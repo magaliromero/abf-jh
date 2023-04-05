@@ -1,0 +1,11 @@
+{
+  "abfApp": {
+    "TiposPagos": {
+      "null": "",
+      "CUOTA": "Cuota",
+      "MENSUAL": "Mensual",
+      "DIARIO": "Diario",
+      "UNICO": "Unico"
+    }
+  }
+}
