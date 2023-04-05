@@ -1,0 +1,151 @@
+<div>
+  <h2 id="page-heading" data-cy="CobrosHeading">
+    <span jhiTranslate="abfApp.cobros.home.title">Cobros</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="abfApp.cobros.home.refreshListLabel">Refrescar lista</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-cobros"
+        [routerLink]="['/cobros/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="abfApp.cobros.home.createLabel"> Crear nuevo Cobros </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="cobros?.length === 0">
+    <span jhiTranslate="abfApp.cobros.home.notFound">Ningún Cobros encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="cobros && cobros.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="montoPago">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.montoPago">Monto Pago</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="montoInicial">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.montoInicial">Monto Inicial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="saldo">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.saldo">Saldo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fechaRegistro">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.fechaRegistro">Fecha Registro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fechaPago">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.fechaPago">Fecha Pago</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="tipoPago">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.tipoPago">Tipo Pago</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="descripcion">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.descripcion">Descripcion</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="alumnos.nombreCompleto">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.alumnos">Alumnos</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cobros of cobros; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/cobros', cobros.id, 'view']">{{ cobros.id }}</a>
+          </td>
+          <td>{{ cobros.montoPago }}</td>
+          <td>{{ cobros.montoInicial }}</td>
+          <td>{{ cobros.saldo }}</td>
+          <td>{{ cobros.fechaRegistro | formatMediumDate }}</td>
+          <td>{{ cobros.fechaPago | formatMediumDate }}</td>
+          <td jhiTranslate="{{ 'abfApp.TiposPagos.' + cobros.tipoPago }}">{{ cobros.tipoPago }}</td>
+          <td>{{ cobros.descripcion }}</td>
+          <td>
+            <div *ngIf="cobros.alumnos">
+              <a [routerLink]="['/alumnos', cobros.alumnos.id, 'view']">{{ cobros.alumnos.nombreCompleto }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/cobros', cobros.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/cobros', cobros.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(cobros)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="cobros && cobros.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
