@@ -84,6 +84,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'abfApp.inscripciones.home.title' },
         loadChildren: () => import('./inscripciones/inscripciones.module').then(m => m.InscripcionesModule),
       },
+      {
+        path: 'cobros',
+        data: { pageTitle: 'abfApp.cobros.home.title' },
+        loadChildren: () => import('./cobros/cobros.module').then(m => m.CobrosModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

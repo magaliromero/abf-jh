@@ -25,8 +25,6 @@ type PagosFormGroupContent = {
   fechaPago: FormControl<IPagos['fechaPago']>;
   tipoPago: FormControl<IPagos['tipoPago']>;
   descripcion: FormControl<IPagos['descripcion']>;
-  idUsuarioRegistro: FormControl<IPagos['idUsuarioRegistro']>;
-  alumnos: FormControl<IPagos['alumnos']>;
   funcionarios: FormControl<IPagos['funcionarios']>;
 };
 
@@ -66,12 +64,6 @@ export class PagosFormService {
         validators: [Validators.required],
       }),
       descripcion: new FormControl(pagosRawValue.descripcion, {
-        validators: [Validators.required],
-      }),
-      idUsuarioRegistro: new FormControl(pagosRawValue.idUsuarioRegistro, {
-        validators: [Validators.required],
-      }),
-      alumnos: new FormControl(pagosRawValue.alumnos, {
         validators: [Validators.required],
       }),
       funcionarios: new FormControl(pagosRawValue.funcionarios, {

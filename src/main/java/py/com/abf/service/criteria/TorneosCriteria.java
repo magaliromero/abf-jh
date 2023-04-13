@@ -3,6 +3,7 @@ package py.com.abf.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
+import py.com.abf.domain.enumeration.TiposTorneos;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -19,6 +20,23 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class TorneosCriteria implements Serializable, Criteria {
 
+    /**
+     * Class for filtering TiposTorneos
+     */
+    public static class TiposTorneosFilter extends Filter<TiposTorneos> {
+
+        public TiposTorneosFilter() {}
+
+        public TiposTorneosFilter(TiposTorneosFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public TiposTorneosFilter copy() {
+            return new TiposTorneosFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
@@ -33,7 +51,7 @@ public class TorneosCriteria implements Serializable, Criteria {
 
     private StringFilter tiempo;
 
-    private StringFilter tipoTorneo;
+    private TiposTorneosFilter tipoTorneo;
 
     private BooleanFilter torneoEvaluado;
 
@@ -154,18 +172,18 @@ public class TorneosCriteria implements Serializable, Criteria {
         this.tiempo = tiempo;
     }
 
-    public StringFilter getTipoTorneo() {
+    public TiposTorneosFilter getTipoTorneo() {
         return tipoTorneo;
     }
 
-    public StringFilter tipoTorneo() {
+    public TiposTorneosFilter tipoTorneo() {
         if (tipoTorneo == null) {
-            tipoTorneo = new StringFilter();
+            tipoTorneo = new TiposTorneosFilter();
         }
         return tipoTorneo;
     }
 
-    public void setTipoTorneo(StringFilter tipoTorneo) {
+    public void setTipoTorneo(TiposTorneosFilter tipoTorneo) {
         this.tipoTorneo = tipoTorneo;
     }
 

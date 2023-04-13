@@ -36,21 +36,11 @@
         </dd>
         <dt><span jhiTranslate="abfApp.pagos.tipoPago">Tipo Pago</span></dt>
         <dd>
-          <span>{{ pagos.tipoPago }}</span>
+          <span jhiTranslate="{{ 'abfApp.TiposPagos.' + pagos.tipoPago }}">{{ pagos.tipoPago }}</span>
         </dd>
         <dt><span jhiTranslate="abfApp.pagos.descripcion">Descripcion</span></dt>
         <dd>
           <span>{{ pagos.descripcion }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.pagos.idUsuarioRegistro">Id Usuario Registro</span></dt>
-        <dd>
-          <span>{{ pagos.idUsuarioRegistro }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.pagos.alumnos">Alumnos</span></dt>
-        <dd>
-          <div *ngIf="pagos.alumnos">
-            <a [routerLink]="['/alumnos', pagos.alumnos.id, 'view']">{{ pagos.alumnos.nombreCompleto }}</a>
-          </div>
         </dd>
         <dt><span jhiTranslate="abfApp.pagos.funcionarios">Funcionarios</span></dt>
         <dd>

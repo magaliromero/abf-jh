@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import py.com.abf.domain.enumeration.TiposPagos;
 
 /**
  * A Pagos.
@@ -46,24 +47,13 @@ public class Pagos implements Serializable {
     private LocalDate fechaPago;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_pago", nullable = false)
-    private String tipoPago;
+    private TiposPagos tipoPago;
 
     @NotNull
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
-
-    @NotNull
-    @Column(name = "id_usuario_registro", nullable = false)
-    private Integer idUsuarioRegistro;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(
-        value = { "matriculas", "registroClases", "pagos", "evaluaciones", "inscripciones", "tipoDocumentos" },
-        allowSetters = true
-    )
-    private Alumnos alumnos;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -150,16 +140,16 @@ public class Pagos implements Serializable {
         this.fechaPago = fechaPago;
     }
 
-    public String getTipoPago() {
+    public TiposPagos getTipoPago() {
         return this.tipoPago;
     }
 
-    public Pagos tipoPago(String tipoPago) {
+    public Pagos tipoPago(TiposPagos tipoPago) {
         this.setTipoPago(tipoPago);
         return this;
     }
 
-    public void setTipoPago(String tipoPago) {
+    public void setTipoPago(TiposPagos tipoPago) {
         this.tipoPago = tipoPago;
     }
 
@@ -174,32 +164,6 @@ public class Pagos implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Integer getIdUsuarioRegistro() {
-        return this.idUsuarioRegistro;
-    }
-
-    public Pagos idUsuarioRegistro(Integer idUsuarioRegistro) {
-        this.setIdUsuarioRegistro(idUsuarioRegistro);
-        return this;
-    }
-
-    public void setIdUsuarioRegistro(Integer idUsuarioRegistro) {
-        this.idUsuarioRegistro = idUsuarioRegistro;
-    }
-
-    public Alumnos getAlumnos() {
-        return this.alumnos;
-    }
-
-    public void setAlumnos(Alumnos alumnos) {
-        this.alumnos = alumnos;
-    }
-
-    public Pagos alumnos(Alumnos alumnos) {
-        this.setAlumnos(alumnos);
-        return this;
     }
 
     public Funcionarios getFuncionarios() {
@@ -246,7 +210,6 @@ public class Pagos implements Serializable {
             ", fechaPago='" + getFechaPago() + "'" +
             ", tipoPago='" + getTipoPago() + "'" +
             ", descripcion='" + getDescripcion() + "'" +
-            ", idUsuarioRegistro=" + getIdUsuarioRegistro() +
             "}";
     }
 }

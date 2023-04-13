@@ -20,7 +20,8 @@
       "id": "ID",
       "fechaPrestamo": "Fecha Prestamo",
       "vigenciaPrestamo": "Vigencia Prestamo",
-      "fechaDevolucion": "Fecha Devolucion"
+      "fechaDevolucion": "Fecha Devolucion",
+      "materiales": "Materiales"
     }
   }
 }

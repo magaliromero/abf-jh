@@ -29,6 +29,8 @@ public class PrestamosCriteria implements Serializable, Criteria {
 
     private LocalDateFilter fechaDevolucion;
 
+    private LongFilter materialesId;
+
     private Boolean distinct;
 
     public PrestamosCriteria() {}
@@ -38,6 +40,7 @@ public class PrestamosCriteria implements Serializable, Criteria {
         this.fechaPrestamo = other.fechaPrestamo == null ? null : other.fechaPrestamo.copy();
         this.vigenciaPrestamo = other.vigenciaPrestamo == null ? null : other.vigenciaPrestamo.copy();
         this.fechaDevolucion = other.fechaDevolucion == null ? null : other.fechaDevolucion.copy();
+        this.materialesId = other.materialesId == null ? null : other.materialesId.copy();
         this.distinct = other.distinct;
     }
 
@@ -106,6 +109,21 @@ public class PrestamosCriteria implements Serializable, Criteria {
         this.fechaDevolucion = fechaDevolucion;
     }
 
+    public LongFilter getMaterialesId() {
+        return materialesId;
+    }
+
+    public LongFilter materialesId() {
+        if (materialesId == null) {
+            materialesId = new LongFilter();
+        }
+        return materialesId;
+    }
+
+    public void setMaterialesId(LongFilter materialesId) {
+        this.materialesId = materialesId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -128,13 +146,14 @@ public class PrestamosCriteria implements Serializable, Criteria {
             Objects.equals(fechaPrestamo, that.fechaPrestamo) &&
             Objects.equals(vigenciaPrestamo, that.vigenciaPrestamo) &&
             Objects.equals(fechaDevolucion, that.fechaDevolucion) &&
+            Objects.equals(materialesId, that.materialesId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fechaPrestamo, vigenciaPrestamo, fechaDevolucion, distinct);
+        return Objects.hash(id, fechaPrestamo, vigenciaPrestamo, fechaDevolucion, materialesId, distinct);
     }
 
     // prettier-ignore
@@ -145,6 +164,7 @@ public class PrestamosCriteria implements Serializable, Criteria {
             (fechaPrestamo != null ? "fechaPrestamo=" + fechaPrestamo + ", " : "") +
             (vigenciaPrestamo != null ? "vigenciaPrestamo=" + vigenciaPrestamo + ", " : "") +
             (fechaDevolucion != null ? "fechaDevolucion=" + fechaDevolucion + ", " : "") +
+            (materialesId != null ? "materialesId=" + materialesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

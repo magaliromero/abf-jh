@@ -58,7 +58,9 @@ export class TorneosFormService {
         validators: [Validators.required],
       }),
       tiempo: new FormControl(torneosRawValue.tiempo),
-      tipoTorneo: new FormControl(torneosRawValue.tipoTorneo),
+      tipoTorneo: new FormControl(torneosRawValue.tipoTorneo, {
+        validators: [Validators.required],
+      }),
       torneoEvaluado: new FormControl(torneosRawValue.torneoEvaluado, {
         validators: [Validators.required],
       }),

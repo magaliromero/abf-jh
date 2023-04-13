@@ -27,14 +27,14 @@ public interface PagosRepository extends JpaRepository<Pagos, Long>, JpaSpecific
     }
 
     @Query(
-        value = "select distinct pagos from Pagos pagos left join fetch pagos.alumnos left join fetch pagos.funcionarios",
+        value = "select distinct pagos from Pagos pagos left join fetch pagos.funcionarios",
         countQuery = "select count(distinct pagos) from Pagos pagos"
     )
     Page<Pagos> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select distinct pagos from Pagos pagos left join fetch pagos.alumnos left join fetch pagos.funcionarios")
+    @Query("select distinct pagos from Pagos pagos left join fetch pagos.funcionarios")
     List<Pagos> findAllWithToOneRelationships();
 
-    @Query("select pagos from Pagos pagos left join fetch pagos.alumnos left join fetch pagos.funcionarios where pagos.id =:id")
+    @Query("select pagos from Pagos pagos left join fetch pagos.funcionarios where pagos.id =:id")
     Optional<Pagos> findOneWithToOneRelationships(@Param("id") Long id);
 }

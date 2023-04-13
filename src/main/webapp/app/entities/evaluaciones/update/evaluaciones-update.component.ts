@@ -9,6 +9,7 @@ import { IEvaluaciones } from '../evaluaciones.model';
 import { EvaluacionesService } from '../service/evaluaciones.service';
 import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
 import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
+import { TiposEvaluaciones } from 'app/entities/enumerations/tipos-evaluaciones.model';
 
 @Component({
   selector: 'jhi-evaluaciones-update',
@@ -17,6 +18,7 @@ import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
 export class EvaluacionesUpdateComponent implements OnInit {
   isSaving = false;
   evaluaciones: IEvaluaciones | null = null;
+  tiposEvaluacionesValues = Object.keys(TiposEvaluaciones);
 
   alumnosSharedCollection: IAlumnos[] = [];
 

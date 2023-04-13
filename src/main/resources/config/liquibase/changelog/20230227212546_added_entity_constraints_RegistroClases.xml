@@ -30,6 +30,6 @@
                                  baseTableName="registro_clases"
                                  constraintName="fk_registro_clases__alumnos_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="alummos"/>
+                                 referencedTableName="alumnos"/>
     </changeSet>
 </databaseChangeLog>

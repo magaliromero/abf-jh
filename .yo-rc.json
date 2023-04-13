@@ -36,7 +36,8 @@
       "FichaPartidasTorneos",
       "Cursos",
       "Evaluaciones",
-      "Inscripciones"
+      "Inscripciones",
+      "Cobros"
     ],
     "entitySuffix": "",
     "gradleEnterpriseHost": "",
@@ -44,7 +45,7 @@
     "jhipsterVersion": "7.9.3",
     "jwtSecretKey": "ZmVkMWYyNmUwNmViM2NjYjg1MGM2ZGE0OWNhMzAzOWYxYjc4NmQzYjY3YTI5ZTJlMjM1N2M4NDAyYzVmNzQ0MjY2ZWM0OWI2MDZkYTlhN2NlMjMxM2VjZGE2NmY2NjZmMzI3ODgzNmM2MjdmOGJkZDFlZTM5YmY5ZjE2NzdiN2Q=",
     "languages": ["es", "en"],
-    "lastLiquibaseTimestamp": 1678750668000,
+    "lastLiquibaseTimestamp": 1680725184000,
     "messageBroker": false,
     "nativeLanguage": "es",
     "otherModules": [],

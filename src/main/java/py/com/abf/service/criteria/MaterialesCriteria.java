@@ -3,6 +3,7 @@ package py.com.abf.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
+import py.com.abf.domain.enumeration.EstadosMateriales;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -19,15 +20,36 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class MaterialesCriteria implements Serializable, Criteria {
 
+    /**
+     * Class for filtering EstadosMateriales
+     */
+    public static class EstadosMaterialesFilter extends Filter<EstadosMateriales> {
+
+        public EstadosMaterialesFilter() {}
+
+        public EstadosMaterialesFilter(EstadosMaterialesFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public EstadosMaterialesFilter copy() {
+            return new EstadosMaterialesFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
 
     private StringFilter descripcion;
 
-    private StringFilter estado;
+    private EstadosMaterialesFilter estado;
 
-    private IntegerFilter cantidad;
+    private IntegerFilter cantidadStock;
+
+    private IntegerFilter cantidadPrestamo;
+
+    private LongFilter prestamosId;
 
     private Boolean distinct;
 
@@ -37,7 +59,9 @@ public class MaterialesCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.descripcion = other.descripcion == null ? null : other.descripcion.copy();
         this.estado = other.estado == null ? null : other.estado.copy();
-        this.cantidad = other.cantidad == null ? null : other.cantidad.copy();
+        this.cantidadStock = other.cantidadStock == null ? null : other.cantidadStock.copy();
+        this.cantidadPrestamo = other.cantidadPrestamo == null ? null : other.cantidadPrestamo.copy();
+        this.prestamosId = other.prestamosId == null ? null : other.prestamosId.copy();
         this.distinct = other.distinct;
     }
 
@@ -76,34 +100,64 @@ public class MaterialesCriteria implements Serializable, Criteria {
         this.descripcion = descripcion;
     }
 
-    public StringFilter getEstado() {
+    public EstadosMaterialesFilter getEstado() {
         return estado;
     }
 
-    public StringFilter estado() {
+    public EstadosMaterialesFilter estado() {
         if (estado == null) {
-            estado = new StringFilter();
+            estado = new EstadosMaterialesFilter();
         }
         return estado;
     }
 
-    public void setEstado(StringFilter estado) {
+    public void setEstado(EstadosMaterialesFilter estado) {
         this.estado = estado;
     }
 
-    public IntegerFilter getCantidad() {
-        return cantidad;
+    public IntegerFilter getCantidadStock() {
+        return cantidadStock;
     }
 
-    public IntegerFilter cantidad() {
-        if (cantidad == null) {
-            cantidad = new IntegerFilter();
+    public IntegerFilter cantidadStock() {
+        if (cantidadStock == null) {
+            cantidadStock = new IntegerFilter();
         }
-        return cantidad;
+        return cantidadStock;
     }
 
-    public void setCantidad(IntegerFilter cantidad) {
-        this.cantidad = cantidad;
+    public void setCantidadStock(IntegerFilter cantidadStock) {
+        this.cantidadStock = cantidadStock;
+    }
+
+    public IntegerFilter getCantidadPrestamo() {
+        return cantidadPrestamo;
+    }
+
+    public IntegerFilter cantidadPrestamo() {
+        if (cantidadPrestamo == null) {
+            cantidadPrestamo = new IntegerFilter();
+        }
+        return cantidadPrestamo;
+    }
+
+    public void setCantidadPrestamo(IntegerFilter cantidadPrestamo) {
+        this.cantidadPrestamo = cantidadPrestamo;
+    }
+
+    public LongFilter getPrestamosId() {
+        return prestamosId;
+    }
+
+    public LongFilter prestamosId() {
+        if (prestamosId == null) {
+            prestamosId = new LongFilter();
+        }
+        return prestamosId;
+    }
+
+    public void setPrestamosId(LongFilter prestamosId) {
+        this.prestamosId = prestamosId;
     }
 
     public Boolean getDistinct() {
@@ -127,14 +181,16 @@ public class MaterialesCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(descripcion, that.descripcion) &&
             Objects.equals(estado, that.estado) &&
-            Objects.equals(cantidad, that.cantidad) &&
+            Objects.equals(cantidadStock, that.cantidadStock) &&
+            Objects.equals(cantidadPrestamo, that.cantidadPrestamo) &&
+            Objects.equals(prestamosId, that.prestamosId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, descripcion, estado, cantidad, distinct);
+        return Objects.hash(id, descripcion, estado, cantidadStock, cantidadPrestamo, prestamosId, distinct);
     }
 
     // prettier-ignore
@@ -144,7 +200,9 @@ public class MaterialesCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (descripcion != null ? "descripcion=" + descripcion + ", " : "") +
             (estado != null ? "estado=" + estado + ", " : "") +
-            (cantidad != null ? "cantidad=" + cantidad + ", " : "") +
+            (cantidadStock != null ? "cantidadStock=" + cantidadStock + ", " : "") +
+            (cantidadPrestamo != null ? "cantidadPrestamo=" + cantidadPrestamo + ", " : "") +
+            (prestamosId != null ? "prestamosId=" + prestamosId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

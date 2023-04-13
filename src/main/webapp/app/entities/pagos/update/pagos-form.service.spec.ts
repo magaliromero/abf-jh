@@ -27,8 +27,6 @@ describe('Pagos Form Service', () => {
             fechaPago: expect.any(Object),
             tipoPago: expect.any(Object),
             descripcion: expect.any(Object),
-            idUsuarioRegistro: expect.any(Object),
-            alumnos: expect.any(Object),
             funcionarios: expect.any(Object),
           })
         );
@@ -47,8 +45,6 @@ describe('Pagos Form Service', () => {
             fechaPago: expect.any(Object),
             tipoPago: expect.any(Object),
             descripcion: expect.any(Object),
-            idUsuarioRegistro: expect.any(Object),
-            alumnos: expect.any(Object),
             funcionarios: expect.any(Object),
           })
         );

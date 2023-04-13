@@ -65,7 +65,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
 
     private LongFilter registroClasesId;
 
-    private LongFilter pagosId;
+    private LongFilter cobrosId;
 
     private LongFilter evaluacionesId;
 
@@ -91,7 +91,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
         this.estado = other.estado == null ? null : other.estado.copy();
         this.matriculaId = other.matriculaId == null ? null : other.matriculaId.copy();
         this.registroClasesId = other.registroClasesId == null ? null : other.registroClasesId.copy();
-        this.pagosId = other.pagosId == null ? null : other.pagosId.copy();
+        this.cobrosId = other.cobrosId == null ? null : other.cobrosId.copy();
         this.evaluacionesId = other.evaluacionesId == null ? null : other.evaluacionesId.copy();
         this.inscripcionesId = other.inscripcionesId == null ? null : other.inscripcionesId.copy();
         this.tipoDocumentosId = other.tipoDocumentosId == null ? null : other.tipoDocumentosId.copy();
@@ -298,19 +298,19 @@ public class AlumnosCriteria implements Serializable, Criteria {
         this.registroClasesId = registroClasesId;
     }
 
-    public LongFilter getPagosId() {
-        return pagosId;
+    public LongFilter getCobrosId() {
+        return cobrosId;
     }
 
-    public LongFilter pagosId() {
-        if (pagosId == null) {
-            pagosId = new LongFilter();
+    public LongFilter cobrosId() {
+        if (cobrosId == null) {
+            cobrosId = new LongFilter();
         }
-        return pagosId;
+        return cobrosId;
     }
 
-    public void setPagosId(LongFilter pagosId) {
-        this.pagosId = pagosId;
+    public void setCobrosId(LongFilter cobrosId) {
+        this.cobrosId = cobrosId;
     }
 
     public LongFilter getEvaluacionesId() {
@@ -389,7 +389,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
             Objects.equals(estado, that.estado) &&
             Objects.equals(matriculaId, that.matriculaId) &&
             Objects.equals(registroClasesId, that.registroClasesId) &&
-            Objects.equals(pagosId, that.pagosId) &&
+            Objects.equals(cobrosId, that.cobrosId) &&
             Objects.equals(evaluacionesId, that.evaluacionesId) &&
             Objects.equals(inscripcionesId, that.inscripcionesId) &&
             Objects.equals(tipoDocumentosId, that.tipoDocumentosId) &&
@@ -413,7 +413,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
             estado,
             matriculaId,
             registroClasesId,
-            pagosId,
+            cobrosId,
             evaluacionesId,
             inscripcionesId,
             tipoDocumentosId,
@@ -438,7 +438,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
             (estado != null ? "estado=" + estado + ", " : "") +
             (matriculaId != null ? "matriculaId=" + matriculaId + ", " : "") +
             (registroClasesId != null ? "registroClasesId=" + registroClasesId + ", " : "") +
-            (pagosId != null ? "pagosId=" + pagosId + ", " : "") +
+            (cobrosId != null ? "cobrosId=" + cobrosId + ", " : "") +
             (evaluacionesId != null ? "evaluacionesId=" + evaluacionesId + ", " : "") +
             (inscripcionesId != null ? "inscripcionesId=" + inscripcionesId + ", " : "") +
             (tipoDocumentosId != null ? "tipoDocumentosId=" + tipoDocumentosId + ", " : "") +

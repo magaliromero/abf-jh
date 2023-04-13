@@ -15,7 +15,7 @@ import py.com.abf.domain.enumeration.EstadosPersona;
  * A Alumnos.
  */
 @Entity
-@Table(name = "alummos")
+@Table(name = "alumnos")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Alumnos implements Serializable {
@@ -78,8 +78,8 @@ public class Alumnos implements Serializable {
 
     @OneToMany(mappedBy = "alumnos")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alumnos", "funcionarios" }, allowSetters = true)
-    private Set<Pagos> pagos = new HashSet<>();
+    @JsonIgnoreProperties(value = { "alumnos" }, allowSetters = true)
+    private Set<Cobros> cobros = new HashSet<>();
 
     @OneToMany(mappedBy = "alumnos")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -303,34 +303,34 @@ public class Alumnos implements Serializable {
         return this;
     }
 
-    public Set<Pagos> getPagos() {
-        return this.pagos;
+    public Set<Cobros> getCobros() {
+        return this.cobros;
     }
 
-    public void setPagos(Set<Pagos> pagos) {
-        if (this.pagos != null) {
-            this.pagos.forEach(i -> i.setAlumnos(null));
+    public void setCobros(Set<Cobros> cobros) {
+        if (this.cobros != null) {
+            this.cobros.forEach(i -> i.setAlumnos(null));
         }
-        if (pagos != null) {
-            pagos.forEach(i -> i.setAlumnos(this));
+        if (cobros != null) {
+            cobros.forEach(i -> i.setAlumnos(this));
         }
-        this.pagos = pagos;
+        this.cobros = cobros;
     }
 
-    public Alumnos pagos(Set<Pagos> pagos) {
-        this.setPagos(pagos);
+    public Alumnos cobros(Set<Cobros> cobros) {
+        this.setCobros(cobros);
         return this;
     }
 
-    public Alumnos addPagos(Pagos pagos) {
-        this.pagos.add(pagos);
-        pagos.setAlumnos(this);
+    public Alumnos addCobros(Cobros cobros) {
+        this.cobros.add(cobros);
+        cobros.setAlumnos(this);
         return this;
     }
 
-    public Alumnos removePagos(Pagos pagos) {
-        this.pagos.remove(pagos);
-        pagos.setAlumnos(null);
+    public Alumnos removeCobros(Cobros cobros) {
+        this.cobros.remove(cobros);
+        cobros.setAlumnos(null);
         return this;
     }
 

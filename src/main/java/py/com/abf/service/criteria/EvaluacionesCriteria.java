@@ -3,6 +3,7 @@ package py.com.abf.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
+import py.com.abf.domain.enumeration.TiposEvaluaciones;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -19,11 +20,28 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class EvaluacionesCriteria implements Serializable, Criteria {
 
+    /**
+     * Class for filtering TiposEvaluaciones
+     */
+    public static class TiposEvaluacionesFilter extends Filter<TiposEvaluaciones> {
+
+        public TiposEvaluacionesFilter() {}
+
+        public TiposEvaluacionesFilter(TiposEvaluacionesFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public TiposEvaluacionesFilter copy() {
+            return new TiposEvaluacionesFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
 
-    private StringFilter tipoEvaluacion;
+    private TiposEvaluacionesFilter tipoEvaluacion;
 
     private IntegerFilter idExamen;
 
@@ -76,18 +94,18 @@ public class EvaluacionesCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public StringFilter getTipoEvaluacion() {
+    public TiposEvaluacionesFilter getTipoEvaluacion() {
         return tipoEvaluacion;
     }
 
-    public StringFilter tipoEvaluacion() {
+    public TiposEvaluacionesFilter tipoEvaluacion() {
         if (tipoEvaluacion == null) {
-            tipoEvaluacion = new StringFilter();
+            tipoEvaluacion = new TiposEvaluacionesFilter();
         }
         return tipoEvaluacion;
     }
 
-    public void setTipoEvaluacion(StringFilter tipoEvaluacion) {
+    public void setTipoEvaluacion(TiposEvaluacionesFilter tipoEvaluacion) {
         this.tipoEvaluacion = tipoEvaluacion;
     }
 

@@ -3,7 +3,7 @@
   "changelogDate": "20230227212046",
   "dto": "no",
   "embedded": false,
-  "entityTableName": "alummos",
+  "entityTableName": "alumnos",
   "fields": [
     {
       "fieldName": "elo",
@@ -73,9 +73,9 @@
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "pagos",
+      "otherEntityName": "cobros",
       "otherEntityRelationshipName": "alumnos",
-      "relationshipName": "pagos",
+      "relationshipName": "cobros",
       "relationshipType": "one-to-many"
     },
     {

@@ -58,6 +58,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="materiales.descripcion">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.prestamos.materiales">Materiales</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -69,6 +75,11 @@
           <td>{{ prestamos.fechaPrestamo | formatMediumDate }}</td>
           <td>{{ prestamos.vigenciaPrestamo }}</td>
           <td>{{ prestamos.fechaDevolucion | formatMediumDate }}</td>
+          <td>
+            <div *ngIf="prestamos.materiales">
+              <a [routerLink]="['/materiales', prestamos.materiales.id, 'view']">{{ prestamos.materiales.descripcion }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

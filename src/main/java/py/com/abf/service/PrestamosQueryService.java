@@ -94,6 +94,15 @@ public class PrestamosQueryService extends QueryService<Prestamos> {
             if (criteria.getFechaDevolucion() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFechaDevolucion(), Prestamos_.fechaDevolucion));
             }
+            if (criteria.getMaterialesId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getMaterialesId(),
+                            root -> root.join(Prestamos_.materiales, JoinType.LEFT).get(Materiales_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

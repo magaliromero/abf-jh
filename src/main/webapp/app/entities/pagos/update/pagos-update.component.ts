@@ -7,10 +7,9 @@ import { finalize, map } from 'rxjs/operators';
 import { PagosFormService, PagosFormGroup } from './pagos-form.service';
 import { IPagos } from '../pagos.model';
 import { PagosService } from '../service/pagos.service';
-import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
-import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
 import { IFuncionarios } from 'app/entities/funcionarios/funcionarios.model';
 import { FuncionariosService } from 'app/entities/funcionarios/service/funcionarios.service';
+import { TiposPagos } from 'app/entities/enumerations/tipos-pagos.model';
 
 @Component({
   selector: 'jhi-pagos-update',
@@ -19,8 +18,8 @@ import { FuncionariosService } from 'app/entities/funcionarios/service/funcionar
 export class PagosUpdateComponent implements OnInit {
   isSaving = false;
   pagos: IPagos | null = null;
+  tiposPagosValues = Object.keys(TiposPagos);
 
-  alumnosSharedCollection: IAlumnos[] = [];
   funcionariosSharedCollection: IFuncionarios[] = [];
 
   editForm: PagosFormGroup = this.pagosFormService.createPagosFormGroup();
@@ -28,12 +27,9 @@ export class PagosUpdateComponent implements OnInit {
   constructor(
     protected pagosService: PagosService,
     protected pagosFormService: PagosFormService,
-    protected alumnosService: AlumnosService,
     protected funcionariosService: FuncionariosService,
     protected activatedRoute: ActivatedRoute
   ) {}
-
-  compareAlumnos = (o1: IAlumnos | null, o2: IAlumnos | null): boolean => this.alumnosService.compareAlumnos(o1, o2);
 
   compareFuncionarios = (o1: IFuncionarios | null, o2: IFuncionarios | null): boolean =>
     this.funcionariosService.compareFuncionarios(o1, o2);
@@ -86,10 +82,6 @@ export class PagosUpdateComponent implements OnInit {
     this.pagos = pagos;
     this.pagosFormService.resetForm(this.editForm, pagos);
 
-    this.alumnosSharedCollection = this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(
-      this.alumnosSharedCollection,
-      pagos.alumnos
-    );
     this.funcionariosSharedCollection = this.funcionariosService.addFuncionariosToCollectionIfMissing<IFuncionarios>(
       this.funcionariosSharedCollection,
       pagos.funcionarios
@@ -97,12 +89,6 @@ export class PagosUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.alumnosService
-      .query()
-      .pipe(map((res: HttpResponse<IAlumnos[]>) => res.body ?? []))
-      .pipe(map((alumnos: IAlumnos[]) => this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(alumnos, this.pagos?.alumnos)))
-      .subscribe((alumnos: IAlumnos[]) => (this.alumnosSharedCollection = alumnos));
-
     this.funcionariosService
       .query()
       .pipe(map((res: HttpResponse<IFuncionarios[]>) => res.body ?? []))

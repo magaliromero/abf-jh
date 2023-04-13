@@ -78,6 +78,9 @@ public class CacheConfiguration {
             createCache(cm, py.com.abf.domain.Cursos.class.getName());
             createCache(cm, py.com.abf.domain.Evaluaciones.class.getName());
             createCache(cm, py.com.abf.domain.Inscripciones.class.getName());
+            createCache(cm, py.com.abf.domain.Alumnos.class.getName() + ".cobros");
+            createCache(cm, py.com.abf.domain.Cobros.class.getName());
+            createCache(cm, py.com.abf.domain.Materiales.class.getName() + ".prestamos");
             // jhipster-needle-ehcache-add-entry
         };
     }

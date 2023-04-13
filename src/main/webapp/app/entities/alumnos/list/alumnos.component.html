@@ -163,7 +163,7 @@
               </button>
               <button
                 type="submit"
-                [routerLink]="['/pagos']"
+                [routerLink]="['/cobros']"
                 [queryParams]="{ 'filter[alumnosId.in]': alumnos.id }"
                 class="btn btn-info btn-sm"
                 data-cy="filterOtherEntityButton"
@@ -172,8 +172,8 @@
                 <span
                   class="d-none d-md-inline"
                   jhiTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('abfApp.alumnos.pagos' | translate) }"
-                  >Show Pagos</span
+                  [translateValues]="{ otherEntity: ('abfApp.alumnos.cobros' | translate) }"
+                  >Show Cobros</span
                 >
               </button>
               <button

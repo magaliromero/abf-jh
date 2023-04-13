@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import py.com.abf.domain.enumeration.TiposTorneos;
 
 /**
  * A Torneos.
@@ -46,8 +47,10 @@ public class Torneos implements Serializable {
     @Column(name = "tiempo")
     private String tiempo;
 
-    @Column(name = "tipo_torneo")
-    private String tipoTorneo;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_torneo", nullable = false)
+    private TiposTorneos tipoTorneo;
 
     @NotNull
     @Column(name = "torneo_evaluado", nullable = false)
@@ -142,16 +145,16 @@ public class Torneos implements Serializable {
         this.tiempo = tiempo;
     }
 
-    public String getTipoTorneo() {
+    public TiposTorneos getTipoTorneo() {
         return this.tipoTorneo;
     }
 
-    public Torneos tipoTorneo(String tipoTorneo) {
+    public Torneos tipoTorneo(TiposTorneos tipoTorneo) {
         this.setTipoTorneo(tipoTorneo);
         return this;
     }
 
-    public void setTipoTorneo(String tipoTorneo) {
+    public void setTipoTorneo(TiposTorneos tipoTorneo) {
         this.tipoTorneo = tipoTorneo;
     }
 

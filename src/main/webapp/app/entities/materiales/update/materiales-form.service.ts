@@ -20,7 +20,8 @@ type MaterialesFormGroupContent = {
   id: FormControl<IMateriales['id'] | NewMateriales['id']>;
   descripcion: FormControl<IMateriales['descripcion']>;
   estado: FormControl<IMateriales['estado']>;
-  cantidad: FormControl<IMateriales['cantidad']>;
+  cantidadStock: FormControl<IMateriales['cantidadStock']>;
+  cantidadPrestamo: FormControl<IMateriales['cantidadPrestamo']>;
 };
 
 export type MaterialesFormGroup = FormGroup<MaterialesFormGroupContent>;
@@ -46,7 +47,10 @@ export class MaterialesFormService {
       estado: new FormControl(materialesRawValue.estado, {
         validators: [Validators.required],
       }),
-      cantidad: new FormControl(materialesRawValue.cantidad, {
+      cantidadStock: new FormControl(materialesRawValue.cantidadStock, {
+        validators: [Validators.required],
+      }),
+      cantidadPrestamo: new FormControl(materialesRawValue.cantidadPrestamo, {
         validators: [Validators.required],
       }),
     });

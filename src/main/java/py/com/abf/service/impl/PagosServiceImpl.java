@@ -66,9 +66,6 @@ public class PagosServiceImpl implements PagosService {
                 if (pagos.getDescripcion() != null) {
                     existingPagos.setDescripcion(pagos.getDescripcion());
                 }
-                if (pagos.getIdUsuarioRegistro() != null) {
-                    existingPagos.setIdUsuarioRegistro(pagos.getIdUsuarioRegistro());
-                }
 
                 return existingPagos;
             })

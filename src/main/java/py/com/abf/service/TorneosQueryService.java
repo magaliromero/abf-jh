@@ -101,7 +101,7 @@ public class TorneosQueryService extends QueryService<Torneos> {
                 specification = specification.and(buildStringSpecification(criteria.getTiempo(), Torneos_.tiempo));
             }
             if (criteria.getTipoTorneo() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getTipoTorneo(), Torneos_.tipoTorneo));
+                specification = specification.and(buildSpecification(criteria.getTipoTorneo(), Torneos_.tipoTorneo));
             }
             if (criteria.getTorneoEvaluado() != null) {
                 specification = specification.and(buildSpecification(criteria.getTorneoEvaluado(), Torneos_.torneoEvaluado));

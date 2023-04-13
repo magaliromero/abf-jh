@@ -133,10 +133,10 @@ public class AlumnosQueryService extends QueryService<Alumnos> {
                         )
                     );
             }
-            if (criteria.getPagosId() != null) {
+            if (criteria.getCobrosId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(criteria.getPagosId(), root -> root.join(Alumnos_.pagos, JoinType.LEFT).get(Pagos_.id))
+                        buildSpecification(criteria.getCobrosId(), root -> root.join(Alumnos_.cobros, JoinType.LEFT).get(Cobros_.id))
                     );
             }
             if (criteria.getEvaluacionesId() != null) {

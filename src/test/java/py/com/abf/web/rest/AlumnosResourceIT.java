@@ -29,10 +29,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Alumnos;
+import py.com.abf.domain.Cobros;
 import py.com.abf.domain.Evaluaciones;
 import py.com.abf.domain.Inscripciones;
 import py.com.abf.domain.Matricula;
-import py.com.abf.domain.Pagos;
 import py.com.abf.domain.RegistroClases;
 import py.com.abf.domain.TiposDocumentos;
 import py.com.abf.domain.enumeration.EstadosPersona;
@@ -1167,25 +1167,25 @@ class AlumnosResourceIT {
 
     @Test
     @Transactional
-    void getAllAlumnosByPagosIsEqualToSomething() throws Exception {
-        Pagos pagos;
-        if (TestUtil.findAll(em, Pagos.class).isEmpty()) {
+    void getAllAlumnosByCobrosIsEqualToSomething() throws Exception {
+        Cobros cobros;
+        if (TestUtil.findAll(em, Cobros.class).isEmpty()) {
             alumnosRepository.saveAndFlush(alumnos);
-            pagos = PagosResourceIT.createEntity(em);
+            cobros = CobrosResourceIT.createEntity(em);
         } else {
-            pagos = TestUtil.findAll(em, Pagos.class).get(0);
+            cobros = TestUtil.findAll(em, Cobros.class).get(0);
         }
-        em.persist(pagos);
+        em.persist(cobros);
         em.flush();
-        alumnos.addPagos(pagos);
+        alumnos.addCobros(cobros);
         alumnosRepository.saveAndFlush(alumnos);
-        Long pagosId = pagos.getId();
+        Long cobrosId = cobros.getId();
 
-        // Get all the alumnosList where pagos equals to pagosId
-        defaultAlumnosShouldBeFound("pagosId.equals=" + pagosId);
+        // Get all the alumnosList where cobros equals to cobrosId
+        defaultAlumnosShouldBeFound("cobrosId.equals=" + cobrosId);
 
-        // Get all the alumnosList where pagos equals to (pagosId + 1)
-        defaultAlumnosShouldNotBeFound("pagosId.equals=" + (pagosId + 1));
+        // Get all the alumnosList where cobros equals to (cobrosId + 1)
+        defaultAlumnosShouldNotBeFound("cobrosId.equals=" + (cobrosId + 1));
     }
 
     @Test

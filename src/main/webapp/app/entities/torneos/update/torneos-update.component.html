@@ -107,14 +107,21 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="abfApp.torneos.tipoTorneo" for="field_tipoTorneo">Tipo Torneo</label>
-          <input
-            type="text"
-            class="form-control"
-            name="tipoTorneo"
-            id="field_tipoTorneo"
-            data-cy="tipoTorneo"
-            formControlName="tipoTorneo"
-          />
+          <select class="form-control" name="tipoTorneo" formControlName="tipoTorneo" id="field_tipoTorneo" data-cy="tipoTorneo">
+            <option [ngValue]="null">{{ 'abfApp.TiposTorneos.null' | translate }}</option>
+            <option *ngFor="let tiposTorneos of tiposTorneosValues" [value]="tiposTorneos">
+              {{ 'abfApp.TiposTorneos.' + tiposTorneos | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('tipoTorneo')!.invalid && (editForm.get('tipoTorneo')!.dirty || editForm.get('tipoTorneo')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tipoTorneo')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Este campo es obligatorio.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">

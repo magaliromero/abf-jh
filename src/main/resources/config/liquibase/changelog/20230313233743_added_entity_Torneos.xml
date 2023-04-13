@@ -30,7 +30,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="tipo_torneo" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="torneo_evaluado" type="boolean">
                 <constraints nullable="false" />

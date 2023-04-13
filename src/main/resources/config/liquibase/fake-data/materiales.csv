@@ -1,11 +1,11 @@
-id;descripcion;estado;cantidad
-1;synthesizing;Increible Castilla-La Verde;68324
-2;Central Planificador;Account 24/365 Checking;31450
-3;Hormigon Cambridgeshire Calle;invoice Marroquinería estable;53014
-4;markets Comunidad Directo;Artesanal International Seguridada;21024
-5;array;Coche Verde Inteligente;60539
-6;Artesanal estructura;Bicicleta infrastructures Avon;59595
-7;Granito solid;Informática Global;44701
-8;División funcionalidad;enable alarm;8379
-9;Account Francia desafío;Rincón quantifying;49186
-10;revolutionize granular;Polígono;63779
+id;descripcion;estado;cantidad_stock;cantidad_prestamo
+1;synthesizing;VENCIDO;5612;26732
+2;enable proactive;VENCIDO;7672;68324
+3;Central Planificador;VENCIDO;60445;57376
+4;24/365 Checking éxito;VENCIDO;32148;50092
+5;Algodón Humano TCP;PRESTADO;4529;26397
+6;Account markets Comunidad;VENCIDO;11586;96009
+7;Artesanal International Seguridada;DISPONIBLE;27040;71343
+8;Refinado Increible;DISPONIBLE;21687;21430
+9;Account copy;PRESTADO;80764;17876
+10;Berkshire;DISPONIBLE;51588;15806

@@ -23,6 +23,7 @@ describe('Prestamos Form Service', () => {
             fechaPrestamo: expect.any(Object),
             vigenciaPrestamo: expect.any(Object),
             fechaDevolucion: expect.any(Object),
+            materiales: expect.any(Object),
           })
         );
       });
@@ -36,6 +37,7 @@ describe('Prestamos Form Service', () => {
             fechaPrestamo: expect.any(Object),
             vigenciaPrestamo: expect.any(Object),
             fechaDevolucion: expect.any(Object),
+            materiales: expect.any(Object),
           })
         );
       });

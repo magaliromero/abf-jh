@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { TorneosFormService, TorneosFormGroup } from './torneos-form.service';
 import { ITorneos } from '../torneos.model';
 import { TorneosService } from '../service/torneos.service';
+import { TiposTorneos } from 'app/entities/enumerations/tipos-torneos.model';
 
 @Component({
   selector: 'jhi-torneos-update',
@@ -15,6 +16,7 @@ import { TorneosService } from '../service/torneos.service';
 export class TorneosUpdateComponent implements OnInit {
   isSaving = false;
   torneos: ITorneos | null = null;
+  tiposTorneosValues = Object.keys(TiposTorneos);
 
   editForm: TorneosFormGroup = this.torneosFormService.createTorneosFormGroup();
 
