@@ -181,7 +181,7 @@ relationship OneToMany {
 	TiposDocumentos to Alumnos { tipoDocumentos(descripcion) required },
     TiposDocumentos to Funcionarios { tipoDocumentos(descripcion) required },
     Alumnos to Matricula  { alumnos(nombreCompleto) required },
-    MallaCurricular to RegistroClases{mallaCurricular(titulo) required},
+    Cursos to RegistroClases{Cursos(nombreCurso) required},
     Temas to RegistroClases{temas(titulo) required},
     Funcionarios to RegistroClases{funcionarios(nombreCompleto) required},
     Alumnos to RegistroClases {alumnos(nombreCompleto) required},
