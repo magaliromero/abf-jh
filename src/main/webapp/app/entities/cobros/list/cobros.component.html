@@ -88,6 +88,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="factura.facturaNro">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.cobros.factura">Factura</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -106,6 +112,11 @@
           <td>
             <div *ngIf="cobros.alumnos">
               <a [routerLink]="['/alumnos', cobros.alumnos.id, 'view']">{{ cobros.alumnos.nombreCompleto }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="cobros.factura">
+              <a [routerLink]="['/facturas', cobros.factura.id, 'view']">{{ cobros.factura.facturaNro }}</a>
             </div>
           </td>
           <td class="text-end">

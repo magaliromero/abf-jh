@@ -57,6 +57,8 @@ public class CobrosCriteria implements Serializable, Criteria {
 
     private LongFilter alumnosId;
 
+    private LongFilter facturaId;
+
     private Boolean distinct;
 
     public CobrosCriteria() {}
@@ -71,6 +73,7 @@ public class CobrosCriteria implements Serializable, Criteria {
         this.tipoPago = other.tipoPago == null ? null : other.tipoPago.copy();
         this.descripcion = other.descripcion == null ? null : other.descripcion.copy();
         this.alumnosId = other.alumnosId == null ? null : other.alumnosId.copy();
+        this.facturaId = other.facturaId == null ? null : other.facturaId.copy();
         this.distinct = other.distinct;
     }
 
@@ -214,6 +217,21 @@ public class CobrosCriteria implements Serializable, Criteria {
         this.alumnosId = alumnosId;
     }
 
+    public LongFilter getFacturaId() {
+        return facturaId;
+    }
+
+    public LongFilter facturaId() {
+        if (facturaId == null) {
+            facturaId = new LongFilter();
+        }
+        return facturaId;
+    }
+
+    public void setFacturaId(LongFilter facturaId) {
+        this.facturaId = facturaId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -241,13 +259,26 @@ public class CobrosCriteria implements Serializable, Criteria {
             Objects.equals(tipoPago, that.tipoPago) &&
             Objects.equals(descripcion, that.descripcion) &&
             Objects.equals(alumnosId, that.alumnosId) &&
+            Objects.equals(facturaId, that.facturaId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, montoPago, montoInicial, saldo, fechaRegistro, fechaPago, tipoPago, descripcion, alumnosId, distinct);
+        return Objects.hash(
+            id,
+            montoPago,
+            montoInicial,
+            saldo,
+            fechaRegistro,
+            fechaPago,
+            tipoPago,
+            descripcion,
+            alumnosId,
+            facturaId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -263,6 +294,7 @@ public class CobrosCriteria implements Serializable, Criteria {
             (tipoPago != null ? "tipoPago=" + tipoPago + ", " : "") +
             (descripcion != null ? "descripcion=" + descripcion + ", " : "") +
             (alumnosId != null ? "alumnosId=" + alumnosId + ", " : "") +
+            (facturaId != null ? "facturaId=" + facturaId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

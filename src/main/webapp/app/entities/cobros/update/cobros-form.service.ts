@@ -26,6 +26,7 @@ type CobrosFormGroupContent = {
   tipoPago: FormControl<ICobros['tipoPago']>;
   descripcion: FormControl<ICobros['descripcion']>;
   alumnos: FormControl<ICobros['alumnos']>;
+  factura: FormControl<ICobros['factura']>;
 };
 
 export type CobrosFormGroup = FormGroup<CobrosFormGroupContent>;
@@ -67,6 +68,9 @@ export class CobrosFormService {
         validators: [Validators.required],
       }),
       alumnos: new FormControl(cobrosRawValue.alumnos, {
+        validators: [Validators.required],
+      }),
+      factura: new FormControl(cobrosRawValue.factura, {
         validators: [Validators.required],
       }),
     });

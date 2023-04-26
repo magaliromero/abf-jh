@@ -28,18 +28,18 @@ public interface FichaPartidasTorneosRepository
     }
 
     @Query(
-        value = "select distinct fichaPartidasTorneos from FichaPartidasTorneos fichaPartidasTorneos left join fetch fichaPartidasTorneos.torneos",
+        value = "select distinct fichaPartidasTorneos from FichaPartidasTorneos fichaPartidasTorneos left join fetch fichaPartidasTorneos.torneos left join fetch fichaPartidasTorneos.alumnos",
         countQuery = "select count(distinct fichaPartidasTorneos) from FichaPartidasTorneos fichaPartidasTorneos"
     )
     Page<FichaPartidasTorneos> findAllWithToOneRelationships(Pageable pageable);
 
     @Query(
-        "select distinct fichaPartidasTorneos from FichaPartidasTorneos fichaPartidasTorneos left join fetch fichaPartidasTorneos.torneos"
+        "select distinct fichaPartidasTorneos from FichaPartidasTorneos fichaPartidasTorneos left join fetch fichaPartidasTorneos.torneos left join fetch fichaPartidasTorneos.alumnos"
     )
     List<FichaPartidasTorneos> findAllWithToOneRelationships();
 
     @Query(
-        "select fichaPartidasTorneos from FichaPartidasTorneos fichaPartidasTorneos left join fetch fichaPartidasTorneos.torneos where fichaPartidasTorneos.id =:id"
+        "select fichaPartidasTorneos from FichaPartidasTorneos fichaPartidasTorneos left join fetch fichaPartidasTorneos.torneos left join fetch fichaPartidasTorneos.alumnos where fichaPartidasTorneos.id =:id"
     )
     Optional<FichaPartidasTorneos> findOneWithToOneRelationships(@Param("id") Long id);
 }

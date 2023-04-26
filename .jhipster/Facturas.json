@@ -1,0 +1,93 @@
+{
+  "applications": "*",
+  "changelogDate": "20230425234913",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "factura",
+  "fields": [
+    {
+      "fieldName": "fecha",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "facturaNro",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "timbrado",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ruc",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "condicionVenta",
+      "fieldType": "CondVenta",
+      "fieldValues": "CONTADO (Contado),CREDITO (Credito)"
+    },
+    {
+      "fieldName": "cantidad",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "precioUnitario",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "valor5",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "valor10",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "total",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "total5",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "total10",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "totalIva",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Facturas",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "cobros",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "cobros",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nombreCompleto",
+      "otherEntityName": "alumnos",
+      "otherEntityRelationshipName": "facturas",
+      "relationshipName": "alumnos",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

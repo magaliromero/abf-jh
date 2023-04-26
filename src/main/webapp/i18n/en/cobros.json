@@ -25,7 +25,8 @@
       "fechaPago": "Fecha Pago",
       "tipoPago": "Tipo Pago",
       "descripcion": "Descripcion",
-      "alumnos": "Alumnos"
+      "alumnos": "Alumnos",
+      "factura": "Factura"
     }
   }
 }

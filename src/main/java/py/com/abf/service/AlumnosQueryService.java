@@ -157,6 +157,21 @@ public class AlumnosQueryService extends QueryService<Alumnos> {
                         )
                     );
             }
+            if (criteria.getFichaPartidasTorneosId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getFichaPartidasTorneosId(),
+                            root -> root.join(Alumnos_.fichaPartidasTorneos, JoinType.LEFT).get(FichaPartidasTorneos_.id)
+                        )
+                    );
+            }
+            if (criteria.getFacturasId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getFacturasId(), root -> root.join(Alumnos_.facturas, JoinType.LEFT).get(Facturas_.id))
+                    );
+            }
             if (criteria.getTipoDocumentosId() != null) {
                 specification =
                     specification.and(

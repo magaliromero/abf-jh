@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Alumnos;
 import py.com.abf.domain.Cobros;
+import py.com.abf.domain.Facturas;
 import py.com.abf.domain.enumeration.TiposPagos;
 import py.com.abf.repository.CobrosRepository;
 import py.com.abf.service.CobrosService;
@@ -118,6 +119,16 @@ class CobrosResourceIT {
             alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
         }
         cobros.setAlumnos(alumnos);
+        // Add required entity
+        Facturas facturas;
+        if (TestUtil.findAll(em, Facturas.class).isEmpty()) {
+            facturas = FacturasResourceIT.createEntity(em);
+            em.persist(facturas);
+            em.flush();
+        } else {
+            facturas = TestUtil.findAll(em, Facturas.class).get(0);
+        }
+        cobros.setFactura(facturas);
         return cobros;
     }
 
@@ -146,6 +157,16 @@ class CobrosResourceIT {
             alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
         }
         cobros.setAlumnos(alumnos);
+        // Add required entity
+        Facturas facturas;
+        if (TestUtil.findAll(em, Facturas.class).isEmpty()) {
+            facturas = FacturasResourceIT.createUpdatedEntity(em);
+            em.persist(facturas);
+            em.flush();
+        } else {
+            facturas = TestUtil.findAll(em, Facturas.class).get(0);
+        }
+        cobros.setFactura(facturas);
         return cobros;
     }
 
@@ -970,6 +991,29 @@ class CobrosResourceIT {
 
         // Get all the cobrosList where alumnos equals to (alumnosId + 1)
         defaultCobrosShouldNotBeFound("alumnosId.equals=" + (alumnosId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllCobrosByFacturaIsEqualToSomething() throws Exception {
+        Facturas factura;
+        if (TestUtil.findAll(em, Facturas.class).isEmpty()) {
+            cobrosRepository.saveAndFlush(cobros);
+            factura = FacturasResourceIT.createEntity(em);
+        } else {
+            factura = TestUtil.findAll(em, Facturas.class).get(0);
+        }
+        em.persist(factura);
+        em.flush();
+        cobros.setFactura(factura);
+        cobrosRepository.saveAndFlush(cobros);
+        Long facturaId = factura.getId();
+
+        // Get all the cobrosList where factura equals to facturaId
+        defaultCobrosShouldBeFound("facturaId.equals=" + facturaId);
+
+        // Get all the cobrosList where factura equals to (facturaId + 1)
+        defaultCobrosShouldNotBeFound("facturaId.equals=" + (facturaId + 1));
     }
 
     /**

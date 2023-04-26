@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Cursos;
+import py.com.abf.domain.RegistroClases;
 import py.com.abf.repository.CursosRepository;
 import py.com.abf.service.criteria.CursosCriteria;
 
@@ -222,6 +223,29 @@ class CursosResourceIT {
 
         // Get all the cursosList where nombreCurso does not contain UPDATED_NOMBRE_CURSO
         defaultCursosShouldBeFound("nombreCurso.doesNotContain=" + UPDATED_NOMBRE_CURSO);
+    }
+
+    @Test
+    @Transactional
+    void getAllCursosByRegistroClasesIsEqualToSomething() throws Exception {
+        RegistroClases registroClases;
+        if (TestUtil.findAll(em, RegistroClases.class).isEmpty()) {
+            cursosRepository.saveAndFlush(cursos);
+            registroClases = RegistroClasesResourceIT.createEntity(em);
+        } else {
+            registroClases = TestUtil.findAll(em, RegistroClases.class).get(0);
+        }
+        em.persist(registroClases);
+        em.flush();
+        cursos.addRegistroClases(registroClases);
+        cursosRepository.saveAndFlush(cursos);
+        Long registroClasesId = registroClases.getId();
+
+        // Get all the cursosList where registroClases equals to registroClasesId
+        defaultCursosShouldBeFound("registroClasesId.equals=" + registroClasesId);
+
+        // Get all the cursosList where registroClases equals to (registroClasesId + 1)
+        defaultCursosShouldNotBeFound("registroClasesId.equals=" + (registroClasesId + 1));
     }
 
     /**

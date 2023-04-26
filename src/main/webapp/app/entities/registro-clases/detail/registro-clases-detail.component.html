@@ -26,12 +26,10 @@
         <dd>
           <span>{{ registroClases.asistenciaAlumno }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.registroClases.mallaCurricular">Malla Curricular</span></dt>
+        <dt><span jhiTranslate="abfApp.registroClases.cursos">Cursos</span></dt>
         <dd>
-          <div *ngIf="registroClases.mallaCurricular">
-            <a [routerLink]="['/malla-curricular', registroClases.mallaCurricular.id, 'view']">{{
-              registroClases.mallaCurricular.titulo
-            }}</a>
+          <div *ngIf="registroClases.cursos">
+            <a [routerLink]="['/cursos', registroClases.cursos.id, 'view']">{{ registroClases.cursos.nombreCurso }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="abfApp.registroClases.temas">Temas</span></dt>

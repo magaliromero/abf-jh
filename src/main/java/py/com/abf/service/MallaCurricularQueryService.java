@@ -91,15 +91,6 @@ public class MallaCurricularQueryService extends QueryService<MallaCurricular> {
             if (criteria.getNivel() != null) {
                 specification = specification.and(buildSpecification(criteria.getNivel(), MallaCurricular_.nivel));
             }
-            if (criteria.getRegistroClasesId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getRegistroClasesId(),
-                            root -> root.join(MallaCurricular_.registroClases, JoinType.LEFT).get(RegistroClases_.id)
-                        )
-                    );
-            }
             if (criteria.getTemasId() != null) {
                 specification =
                     specification.and(

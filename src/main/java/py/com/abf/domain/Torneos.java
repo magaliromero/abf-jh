@@ -62,7 +62,7 @@ public class Torneos implements Serializable {
 
     @OneToMany(mappedBy = "torneos")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "torneos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "torneos", "alumnos" }, allowSetters = true)
     private Set<FichaPartidasTorneos> fichaPartidasTorneos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

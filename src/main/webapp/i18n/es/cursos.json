@@ -18,7 +18,8 @@
         "title": "Cursos"
       },
       "id": "ID",
-      "nombreCurso": "Nombre Curso"
+      "nombreCurso": "Nombre Curso",
+      "registroClases": "Registro Clases"
     }
   }
 }

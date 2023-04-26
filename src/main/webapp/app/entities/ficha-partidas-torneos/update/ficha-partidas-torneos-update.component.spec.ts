@@ -11,6 +11,8 @@ import { FichaPartidasTorneosService } from '../service/ficha-partidas-torneos.s
 import { IFichaPartidasTorneos } from '../ficha-partidas-torneos.model';
 import { ITorneos } from 'app/entities/torneos/torneos.model';
 import { TorneosService } from 'app/entities/torneos/service/torneos.service';
+import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
+import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
 
 import { FichaPartidasTorneosUpdateComponent } from './ficha-partidas-torneos-update.component';
 
@@ -21,6 +23,7 @@ describe('FichaPartidasTorneos Management Update Component', () => {
   let fichaPartidasTorneosFormService: FichaPartidasTorneosFormService;
   let fichaPartidasTorneosService: FichaPartidasTorneosService;
   let torneosService: TorneosService;
+  let alumnosService: AlumnosService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -44,6 +47,7 @@ describe('FichaPartidasTorneos Management Update Component', () => {
     fichaPartidasTorneosFormService = TestBed.inject(FichaPartidasTorneosFormService);
     fichaPartidasTorneosService = TestBed.inject(FichaPartidasTorneosService);
     torneosService = TestBed.inject(TorneosService);
+    alumnosService = TestBed.inject(AlumnosService);
 
     comp = fixture.componentInstance;
   });
@@ -71,15 +75,40 @@ describe('FichaPartidasTorneos Management Update Component', () => {
       expect(comp.torneosSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Alumnos query and add missing value', () => {
+      const fichaPartidasTorneos: IFichaPartidasTorneos = { id: 456 };
+      const alumnos: IAlumnos = { id: 84042 };
+      fichaPartidasTorneos.alumnos = alumnos;
+
+      const alumnosCollection: IAlumnos[] = [{ id: 4197 }];
+      jest.spyOn(alumnosService, 'query').mockReturnValue(of(new HttpResponse({ body: alumnosCollection })));
+      const additionalAlumnos = [alumnos];
+      const expectedCollection: IAlumnos[] = [...additionalAlumnos, ...alumnosCollection];
+      jest.spyOn(alumnosService, 'addAlumnosToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ fichaPartidasTorneos });
+      comp.ngOnInit();
+
+      expect(alumnosService.query).toHaveBeenCalled();
+      expect(alumnosService.addAlumnosToCollectionIfMissing).toHaveBeenCalledWith(
+        alumnosCollection,
+        ...additionalAlumnos.map(expect.objectContaining)
+      );
+      expect(comp.alumnosSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const fichaPartidasTorneos: IFichaPartidasTorneos = { id: 456 };
       const torneos: ITorneos = { id: 76716 };
       fichaPartidasTorneos.torneos = torneos;
+      const alumnos: IAlumnos = { id: 36623 };
+      fichaPartidasTorneos.alumnos = alumnos;
 
       activatedRoute.data = of({ fichaPartidasTorneos });
       comp.ngOnInit();
 
       expect(comp.torneosSharedCollection).toContain(torneos);
+      expect(comp.alumnosSharedCollection).toContain(alumnos);
       expect(comp.fichaPartidasTorneos).toEqual(fichaPartidasTorneos);
     });
   });
@@ -160,6 +189,16 @@ describe('FichaPartidasTorneos Management Update Component', () => {
         jest.spyOn(torneosService, 'compareTorneos');
         comp.compareTorneos(entity, entity2);
         expect(torneosService.compareTorneos).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareAlumnos', () => {
+      it('Should forward to alumnosService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(alumnosService, 'compareAlumnos');
+        comp.compareAlumnos(entity, entity2);
+        expect(alumnosService.compareAlumnos).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

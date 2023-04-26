@@ -47,6 +47,16 @@ public class FichaPartidasTorneos implements Serializable {
     @JsonIgnoreProperties(value = { "fichaPartidasTorneos" }, allowSetters = true)
     private Torneos torneos;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(
+        value = {
+            "matriculas", "registroClases", "cobros", "evaluaciones", "inscripciones", "fichaPartidasTorneos", "facturas", "tipoDocumentos",
+        },
+        allowSetters = true
+    )
+    private Alumnos alumnos;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -150,6 +160,19 @@ public class FichaPartidasTorneos implements Serializable {
 
     public FichaPartidasTorneos torneos(Torneos torneos) {
         this.setTorneos(torneos);
+        return this;
+    }
+
+    public Alumnos getAlumnos() {
+        return this.alumnos;
+    }
+
+    public void setAlumnos(Alumnos alumnos) {
+        this.alumnos = alumnos;
+    }
+
+    public FichaPartidasTorneos alumnos(Alumnos alumnos) {
+        this.setAlumnos(alumnos);
         return this;
     }
 

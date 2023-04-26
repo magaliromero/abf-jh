@@ -112,6 +112,12 @@ public class CobrosQueryService extends QueryService<Cobros> {
                         buildSpecification(criteria.getAlumnosId(), root -> root.join(Cobros_.alumnos, JoinType.LEFT).get(Alumnos_.id))
                     );
             }
+            if (criteria.getFacturaId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getFacturaId(), root -> root.join(Cobros_.factura, JoinType.LEFT).get(Facturas_.id))
+                    );
+            }
         }
         return specification;
     }

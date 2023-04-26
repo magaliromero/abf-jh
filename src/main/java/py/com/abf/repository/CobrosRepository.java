@@ -27,14 +27,14 @@ public interface CobrosRepository extends JpaRepository<Cobros, Long>, JpaSpecif
     }
 
     @Query(
-        value = "select distinct cobros from Cobros cobros left join fetch cobros.alumnos",
+        value = "select distinct cobros from Cobros cobros left join fetch cobros.alumnos left join fetch cobros.factura",
         countQuery = "select count(distinct cobros) from Cobros cobros"
     )
     Page<Cobros> findAllWithToOneRelationships(Pageable pageable);
 
-    @Query("select distinct cobros from Cobros cobros left join fetch cobros.alumnos")
+    @Query("select distinct cobros from Cobros cobros left join fetch cobros.alumnos left join fetch cobros.factura")
     List<Cobros> findAllWithToOneRelationships();
 
-    @Query("select cobros from Cobros cobros left join fetch cobros.alumnos where cobros.id =:id")
+    @Query("select cobros from Cobros cobros left join fetch cobros.alumnos left join fetch cobros.factura where cobros.id =:id")
     Optional<Cobros> findOneWithToOneRelationships(@Param("id") Long id);
 }

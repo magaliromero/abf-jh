@@ -27,6 +27,7 @@ describe('FichaPartidasTorneos Form Service', () => {
             comentarios: expect.any(Object),
             nombreArbitro: expect.any(Object),
             torneos: expect.any(Object),
+            alumnos: expect.any(Object),
           })
         );
       });
@@ -44,6 +45,7 @@ describe('FichaPartidasTorneos Form Service', () => {
             comentarios: expect.any(Object),
             nombreArbitro: expect.any(Object),
             torneos: expect.any(Object),
+            alumnos: expect.any(Object),
           })
         );
       });

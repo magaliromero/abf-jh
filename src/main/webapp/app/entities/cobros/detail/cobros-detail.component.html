@@ -48,6 +48,12 @@
             <a [routerLink]="['/alumnos', cobros.alumnos.id, 'view']">{{ cobros.alumnos.nombreCompleto }}</a>
           </div>
         </dd>
+        <dt><span jhiTranslate="abfApp.cobros.factura">Factura</span></dt>
+        <dd>
+          <div *ngIf="cobros.factura">
+            <a [routerLink]="['/facturas', cobros.factura.id, 'view']">{{ cobros.factura.facturaNro }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

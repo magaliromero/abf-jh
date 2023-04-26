@@ -25,6 +25,8 @@ public class CursosCriteria implements Serializable, Criteria {
 
     private StringFilter nombreCurso;
 
+    private LongFilter registroClasesId;
+
     private Boolean distinct;
 
     public CursosCriteria() {}
@@ -32,6 +34,7 @@ public class CursosCriteria implements Serializable, Criteria {
     public CursosCriteria(CursosCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.nombreCurso = other.nombreCurso == null ? null : other.nombreCurso.copy();
+        this.registroClasesId = other.registroClasesId == null ? null : other.registroClasesId.copy();
         this.distinct = other.distinct;
     }
 
@@ -70,6 +73,21 @@ public class CursosCriteria implements Serializable, Criteria {
         this.nombreCurso = nombreCurso;
     }
 
+    public LongFilter getRegistroClasesId() {
+        return registroClasesId;
+    }
+
+    public LongFilter registroClasesId() {
+        if (registroClasesId == null) {
+            registroClasesId = new LongFilter();
+        }
+        return registroClasesId;
+    }
+
+    public void setRegistroClasesId(LongFilter registroClasesId) {
+        this.registroClasesId = registroClasesId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -87,12 +105,17 @@ public class CursosCriteria implements Serializable, Criteria {
             return false;
         }
         final CursosCriteria that = (CursosCriteria) o;
-        return Objects.equals(id, that.id) && Objects.equals(nombreCurso, that.nombreCurso) && Objects.equals(distinct, that.distinct);
+        return (
+            Objects.equals(id, that.id) &&
+            Objects.equals(nombreCurso, that.nombreCurso) &&
+            Objects.equals(registroClasesId, that.registroClasesId) &&
+            Objects.equals(distinct, that.distinct)
+        );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombreCurso, distinct);
+        return Objects.hash(id, nombreCurso, registroClasesId, distinct);
     }
 
     // prettier-ignore
@@ -101,6 +124,7 @@ public class CursosCriteria implements Serializable, Criteria {
         return "CursosCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (nombreCurso != null ? "nombreCurso=" + nombreCurso + ", " : "") +
+            (registroClasesId != null ? "registroClasesId=" + registroClasesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

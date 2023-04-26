@@ -58,10 +58,17 @@ public class Cobros implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
-        value = { "matriculas", "registroClases", "cobros", "evaluaciones", "inscripciones", "tipoDocumentos" },
+        value = {
+            "matriculas", "registroClases", "cobros", "evaluaciones", "inscripciones", "fichaPartidasTorneos", "facturas", "tipoDocumentos",
+        },
         allowSetters = true
     )
     private Alumnos alumnos;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "cobros", "alumnos" }, allowSetters = true)
+    private Facturas factura;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -179,6 +186,19 @@ public class Cobros implements Serializable {
 
     public Cobros alumnos(Alumnos alumnos) {
         this.setAlumnos(alumnos);
+        return this;
+    }
+
+    public Facturas getFactura() {
+        return this.factura;
+    }
+
+    public void setFactura(Facturas facturas) {
+        this.factura = facturas;
+    }
+
+    public Cobros factura(Facturas facturas) {
+        this.setFactura(facturas);
         return this;
     }
 

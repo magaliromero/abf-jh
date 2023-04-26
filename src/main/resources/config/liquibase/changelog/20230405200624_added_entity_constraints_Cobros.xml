@@ -13,5 +13,11 @@
                                  constraintName="fk_cobros__alumnos_id"
                                  referencedColumnNames="id"
                                  referencedTableName="alumnos"/>
+
+        <addForeignKeyConstraint baseColumnNames="factura_id"
+                                 baseTableName="cobros"
+                                 constraintName="fk_cobros__factura_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="factura"/>
     </changeSet>
 </databaseChangeLog>

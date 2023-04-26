@@ -208,6 +208,36 @@
               </button>
               <button
                 type="submit"
+                [routerLink]="['/ficha-partidas-torneos']"
+                [queryParams]="{ 'filter[alumnosId.in]': alumnos.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.alumnos.fichaPartidasTorneos' | translate) }"
+                  >Show Ficha Partidas Torneos</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/facturas']"
+                [queryParams]="{ 'filter[alumnosId.in]': alumnos.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.alumnos.facturas' | translate) }"
+                  >Show Facturas</span
+                >
+              </button>
+              <button
+                type="submit"
                 [routerLink]="['/alumnos', alumnos.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"

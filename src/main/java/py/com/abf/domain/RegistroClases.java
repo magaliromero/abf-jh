@@ -38,8 +38,8 @@ public class RegistroClases implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "registroClases", "temas" }, allowSetters = true)
-    private MallaCurricular mallaCurricular;
+    @JsonIgnoreProperties(value = { "registroClases" }, allowSetters = true)
+    private Cursos cursos;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -54,7 +54,9 @@ public class RegistroClases implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
-        value = { "matriculas", "registroClases", "cobros", "evaluaciones", "inscripciones", "tipoDocumentos" },
+        value = {
+            "matriculas", "registroClases", "cobros", "evaluaciones", "inscripciones", "fichaPartidasTorneos", "facturas", "tipoDocumentos",
+        },
         allowSetters = true
     )
     private Alumnos alumnos;
@@ -113,16 +115,16 @@ public class RegistroClases implements Serializable {
         this.asistenciaAlumno = asistenciaAlumno;
     }
 
-    public MallaCurricular getMallaCurricular() {
-        return this.mallaCurricular;
+    public Cursos getCursos() {
+        return this.cursos;
     }
 
-    public void setMallaCurricular(MallaCurricular mallaCurricular) {
-        this.mallaCurricular = mallaCurricular;
+    public void setCursos(Cursos cursos) {
+        this.cursos = cursos;
     }
 
-    public RegistroClases mallaCurricular(MallaCurricular mallaCurricular) {
-        this.setMallaCurricular(mallaCurricular);
+    public RegistroClases cursos(Cursos cursos) {
+        this.setCursos(cursos);
         return this;
     }
 

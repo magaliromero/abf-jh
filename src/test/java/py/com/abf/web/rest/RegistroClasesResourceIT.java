@@ -29,8 +29,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Alumnos;
+import py.com.abf.domain.Cursos;
 import py.com.abf.domain.Funcionarios;
-import py.com.abf.domain.MallaCurricular;
 import py.com.abf.domain.RegistroClases;
 import py.com.abf.domain.Temas;
 import py.com.abf.repository.RegistroClasesRepository;
@@ -92,15 +92,15 @@ class RegistroClasesResourceIT {
             .cantidadHoras(DEFAULT_CANTIDAD_HORAS)
             .asistenciaAlumno(DEFAULT_ASISTENCIA_ALUMNO);
         // Add required entity
-        MallaCurricular mallaCurricular;
-        if (TestUtil.findAll(em, MallaCurricular.class).isEmpty()) {
-            mallaCurricular = MallaCurricularResourceIT.createEntity(em);
-            em.persist(mallaCurricular);
+        Cursos cursos;
+        if (TestUtil.findAll(em, Cursos.class).isEmpty()) {
+            cursos = CursosResourceIT.createEntity(em);
+            em.persist(cursos);
             em.flush();
         } else {
-            mallaCurricular = TestUtil.findAll(em, MallaCurricular.class).get(0);
+            cursos = TestUtil.findAll(em, Cursos.class).get(0);
         }
-        registroClases.setMallaCurricular(mallaCurricular);
+        registroClases.setCursos(cursos);
         // Add required entity
         Temas temas;
         if (TestUtil.findAll(em, Temas.class).isEmpty()) {
@@ -146,15 +146,15 @@ class RegistroClasesResourceIT {
             .cantidadHoras(UPDATED_CANTIDAD_HORAS)
             .asistenciaAlumno(UPDATED_ASISTENCIA_ALUMNO);
         // Add required entity
-        MallaCurricular mallaCurricular;
-        if (TestUtil.findAll(em, MallaCurricular.class).isEmpty()) {
-            mallaCurricular = MallaCurricularResourceIT.createUpdatedEntity(em);
-            em.persist(mallaCurricular);
+        Cursos cursos;
+        if (TestUtil.findAll(em, Cursos.class).isEmpty()) {
+            cursos = CursosResourceIT.createUpdatedEntity(em);
+            em.persist(cursos);
             em.flush();
         } else {
-            mallaCurricular = TestUtil.findAll(em, MallaCurricular.class).get(0);
+            cursos = TestUtil.findAll(em, Cursos.class).get(0);
         }
-        registroClases.setMallaCurricular(mallaCurricular);
+        registroClases.setCursos(cursos);
         // Add required entity
         Temas temas;
         if (TestUtil.findAll(em, Temas.class).isEmpty()) {
@@ -563,25 +563,25 @@ class RegistroClasesResourceIT {
 
     @Test
     @Transactional
-    void getAllRegistroClasesByMallaCurricularIsEqualToSomething() throws Exception {
-        MallaCurricular mallaCurricular;
-        if (TestUtil.findAll(em, MallaCurricular.class).isEmpty()) {
+    void getAllRegistroClasesByCursosIsEqualToSomething() throws Exception {
+        Cursos cursos;
+        if (TestUtil.findAll(em, Cursos.class).isEmpty()) {
             registroClasesRepository.saveAndFlush(registroClases);
-            mallaCurricular = MallaCurricularResourceIT.createEntity(em);
+            cursos = CursosResourceIT.createEntity(em);
         } else {
-            mallaCurricular = TestUtil.findAll(em, MallaCurricular.class).get(0);
+            cursos = TestUtil.findAll(em, Cursos.class).get(0);
         }
-        em.persist(mallaCurricular);
+        em.persist(cursos);
         em.flush();
-        registroClases.setMallaCurricular(mallaCurricular);
+        registroClases.setCursos(cursos);
         registroClasesRepository.saveAndFlush(registroClases);
-        Long mallaCurricularId = mallaCurricular.getId();
+        Long cursosId = cursos.getId();
 
-        // Get all the registroClasesList where mallaCurricular equals to mallaCurricularId
-        defaultRegistroClasesShouldBeFound("mallaCurricularId.equals=" + mallaCurricularId);
+        // Get all the registroClasesList where cursos equals to cursosId
+        defaultRegistroClasesShouldBeFound("cursosId.equals=" + cursosId);
 
-        // Get all the registroClasesList where mallaCurricular equals to (mallaCurricularId + 1)
-        defaultRegistroClasesShouldNotBeFound("mallaCurricularId.equals=" + (mallaCurricularId + 1));
+        // Get all the registroClasesList where cursos equals to (cursosId + 1)
+        defaultRegistroClasesShouldNotBeFound("cursosId.equals=" + (cursosId + 1));
     }
 
     @Test

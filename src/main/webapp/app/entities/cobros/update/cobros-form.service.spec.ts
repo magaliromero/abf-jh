@@ -28,6 +28,7 @@ describe('Cobros Form Service', () => {
             tipoPago: expect.any(Object),
             descripcion: expect.any(Object),
             alumnos: expect.any(Object),
+            factura: expect.any(Object),
           })
         );
       });
@@ -46,6 +47,7 @@ describe('Cobros Form Service', () => {
             tipoPago: expect.any(Object),
             descripcion: expect.any(Object),
             alumnos: expect.any(Object),
+            factura: expect.any(Object),
           })
         );
       });

@@ -27,18 +27,18 @@ public interface RegistroClasesRepository extends JpaRepository<RegistroClases, 
     }
 
     @Query(
-        value = "select distinct registroClases from RegistroClases registroClases left join fetch registroClases.mallaCurricular left join fetch registroClases.temas left join fetch registroClases.funcionarios left join fetch registroClases.alumnos",
+        value = "select distinct registroClases from RegistroClases registroClases left join fetch registroClases.cursos left join fetch registroClases.temas left join fetch registroClases.funcionarios left join fetch registroClases.alumnos",
         countQuery = "select count(distinct registroClases) from RegistroClases registroClases"
     )
     Page<RegistroClases> findAllWithToOneRelationships(Pageable pageable);
 
     @Query(
-        "select distinct registroClases from RegistroClases registroClases left join fetch registroClases.mallaCurricular left join fetch registroClases.temas left join fetch registroClases.funcionarios left join fetch registroClases.alumnos"
+        "select distinct registroClases from RegistroClases registroClases left join fetch registroClases.cursos left join fetch registroClases.temas left join fetch registroClases.funcionarios left join fetch registroClases.alumnos"
     )
     List<RegistroClases> findAllWithToOneRelationships();
 
     @Query(
-        "select registroClases from RegistroClases registroClases left join fetch registroClases.mallaCurricular left join fetch registroClases.temas left join fetch registroClases.funcionarios left join fetch registroClases.alumnos where registroClases.id =:id"
+        "select registroClases from RegistroClases registroClases left join fetch registroClases.cursos left join fetch registroClases.temas left join fetch registroClases.funcionarios left join fetch registroClases.alumnos where registroClases.id =:id"
     )
     Optional<RegistroClases> findOneWithToOneRelationships(@Param("id") Long id);
 }

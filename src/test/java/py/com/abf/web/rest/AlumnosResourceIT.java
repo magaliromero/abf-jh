@@ -31,6 +31,8 @@ import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Alumnos;
 import py.com.abf.domain.Cobros;
 import py.com.abf.domain.Evaluaciones;
+import py.com.abf.domain.Facturas;
+import py.com.abf.domain.FichaPartidasTorneos;
 import py.com.abf.domain.Inscripciones;
 import py.com.abf.domain.Matricula;
 import py.com.abf.domain.RegistroClases;
@@ -1232,6 +1234,52 @@ class AlumnosResourceIT {
 
         // Get all the alumnosList where inscripciones equals to (inscripcionesId + 1)
         defaultAlumnosShouldNotBeFound("inscripcionesId.equals=" + (inscripcionesId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllAlumnosByFichaPartidasTorneosIsEqualToSomething() throws Exception {
+        FichaPartidasTorneos fichaPartidasTorneos;
+        if (TestUtil.findAll(em, FichaPartidasTorneos.class).isEmpty()) {
+            alumnosRepository.saveAndFlush(alumnos);
+            fichaPartidasTorneos = FichaPartidasTorneosResourceIT.createEntity(em);
+        } else {
+            fichaPartidasTorneos = TestUtil.findAll(em, FichaPartidasTorneos.class).get(0);
+        }
+        em.persist(fichaPartidasTorneos);
+        em.flush();
+        alumnos.addFichaPartidasTorneos(fichaPartidasTorneos);
+        alumnosRepository.saveAndFlush(alumnos);
+        Long fichaPartidasTorneosId = fichaPartidasTorneos.getId();
+
+        // Get all the alumnosList where fichaPartidasTorneos equals to fichaPartidasTorneosId
+        defaultAlumnosShouldBeFound("fichaPartidasTorneosId.equals=" + fichaPartidasTorneosId);
+
+        // Get all the alumnosList where fichaPartidasTorneos equals to (fichaPartidasTorneosId + 1)
+        defaultAlumnosShouldNotBeFound("fichaPartidasTorneosId.equals=" + (fichaPartidasTorneosId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllAlumnosByFacturasIsEqualToSomething() throws Exception {
+        Facturas facturas;
+        if (TestUtil.findAll(em, Facturas.class).isEmpty()) {
+            alumnosRepository.saveAndFlush(alumnos);
+            facturas = FacturasResourceIT.createEntity(em);
+        } else {
+            facturas = TestUtil.findAll(em, Facturas.class).get(0);
+        }
+        em.persist(facturas);
+        em.flush();
+        alumnos.addFacturas(facturas);
+        alumnosRepository.saveAndFlush(alumnos);
+        Long facturasId = facturas.getId();
+
+        // Get all the alumnosList where facturas equals to facturasId
+        defaultAlumnosShouldBeFound("facturasId.equals=" + facturasId);
+
+        // Get all the alumnosList where facturas equals to (facturasId + 1)
+        defaultAlumnosShouldNotBeFound("facturasId.equals=" + (facturasId + 1));
     }
 
     @Test

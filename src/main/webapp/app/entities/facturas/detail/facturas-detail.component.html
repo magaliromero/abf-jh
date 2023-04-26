@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="facturas">
+      <h2 data-cy="facturasDetailsHeading"><span jhiTranslate="abfApp.facturas.detail.title">Facturas</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ facturas.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.fecha">Fecha</span></dt>
+        <dd>
+          <span>{{ facturas.fecha | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.facturaNro">Factura Nro</span></dt>
+        <dd>
+          <span>{{ facturas.facturaNro }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.timbrado">Timbrado</span></dt>
+        <dd>
+          <span>{{ facturas.timbrado }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.ruc">Ruc</span></dt>
+        <dd>
+          <span>{{ facturas.ruc }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.condicionVenta">Condicion Venta</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'abfApp.CondVenta.' + facturas.condicionVenta }}">{{ facturas.condicionVenta }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.cantidad">Cantidad</span></dt>
+        <dd>
+          <span>{{ facturas.cantidad }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.descripcion">Descripcion</span></dt>
+        <dd>
+          <span>{{ facturas.descripcion }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.precioUnitario">Precio Unitario</span></dt>
+        <dd>
+          <span>{{ facturas.precioUnitario }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.valor5">Valor 5</span></dt>
+        <dd>
+          <span>{{ facturas.valor5 }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.valor10">Valor 10</span></dt>
+        <dd>
+          <span>{{ facturas.valor10 }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.total">Total</span></dt>
+        <dd>
+          <span>{{ facturas.total }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.total5">Total 5</span></dt>
+        <dd>
+          <span>{{ facturas.total5 }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.total10">Total 10</span></dt>
+        <dd>
+          <span>{{ facturas.total10 }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.totalIva">Total Iva</span></dt>
+        <dd>
+          <span>{{ facturas.totalIva }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.alumnos">Alumnos</span></dt>
+        <dd>
+          <div *ngIf="facturas.alumnos">
+            <a [routerLink]="['/alumnos', facturas.alumnos.id, 'view']">{{ facturas.alumnos.nombreCompleto }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+      </button>
+
+      <button type="button" [routerLink]="['/facturas', facturas.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -86,34 +86,21 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.registroClases.mallaCurricular" for="field_mallaCurricular"
-            >Malla Curricular</label
-          >
+          <label class="form-label" jhiTranslate="abfApp.registroClases.cursos" for="field_cursos">Cursos</label>
           <select
             class="form-control"
-            id="field_mallaCurricular"
-            data-cy="mallaCurricular"
-            name="mallaCurricular"
-            formControlName="mallaCurricular"
-            [compareWith]="compareMallaCurricular"
+            id="field_cursos"
+            data-cy="cursos"
+            name="cursos"
+            formControlName="cursos"
+            [compareWith]="compareCursos"
           >
-            <option *ngIf="editForm.get(['mallaCurricular'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="mallaCurricularOption" *ngFor="let mallaCurricularOption of mallaCurricularsSharedCollection">
-              {{ mallaCurricularOption.titulo }}
-            </option>
+            <option *ngIf="editForm.get(['cursos'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="cursosOption" *ngFor="let cursosOption of cursosSharedCollection">{{ cursosOption.nombreCurso }}</option>
           </select>
         </div>
-        <div
-          *ngIf="
-            editForm.get(['mallaCurricular'])!.invalid &&
-            (editForm.get(['mallaCurricular'])!.dirty || editForm.get(['mallaCurricular'])!.touched)
-          "
-        >
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['mallaCurricular'])?.errors?.required"
-            jhiTranslate="entity.validation.required"
-          >
+        <div *ngIf="editForm.get(['cursos'])!.invalid && (editForm.get(['cursos'])!.dirty || editForm.get(['cursos'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['cursos'])?.errors?.required" jhiTranslate="entity.validation.required">
             Este campo es obligatorio.
           </small>
         </div>

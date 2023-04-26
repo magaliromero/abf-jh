@@ -81,6 +81,7 @@ enum TiposPagos{
     MENSUAL(Mensual)
     DIARIO(Diario)
     UNICO (Unico) 
+    PARCIAL (Parcial)
 }
 
 entity Pagos(pagos){
@@ -100,6 +101,28 @@ entity Cobros(cobros){
     fechaPago LocalDate required,
     tipoPago TiposPagos required,
     descripcion String required,
+}
+enum CondVenta{
+ 	CONTADO(Contado)
+    CREDITO(Credito)
+}
+
+entity Facturas(factura){
+    fecha LocalDate required,
+    facturaNro String required,
+    timbrado Integer required,
+    razonSocial String required,
+    ruc Integer required,
+    condicionVenta CondVenta,
+    cantidad Integer,
+    descripcion String required,
+    precioUnitario Integer,
+    valor5 Integer,
+    valor10 Integer,
+    total Integer,
+    total5 Integer,
+    total10 Integer,
+    totalIva Integer,  
 }
 
 entity Usuarios(usuarios){
@@ -190,7 +213,10 @@ relationship OneToMany {
     Alumnos to Evaluaciones{alumnos(nombreCompleto) required}
     Alumnos to Inscripciones  { alumnos(nombreCompleto) required },
     Torneos to FichaPartidasTorneos {torneos (nombreTorneo) required},
+    Alumnos to FichaPartidasTorneos {alumnos(nombreCompleto)required},
     Materiales to Prestamos {Materiales(descripcion)},
+    Alumnos to Facturas {alumnos (nombreCompleto)required},
+    Facturas to Cobros {factura(facturaNro)required}
 }
 
 relationship ManyToMany{

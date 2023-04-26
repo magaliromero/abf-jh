@@ -200,6 +200,32 @@
             Este campo es obligatorio.
           </small>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.cobros.factura" for="field_factura">Factura</label>
+          <select
+            class="form-control"
+            id="field_factura"
+            data-cy="factura"
+            name="factura"
+            formControlName="factura"
+            [compareWith]="compareFacturas"
+          >
+            <option *ngIf="editForm.get(['factura'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="facturasOption" *ngFor="let facturasOption of facturasSharedCollection">
+              {{ facturasOption.facturaNro }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['factura'])!.invalid && (editForm.get(['factura'])!.dirty || editForm.get(['factura'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['factura'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            Este campo es obligatorio.
+          </small>
+        </div>
       </div>
 
       <div>

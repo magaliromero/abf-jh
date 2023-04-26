@@ -24,6 +24,7 @@
         "evaluaciones": "Evaluaciones",
         "inscripciones": "Inscripciones",
         "cobros": "Cobros",
+        "facturas": "Facturas",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

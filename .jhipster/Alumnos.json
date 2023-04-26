@@ -91,6 +91,18 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityName": "fichaPartidasTorneos",
+      "otherEntityRelationshipName": "alumnos",
+      "relationshipName": "fichaPartidasTorneos",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "facturas",
+      "otherEntityRelationshipName": "alumnos",
+      "relationshipName": "facturas",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityField": "descripcion",
       "otherEntityName": "tiposDocumentos",
       "otherEntityRelationshipName": "alumnos",

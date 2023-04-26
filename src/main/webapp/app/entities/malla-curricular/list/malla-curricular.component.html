@@ -66,21 +66,6 @@
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/registro-clases']"
-                [queryParams]="{ 'filter[mallaCurricularId.in]': mallaCurricular.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  jhiTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('abfApp.mallaCurricular.registroClases' | translate) }"
-                  >Show Registro Clases</span
-                >
-              </button>
-              <button
-                type="submit"
                 [routerLink]="['/malla-curricular', mallaCurricular.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"

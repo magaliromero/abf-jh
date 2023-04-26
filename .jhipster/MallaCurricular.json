@@ -1,5 +1,5 @@
 {
-  "applications": ["abf"],
+  "applications": "*",
   "changelogDate": "20230227212346",
   "dto": "no",
   "embedded": false,
@@ -23,12 +23,6 @@
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [
-    {
-      "otherEntityName": "registroClases",
-      "otherEntityRelationshipName": "mallaCurricular",
-      "relationshipName": "registroClases",
-      "relationshipType": "one-to-many"
-    },
     {
       "otherEntityField": "titulo",
       "otherEntityName": "temas",

@@ -9,6 +9,8 @@ import { ICobros } from '../cobros.model';
 import { CobrosService } from '../service/cobros.service';
 import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
 import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
+import { IFacturas } from 'app/entities/facturas/facturas.model';
+import { FacturasService } from 'app/entities/facturas/service/facturas.service';
 import { TiposPagos } from 'app/entities/enumerations/tipos-pagos.model';
 
 @Component({
@@ -21,6 +23,7 @@ export class CobrosUpdateComponent implements OnInit {
   tiposPagosValues = Object.keys(TiposPagos);
 
   alumnosSharedCollection: IAlumnos[] = [];
+  facturasSharedCollection: IFacturas[] = [];
 
   editForm: CobrosFormGroup = this.cobrosFormService.createCobrosFormGroup();
 
@@ -28,10 +31,13 @@ export class CobrosUpdateComponent implements OnInit {
     protected cobrosService: CobrosService,
     protected cobrosFormService: CobrosFormService,
     protected alumnosService: AlumnosService,
+    protected facturasService: FacturasService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
   compareAlumnos = (o1: IAlumnos | null, o2: IAlumnos | null): boolean => this.alumnosService.compareAlumnos(o1, o2);
+
+  compareFacturas = (o1: IFacturas | null, o2: IFacturas | null): boolean => this.facturasService.compareFacturas(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ cobros }) => {
@@ -85,6 +91,10 @@ export class CobrosUpdateComponent implements OnInit {
       this.alumnosSharedCollection,
       cobros.alumnos
     );
+    this.facturasSharedCollection = this.facturasService.addFacturasToCollectionIfMissing<IFacturas>(
+      this.facturasSharedCollection,
+      cobros.factura
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -93,5 +103,13 @@ export class CobrosUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IAlumnos[]>) => res.body ?? []))
       .pipe(map((alumnos: IAlumnos[]) => this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(alumnos, this.cobros?.alumnos)))
       .subscribe((alumnos: IAlumnos[]) => (this.alumnosSharedCollection = alumnos));
+
+    this.facturasService
+      .query()
+      .pipe(map((res: HttpResponse<IFacturas[]>) => res.body ?? []))
+      .pipe(
+        map((facturas: IFacturas[]) => this.facturasService.addFacturasToCollectionIfMissing<IFacturas>(facturas, this.cobros?.factura))
+      )
+      .subscribe((facturas: IFacturas[]) => (this.facturasSharedCollection = facturas));
   }
 }
