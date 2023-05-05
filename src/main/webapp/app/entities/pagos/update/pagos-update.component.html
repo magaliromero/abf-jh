@@ -15,7 +15,14 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="abfApp.pagos.montoPago" for="field_montoPago">Monto Pago</label>
-          <input type="number" class="form-control" name="montoPago" id="field_montoPago" data-cy="montoPago" formControlName="montoPago" />
+          <input
+            type="number"
+            class="form-control"
+            name="montoPago"
+            id=" field_montoPago"
+            data-cy="montoPago"
+            formControlName="montoPago"
+          />
           <div *ngIf="editForm.get('montoPago')!.invalid && (editForm.get('montoPago')!.dirty || editForm.get('montoPago')!.touched)">
             <small
               class="form-text text-danger"
@@ -43,6 +50,7 @@
             id="field_montoInicial"
             data-cy="montoInicial"
             formControlName="montoInicial"
+            (change)="calcularDiferencia()"
           />
           <div
             *ngIf="editForm.get('montoInicial')!.invalid && (editForm.get('montoInicial')!.dirty || editForm.get('montoInicial')!.touched)"

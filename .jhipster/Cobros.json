@@ -1,9 +1,9 @@
 {
   "applications": "*",
-  "changelogDate": "20230313233740",
+  "changelogDate": "20230405200624",
   "dto": "no",
   "embedded": false,
-  "entityTableName": "pagos",
+  "entityTableName": "cobros",
   "fields": [
     {
       "fieldName": "montoPago",
@@ -32,45 +32,35 @@
     },
     {
       "fieldName": "tipoPago",
-<<<<<<< Updated upstream
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-=======
       "fieldType": "TiposPagos",
       "fieldValidateRules": ["required"],
       "fieldValues": "CUOTA (Cuota),MENSUAL (Mensual),DIARIO (Diario),UNICO (Unico),PARCIAL (Parcial)"
->>>>>>> Stashed changes
     },
     {
       "fieldName": "descripcion",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "idUsuarioRegistro",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,
   "jpaMetamodelFiltering": true,
-  "name": "Pagos",
+  "name": "Cobros",
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [
     {
       "otherEntityField": "nombreCompleto",
       "otherEntityName": "alumnos",
-      "otherEntityRelationshipName": "pagos",
+      "otherEntityRelationshipName": "cobros",
       "relationshipName": "alumnos",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
     {
-      "otherEntityField": "nombreCompleto",
-      "otherEntityName": "funcionarios",
-      "otherEntityRelationshipName": "pagos",
-      "relationshipName": "funcionarios",
+      "otherEntityField": "facturaNro",
+      "otherEntityName": "facturas",
+      "otherEntityRelationshipName": "cobros",
+      "relationshipName": "factura",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     }

@@ -52,15 +52,22 @@ export class PagosUpdateComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
-
+  calcularDiferencia(): void {
+    this.editForm.value;
+    console.log(this.editForm.value);
+    let MontoInicial = this.editForm.value.montoInicial || 0;
+    let MontoPago = this.editForm.value.montoPago || 0;
+    this.editForm.controls.saldo.setValue(MontoInicial - MontoPago);
+  }
   save(): void {
     this.isSaving = true;
     const pagos = this.pagosFormService.getPagos(this.editForm);
-    if (pagos.id !== null) {
+    console.log(pagos);
+    /*if (pagos.id !== null) {
       this.subscribeToSaveResponse(this.pagosService.update(pagos));
     } else {
       this.subscribeToSaveResponse(this.pagosService.create(pagos));
-    }
+    }*/
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPagos>>): void {
