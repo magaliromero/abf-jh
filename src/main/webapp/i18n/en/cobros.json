@@ -1,0 +1,32 @@
+{
+  "abfApp": {
+    "cobros": {
+      "home": {
+        "title": "Cobros",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cobros",
+        "createOrEditLabel": "Create or edit a Cobros",
+        "notFound": "No Cobros found"
+      },
+      "created": "A new Cobros is created with identifier {{ param }}",
+      "updated": "A Cobros is updated with identifier {{ param }}",
+      "deleted": "A Cobros is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cobros {{ id }}?"
+      },
+      "detail": {
+        "title": "Cobros"
+      },
+      "id": "ID",
+      "montoPago": "Monto Pago",
+      "montoInicial": "Monto Inicial",
+      "saldo": "Saldo",
+      "fechaRegistro": "Fecha Registro",
+      "fechaPago": "Fecha Pago",
+      "tipoPago": "Tipo Pago",
+      "descripcion": "Descripcion",
+      "alumnos": "Alumnos",
+      "factura": "Factura"
+    }
+  }
+}

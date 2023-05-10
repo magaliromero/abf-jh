@@ -1,5 +1,7 @@
 import dayjs from 'dayjs/esm';
 
+import { TiposPagos } from 'app/entities/enumerations/tipos-pagos.model';
+
 import { IPagos, NewPagos } from './pagos.model';
 
 export const sampleWithRequiredData: IPagos = {
@@ -9,44 +11,40 @@ export const sampleWithRequiredData: IPagos = {
   saldo: 2075,
   fechaRegistro: dayjs('2023-03-13'),
   fechaPago: dayjs('2023-03-13'),
-  tipoPago: 'JSON Especialista',
-  descripcion: 'Market Regional Distribuido',
-  idUsuarioRegistro: 29203,
+  tipoPago: TiposPagos['DIARIO'],
+  descripcion: 'Configuración añadido Market',
 };
 
 export const sampleWithPartialData: IPagos = {
-  id: 24366,
-  montoPago: 47263,
-  montoInicial: 47134,
-  saldo: 48664,
+  id: 90317,
+  montoPago: 39482,
+  montoInicial: 75237,
+  saldo: 22940,
   fechaRegistro: dayjs('2023-03-13'),
   fechaPago: dayjs('2023-03-13'),
-  tipoPago: 'Castilla copy Cantabria',
-  descripcion: 'Buckinghamshire',
-  idUsuarioRegistro: 58299,
+  tipoPago: TiposPagos['CUOTA'],
+  descripcion: 'Lugar',
 };
 
 export const sampleWithFullData: IPagos = {
-  id: 31611,
-  montoPago: 20140,
-  montoInicial: 95078,
-  saldo: 68388,
+  id: 29917,
+  montoPago: 3506,
+  montoInicial: 94274,
+  saldo: 57695,
   fechaRegistro: dayjs('2023-03-13'),
   fechaPago: dayjs('2023-03-13'),
-  tipoPago: 'networks Tenge',
-  descripcion: 'Guantes Mercados',
-  idUsuarioRegistro: 45828,
+  tipoPago: TiposPagos['DIARIO'],
+  descripcion: 'COM',
 };
 
 export const sampleWithNewData: NewPagos = {
-  montoPago: 38192,
-  montoInicial: 70073,
-  saldo: 79560,
+  montoPago: 6073,
+  montoInicial: 17805,
+  saldo: 50968,
   fechaRegistro: dayjs('2023-03-13'),
   fechaPago: dayjs('2023-03-13'),
-  tipoPago: 'Azerbayán Account envisioneer',
-  descripcion: 'Camiseta óptima transmitting',
-  idUsuarioRegistro: 84982,
+  tipoPago: TiposPagos['MENSUAL'],
+  descripcion: 'Violeta',
   id: null,
 };
 

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs/esm';
-import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
 import { IFuncionarios } from 'app/entities/funcionarios/funcionarios.model';
+import { TiposPagos } from 'app/entities/enumerations/tipos-pagos.model';
 
 export interface IPagos {
   id: number;
@@ -9,10 +9,8 @@ export interface IPagos {
   saldo?: number | null;
   fechaRegistro?: dayjs.Dayjs | null;
   fechaPago?: dayjs.Dayjs | null;
-  tipoPago?: string | null;
+  tipoPago?: TiposPagos | null;
   descripcion?: string | null;
-  idUsuarioRegistro?: number | null;
-  alumnos?: Pick<IAlumnos, 'id' | 'nombreCompleto'> | null;
   funcionarios?: Pick<IFuncionarios, 'id' | 'nombreCompleto'> | null;
 }
 

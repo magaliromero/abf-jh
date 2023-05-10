@@ -32,23 +32,13 @@
     },
     {
       "fieldName": "tipoPago",
-<<<<<<< Updated upstream
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-=======
       "fieldType": "TiposPagos",
       "fieldValidateRules": ["required"],
-      "fieldValues": "CUOTA (Cuota),MENSUAL (Mensual),DIARIO (Diario),UNICO (Unico),PARCIAL (Parcial)"
->>>>>>> Stashed changes
+      "fieldValues": "PARCIAL (Parcial),CUOTA (Cuota),MENSUAL (Mensual),DIARIO (Diario),UNICO (Unico)"
     },
     {
       "fieldName": "descripcion",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "idUsuarioRegistro",
-      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     }
   ],
@@ -58,14 +48,6 @@
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [
-    {
-      "otherEntityField": "nombreCompleto",
-      "otherEntityName": "alumnos",
-      "otherEntityRelationshipName": "pagos",
-      "relationshipName": "alumnos",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
-    },
     {
       "otherEntityField": "nombreCompleto",
       "otherEntityName": "funcionarios",

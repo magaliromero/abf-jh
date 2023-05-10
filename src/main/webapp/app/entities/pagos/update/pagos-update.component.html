@@ -145,7 +145,12 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="abfApp.pagos.tipoPago" for="field_tipoPago">Tipo Pago</label>
-          <input type="text" class="form-control" name="tipoPago" id="field_tipoPago" data-cy="tipoPago" formControlName="tipoPago" />
+          <select class="form-control" name="tipoPago" formControlName="tipoPago" id="field_tipoPago" data-cy="tipoPago">
+            <option [ngValue]="null">{{ 'abfApp.TiposPagos.null' | translate }}</option>
+            <option *ngFor="let tiposPagos of tiposPagosValues" [value]="tiposPagos">
+              {{ 'abfApp.TiposPagos.' + tiposPagos | translate }}
+            </option>
+          </select>
           <div *ngIf="editForm.get('tipoPago')!.invalid && (editForm.get('tipoPago')!.dirty || editForm.get('tipoPago')!.touched)">
             <small
               class="form-text text-danger"
@@ -176,65 +181,6 @@
               Este campo es obligatorio.
             </small>
           </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.pagos.idUsuarioRegistro" for="field_idUsuarioRegistro">Id Usuario Registro</label>
-          <input
-            type="number"
-            class="form-control"
-            name="idUsuarioRegistro"
-            id="field_idUsuarioRegistro"
-            data-cy="idUsuarioRegistro"
-            formControlName="idUsuarioRegistro"
-          />
-          <div
-            *ngIf="
-              editForm.get('idUsuarioRegistro')!.invalid &&
-              (editForm.get('idUsuarioRegistro')!.dirty || editForm.get('idUsuarioRegistro')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('idUsuarioRegistro')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              Este campo es obligatorio.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('idUsuarioRegistro')?.errors?.number"
-              jhiTranslate="entity.validation.number"
-            >
-              Este campo debe ser un número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.pagos.alumnos" for="field_alumnos">Alumnos</label>
-          <select
-            class="form-control"
-            id="field_alumnos"
-            data-cy="alumnos"
-            name="alumnos"
-            formControlName="alumnos"
-            [compareWith]="compareAlumnos"
-          >
-            <option *ngIf="editForm.get(['alumnos'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="alumnosOption" *ngFor="let alumnosOption of alumnosSharedCollection">
-              {{ alumnosOption.nombreCompleto }}
-            </option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['alumnos'])!.invalid && (editForm.get(['alumnos'])!.dirty || editForm.get(['alumnos'])!.touched)">
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['alumnos'])?.errors?.required"
-            jhiTranslate="entity.validation.required"
-          >
-            Este campo es obligatorio.
-          </small>
         </div>
 
         <div class="row mb-3">

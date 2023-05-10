@@ -65,11 +65,15 @@ public class AlumnosCriteria implements Serializable, Criteria {
 
     private LongFilter registroClasesId;
 
-    private LongFilter pagosId;
+    private LongFilter cobrosId;
 
     private LongFilter evaluacionesId;
 
     private LongFilter inscripcionesId;
+
+    private LongFilter fichaPartidasTorneosId;
+
+    private LongFilter facturasId;
 
     private LongFilter tipoDocumentosId;
 
@@ -91,9 +95,11 @@ public class AlumnosCriteria implements Serializable, Criteria {
         this.estado = other.estado == null ? null : other.estado.copy();
         this.matriculaId = other.matriculaId == null ? null : other.matriculaId.copy();
         this.registroClasesId = other.registroClasesId == null ? null : other.registroClasesId.copy();
-        this.pagosId = other.pagosId == null ? null : other.pagosId.copy();
+        this.cobrosId = other.cobrosId == null ? null : other.cobrosId.copy();
         this.evaluacionesId = other.evaluacionesId == null ? null : other.evaluacionesId.copy();
         this.inscripcionesId = other.inscripcionesId == null ? null : other.inscripcionesId.copy();
+        this.fichaPartidasTorneosId = other.fichaPartidasTorneosId == null ? null : other.fichaPartidasTorneosId.copy();
+        this.facturasId = other.facturasId == null ? null : other.facturasId.copy();
         this.tipoDocumentosId = other.tipoDocumentosId == null ? null : other.tipoDocumentosId.copy();
         this.distinct = other.distinct;
     }
@@ -298,19 +304,19 @@ public class AlumnosCriteria implements Serializable, Criteria {
         this.registroClasesId = registroClasesId;
     }
 
-    public LongFilter getPagosId() {
-        return pagosId;
+    public LongFilter getCobrosId() {
+        return cobrosId;
     }
 
-    public LongFilter pagosId() {
-        if (pagosId == null) {
-            pagosId = new LongFilter();
+    public LongFilter cobrosId() {
+        if (cobrosId == null) {
+            cobrosId = new LongFilter();
         }
-        return pagosId;
+        return cobrosId;
     }
 
-    public void setPagosId(LongFilter pagosId) {
-        this.pagosId = pagosId;
+    public void setCobrosId(LongFilter cobrosId) {
+        this.cobrosId = cobrosId;
     }
 
     public LongFilter getEvaluacionesId() {
@@ -341,6 +347,36 @@ public class AlumnosCriteria implements Serializable, Criteria {
 
     public void setInscripcionesId(LongFilter inscripcionesId) {
         this.inscripcionesId = inscripcionesId;
+    }
+
+    public LongFilter getFichaPartidasTorneosId() {
+        return fichaPartidasTorneosId;
+    }
+
+    public LongFilter fichaPartidasTorneosId() {
+        if (fichaPartidasTorneosId == null) {
+            fichaPartidasTorneosId = new LongFilter();
+        }
+        return fichaPartidasTorneosId;
+    }
+
+    public void setFichaPartidasTorneosId(LongFilter fichaPartidasTorneosId) {
+        this.fichaPartidasTorneosId = fichaPartidasTorneosId;
+    }
+
+    public LongFilter getFacturasId() {
+        return facturasId;
+    }
+
+    public LongFilter facturasId() {
+        if (facturasId == null) {
+            facturasId = new LongFilter();
+        }
+        return facturasId;
+    }
+
+    public void setFacturasId(LongFilter facturasId) {
+        this.facturasId = facturasId;
     }
 
     public LongFilter getTipoDocumentosId() {
@@ -389,9 +425,11 @@ public class AlumnosCriteria implements Serializable, Criteria {
             Objects.equals(estado, that.estado) &&
             Objects.equals(matriculaId, that.matriculaId) &&
             Objects.equals(registroClasesId, that.registroClasesId) &&
-            Objects.equals(pagosId, that.pagosId) &&
+            Objects.equals(cobrosId, that.cobrosId) &&
             Objects.equals(evaluacionesId, that.evaluacionesId) &&
             Objects.equals(inscripcionesId, that.inscripcionesId) &&
+            Objects.equals(fichaPartidasTorneosId, that.fichaPartidasTorneosId) &&
+            Objects.equals(facturasId, that.facturasId) &&
             Objects.equals(tipoDocumentosId, that.tipoDocumentosId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -413,9 +451,11 @@ public class AlumnosCriteria implements Serializable, Criteria {
             estado,
             matriculaId,
             registroClasesId,
-            pagosId,
+            cobrosId,
             evaluacionesId,
             inscripcionesId,
+            fichaPartidasTorneosId,
+            facturasId,
             tipoDocumentosId,
             distinct
         );
@@ -438,9 +478,11 @@ public class AlumnosCriteria implements Serializable, Criteria {
             (estado != null ? "estado=" + estado + ", " : "") +
             (matriculaId != null ? "matriculaId=" + matriculaId + ", " : "") +
             (registroClasesId != null ? "registroClasesId=" + registroClasesId + ", " : "") +
-            (pagosId != null ? "pagosId=" + pagosId + ", " : "") +
+            (cobrosId != null ? "cobrosId=" + cobrosId + ", " : "") +
             (evaluacionesId != null ? "evaluacionesId=" + evaluacionesId + ", " : "") +
             (inscripcionesId != null ? "inscripcionesId=" + inscripcionesId + ", " : "") +
+            (fichaPartidasTorneosId != null ? "fichaPartidasTorneosId=" + fichaPartidasTorneosId + ", " : "") +
+            (facturasId != null ? "facturasId=" + facturasId + ", " : "") +
             (tipoDocumentosId != null ? "tipoDocumentosId=" + tipoDocumentosId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

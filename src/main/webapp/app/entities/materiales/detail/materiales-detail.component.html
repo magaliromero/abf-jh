@@ -20,11 +20,15 @@
         </dd>
         <dt><span jhiTranslate="abfApp.materiales.estado">Estado</span></dt>
         <dd>
-          <span>{{ materiales.estado }}</span>
+          <span jhiTranslate="{{ 'abfApp.EstadosMateriales.' + materiales.estado }}">{{ materiales.estado }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.materiales.cantidad">Cantidad</span></dt>
+        <dt><span jhiTranslate="abfApp.materiales.cantidadStock">Cantidad Stock</span></dt>
         <dd>
-          <span>{{ materiales.cantidad }}</span>
+          <span>{{ materiales.cantidadStock }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.materiales.cantidadPrestamo">Cantidad Prestamo</span></dt>
+        <dd>
+          <span>{{ materiales.cantidadPrestamo }}</span>
         </dd>
       </dl>
 

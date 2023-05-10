@@ -31,7 +31,9 @@
     },
     {
       "fieldName": "tipoTorneo",
-      "fieldType": "String"
+      "fieldType": "TiposTorneos",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "INTERNO (Interno),NACIONAL (Nacional),INTERNACIONAL (Internacional)"
     },
     {
       "fieldName": "torneoEvaluado",

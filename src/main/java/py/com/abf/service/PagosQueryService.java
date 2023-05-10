@@ -101,19 +101,10 @@ public class PagosQueryService extends QueryService<Pagos> {
                 specification = specification.and(buildRangeSpecification(criteria.getFechaPago(), Pagos_.fechaPago));
             }
             if (criteria.getTipoPago() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getTipoPago(), Pagos_.tipoPago));
+                specification = specification.and(buildSpecification(criteria.getTipoPago(), Pagos_.tipoPago));
             }
             if (criteria.getDescripcion() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescripcion(), Pagos_.descripcion));
-            }
-            if (criteria.getIdUsuarioRegistro() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getIdUsuarioRegistro(), Pagos_.idUsuarioRegistro));
-            }
-            if (criteria.getAlumnosId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getAlumnosId(), root -> root.join(Pagos_.alumnos, JoinType.LEFT).get(Alumnos_.id))
-                    );
             }
             if (criteria.getFuncionariosId() != null) {
                 specification =

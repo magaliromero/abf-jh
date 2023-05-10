@@ -26,6 +26,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
+import py.com.abf.domain.Alumnos;
 import py.com.abf.domain.FichaPartidasTorneos;
 import py.com.abf.domain.Torneos;
 import py.com.abf.repository.FichaPartidasTorneosRepository;
@@ -107,6 +108,16 @@ class FichaPartidasTorneosResourceIT {
             torneos = TestUtil.findAll(em, Torneos.class).get(0);
         }
         fichaPartidasTorneos.setTorneos(torneos);
+        // Add required entity
+        Alumnos alumnos;
+        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
+            alumnos = AlumnosResourceIT.createEntity(em);
+            em.persist(alumnos);
+            em.flush();
+        } else {
+            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
+        }
+        fichaPartidasTorneos.setAlumnos(alumnos);
         return fichaPartidasTorneos;
     }
 
@@ -134,6 +145,16 @@ class FichaPartidasTorneosResourceIT {
             torneos = TestUtil.findAll(em, Torneos.class).get(0);
         }
         fichaPartidasTorneos.setTorneos(torneos);
+        // Add required entity
+        Alumnos alumnos;
+        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
+            alumnos = AlumnosResourceIT.createUpdatedEntity(em);
+            em.persist(alumnos);
+            em.flush();
+        } else {
+            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
+        }
+        fichaPartidasTorneos.setAlumnos(alumnos);
         return fichaPartidasTorneos;
     }
 
@@ -703,6 +724,29 @@ class FichaPartidasTorneosResourceIT {
 
         // Get all the fichaPartidasTorneosList where torneos equals to (torneosId + 1)
         defaultFichaPartidasTorneosShouldNotBeFound("torneosId.equals=" + (torneosId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllFichaPartidasTorneosByAlumnosIsEqualToSomething() throws Exception {
+        Alumnos alumnos;
+        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
+            fichaPartidasTorneosRepository.saveAndFlush(fichaPartidasTorneos);
+            alumnos = AlumnosResourceIT.createEntity(em);
+        } else {
+            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
+        }
+        em.persist(alumnos);
+        em.flush();
+        fichaPartidasTorneos.setAlumnos(alumnos);
+        fichaPartidasTorneosRepository.saveAndFlush(fichaPartidasTorneos);
+        Long alumnosId = alumnos.getId();
+
+        // Get all the fichaPartidasTorneosList where alumnos equals to alumnosId
+        defaultFichaPartidasTorneosShouldBeFound("alumnosId.equals=" + alumnosId);
+
+        // Get all the fichaPartidasTorneosList where alumnos equals to (alumnosId + 1)
+        defaultFichaPartidasTorneosShouldNotBeFound("alumnosId.equals=" + (alumnosId + 1));
     }
 
     /**

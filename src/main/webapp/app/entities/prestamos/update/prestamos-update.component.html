@@ -110,6 +110,23 @@
             </small>
           </div>
         </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.prestamos.materiales" for="field_materiales">Materiales</label>
+          <select
+            class="form-control"
+            id="field_materiales"
+            data-cy="materiales"
+            name="materiales"
+            formControlName="materiales"
+            [compareWith]="compareMateriales"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="materialesOption" *ngFor="let materialesOption of materialesSharedCollection">
+              {{ materialesOption.descripcion }}
+            </option>
+          </select>
+        </div>
       </div>
 
       <div>

@@ -101,7 +101,7 @@
           <td>{{ torneos.fechaFin | formatMediumDate }}</td>
           <td>{{ torneos.lugar }}</td>
           <td>{{ torneos.tiempo }}</td>
-          <td>{{ torneos.tipoTorneo }}</td>
+          <td jhiTranslate="{{ 'abfApp.TiposTorneos.' + torneos.tipoTorneo }}">{{ torneos.tipoTorneo }}</td>
           <td>{{ torneos.torneoEvaluado }}</td>
           <td>{{ torneos.federado }}</td>
           <td class="text-end">

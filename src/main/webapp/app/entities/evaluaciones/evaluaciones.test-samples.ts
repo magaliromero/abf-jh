@@ -1,34 +1,37 @@
 import dayjs from 'dayjs/esm';
 
+import { TiposEvaluaciones } from 'app/entities/enumerations/tipos-evaluaciones.model';
+
 import { IEvaluaciones, NewEvaluaciones } from './evaluaciones.model';
 
 export const sampleWithRequiredData: IEvaluaciones = {
   id: 68068,
-  tipoEvaluacion: 'Avon CSS Global',
+  tipoEvaluacion: TiposEvaluaciones['FORMATIVA'],
   fecha: dayjs('2023-03-13'),
 };
 
 export const sampleWithPartialData: IEvaluaciones = {
-  id: 66628,
-  tipoEvaluacion: 'connecting acceso channels',
-  idExamen: 23897,
+  id: 91593,
+  tipoEvaluacion: TiposEvaluaciones['ACUMULATIVA'],
+  idActa: 69398,
   fecha: dayjs('2023-03-13'),
-  puntosLogrados: 21753,
+  puntosLogrados: 55864,
+  comentarios: 'Distrito',
 };
 
 export const sampleWithFullData: IEvaluaciones = {
-  id: 34615,
-  tipoEvaluacion: 'program',
-  idExamen: 57872,
-  idActa: 30764,
+  id: 66628,
+  tipoEvaluacion: TiposEvaluaciones['FORMATIVA'],
+  idExamen: 82772,
+  idActa: 50767,
   fecha: dayjs('2023-03-13'),
-  puntosLogrados: 63170,
-  porcentaje: 35386,
-  comentarios: 'Franc',
+  puntosLogrados: 30805,
+  porcentaje: 1145,
+  comentarios: 'channels',
 };
 
 export const sampleWithNewData: NewEvaluaciones = {
-  tipoEvaluacion: 'JBOD Fácil habilidad',
+  tipoEvaluacion: TiposEvaluaciones['FINAL'],
   fecha: dayjs('2023-03-13'),
   id: null,
 };

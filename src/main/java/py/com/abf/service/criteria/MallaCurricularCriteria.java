@@ -45,8 +45,6 @@ public class MallaCurricularCriteria implements Serializable, Criteria {
 
     private NivelesFilter nivel;
 
-    private LongFilter registroClasesId;
-
     private LongFilter temasId;
 
     private Boolean distinct;
@@ -57,7 +55,6 @@ public class MallaCurricularCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.titulo = other.titulo == null ? null : other.titulo.copy();
         this.nivel = other.nivel == null ? null : other.nivel.copy();
-        this.registroClasesId = other.registroClasesId == null ? null : other.registroClasesId.copy();
         this.temasId = other.temasId == null ? null : other.temasId.copy();
         this.distinct = other.distinct;
     }
@@ -112,21 +109,6 @@ public class MallaCurricularCriteria implements Serializable, Criteria {
         this.nivel = nivel;
     }
 
-    public LongFilter getRegistroClasesId() {
-        return registroClasesId;
-    }
-
-    public LongFilter registroClasesId() {
-        if (registroClasesId == null) {
-            registroClasesId = new LongFilter();
-        }
-        return registroClasesId;
-    }
-
-    public void setRegistroClasesId(LongFilter registroClasesId) {
-        this.registroClasesId = registroClasesId;
-    }
-
     public LongFilter getTemasId() {
         return temasId;
     }
@@ -163,7 +145,6 @@ public class MallaCurricularCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(titulo, that.titulo) &&
             Objects.equals(nivel, that.nivel) &&
-            Objects.equals(registroClasesId, that.registroClasesId) &&
             Objects.equals(temasId, that.temasId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -171,7 +152,7 @@ public class MallaCurricularCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, titulo, nivel, registroClasesId, temasId, distinct);
+        return Objects.hash(id, titulo, nivel, temasId, distinct);
     }
 
     // prettier-ignore
@@ -181,7 +162,6 @@ public class MallaCurricularCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (titulo != null ? "titulo=" + titulo + ", " : "") +
             (nivel != null ? "nivel=" + nivel + ", " : "") +
-            (registroClasesId != null ? "registroClasesId=" + registroClasesId + ", " : "") +
             (temasId != null ? "temasId=" + temasId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

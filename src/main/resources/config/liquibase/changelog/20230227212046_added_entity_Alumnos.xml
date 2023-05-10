@@ -10,7 +10,7 @@
         Added the entity Alumnos.
     -->
     <changeSet id="20230227212046-1" author="jhipster">
-        <createTable tableName="alummos">
+        <createTable tableName="alumnos">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -63,9 +63,9 @@
     -->
     <changeSet id="20230227212046-1-data" author="jhipster" context="faker">
         <loadData
-                  file="config/liquibase/fake-data/alummos.csv"
+                  file="config/liquibase/fake-data/alumnos.csv"
                   separator=";"
-                  tableName="alummos"
+                  tableName="alumnos"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="elo" type="numeric"/>

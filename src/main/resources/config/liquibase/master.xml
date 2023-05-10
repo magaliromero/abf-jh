@@ -27,6 +27,8 @@
     <include file="config/liquibase/changelog/20230313233746_added_entity_Cursos.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230313233747_added_entity_Evaluaciones.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230313233748_added_entity_Inscripciones.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230405200624_added_entity_Cobros.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230425234913_added_entity_Facturas.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20230227212046_added_entity_constraints_Alumnos.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230227212146_added_entity_constraints_Funcionarios.xml" relativeToChangelogFile="false"/>
@@ -37,6 +39,9 @@
     <include file="config/liquibase/changelog/20230313233745_added_entity_constraints_FichaPartidasTorneos.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230313233747_added_entity_constraints_Evaluaciones.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230313233748_added_entity_constraints_Inscripciones.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230405200624_added_entity_constraints_Cobros.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230313233742_added_entity_constraints_Prestamos.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230425234913_added_entity_constraints_Facturas.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

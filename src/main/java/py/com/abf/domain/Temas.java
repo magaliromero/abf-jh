@@ -36,12 +36,12 @@ public class Temas implements Serializable {
 
     @OneToMany(mappedBy = "temas")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "mallaCurricular", "temas", "funcionarios", "alumnos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cursos", "temas", "funcionarios", "alumnos" }, allowSetters = true)
     private Set<RegistroClases> registroClases = new HashSet<>();
 
     @ManyToMany(mappedBy = "temas")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "registroClases", "temas" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "temas" }, allowSetters = true)
     private Set<MallaCurricular> mallaCurriculars = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

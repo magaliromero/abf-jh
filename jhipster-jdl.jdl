@@ -25,7 +25,7 @@ entity TiposDocumentos(tipos_documentos){
     descripcion String required
 }
 
-entity Alumnos(alummos){
+entity Alumnos(alumnos){
 	elo Integer,
     fideId Integer,
 	nombres String required,
@@ -76,15 +76,53 @@ entity RegistroClases(registro_clases){
    
 }
 
+enum TiposPagos{
+    PARCIAL (Parcial)
+ 	CUOTA(Cuota)
+    MENSUAL(Mensual)
+    DIARIO(Diario)
+    UNICO (Unico) 
+}
+
 entity Pagos(pagos){
     montoPago Integer required,
     montoInicial Integer required,
     saldo Integer required,
 	fechaRegistro LocalDate  required,
     fechaPago LocalDate required,
-    tipoPago String required,
+    tipoPago TiposPagos required,
     descripcion String required,
-    idUsuarioRegistro Integer required
+}
+entity Cobros(cobros){
+    montoPago Integer required,
+    montoInicial Integer required,
+    saldo Integer required,
+	fechaRegistro LocalDate  required,
+    fechaPago LocalDate required,
+    tipoPago TiposPagos required,
+    descripcion String required,
+}
+enum CondVenta{
+ 	CONTADO(Contado)
+    CREDITO(Credito)
+}
+
+entity Facturas(factura){
+    fecha LocalDate required,
+    facturaNro String required,
+    timbrado Integer required,
+    razonSocial String required,
+    ruc Integer required,
+    condicionVenta CondVenta,
+    cantidad Integer,
+    descripcion String required,
+    precioUnitario Integer,
+    valor5 Integer,
+    valor10 Integer,
+    total Integer,
+    total5 Integer,
+    total10 Integer,
+    totalIva Integer,  
 }
 
 entity Usuarios(usuarios){
@@ -97,24 +135,33 @@ entity Prestamos(prestamos){
     vigenciaPrestamo Integer required,
     fechaDevolucion LocalDate required
 }
-
+enum TiposTorneos{
+ 	INTERNO(Interno)
+    NACIONAL(Nacional)
+    INTERNACIONAL(Internacional) 
+}
 entity Torneos(torneos){
     nombreTorneo String required,
     fechaInicio LocalDate required,
     fechaFin  LocalDate required,
     lugar String required,
     tiempo String,
-    tipoTorneo String,
+    tipoTorneo TiposTorneos required,
     torneoEvaluado Boolean required,
     federado Boolean required,
 }
 
-
+enum EstadosMateriales{
+ 	DISPONIBLE(Disponible)
+    PRESTADO("En Prestamo")
+    VENCIDO("No devuelto") 
+}
 
 entity Materiales(materiales){
 	descripcion String required,
-    estado String required, 
-    cantidad Integer required
+    estado EstadosMateriales required, 
+    cantidadStock Integer required,
+    cantidadPrestamo Integer required,
 }
 
 entity FichaPartidasTorneos(fichas){
@@ -130,8 +177,15 @@ entity Cursos(cursos){
 	nombreCurso String,
 }
 
+
+enum TiposEvaluaciones{
+ 	FINAL(Final)
+    ACUMULATIVA(Acumulativa)
+    FORMATIVA(Formativa) 
+}
+
 entity Evaluaciones (evaluaciones){
-    tipoEvaluacion String required,
+    tipoEvaluacion TiposEvaluaciones required,
     idExamen Integer,
     idActa Integer, 
     fecha LocalDate required,
@@ -150,15 +204,19 @@ relationship OneToMany {
 	TiposDocumentos to Alumnos { tipoDocumentos(descripcion) required },
     TiposDocumentos to Funcionarios { tipoDocumentos(descripcion) required },
     Alumnos to Matricula  { alumnos(nombreCompleto) required },
-    MallaCurricular to RegistroClases{mallaCurricular(titulo) required},
+    Cursos to RegistroClases{Cursos(nombreCurso) required},
     Temas to RegistroClases{temas(titulo) required},
     Funcionarios to RegistroClases{funcionarios(nombreCompleto) required},
     Alumnos to RegistroClases {alumnos(nombreCompleto) required},
-    Alumnos to Pagos {alumnos(nombreCompleto) required},
+    Alumnos to Cobros {alumnos(nombreCompleto) required},
     Funcionarios to Pagos {funcionarios(nombreCompleto) required},
     Alumnos to Evaluaciones{alumnos(nombreCompleto) required}
     Alumnos to Inscripciones  { alumnos(nombreCompleto) required },
-    Torneos to FichaPartidasTorneos {torneos (nombreTorneo) required}
+    Torneos to FichaPartidasTorneos {torneos (nombreTorneo) required},
+    Alumnos to FichaPartidasTorneos {alumnos(nombreCompleto)required},
+    Materiales to Prestamos {Materiales(descripcion)},
+    Alumnos to Facturas {alumnos (nombreCompleto)required},
+    Facturas to Cobros {factura(facturaNro)required}
 }
 
 relationship ManyToMany{

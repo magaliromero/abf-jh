@@ -46,6 +46,12 @@
             <a [routerLink]="['/torneos', fichaPartidasTorneos.torneos.id, 'view']">{{ fichaPartidasTorneos.torneos.nombreTorneo }}</a>
           </div>
         </dd>
+        <dt><span jhiTranslate="abfApp.fichaPartidasTorneos.alumnos">Alumnos</span></dt>
+        <dd>
+          <div *ngIf="fichaPartidasTorneos.alumnos">
+            <a [routerLink]="['/alumnos', fichaPartidasTorneos.alumnos.id, 'view']">{{ fichaPartidasTorneos.alumnos.nombreCompleto }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

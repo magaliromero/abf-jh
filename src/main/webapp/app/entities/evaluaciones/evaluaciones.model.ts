@@ -1,9 +1,10 @@
 import dayjs from 'dayjs/esm';
 import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
+import { TiposEvaluaciones } from 'app/entities/enumerations/tipos-evaluaciones.model';
 
 export interface IEvaluaciones {
   id: number;
-  tipoEvaluacion?: string | null;
+  tipoEvaluacion?: TiposEvaluaciones | null;
   idExamen?: number | null;
   idActa?: number | null;
   fecha?: dayjs.Dayjs | null;

@@ -21,6 +21,7 @@ type PrestamosFormGroupContent = {
   fechaPrestamo: FormControl<IPrestamos['fechaPrestamo']>;
   vigenciaPrestamo: FormControl<IPrestamos['vigenciaPrestamo']>;
   fechaDevolucion: FormControl<IPrestamos['fechaDevolucion']>;
+  materiales: FormControl<IPrestamos['materiales']>;
 };
 
 export type PrestamosFormGroup = FormGroup<PrestamosFormGroupContent>;
@@ -49,6 +50,7 @@ export class PrestamosFormService {
       fechaDevolucion: new FormControl(prestamosRawValue.fechaDevolucion, {
         validators: [Validators.required],
       }),
+      materiales: new FormControl(prestamosRawValue.materiales),
     });
   }
 

@@ -1,30 +1,36 @@
+import { EstadosMateriales } from 'app/entities/enumerations/estados-materiales.model';
+
 import { IMateriales, NewMateriales } from './materiales.model';
 
 export const sampleWithRequiredData: IMateriales = {
   id: 51682,
   descripcion: 'Hecho Avanzado withdrawal',
-  estado: 'Refinado Técnico hack',
-  cantidad: 2067,
+  estado: EstadosMateriales['VENCIDO'],
+  cantidadStock: 10372,
+  cantidadPrestamo: 90659,
 };
 
 export const sampleWithPartialData: IMateriales = {
-  id: 57189,
-  descripcion: 'Amarillo Rojo transmitter',
-  estado: 'dynamic',
-  cantidad: 68574,
+  id: 87539,
+  descripcion: 'Account Algodón País',
+  estado: EstadosMateriales['PRESTADO'],
+  cantidadStock: 87558,
+  cantidadPrestamo: 19129,
 };
 
 export const sampleWithFullData: IMateriales = {
-  id: 76470,
-  descripcion: 'Rústico vortals',
-  estado: 'Amarillo',
-  cantidad: 67334,
+  id: 1247,
+  descripcion: 'transmitter',
+  estado: EstadosMateriales['DISPONIBLE'],
+  cantidadStock: 33751,
+  cantidadPrestamo: 37480,
 };
 
 export const sampleWithNewData: NewMateriales = {
-  descripcion: 'Metal',
-  estado: 'Morado',
-  cantidad: 990,
+  descripcion: 'Syrian Rústico vortals',
+  estado: EstadosMateriales['DISPONIBLE'],
+  cantidadStock: 19341,
+  cantidadPrestamo: 59205,
   id: null,
 };
 

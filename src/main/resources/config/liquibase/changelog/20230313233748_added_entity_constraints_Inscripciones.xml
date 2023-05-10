@@ -12,6 +12,6 @@
                                  baseTableName="inscripciones"
                                  constraintName="fk_inscripciones__alumnos_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="alummos"/>
+                                 referencedTableName="alumnos"/>
     </changeSet>
 </databaseChangeLog>

@@ -86,7 +86,7 @@ public class EvaluacionesQueryService extends QueryService<Evaluaciones> {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Evaluaciones_.id));
             }
             if (criteria.getTipoEvaluacion() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getTipoEvaluacion(), Evaluaciones_.tipoEvaluacion));
+                specification = specification.and(buildSpecification(criteria.getTipoEvaluacion(), Evaluaciones_.tipoEvaluacion));
             }
             if (criteria.getIdExamen() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getIdExamen(), Evaluaciones_.idExamen));

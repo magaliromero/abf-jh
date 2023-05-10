@@ -114,6 +114,15 @@ public class FichaPartidasTorneosQueryService extends QueryService<FichaPartidas
                         )
                     );
             }
+            if (criteria.getAlumnosId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getAlumnosId(),
+                            root -> root.join(FichaPartidasTorneos_.alumnos, JoinType.LEFT).get(Alumnos_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }

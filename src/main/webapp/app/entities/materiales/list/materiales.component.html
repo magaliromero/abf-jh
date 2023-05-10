@@ -52,9 +52,15 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="cantidad">
+          <th scope="col" jhiSortBy="cantidadStock">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.materiales.cantidad">Cantidad</span>
+              <span jhiTranslate="abfApp.materiales.cantidadStock">Cantidad Stock</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="cantidadPrestamo">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.materiales.cantidadPrestamo">Cantidad Prestamo</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -67,10 +73,26 @@
             <a [routerLink]="['/materiales', materiales.id, 'view']">{{ materiales.id }}</a>
           </td>
           <td>{{ materiales.descripcion }}</td>
-          <td>{{ materiales.estado }}</td>
-          <td>{{ materiales.cantidad }}</td>
+          <td jhiTranslate="{{ 'abfApp.EstadosMateriales.' + materiales.estado }}">{{ materiales.estado }}</td>
+          <td>{{ materiales.cantidadStock }}</td>
+          <td>{{ materiales.cantidadPrestamo }}</td>
           <td class="text-end">
             <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/prestamos']"
+                [queryParams]="{ 'filter[materialesId.in]': materiales.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.materiales.prestamos' | translate) }"
+                  >Show Prestamos</span
+                >
+              </button>
               <button
                 type="submit"
                 [routerLink]="['/materiales', materiales.id, 'view']"

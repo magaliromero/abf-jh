@@ -15,14 +15,18 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="abfApp.evaluaciones.tipoEvaluacion" for="field_tipoEvaluacion">Tipo Evaluacion</label>
-          <input
-            type="text"
+          <select
             class="form-control"
             name="tipoEvaluacion"
+            formControlName="tipoEvaluacion"
             id="field_tipoEvaluacion"
             data-cy="tipoEvaluacion"
-            formControlName="tipoEvaluacion"
-          />
+          >
+            <option [ngValue]="null">{{ 'abfApp.TiposEvaluaciones.null' | translate }}</option>
+            <option *ngFor="let tiposEvaluaciones of tiposEvaluacionesValues" [value]="tiposEvaluaciones">
+              {{ 'abfApp.TiposEvaluaciones.' + tiposEvaluaciones | translate }}
+            </option>
+          </select>
           <div
             *ngIf="
               editForm.get('tipoEvaluacion')!.invalid && (editForm.get('tipoEvaluacion')!.dirty || editForm.get('tipoEvaluacion')!.touched)

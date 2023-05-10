@@ -37,6 +37,8 @@ public class FichaPartidasTorneosCriteria implements Serializable, Criteria {
 
     private LongFilter torneosId;
 
+    private LongFilter alumnosId;
+
     private Boolean distinct;
 
     public FichaPartidasTorneosCriteria() {}
@@ -50,6 +52,7 @@ public class FichaPartidasTorneosCriteria implements Serializable, Criteria {
         this.comentarios = other.comentarios == null ? null : other.comentarios.copy();
         this.nombreArbitro = other.nombreArbitro == null ? null : other.nombreArbitro.copy();
         this.torneosId = other.torneosId == null ? null : other.torneosId.copy();
+        this.alumnosId = other.alumnosId == null ? null : other.alumnosId.copy();
         this.distinct = other.distinct;
     }
 
@@ -178,6 +181,21 @@ public class FichaPartidasTorneosCriteria implements Serializable, Criteria {
         this.torneosId = torneosId;
     }
 
+    public LongFilter getAlumnosId() {
+        return alumnosId;
+    }
+
+    public LongFilter alumnosId() {
+        if (alumnosId == null) {
+            alumnosId = new LongFilter();
+        }
+        return alumnosId;
+    }
+
+    public void setAlumnosId(LongFilter alumnosId) {
+        this.alumnosId = alumnosId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -204,13 +222,25 @@ public class FichaPartidasTorneosCriteria implements Serializable, Criteria {
             Objects.equals(comentarios, that.comentarios) &&
             Objects.equals(nombreArbitro, that.nombreArbitro) &&
             Objects.equals(torneosId, that.torneosId) &&
+            Objects.equals(alumnosId, that.alumnosId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombreContrincante, duracion, winner, resultado, comentarios, nombreArbitro, torneosId, distinct);
+        return Objects.hash(
+            id,
+            nombreContrincante,
+            duracion,
+            winner,
+            resultado,
+            comentarios,
+            nombreArbitro,
+            torneosId,
+            alumnosId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -225,6 +255,7 @@ public class FichaPartidasTorneosCriteria implements Serializable, Criteria {
             (comentarios != null ? "comentarios=" + comentarios + ", " : "") +
             (nombreArbitro != null ? "nombreArbitro=" + nombreArbitro + ", " : "") +
             (torneosId != null ? "torneosId=" + torneosId + ", " : "") +
+            (alumnosId != null ? "alumnosId=" + alumnosId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

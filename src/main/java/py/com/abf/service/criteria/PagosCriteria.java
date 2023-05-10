@@ -3,6 +3,7 @@ package py.com.abf.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
+import py.com.abf.domain.enumeration.TiposPagos;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -19,6 +20,23 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class PagosCriteria implements Serializable, Criteria {
 
+    /**
+     * Class for filtering TiposPagos
+     */
+    public static class TiposPagosFilter extends Filter<TiposPagos> {
+
+        public TiposPagosFilter() {}
+
+        public TiposPagosFilter(TiposPagosFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public TiposPagosFilter copy() {
+            return new TiposPagosFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
@@ -33,13 +51,9 @@ public class PagosCriteria implements Serializable, Criteria {
 
     private LocalDateFilter fechaPago;
 
-    private StringFilter tipoPago;
+    private TiposPagosFilter tipoPago;
 
     private StringFilter descripcion;
-
-    private IntegerFilter idUsuarioRegistro;
-
-    private LongFilter alumnosId;
 
     private LongFilter funcionariosId;
 
@@ -56,8 +70,6 @@ public class PagosCriteria implements Serializable, Criteria {
         this.fechaPago = other.fechaPago == null ? null : other.fechaPago.copy();
         this.tipoPago = other.tipoPago == null ? null : other.tipoPago.copy();
         this.descripcion = other.descripcion == null ? null : other.descripcion.copy();
-        this.idUsuarioRegistro = other.idUsuarioRegistro == null ? null : other.idUsuarioRegistro.copy();
-        this.alumnosId = other.alumnosId == null ? null : other.alumnosId.copy();
         this.funcionariosId = other.funcionariosId == null ? null : other.funcionariosId.copy();
         this.distinct = other.distinct;
     }
@@ -157,18 +169,18 @@ public class PagosCriteria implements Serializable, Criteria {
         this.fechaPago = fechaPago;
     }
 
-    public StringFilter getTipoPago() {
+    public TiposPagosFilter getTipoPago() {
         return tipoPago;
     }
 
-    public StringFilter tipoPago() {
+    public TiposPagosFilter tipoPago() {
         if (tipoPago == null) {
-            tipoPago = new StringFilter();
+            tipoPago = new TiposPagosFilter();
         }
         return tipoPago;
     }
 
-    public void setTipoPago(StringFilter tipoPago) {
+    public void setTipoPago(TiposPagosFilter tipoPago) {
         this.tipoPago = tipoPago;
     }
 
@@ -185,36 +197,6 @@ public class PagosCriteria implements Serializable, Criteria {
 
     public void setDescripcion(StringFilter descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public IntegerFilter getIdUsuarioRegistro() {
-        return idUsuarioRegistro;
-    }
-
-    public IntegerFilter idUsuarioRegistro() {
-        if (idUsuarioRegistro == null) {
-            idUsuarioRegistro = new IntegerFilter();
-        }
-        return idUsuarioRegistro;
-    }
-
-    public void setIdUsuarioRegistro(IntegerFilter idUsuarioRegistro) {
-        this.idUsuarioRegistro = idUsuarioRegistro;
-    }
-
-    public LongFilter getAlumnosId() {
-        return alumnosId;
-    }
-
-    public LongFilter alumnosId() {
-        if (alumnosId == null) {
-            alumnosId = new LongFilter();
-        }
-        return alumnosId;
-    }
-
-    public void setAlumnosId(LongFilter alumnosId) {
-        this.alumnosId = alumnosId;
     }
 
     public LongFilter getFuncionariosId() {
@@ -258,8 +240,6 @@ public class PagosCriteria implements Serializable, Criteria {
             Objects.equals(fechaPago, that.fechaPago) &&
             Objects.equals(tipoPago, that.tipoPago) &&
             Objects.equals(descripcion, that.descripcion) &&
-            Objects.equals(idUsuarioRegistro, that.idUsuarioRegistro) &&
-            Objects.equals(alumnosId, that.alumnosId) &&
             Objects.equals(funcionariosId, that.funcionariosId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -267,20 +247,7 @@ public class PagosCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            montoPago,
-            montoInicial,
-            saldo,
-            fechaRegistro,
-            fechaPago,
-            tipoPago,
-            descripcion,
-            idUsuarioRegistro,
-            alumnosId,
-            funcionariosId,
-            distinct
-        );
+        return Objects.hash(id, montoPago, montoInicial, saldo, fechaRegistro, fechaPago, tipoPago, descripcion, funcionariosId, distinct);
     }
 
     // prettier-ignore
@@ -295,8 +262,6 @@ public class PagosCriteria implements Serializable, Criteria {
             (fechaPago != null ? "fechaPago=" + fechaPago + ", " : "") +
             (tipoPago != null ? "tipoPago=" + tipoPago + ", " : "") +
             (descripcion != null ? "descripcion=" + descripcion + ", " : "") +
-            (idUsuarioRegistro != null ? "idUsuarioRegistro=" + idUsuarioRegistro + ", " : "") +
-            (alumnosId != null ? "alumnosId=" + alumnosId + ", " : "") +
             (funcionariosId != null ? "funcionariosId=" + funcionariosId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

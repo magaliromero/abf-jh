@@ -12,6 +12,6 @@
                                  baseTableName="matricula"
                                  constraintName="fk_matricula__alumnos_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="alummos"/>
+                                 referencedTableName="alumnos"/>
     </changeSet>
 </databaseChangeLog>

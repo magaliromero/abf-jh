@@ -82,18 +82,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="idUsuarioRegistro">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.idUsuarioRegistro">Id Usuario Registro</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="alumnos.nombreCompleto">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.alumnos">Alumnos</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="funcionarios.nombreCompleto">
             <div class="d-flex">
               <span jhiTranslate="abfApp.pagos.funcionarios">Funcionarios</span>
@@ -113,14 +101,8 @@
           <td>{{ pagos.saldo }}</td>
           <td>{{ pagos.fechaRegistro | formatMediumDate }}</td>
           <td>{{ pagos.fechaPago | formatMediumDate }}</td>
-          <td>{{ pagos.tipoPago }}</td>
+          <td jhiTranslate="{{ 'abfApp.TiposPagos.' + pagos.tipoPago }}">{{ pagos.tipoPago }}</td>
           <td>{{ pagos.descripcion }}</td>
-          <td>{{ pagos.idUsuarioRegistro }}</td>
-          <td>
-            <div *ngIf="pagos.alumnos">
-              <a [routerLink]="['/alumnos', pagos.alumnos.id, 'view']">{{ pagos.alumnos.nombreCompleto }}</a>
-            </div>
-          </td>
           <td>
             <div *ngIf="pagos.funcionarios">
               <a [routerLink]="['/funcionarios', pagos.funcionarios.id, 'view']">{{ pagos.funcionarios.nombreCompleto }}</a>

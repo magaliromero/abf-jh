@@ -1,0 +1,10 @@
+{
+  "abfApp": {
+    "TiposTorneos": {
+      "null": "",
+      "INTERNO": "Interno",
+      "NACIONAL": "Nacional",
+      "INTERNACIONAL": "Internacional"
+    }
+  }
+}

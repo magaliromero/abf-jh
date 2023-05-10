@@ -28,9 +28,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
-import py.com.abf.domain.Alumnos;
 import py.com.abf.domain.Funcionarios;
 import py.com.abf.domain.Pagos;
+import py.com.abf.domain.enumeration.TiposPagos;
 import py.com.abf.repository.PagosRepository;
 import py.com.abf.service.PagosService;
 import py.com.abf.service.criteria.PagosCriteria;
@@ -64,15 +64,11 @@ class PagosResourceIT {
     private static final LocalDate UPDATED_FECHA_PAGO = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_FECHA_PAGO = LocalDate.ofEpochDay(-1L);
 
-    private static final String DEFAULT_TIPO_PAGO = "AAAAAAAAAA";
-    private static final String UPDATED_TIPO_PAGO = "BBBBBBBBBB";
+    private static final TiposPagos DEFAULT_TIPO_PAGO = TiposPagos.PARCIAL;
+    private static final TiposPagos UPDATED_TIPO_PAGO = TiposPagos.CUOTA;
 
     private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
-
-    private static final Integer DEFAULT_ID_USUARIO_REGISTRO = 1;
-    private static final Integer UPDATED_ID_USUARIO_REGISTRO = 2;
-    private static final Integer SMALLER_ID_USUARIO_REGISTRO = 1 - 1;
 
     private static final String ENTITY_API_URL = "/api/pagos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -111,18 +107,7 @@ class PagosResourceIT {
             .fechaRegistro(DEFAULT_FECHA_REGISTRO)
             .fechaPago(DEFAULT_FECHA_PAGO)
             .tipoPago(DEFAULT_TIPO_PAGO)
-            .descripcion(DEFAULT_DESCRIPCION)
-            .idUsuarioRegistro(DEFAULT_ID_USUARIO_REGISTRO);
-        // Add required entity
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            alumnos = AlumnosResourceIT.createEntity(em);
-            em.persist(alumnos);
-            em.flush();
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        pagos.setAlumnos(alumnos);
+            .descripcion(DEFAULT_DESCRIPCION);
         // Add required entity
         Funcionarios funcionarios;
         if (TestUtil.findAll(em, Funcionarios.class).isEmpty()) {
@@ -150,18 +135,7 @@ class PagosResourceIT {
             .fechaRegistro(UPDATED_FECHA_REGISTRO)
             .fechaPago(UPDATED_FECHA_PAGO)
             .tipoPago(UPDATED_TIPO_PAGO)
-            .descripcion(UPDATED_DESCRIPCION)
-            .idUsuarioRegistro(UPDATED_ID_USUARIO_REGISTRO);
-        // Add required entity
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            alumnos = AlumnosResourceIT.createUpdatedEntity(em);
-            em.persist(alumnos);
-            em.flush();
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        pagos.setAlumnos(alumnos);
+            .descripcion(UPDATED_DESCRIPCION);
         // Add required entity
         Funcionarios funcionarios;
         if (TestUtil.findAll(em, Funcionarios.class).isEmpty()) {
@@ -200,7 +174,6 @@ class PagosResourceIT {
         assertThat(testPagos.getFechaPago()).isEqualTo(DEFAULT_FECHA_PAGO);
         assertThat(testPagos.getTipoPago()).isEqualTo(DEFAULT_TIPO_PAGO);
         assertThat(testPagos.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
-        assertThat(testPagos.getIdUsuarioRegistro()).isEqualTo(DEFAULT_ID_USUARIO_REGISTRO);
     }
 
     @Test
@@ -342,23 +315,6 @@ class PagosResourceIT {
 
     @Test
     @Transactional
-    void checkIdUsuarioRegistroIsRequired() throws Exception {
-        int databaseSizeBeforeTest = pagosRepository.findAll().size();
-        // set the field null
-        pagos.setIdUsuarioRegistro(null);
-
-        // Create the Pagos, which fails.
-
-        restPagosMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(pagos)))
-            .andExpect(status().isBadRequest());
-
-        List<Pagos> pagosList = pagosRepository.findAll();
-        assertThat(pagosList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllPagos() throws Exception {
         // Initialize the database
         pagosRepository.saveAndFlush(pagos);
@@ -374,9 +330,8 @@ class PagosResourceIT {
             .andExpect(jsonPath("$.[*].saldo").value(hasItem(DEFAULT_SALDO)))
             .andExpect(jsonPath("$.[*].fechaRegistro").value(hasItem(DEFAULT_FECHA_REGISTRO.toString())))
             .andExpect(jsonPath("$.[*].fechaPago").value(hasItem(DEFAULT_FECHA_PAGO.toString())))
-            .andExpect(jsonPath("$.[*].tipoPago").value(hasItem(DEFAULT_TIPO_PAGO)))
-            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
-            .andExpect(jsonPath("$.[*].idUsuarioRegistro").value(hasItem(DEFAULT_ID_USUARIO_REGISTRO)));
+            .andExpect(jsonPath("$.[*].tipoPago").value(hasItem(DEFAULT_TIPO_PAGO.toString())))
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -413,9 +368,8 @@ class PagosResourceIT {
             .andExpect(jsonPath("$.saldo").value(DEFAULT_SALDO))
             .andExpect(jsonPath("$.fechaRegistro").value(DEFAULT_FECHA_REGISTRO.toString()))
             .andExpect(jsonPath("$.fechaPago").value(DEFAULT_FECHA_PAGO.toString()))
-            .andExpect(jsonPath("$.tipoPago").value(DEFAULT_TIPO_PAGO))
-            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION))
-            .andExpect(jsonPath("$.idUsuarioRegistro").value(DEFAULT_ID_USUARIO_REGISTRO));
+            .andExpect(jsonPath("$.tipoPago").value(DEFAULT_TIPO_PAGO.toString()))
+            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION));
     }
 
     @Test
@@ -932,32 +886,6 @@ class PagosResourceIT {
 
     @Test
     @Transactional
-    void getAllPagosByTipoPagoContainsSomething() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where tipoPago contains DEFAULT_TIPO_PAGO
-        defaultPagosShouldBeFound("tipoPago.contains=" + DEFAULT_TIPO_PAGO);
-
-        // Get all the pagosList where tipoPago contains UPDATED_TIPO_PAGO
-        defaultPagosShouldNotBeFound("tipoPago.contains=" + UPDATED_TIPO_PAGO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPagosByTipoPagoNotContainsSomething() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where tipoPago does not contain DEFAULT_TIPO_PAGO
-        defaultPagosShouldNotBeFound("tipoPago.doesNotContain=" + DEFAULT_TIPO_PAGO);
-
-        // Get all the pagosList where tipoPago does not contain UPDATED_TIPO_PAGO
-        defaultPagosShouldBeFound("tipoPago.doesNotContain=" + UPDATED_TIPO_PAGO);
-    }
-
-    @Test
-    @Transactional
     void getAllPagosByDescripcionIsEqualToSomething() throws Exception {
         // Initialize the database
         pagosRepository.saveAndFlush(pagos);
@@ -1023,120 +951,6 @@ class PagosResourceIT {
 
     @Test
     @Transactional
-    void getAllPagosByIdUsuarioRegistroIsEqualToSomething() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where idUsuarioRegistro equals to DEFAULT_ID_USUARIO_REGISTRO
-        defaultPagosShouldBeFound("idUsuarioRegistro.equals=" + DEFAULT_ID_USUARIO_REGISTRO);
-
-        // Get all the pagosList where idUsuarioRegistro equals to UPDATED_ID_USUARIO_REGISTRO
-        defaultPagosShouldNotBeFound("idUsuarioRegistro.equals=" + UPDATED_ID_USUARIO_REGISTRO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPagosByIdUsuarioRegistroIsInShouldWork() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where idUsuarioRegistro in DEFAULT_ID_USUARIO_REGISTRO or UPDATED_ID_USUARIO_REGISTRO
-        defaultPagosShouldBeFound("idUsuarioRegistro.in=" + DEFAULT_ID_USUARIO_REGISTRO + "," + UPDATED_ID_USUARIO_REGISTRO);
-
-        // Get all the pagosList where idUsuarioRegistro equals to UPDATED_ID_USUARIO_REGISTRO
-        defaultPagosShouldNotBeFound("idUsuarioRegistro.in=" + UPDATED_ID_USUARIO_REGISTRO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPagosByIdUsuarioRegistroIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where idUsuarioRegistro is not null
-        defaultPagosShouldBeFound("idUsuarioRegistro.specified=true");
-
-        // Get all the pagosList where idUsuarioRegistro is null
-        defaultPagosShouldNotBeFound("idUsuarioRegistro.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllPagosByIdUsuarioRegistroIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where idUsuarioRegistro is greater than or equal to DEFAULT_ID_USUARIO_REGISTRO
-        defaultPagosShouldBeFound("idUsuarioRegistro.greaterThanOrEqual=" + DEFAULT_ID_USUARIO_REGISTRO);
-
-        // Get all the pagosList where idUsuarioRegistro is greater than or equal to UPDATED_ID_USUARIO_REGISTRO
-        defaultPagosShouldNotBeFound("idUsuarioRegistro.greaterThanOrEqual=" + UPDATED_ID_USUARIO_REGISTRO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPagosByIdUsuarioRegistroIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where idUsuarioRegistro is less than or equal to DEFAULT_ID_USUARIO_REGISTRO
-        defaultPagosShouldBeFound("idUsuarioRegistro.lessThanOrEqual=" + DEFAULT_ID_USUARIO_REGISTRO);
-
-        // Get all the pagosList where idUsuarioRegistro is less than or equal to SMALLER_ID_USUARIO_REGISTRO
-        defaultPagosShouldNotBeFound("idUsuarioRegistro.lessThanOrEqual=" + SMALLER_ID_USUARIO_REGISTRO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPagosByIdUsuarioRegistroIsLessThanSomething() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where idUsuarioRegistro is less than DEFAULT_ID_USUARIO_REGISTRO
-        defaultPagosShouldNotBeFound("idUsuarioRegistro.lessThan=" + DEFAULT_ID_USUARIO_REGISTRO);
-
-        // Get all the pagosList where idUsuarioRegistro is less than UPDATED_ID_USUARIO_REGISTRO
-        defaultPagosShouldBeFound("idUsuarioRegistro.lessThan=" + UPDATED_ID_USUARIO_REGISTRO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPagosByIdUsuarioRegistroIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        pagosRepository.saveAndFlush(pagos);
-
-        // Get all the pagosList where idUsuarioRegistro is greater than DEFAULT_ID_USUARIO_REGISTRO
-        defaultPagosShouldNotBeFound("idUsuarioRegistro.greaterThan=" + DEFAULT_ID_USUARIO_REGISTRO);
-
-        // Get all the pagosList where idUsuarioRegistro is greater than SMALLER_ID_USUARIO_REGISTRO
-        defaultPagosShouldBeFound("idUsuarioRegistro.greaterThan=" + SMALLER_ID_USUARIO_REGISTRO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPagosByAlumnosIsEqualToSomething() throws Exception {
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            pagosRepository.saveAndFlush(pagos);
-            alumnos = AlumnosResourceIT.createEntity(em);
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        em.persist(alumnos);
-        em.flush();
-        pagos.setAlumnos(alumnos);
-        pagosRepository.saveAndFlush(pagos);
-        Long alumnosId = alumnos.getId();
-
-        // Get all the pagosList where alumnos equals to alumnosId
-        defaultPagosShouldBeFound("alumnosId.equals=" + alumnosId);
-
-        // Get all the pagosList where alumnos equals to (alumnosId + 1)
-        defaultPagosShouldNotBeFound("alumnosId.equals=" + (alumnosId + 1));
-    }
-
-    @Test
-    @Transactional
     void getAllPagosByFuncionariosIsEqualToSomething() throws Exception {
         Funcionarios funcionarios;
         if (TestUtil.findAll(em, Funcionarios.class).isEmpty()) {
@@ -1172,9 +986,8 @@ class PagosResourceIT {
             .andExpect(jsonPath("$.[*].saldo").value(hasItem(DEFAULT_SALDO)))
             .andExpect(jsonPath("$.[*].fechaRegistro").value(hasItem(DEFAULT_FECHA_REGISTRO.toString())))
             .andExpect(jsonPath("$.[*].fechaPago").value(hasItem(DEFAULT_FECHA_PAGO.toString())))
-            .andExpect(jsonPath("$.[*].tipoPago").value(hasItem(DEFAULT_TIPO_PAGO)))
-            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
-            .andExpect(jsonPath("$.[*].idUsuarioRegistro").value(hasItem(DEFAULT_ID_USUARIO_REGISTRO)));
+            .andExpect(jsonPath("$.[*].tipoPago").value(hasItem(DEFAULT_TIPO_PAGO.toString())))
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)));
 
         // Check, that the count call also returns 1
         restPagosMockMvc
@@ -1229,8 +1042,7 @@ class PagosResourceIT {
             .fechaRegistro(UPDATED_FECHA_REGISTRO)
             .fechaPago(UPDATED_FECHA_PAGO)
             .tipoPago(UPDATED_TIPO_PAGO)
-            .descripcion(UPDATED_DESCRIPCION)
-            .idUsuarioRegistro(UPDATED_ID_USUARIO_REGISTRO);
+            .descripcion(UPDATED_DESCRIPCION);
 
         restPagosMockMvc
             .perform(
@@ -1251,7 +1063,6 @@ class PagosResourceIT {
         assertThat(testPagos.getFechaPago()).isEqualTo(UPDATED_FECHA_PAGO);
         assertThat(testPagos.getTipoPago()).isEqualTo(UPDATED_TIPO_PAGO);
         assertThat(testPagos.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testPagos.getIdUsuarioRegistro()).isEqualTo(UPDATED_ID_USUARIO_REGISTRO);
     }
 
     @Test
@@ -1326,8 +1137,7 @@ class PagosResourceIT {
             .montoInicial(UPDATED_MONTO_INICIAL)
             .saldo(UPDATED_SALDO)
             .fechaPago(UPDATED_FECHA_PAGO)
-            .descripcion(UPDATED_DESCRIPCION)
-            .idUsuarioRegistro(UPDATED_ID_USUARIO_REGISTRO);
+            .descripcion(UPDATED_DESCRIPCION);
 
         restPagosMockMvc
             .perform(
@@ -1348,7 +1158,6 @@ class PagosResourceIT {
         assertThat(testPagos.getFechaPago()).isEqualTo(UPDATED_FECHA_PAGO);
         assertThat(testPagos.getTipoPago()).isEqualTo(DEFAULT_TIPO_PAGO);
         assertThat(testPagos.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testPagos.getIdUsuarioRegistro()).isEqualTo(UPDATED_ID_USUARIO_REGISTRO);
     }
 
     @Test
@@ -1370,8 +1179,7 @@ class PagosResourceIT {
             .fechaRegistro(UPDATED_FECHA_REGISTRO)
             .fechaPago(UPDATED_FECHA_PAGO)
             .tipoPago(UPDATED_TIPO_PAGO)
-            .descripcion(UPDATED_DESCRIPCION)
-            .idUsuarioRegistro(UPDATED_ID_USUARIO_REGISTRO);
+            .descripcion(UPDATED_DESCRIPCION);
 
         restPagosMockMvc
             .perform(
@@ -1392,7 +1200,6 @@ class PagosResourceIT {
         assertThat(testPagos.getFechaPago()).isEqualTo(UPDATED_FECHA_PAGO);
         assertThat(testPagos.getTipoPago()).isEqualTo(UPDATED_TIPO_PAGO);
         assertThat(testPagos.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testPagos.getIdUsuarioRegistro()).isEqualTo(UPDATED_ID_USUARIO_REGISTRO);
     }
 
     @Test

@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { PrestamosFormService } from './prestamos-form.service';
 import { PrestamosService } from '../service/prestamos.service';
 import { IPrestamos } from '../prestamos.model';
+import { IMateriales } from 'app/entities/materiales/materiales.model';
+import { MaterialesService } from 'app/entities/materiales/service/materiales.service';
 
 import { PrestamosUpdateComponent } from './prestamos-update.component';
 
@@ -18,6 +20,7 @@ describe('Prestamos Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let prestamosFormService: PrestamosFormService;
   let prestamosService: PrestamosService;
+  let materialesService: MaterialesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +43,43 @@ describe('Prestamos Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     prestamosFormService = TestBed.inject(PrestamosFormService);
     prestamosService = TestBed.inject(PrestamosService);
+    materialesService = TestBed.inject(MaterialesService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call Materiales query and add missing value', () => {
       const prestamos: IPrestamos = { id: 456 };
+      const materiales: IMateriales = { id: 38783 };
+      prestamos.materiales = materiales;
+
+      const materialesCollection: IMateriales[] = [{ id: 40409 }];
+      jest.spyOn(materialesService, 'query').mockReturnValue(of(new HttpResponse({ body: materialesCollection })));
+      const additionalMateriales = [materiales];
+      const expectedCollection: IMateriales[] = [...additionalMateriales, ...materialesCollection];
+      jest.spyOn(materialesService, 'addMaterialesToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ prestamos });
       comp.ngOnInit();
 
+      expect(materialesService.query).toHaveBeenCalled();
+      expect(materialesService.addMaterialesToCollectionIfMissing).toHaveBeenCalledWith(
+        materialesCollection,
+        ...additionalMateriales.map(expect.objectContaining)
+      );
+      expect(comp.materialesSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const prestamos: IPrestamos = { id: 456 };
+      const materiales: IMateriales = { id: 77994 };
+      prestamos.materiales = materiales;
+
+      activatedRoute.data = of({ prestamos });
+      comp.ngOnInit();
+
+      expect(comp.materialesSharedCollection).toContain(materiales);
       expect(comp.prestamos).toEqual(prestamos);
     });
   });
@@ -120,6 +149,18 @@ describe('Prestamos Management Update Component', () => {
       expect(prestamosService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareMateriales', () => {
+      it('Should forward to materialesService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(materialesService, 'compareMateriales');
+        comp.compareMateriales(entity, entity2);
+        expect(materialesService.compareMateriales).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

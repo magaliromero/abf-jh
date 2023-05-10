@@ -13,5 +13,11 @@
                                  constraintName="fk_fichas__torneos_id"
                                  referencedColumnNames="id"
                                  referencedTableName="torneos"/>
+
+        <addForeignKeyConstraint baseColumnNames="alumnos_id"
+                                 baseTableName="fichas"
+                                 constraintName="fk_fichas__alumnos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="alumnos"/>
     </changeSet>
 </databaseChangeLog>

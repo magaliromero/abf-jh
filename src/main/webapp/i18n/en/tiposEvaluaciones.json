@@ -1,0 +1,10 @@
+{
+  "abfApp": {
+    "TiposEvaluaciones": {
+      "null": "",
+      "FINAL": "Final",
+      "ACUMULATIVA": "Acumulativa",
+      "FORMATIVA": "Formativa"
+    }
+  }
+}

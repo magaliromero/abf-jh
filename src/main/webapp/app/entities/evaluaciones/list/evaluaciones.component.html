@@ -96,7 +96,7 @@
           <td>
             <a [routerLink]="['/evaluaciones', evaluaciones.id, 'view']">{{ evaluaciones.id }}</a>
           </td>
-          <td>{{ evaluaciones.tipoEvaluacion }}</td>
+          <td jhiTranslate="{{ 'abfApp.TiposEvaluaciones.' + evaluaciones.tipoEvaluacion }}">{{ evaluaciones.tipoEvaluacion }}</td>
           <td>{{ evaluaciones.idExamen }}</td>
           <td>{{ evaluaciones.idActa }}</td>
           <td>{{ evaluaciones.fecha | formatMediumDate }}</td>

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import py.com.abf.domain.enumeration.TiposEvaluaciones;
 
 /**
  * A Evaluaciones.
@@ -26,8 +27,9 @@ public class Evaluaciones implements Serializable {
     private Long id;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo_evaluacion", nullable = false)
-    private String tipoEvaluacion;
+    private TiposEvaluaciones tipoEvaluacion;
 
     @Column(name = "id_examen")
     private Integer idExamen;
@@ -51,7 +53,9 @@ public class Evaluaciones implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
-        value = { "matriculas", "registroClases", "pagos", "evaluaciones", "inscripciones", "tipoDocumentos" },
+        value = {
+            "matriculas", "registroClases", "cobros", "evaluaciones", "inscripciones", "fichaPartidasTorneos", "facturas", "tipoDocumentos",
+        },
         allowSetters = true
     )
     private Alumnos alumnos;
@@ -71,16 +75,16 @@ public class Evaluaciones implements Serializable {
         this.id = id;
     }
 
-    public String getTipoEvaluacion() {
+    public TiposEvaluaciones getTipoEvaluacion() {
         return this.tipoEvaluacion;
     }
 
-    public Evaluaciones tipoEvaluacion(String tipoEvaluacion) {
+    public Evaluaciones tipoEvaluacion(TiposEvaluaciones tipoEvaluacion) {
         this.setTipoEvaluacion(tipoEvaluacion);
         return this;
     }
 
-    public void setTipoEvaluacion(String tipoEvaluacion) {
+    public void setTipoEvaluacion(TiposEvaluaciones tipoEvaluacion) {
         this.tipoEvaluacion = tipoEvaluacion;
     }
 

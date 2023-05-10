@@ -1,4 +1,4 @@
-id;fecha;cantidad_horas;asistencia_alumno;malla_curricular_id;temas_id;funcionarios_id;alumnos_id
+id;fecha;cantidad_horas;asistencia_alumno;cursos_id;temas_id;funcionarios_id;alumnos_id
 1;2023-02-27;97372;false;1;1;1;1
 2;2023-02-27;64898;true;2;2;2;2
 3;2023-02-27;45840;true;3;3;3;3

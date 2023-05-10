@@ -2,32 +2,43 @@ package py.com.abf.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
+import py.com.abf.domain.Materiales;
 import py.com.abf.domain.Prestamos;
 import py.com.abf.repository.PrestamosRepository;
+import py.com.abf.service.PrestamosService;
 import py.com.abf.service.criteria.PrestamosCriteria;
 
 /**
  * Integration tests for the {@link PrestamosResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class PrestamosResourceIT {
@@ -52,6 +63,12 @@ class PrestamosResourceIT {
 
     @Autowired
     private PrestamosRepository prestamosRepository;
+
+    @Mock
+    private PrestamosRepository prestamosRepositoryMock;
+
+    @Mock
+    private PrestamosService prestamosServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -196,6 +213,23 @@ class PrestamosResourceIT {
             .andExpect(jsonPath("$.[*].fechaPrestamo").value(hasItem(DEFAULT_FECHA_PRESTAMO.toString())))
             .andExpect(jsonPath("$.[*].vigenciaPrestamo").value(hasItem(DEFAULT_VIGENCIA_PRESTAMO)))
             .andExpect(jsonPath("$.[*].fechaDevolucion").value(hasItem(DEFAULT_FECHA_DEVOLUCION.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPrestamosWithEagerRelationshipsIsEnabled() throws Exception {
+        when(prestamosServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPrestamosMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(prestamosServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPrestamosWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(prestamosServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restPrestamosMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(prestamosRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -504,6 +538,29 @@ class PrestamosResourceIT {
 
         // Get all the prestamosList where fechaDevolucion is greater than SMALLER_FECHA_DEVOLUCION
         defaultPrestamosShouldBeFound("fechaDevolucion.greaterThan=" + SMALLER_FECHA_DEVOLUCION);
+    }
+
+    @Test
+    @Transactional
+    void getAllPrestamosByMaterialesIsEqualToSomething() throws Exception {
+        Materiales materiales;
+        if (TestUtil.findAll(em, Materiales.class).isEmpty()) {
+            prestamosRepository.saveAndFlush(prestamos);
+            materiales = MaterialesResourceIT.createEntity(em);
+        } else {
+            materiales = TestUtil.findAll(em, Materiales.class).get(0);
+        }
+        em.persist(materiales);
+        em.flush();
+        prestamos.setMateriales(materiales);
+        prestamosRepository.saveAndFlush(prestamos);
+        Long materialesId = materiales.getId();
+
+        // Get all the prestamosList where materiales equals to materialesId
+        defaultPrestamosShouldBeFound("materialesId.equals=" + materialesId);
+
+        // Get all the prestamosList where materiales equals to (materialesId + 1)
+        defaultPrestamosShouldNotBeFound("materialesId.equals=" + (materialesId + 1));
     }
 
     /**

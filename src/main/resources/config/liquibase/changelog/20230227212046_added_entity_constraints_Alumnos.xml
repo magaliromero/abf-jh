@@ -9,8 +9,8 @@
     <changeSet id="20230227212046-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="tipo_documentos_id"
-                                 baseTableName="alummos"
-                                 constraintName="fk_alummos__tipo_documentos_id"
+                                 baseTableName="alumnos"
+                                 constraintName="fk_alumnos__tipo_documentos_id"
                                  referencedColumnNames="id"
                                  referencedTableName="tipos_documentos"/>
     </changeSet>

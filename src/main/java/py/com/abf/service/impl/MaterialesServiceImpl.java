@@ -51,8 +51,11 @@ public class MaterialesServiceImpl implements MaterialesService {
                 if (materiales.getEstado() != null) {
                     existingMateriales.setEstado(materiales.getEstado());
                 }
-                if (materiales.getCantidad() != null) {
-                    existingMateriales.setCantidad(materiales.getCantidad());
+                if (materiales.getCantidadStock() != null) {
+                    existingMateriales.setCantidadStock(materiales.getCantidadStock());
+                }
+                if (materiales.getCantidadPrestamo() != null) {
+                    existingMateriales.setCantidadPrestamo(materiales.getCantidadPrestamo());
                 }
 
                 return existingMateriales;

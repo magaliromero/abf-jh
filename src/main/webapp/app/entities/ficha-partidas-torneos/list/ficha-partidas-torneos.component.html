@@ -82,6 +82,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="alumnos.nombreCompleto">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.fichaPartidasTorneos.alumnos">Alumnos</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -99,6 +105,11 @@
           <td>
             <div *ngIf="fichaPartidasTorneos.torneos">
               <a [routerLink]="['/torneos', fichaPartidasTorneos.torneos.id, 'view']">{{ fichaPartidasTorneos.torneos.nombreTorneo }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="fichaPartidasTorneos.alumnos">
+              <a [routerLink]="['/alumnos', fichaPartidasTorneos.alumnos.id, 'view']">{{ fichaPartidasTorneos.alumnos.nombreCompleto }}</a>
             </div>
           </td>
           <td class="text-end">

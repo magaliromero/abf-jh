@@ -27,7 +27,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.MallaCurricular;
-import py.com.abf.domain.RegistroClases;
 import py.com.abf.domain.Temas;
 import py.com.abf.domain.enumeration.Niveles;
 import py.com.abf.repository.MallaCurricularRepository;
@@ -365,29 +364,6 @@ class MallaCurricularResourceIT {
 
         // Get all the mallaCurricularList where nivel is null
         defaultMallaCurricularShouldNotBeFound("nivel.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllMallaCurricularsByRegistroClasesIsEqualToSomething() throws Exception {
-        RegistroClases registroClases;
-        if (TestUtil.findAll(em, RegistroClases.class).isEmpty()) {
-            mallaCurricularRepository.saveAndFlush(mallaCurricular);
-            registroClases = RegistroClasesResourceIT.createEntity(em);
-        } else {
-            registroClases = TestUtil.findAll(em, RegistroClases.class).get(0);
-        }
-        em.persist(registroClases);
-        em.flush();
-        mallaCurricular.addRegistroClases(registroClases);
-        mallaCurricularRepository.saveAndFlush(mallaCurricular);
-        Long registroClasesId = registroClases.getId();
-
-        // Get all the mallaCurricularList where registroClases equals to registroClasesId
-        defaultMallaCurricularShouldBeFound("registroClasesId.equals=" + registroClasesId);
-
-        // Get all the mallaCurricularList where registroClases equals to (registroClasesId + 1)
-        defaultMallaCurricularShouldNotBeFound("registroClasesId.equals=" + (registroClasesId + 1));
     }
 
     @Test

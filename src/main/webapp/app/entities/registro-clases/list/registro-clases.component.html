@@ -58,9 +58,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="mallaCurricular.titulo">
+          <th scope="col" jhiSortBy="cursos.nombreCurso">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.registroClases.mallaCurricular">Malla Curricular</span>
+              <span jhiTranslate="abfApp.registroClases.cursos">Cursos</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -94,10 +94,8 @@
           <td>{{ registroClases.cantidadHoras }}</td>
           <td>{{ registroClases.asistenciaAlumno }}</td>
           <td>
-            <div *ngIf="registroClases.mallaCurricular">
-              <a [routerLink]="['/malla-curricular', registroClases.mallaCurricular.id, 'view']">{{
-                registroClases.mallaCurricular.titulo
-              }}</a>
+            <div *ngIf="registroClases.cursos">
+              <a [routerLink]="['/cursos', registroClases.cursos.id, 'view']">{{ registroClases.cursos.nombreCurso }}</a>
             </div>
           </td>
           <td>

@@ -133,10 +133,10 @@ public class AlumnosQueryService extends QueryService<Alumnos> {
                         )
                     );
             }
-            if (criteria.getPagosId() != null) {
+            if (criteria.getCobrosId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(criteria.getPagosId(), root -> root.join(Alumnos_.pagos, JoinType.LEFT).get(Pagos_.id))
+                        buildSpecification(criteria.getCobrosId(), root -> root.join(Alumnos_.cobros, JoinType.LEFT).get(Cobros_.id))
                     );
             }
             if (criteria.getEvaluacionesId() != null) {
@@ -155,6 +155,21 @@ public class AlumnosQueryService extends QueryService<Alumnos> {
                             criteria.getInscripcionesId(),
                             root -> root.join(Alumnos_.inscripciones, JoinType.LEFT).get(Inscripciones_.id)
                         )
+                    );
+            }
+            if (criteria.getFichaPartidasTorneosId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getFichaPartidasTorneosId(),
+                            root -> root.join(Alumnos_.fichaPartidasTorneos, JoinType.LEFT).get(FichaPartidasTorneos_.id)
+                        )
+                    );
+            }
+            if (criteria.getFacturasId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getFacturasId(), root -> root.join(Alumnos_.facturas, JoinType.LEFT).get(Facturas_.id))
                     );
             }
             if (criteria.getTipoDocumentosId() != null) {

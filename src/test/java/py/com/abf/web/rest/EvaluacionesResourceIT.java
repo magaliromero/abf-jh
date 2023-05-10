@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Alumnos;
 import py.com.abf.domain.Evaluaciones;
+import py.com.abf.domain.enumeration.TiposEvaluaciones;
 import py.com.abf.repository.EvaluacionesRepository;
 import py.com.abf.service.EvaluacionesService;
 import py.com.abf.service.criteria.EvaluacionesCriteria;
@@ -43,8 +44,8 @@ import py.com.abf.service.criteria.EvaluacionesCriteria;
 @WithMockUser
 class EvaluacionesResourceIT {
 
-    private static final String DEFAULT_TIPO_EVALUACION = "AAAAAAAAAA";
-    private static final String UPDATED_TIPO_EVALUACION = "BBBBBBBBBB";
+    private static final TiposEvaluaciones DEFAULT_TIPO_EVALUACION = TiposEvaluaciones.FINAL;
+    private static final TiposEvaluaciones UPDATED_TIPO_EVALUACION = TiposEvaluaciones.ACUMULATIVA;
 
     private static final Integer DEFAULT_ID_EXAMEN = 1;
     private static final Integer UPDATED_ID_EXAMEN = 2;
@@ -239,7 +240,7 @@ class EvaluacionesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(evaluaciones.getId().intValue())))
-            .andExpect(jsonPath("$.[*].tipoEvaluacion").value(hasItem(DEFAULT_TIPO_EVALUACION)))
+            .andExpect(jsonPath("$.[*].tipoEvaluacion").value(hasItem(DEFAULT_TIPO_EVALUACION.toString())))
             .andExpect(jsonPath("$.[*].idExamen").value(hasItem(DEFAULT_ID_EXAMEN)))
             .andExpect(jsonPath("$.[*].idActa").value(hasItem(DEFAULT_ID_ACTA)))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
@@ -277,7 +278,7 @@ class EvaluacionesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(evaluaciones.getId().intValue()))
-            .andExpect(jsonPath("$.tipoEvaluacion").value(DEFAULT_TIPO_EVALUACION))
+            .andExpect(jsonPath("$.tipoEvaluacion").value(DEFAULT_TIPO_EVALUACION.toString()))
             .andExpect(jsonPath("$.idExamen").value(DEFAULT_ID_EXAMEN))
             .andExpect(jsonPath("$.idActa").value(DEFAULT_ID_ACTA))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
@@ -341,32 +342,6 @@ class EvaluacionesResourceIT {
 
         // Get all the evaluacionesList where tipoEvaluacion is null
         defaultEvaluacionesShouldNotBeFound("tipoEvaluacion.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllEvaluacionesByTipoEvaluacionContainsSomething() throws Exception {
-        // Initialize the database
-        evaluacionesRepository.saveAndFlush(evaluaciones);
-
-        // Get all the evaluacionesList where tipoEvaluacion contains DEFAULT_TIPO_EVALUACION
-        defaultEvaluacionesShouldBeFound("tipoEvaluacion.contains=" + DEFAULT_TIPO_EVALUACION);
-
-        // Get all the evaluacionesList where tipoEvaluacion contains UPDATED_TIPO_EVALUACION
-        defaultEvaluacionesShouldNotBeFound("tipoEvaluacion.contains=" + UPDATED_TIPO_EVALUACION);
-    }
-
-    @Test
-    @Transactional
-    void getAllEvaluacionesByTipoEvaluacionNotContainsSomething() throws Exception {
-        // Initialize the database
-        evaluacionesRepository.saveAndFlush(evaluaciones);
-
-        // Get all the evaluacionesList where tipoEvaluacion does not contain DEFAULT_TIPO_EVALUACION
-        defaultEvaluacionesShouldNotBeFound("tipoEvaluacion.doesNotContain=" + DEFAULT_TIPO_EVALUACION);
-
-        // Get all the evaluacionesList where tipoEvaluacion does not contain UPDATED_TIPO_EVALUACION
-        defaultEvaluacionesShouldBeFound("tipoEvaluacion.doesNotContain=" + UPDATED_TIPO_EVALUACION);
     }
 
     @Test
@@ -921,7 +896,7 @@ class EvaluacionesResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(evaluaciones.getId().intValue())))
-            .andExpect(jsonPath("$.[*].tipoEvaluacion").value(hasItem(DEFAULT_TIPO_EVALUACION)))
+            .andExpect(jsonPath("$.[*].tipoEvaluacion").value(hasItem(DEFAULT_TIPO_EVALUACION.toString())))
             .andExpect(jsonPath("$.[*].idExamen").value(hasItem(DEFAULT_ID_EXAMEN)))
             .andExpect(jsonPath("$.[*].idActa").value(hasItem(DEFAULT_ID_ACTA)))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))

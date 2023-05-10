@@ -1,0 +1,10 @@
+{
+  "abfApp": {
+    "EstadosMateriales": {
+      "null": "",
+      "DISPONIBLE": "Disponible",
+      "PRESTADO": "En Prestamo",
+      "VENCIDO": "No devuelto"
+    }
+  }
+}

@@ -57,6 +57,21 @@
           <td>{{ cursos.nombreCurso }}</td>
           <td class="text-end">
             <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/registro-clases']"
+                [queryParams]="{ 'filter[cursosId.in]': cursos.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.cursos.registroClases' | translate) }"
+                  >Show Registro Clases</span
+                >
+              </button>
               <button type="submit" [routerLink]="['/cursos', cursos.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>

@@ -12,11 +12,17 @@
     },
     {
       "fieldName": "estado",
-      "fieldType": "String",
+      "fieldType": "EstadosMateriales",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "DISPONIBLE (Disponible),PRESTADO (En Prestamo),VENCIDO (No devuelto)"
+    },
+    {
+      "fieldName": "cantidadStock",
+      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "cantidad",
+      "fieldName": "cantidadPrestamo",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     }
@@ -26,6 +32,13 @@
   "name": "Materiales",
   "pagination": "pagination",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "prestamos",
+      "otherEntityRelationshipName": "materiales",
+      "relationshipName": "prestamos",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "service": "serviceImpl"
 }

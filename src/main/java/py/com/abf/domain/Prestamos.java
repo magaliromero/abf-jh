@@ -1,5 +1,6 @@
 package py.com.abf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
@@ -35,6 +36,10 @@ public class Prestamos implements Serializable {
     @NotNull
     @Column(name = "fecha_devolucion", nullable = false)
     private LocalDate fechaDevolucion;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "prestamos" }, allowSetters = true)
+    private Materiales materiales;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -88,6 +93,19 @@ public class Prestamos implements Serializable {
 
     public void setFechaDevolucion(LocalDate fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
+    }
+
+    public Materiales getMateriales() {
+        return this.materiales;
+    }
+
+    public void setMateriales(Materiales materiales) {
+        this.materiales = materiales;
+    }
+
+    public Prestamos materiales(Materiales materiales) {
+        this.setMateriales(materiales);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

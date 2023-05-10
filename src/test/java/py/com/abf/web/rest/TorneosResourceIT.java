@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.FichaPartidasTorneos;
 import py.com.abf.domain.Torneos;
+import py.com.abf.domain.enumeration.TiposTorneos;
 import py.com.abf.repository.TorneosRepository;
 import py.com.abf.service.criteria.TorneosCriteria;
 
@@ -50,8 +51,8 @@ class TorneosResourceIT {
     private static final String DEFAULT_TIEMPO = "AAAAAAAAAA";
     private static final String UPDATED_TIEMPO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TIPO_TORNEO = "AAAAAAAAAA";
-    private static final String UPDATED_TIPO_TORNEO = "BBBBBBBBBB";
+    private static final TiposTorneos DEFAULT_TIPO_TORNEO = TiposTorneos.INTERNO;
+    private static final TiposTorneos UPDATED_TIPO_TORNEO = TiposTorneos.NACIONAL;
 
     private static final Boolean DEFAULT_TORNEO_EVALUADO = false;
     private static final Boolean UPDATED_TORNEO_EVALUADO = true;
@@ -230,6 +231,23 @@ class TorneosResourceIT {
 
     @Test
     @Transactional
+    void checkTipoTorneoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = torneosRepository.findAll().size();
+        // set the field null
+        torneos.setTipoTorneo(null);
+
+        // Create the Torneos, which fails.
+
+        restTorneosMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(torneos)))
+            .andExpect(status().isBadRequest());
+
+        List<Torneos> torneosList = torneosRepository.findAll();
+        assertThat(torneosList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkTorneoEvaluadoIsRequired() throws Exception {
         int databaseSizeBeforeTest = torneosRepository.findAll().size();
         // set the field null
@@ -279,7 +297,7 @@ class TorneosResourceIT {
             .andExpect(jsonPath("$.[*].fechaFin").value(hasItem(DEFAULT_FECHA_FIN.toString())))
             .andExpect(jsonPath("$.[*].lugar").value(hasItem(DEFAULT_LUGAR)))
             .andExpect(jsonPath("$.[*].tiempo").value(hasItem(DEFAULT_TIEMPO)))
-            .andExpect(jsonPath("$.[*].tipoTorneo").value(hasItem(DEFAULT_TIPO_TORNEO)))
+            .andExpect(jsonPath("$.[*].tipoTorneo").value(hasItem(DEFAULT_TIPO_TORNEO.toString())))
             .andExpect(jsonPath("$.[*].torneoEvaluado").value(hasItem(DEFAULT_TORNEO_EVALUADO.booleanValue())))
             .andExpect(jsonPath("$.[*].federado").value(hasItem(DEFAULT_FEDERADO.booleanValue())));
     }
@@ -301,7 +319,7 @@ class TorneosResourceIT {
             .andExpect(jsonPath("$.fechaFin").value(DEFAULT_FECHA_FIN.toString()))
             .andExpect(jsonPath("$.lugar").value(DEFAULT_LUGAR))
             .andExpect(jsonPath("$.tiempo").value(DEFAULT_TIEMPO))
-            .andExpect(jsonPath("$.tipoTorneo").value(DEFAULT_TIPO_TORNEO))
+            .andExpect(jsonPath("$.tipoTorneo").value(DEFAULT_TIPO_TORNEO.toString()))
             .andExpect(jsonPath("$.torneoEvaluado").value(DEFAULT_TORNEO_EVALUADO.booleanValue()))
             .andExpect(jsonPath("$.federado").value(DEFAULT_FEDERADO.booleanValue()));
     }
@@ -742,32 +760,6 @@ class TorneosResourceIT {
 
     @Test
     @Transactional
-    void getAllTorneosByTipoTorneoContainsSomething() throws Exception {
-        // Initialize the database
-        torneosRepository.saveAndFlush(torneos);
-
-        // Get all the torneosList where tipoTorneo contains DEFAULT_TIPO_TORNEO
-        defaultTorneosShouldBeFound("tipoTorneo.contains=" + DEFAULT_TIPO_TORNEO);
-
-        // Get all the torneosList where tipoTorneo contains UPDATED_TIPO_TORNEO
-        defaultTorneosShouldNotBeFound("tipoTorneo.contains=" + UPDATED_TIPO_TORNEO);
-    }
-
-    @Test
-    @Transactional
-    void getAllTorneosByTipoTorneoNotContainsSomething() throws Exception {
-        // Initialize the database
-        torneosRepository.saveAndFlush(torneos);
-
-        // Get all the torneosList where tipoTorneo does not contain DEFAULT_TIPO_TORNEO
-        defaultTorneosShouldNotBeFound("tipoTorneo.doesNotContain=" + DEFAULT_TIPO_TORNEO);
-
-        // Get all the torneosList where tipoTorneo does not contain UPDATED_TIPO_TORNEO
-        defaultTorneosShouldBeFound("tipoTorneo.doesNotContain=" + UPDATED_TIPO_TORNEO);
-    }
-
-    @Test
-    @Transactional
     void getAllTorneosByTorneoEvaluadoIsEqualToSomething() throws Exception {
         // Initialize the database
         torneosRepository.saveAndFlush(torneos);
@@ -881,7 +873,7 @@ class TorneosResourceIT {
             .andExpect(jsonPath("$.[*].fechaFin").value(hasItem(DEFAULT_FECHA_FIN.toString())))
             .andExpect(jsonPath("$.[*].lugar").value(hasItem(DEFAULT_LUGAR)))
             .andExpect(jsonPath("$.[*].tiempo").value(hasItem(DEFAULT_TIEMPO)))
-            .andExpect(jsonPath("$.[*].tipoTorneo").value(hasItem(DEFAULT_TIPO_TORNEO)))
+            .andExpect(jsonPath("$.[*].tipoTorneo").value(hasItem(DEFAULT_TIPO_TORNEO.toString())))
             .andExpect(jsonPath("$.[*].torneoEvaluado").value(hasItem(DEFAULT_TORNEO_EVALUADO.booleanValue())))
             .andExpect(jsonPath("$.[*].federado").value(hasItem(DEFAULT_FEDERADO.booleanValue())));
 

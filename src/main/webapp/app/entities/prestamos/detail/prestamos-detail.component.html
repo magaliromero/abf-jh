@@ -26,6 +26,12 @@
         <dd>
           <span>{{ prestamos.fechaDevolucion | formatMediumDate }}</span>
         </dd>
+        <dt><span jhiTranslate="abfApp.prestamos.materiales">Materiales</span></dt>
+        <dd>
+          <div *ngIf="prestamos.materiales">
+            <a [routerLink]="['/materiales', prestamos.materiales.id, 'view']">{{ prestamos.materiales.descripcion }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

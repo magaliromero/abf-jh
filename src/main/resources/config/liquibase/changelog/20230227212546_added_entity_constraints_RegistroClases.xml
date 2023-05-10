@@ -8,11 +8,11 @@
     -->
     <changeSet id="20230227212546-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="malla_curricular_id"
+        <addForeignKeyConstraint baseColumnNames="cursos_id"
                                  baseTableName="registro_clases"
-                                 constraintName="fk_registro_clases__malla_curricular_id"
+                                 constraintName="fk_registro_clases__cursos_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="malla_curricular"/>
+                                 referencedTableName="cursos"/>
 
         <addForeignKeyConstraint baseColumnNames="temas_id"
                                  baseTableName="registro_clases"
@@ -30,6 +30,6 @@
                                  baseTableName="registro_clases"
                                  constraintName="fk_registro_clases__alumnos_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="alummos"/>
+                                 referencedTableName="alumnos"/>
     </changeSet>
 </databaseChangeLog>

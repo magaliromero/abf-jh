@@ -1,5 +1,7 @@
 import dayjs from 'dayjs/esm';
 
+import { TiposTorneos } from 'app/entities/enumerations/tipos-torneos.model';
+
 import { ITorneos, NewTorneos } from './torneos.model';
 
 export const sampleWithRequiredData: ITorneos = {
@@ -8,8 +10,9 @@ export const sampleWithRequiredData: ITorneos = {
   fechaInicio: dayjs('2023-03-12'),
   fechaFin: dayjs('2023-03-13'),
   lugar: 'Zapatos index array',
-  torneoEvaluado: false,
-  federado: true,
+  tipoTorneo: TiposTorneos['NACIONAL'],
+  torneoEvaluado: true,
+  federado: false,
 };
 
 export const sampleWithPartialData: ITorneos = {
@@ -18,29 +21,31 @@ export const sampleWithPartialData: ITorneos = {
   fechaInicio: dayjs('2023-03-13'),
   fechaFin: dayjs('2023-03-13'),
   lugar: 'calculating',
-  torneoEvaluado: false,
-  federado: true,
-};
-
-export const sampleWithFullData: ITorneos = {
-  id: 83450,
-  nombreTorneo: 'Guapa bandwidth Municipio',
-  fechaInicio: dayjs('2023-03-13'),
-  fechaFin: dayjs('2023-03-13'),
-  lugar: 'next-generation',
-  tiempo: 'Orgánico',
-  tipoTorneo: 'Genérico Cine',
+  tipoTorneo: TiposTorneos['INTERNO'],
   torneoEvaluado: true,
   federado: true,
 };
 
-export const sampleWithNewData: NewTorneos = {
-  nombreTorneo: 'Música Deportes',
+export const sampleWithFullData: ITorneos = {
+  id: 99261,
+  nombreTorneo: '1080p',
   fechaInicio: dayjs('2023-03-13'),
   fechaFin: dayjs('2023-03-13'),
-  lugar: 'facilitate Singapore',
+  lugar: 'holística Montserrat',
+  tiempo: 'next-generation',
+  tipoTorneo: TiposTorneos['INTERNO'],
   torneoEvaluado: false,
-  federado: false,
+  federado: true,
+};
+
+export const sampleWithNewData: NewTorneos = {
+  nombreTorneo: 'optimize',
+  fechaInicio: dayjs('2023-03-13'),
+  fechaFin: dayjs('2023-03-13'),
+  lugar: 'synthesize Apartamento back',
+  tipoTorneo: TiposTorneos['INTERNACIONAL'],
+  torneoEvaluado: true,
+  federado: true,
   id: null,
 };
 

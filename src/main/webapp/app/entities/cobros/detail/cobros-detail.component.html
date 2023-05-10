@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="cobros">
+      <h2 data-cy="cobrosDetailsHeading"><span jhiTranslate="abfApp.cobros.detail.title">Cobros</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ cobros.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.montoPago">Monto Pago</span></dt>
+        <dd>
+          <span>{{ cobros.montoPago }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.montoInicial">Monto Inicial</span></dt>
+        <dd>
+          <span>{{ cobros.montoInicial }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.saldo">Saldo</span></dt>
+        <dd>
+          <span>{{ cobros.saldo }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.fechaRegistro">Fecha Registro</span></dt>
+        <dd>
+          <span>{{ cobros.fechaRegistro | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.fechaPago">Fecha Pago</span></dt>
+        <dd>
+          <span>{{ cobros.fechaPago | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.tipoPago">Tipo Pago</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'abfApp.TiposPagos.' + cobros.tipoPago }}">{{ cobros.tipoPago }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.descripcion">Descripcion</span></dt>
+        <dd>
+          <span>{{ cobros.descripcion }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.alumnos">Alumnos</span></dt>
+        <dd>
+          <div *ngIf="cobros.alumnos">
+            <a [routerLink]="['/alumnos', cobros.alumnos.id, 'view']">{{ cobros.alumnos.nombreCompleto }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cobros.factura">Factura</span></dt>
+        <dd>
+          <div *ngIf="cobros.factura">
+            <a [routerLink]="['/facturas', cobros.factura.id, 'view']">{{ cobros.factura.facturaNro }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+      </button>
+
+      <button type="button" [routerLink]="['/cobros', cobros.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -7,8 +7,9 @@
   "fields": [
     {
       "fieldName": "tipoEvaluacion",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "TiposEvaluaciones",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "FINAL (Final),ACUMULATIVA (Acumulativa),FORMATIVA (Formativa)"
     },
     {
       "fieldName": "idExamen",

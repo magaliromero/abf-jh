@@ -25,6 +25,7 @@ type FichaPartidasTorneosFormGroupContent = {
   comentarios: FormControl<IFichaPartidasTorneos['comentarios']>;
   nombreArbitro: FormControl<IFichaPartidasTorneos['nombreArbitro']>;
   torneos: FormControl<IFichaPartidasTorneos['torneos']>;
+  alumnos: FormControl<IFichaPartidasTorneos['alumnos']>;
 };
 
 export type FichaPartidasTorneosFormGroup = FormGroup<FichaPartidasTorneosFormGroupContent>;
@@ -53,6 +54,9 @@ export class FichaPartidasTorneosFormService {
       comentarios: new FormControl(fichaPartidasTorneosRawValue.comentarios),
       nombreArbitro: new FormControl(fichaPartidasTorneosRawValue.nombreArbitro),
       torneos: new FormControl(fichaPartidasTorneosRawValue.torneos, {
+        validators: [Validators.required],
+      }),
+      alumnos: new FormControl(fichaPartidasTorneosRawValue.alumnos, {
         validators: [Validators.required],
       }),
     });

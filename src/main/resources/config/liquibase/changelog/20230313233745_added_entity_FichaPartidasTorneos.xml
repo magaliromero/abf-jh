@@ -35,6 +35,9 @@
             <column name="torneos_id" type="bigint">
                 <constraints nullable="false" />
             </column>
+            <column name="alumnos_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -63,6 +66,7 @@
             <column name="comentarios" type="string"/>
             <column name="nombre_arbitro" type="string"/>
             <column name="torneos_id" type="numeric"/>
+            <column name="alumnos_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

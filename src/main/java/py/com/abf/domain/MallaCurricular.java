@@ -36,11 +36,6 @@ public class MallaCurricular implements Serializable {
     @Column(name = "nivel", nullable = false)
     private Niveles nivel;
 
-    @OneToMany(mappedBy = "mallaCurricular")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "mallaCurricular", "temas", "funcionarios", "alumnos" }, allowSetters = true)
-    private Set<RegistroClases> registroClases = new HashSet<>();
-
     @ManyToMany
     @NotNull
     @JoinTable(
@@ -91,37 +86,6 @@ public class MallaCurricular implements Serializable {
 
     public void setNivel(Niveles nivel) {
         this.nivel = nivel;
-    }
-
-    public Set<RegistroClases> getRegistroClases() {
-        return this.registroClases;
-    }
-
-    public void setRegistroClases(Set<RegistroClases> registroClases) {
-        if (this.registroClases != null) {
-            this.registroClases.forEach(i -> i.setMallaCurricular(null));
-        }
-        if (registroClases != null) {
-            registroClases.forEach(i -> i.setMallaCurricular(this));
-        }
-        this.registroClases = registroClases;
-    }
-
-    public MallaCurricular registroClases(Set<RegistroClases> registroClases) {
-        this.setRegistroClases(registroClases);
-        return this;
-    }
-
-    public MallaCurricular addRegistroClases(RegistroClases registroClases) {
-        this.registroClases.add(registroClases);
-        registroClases.setMallaCurricular(this);
-        return this;
-    }
-
-    public MallaCurricular removeRegistroClases(RegistroClases registroClases) {
-        this.registroClases.remove(registroClases);
-        registroClases.setMallaCurricular(null);
-        return this;
     }
 
     public Set<Temas> getTemas() {

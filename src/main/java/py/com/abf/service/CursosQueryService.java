@@ -88,6 +88,15 @@ public class CursosQueryService extends QueryService<Cursos> {
             if (criteria.getNombreCurso() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNombreCurso(), Cursos_.nombreCurso));
             }
+            if (criteria.getRegistroClasesId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getRegistroClasesId(),
+                            root -> root.join(Cursos_.registroClases, JoinType.LEFT).get(RegistroClases_.id)
+                        )
+                    );
+            }
         }
         return specification;
     }
