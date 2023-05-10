@@ -47,6 +47,8 @@ public class FacturasCriteria implements Serializable, Criteria {
 
     private IntegerFilter timbrado;
 
+    private StringFilter razonSocial;
+
     private IntegerFilter ruc;
 
     private CondVentaFilter condicionVenta;
@@ -82,6 +84,7 @@ public class FacturasCriteria implements Serializable, Criteria {
         this.fecha = other.fecha == null ? null : other.fecha.copy();
         this.facturaNro = other.facturaNro == null ? null : other.facturaNro.copy();
         this.timbrado = other.timbrado == null ? null : other.timbrado.copy();
+        this.razonSocial = other.razonSocial == null ? null : other.razonSocial.copy();
         this.ruc = other.ruc == null ? null : other.ruc.copy();
         this.condicionVenta = other.condicionVenta == null ? null : other.condicionVenta.copy();
         this.cantidad = other.cantidad == null ? null : other.cantidad.copy();
@@ -161,6 +164,21 @@ public class FacturasCriteria implements Serializable, Criteria {
 
     public void setTimbrado(IntegerFilter timbrado) {
         this.timbrado = timbrado;
+    }
+
+    public StringFilter getRazonSocial() {
+        return razonSocial;
+    }
+
+    public StringFilter razonSocial() {
+        if (razonSocial == null) {
+            razonSocial = new StringFilter();
+        }
+        return razonSocial;
+    }
+
+    public void setRazonSocial(StringFilter razonSocial) {
+        this.razonSocial = razonSocial;
     }
 
     public IntegerFilter getRuc() {
@@ -380,6 +398,7 @@ public class FacturasCriteria implements Serializable, Criteria {
             Objects.equals(fecha, that.fecha) &&
             Objects.equals(facturaNro, that.facturaNro) &&
             Objects.equals(timbrado, that.timbrado) &&
+            Objects.equals(razonSocial, that.razonSocial) &&
             Objects.equals(ruc, that.ruc) &&
             Objects.equals(condicionVenta, that.condicionVenta) &&
             Objects.equals(cantidad, that.cantidad) &&
@@ -404,6 +423,7 @@ public class FacturasCriteria implements Serializable, Criteria {
             fecha,
             facturaNro,
             timbrado,
+            razonSocial,
             ruc,
             condicionVenta,
             cantidad,
@@ -429,6 +449,7 @@ public class FacturasCriteria implements Serializable, Criteria {
             (fecha != null ? "fecha=" + fecha + ", " : "") +
             (facturaNro != null ? "facturaNro=" + facturaNro + ", " : "") +
             (timbrado != null ? "timbrado=" + timbrado + ", " : "") +
+            (razonSocial != null ? "razonSocial=" + razonSocial + ", " : "") +
             (ruc != null ? "ruc=" + ruc + ", " : "") +
             (condicionVenta != null ? "condicionVenta=" + condicionVenta + ", " : "") +
             (cantidad != null ? "cantidad=" + cantidad + ", " : "") +

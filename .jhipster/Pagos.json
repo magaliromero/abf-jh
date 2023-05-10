@@ -34,7 +34,7 @@
       "fieldName": "tipoPago",
       "fieldType": "TiposPagos",
       "fieldValidateRules": ["required"],
-      "fieldValues": "CUOTA (Cuota),MENSUAL (Mensual),DIARIO (Diario),UNICO (Unico)"
+      "fieldValues": "PARCIAL (Parcial),CUOTA (Cuota),MENSUAL (Mensual),DIARIO (Diario),UNICO (Unico)"
     },
     {
       "fieldName": "descripcion",

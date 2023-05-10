@@ -21,6 +21,7 @@ type FacturasFormGroupContent = {
   fecha: FormControl<IFacturas['fecha']>;
   facturaNro: FormControl<IFacturas['facturaNro']>;
   timbrado: FormControl<IFacturas['timbrado']>;
+  razonSocial: FormControl<IFacturas['razonSocial']>;
   ruc: FormControl<IFacturas['ruc']>;
   condicionVenta: FormControl<IFacturas['condicionVenta']>;
   cantidad: FormControl<IFacturas['cantidad']>;
@@ -59,6 +60,9 @@ export class FacturasFormService {
         validators: [Validators.required],
       }),
       timbrado: new FormControl(facturasRawValue.timbrado, {
+        validators: [Validators.required],
+      }),
+      razonSocial: new FormControl(facturasRawValue.razonSocial, {
         validators: [Validators.required],
       }),
       ruc: new FormControl(facturasRawValue.ruc, {

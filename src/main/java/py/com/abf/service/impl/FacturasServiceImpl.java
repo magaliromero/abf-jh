@@ -54,6 +54,9 @@ public class FacturasServiceImpl implements FacturasService {
                 if (facturas.getTimbrado() != null) {
                     existingFacturas.setTimbrado(facturas.getTimbrado());
                 }
+                if (facturas.getRazonSocial() != null) {
+                    existingFacturas.setRazonSocial(facturas.getRazonSocial());
+                }
                 if (facturas.getRuc() != null) {
                     existingFacturas.setRuc(facturas.getRuc());
                 }

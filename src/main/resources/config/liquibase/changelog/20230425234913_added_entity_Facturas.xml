@@ -23,6 +23,9 @@
             <column name="timbrado" type="integer">
                 <constraints nullable="false" />
             </column>
+            <column name="razon_social" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="ruc" type="integer">
                 <constraints nullable="false" />
             </column>
@@ -83,6 +86,7 @@
             <column name="fecha" type="date"/>
             <column name="factura_nro" type="string"/>
             <column name="timbrado" type="numeric"/>
+            <column name="razon_social" type="string"/>
             <column name="ruc" type="numeric"/>
             <column name="condicion_venta" type="string"/>
             <column name="cantidad" type="numeric"/>

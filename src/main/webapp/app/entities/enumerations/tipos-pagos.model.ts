@@ -1,4 +1,6 @@
 export enum TiposPagos {
+  PARCIAL = 'Parcial',
+
   CUOTA = 'Cuota',
 
   MENSUAL = 'Mensual',

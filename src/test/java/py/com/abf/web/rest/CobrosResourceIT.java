@@ -65,8 +65,8 @@ class CobrosResourceIT {
     private static final LocalDate UPDATED_FECHA_PAGO = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_FECHA_PAGO = LocalDate.ofEpochDay(-1L);
 
-    private static final TiposPagos DEFAULT_TIPO_PAGO = TiposPagos.CUOTA;
-    private static final TiposPagos UPDATED_TIPO_PAGO = TiposPagos.MENSUAL;
+    private static final TiposPagos DEFAULT_TIPO_PAGO = TiposPagos.PARCIAL;
+    private static final TiposPagos UPDATED_TIPO_PAGO = TiposPagos.CUOTA;
 
     private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";

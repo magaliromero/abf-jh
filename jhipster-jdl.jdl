@@ -77,11 +77,11 @@ entity RegistroClases(registro_clases){
 }
 
 enum TiposPagos{
+    PARCIAL (Parcial)
  	CUOTA(Cuota)
     MENSUAL(Mensual)
     DIARIO(Diario)
     UNICO (Unico) 
-    PARCIAL (Parcial)
 }
 
 entity Pagos(pagos){

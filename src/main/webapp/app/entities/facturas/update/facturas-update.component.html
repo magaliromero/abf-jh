@@ -78,6 +78,27 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.facturas.razonSocial" for="field_razonSocial">Razon Social</label>
+          <input
+            type="text"
+            class="form-control"
+            name="razonSocial"
+            id="field_razonSocial"
+            data-cy="razonSocial"
+            formControlName="razonSocial"
+          />
+          <div *ngIf="editForm.get('razonSocial')!.invalid && (editForm.get('razonSocial')!.dirty || editForm.get('razonSocial')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('razonSocial')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              Este campo es obligatorio.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" jhiTranslate="abfApp.facturas.ruc" for="field_ruc">Ruc</label>
           <input type="number" class="form-control" name="ruc" id="field_ruc" data-cy="ruc" formControlName="ruc" />
           <div *ngIf="editForm.get('ruc')!.invalid && (editForm.get('ruc')!.dirty || editForm.get('ruc')!.touched)">

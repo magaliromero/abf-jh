@@ -4,6 +4,7 @@ package py.com.abf.domain.enumeration;
  * The TiposPagos enumeration.
  */
 public enum TiposPagos {
+    PARCIAL("Parcial"),
     CUOTA("Cuota"),
     MENSUAL("Mensual"),
     DIARIO("Diario"),

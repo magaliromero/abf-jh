@@ -41,6 +41,10 @@ public class Facturas implements Serializable {
     private Integer timbrado;
 
     @NotNull
+    @Column(name = "razon_social", nullable = false)
+    private String razonSocial;
+
+    @NotNull
     @Column(name = "ruc", nullable = false)
     private Integer ruc;
 
@@ -143,6 +147,19 @@ public class Facturas implements Serializable {
 
     public void setTimbrado(Integer timbrado) {
         this.timbrado = timbrado;
+    }
+
+    public String getRazonSocial() {
+        return this.razonSocial;
+    }
+
+    public Facturas razonSocial(String razonSocial) {
+        this.setRazonSocial(razonSocial);
+        return this;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
     }
 
     public Integer getRuc() {
@@ -359,6 +376,7 @@ public class Facturas implements Serializable {
             ", fecha='" + getFecha() + "'" +
             ", facturaNro='" + getFacturaNro() + "'" +
             ", timbrado=" + getTimbrado() +
+            ", razonSocial='" + getRazonSocial() + "'" +
             ", ruc=" + getRuc() +
             ", condicionVenta='" + getCondicionVenta() + "'" +
             ", cantidad=" + getCantidad() +

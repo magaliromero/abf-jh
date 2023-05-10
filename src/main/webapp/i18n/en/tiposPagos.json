@@ -2,6 +2,7 @@
   "abfApp": {
     "TiposPagos": {
       "null": "",
+      "PARCIAL": "Parcial",
       "CUOTA": "Cuota",
       "MENSUAL": "Mensual",
       "DIARIO": "Diario",

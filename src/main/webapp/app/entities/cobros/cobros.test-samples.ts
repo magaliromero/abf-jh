@@ -11,7 +11,7 @@ export const sampleWithRequiredData: ICobros = {
   saldo: 51174,
   fechaRegistro: dayjs('2023-04-05'),
   fechaPago: dayjs('2023-04-05'),
-  tipoPago: TiposPagos['DIARIO'],
+  tipoPago: TiposPagos['MENSUAL'],
   descripcion: 'invoice innovative',
 };
 
@@ -22,7 +22,7 @@ export const sampleWithPartialData: ICobros = {
   saldo: 59201,
   fechaRegistro: dayjs('2023-04-05'),
   fechaPago: dayjs('2023-04-05'),
-  tipoPago: TiposPagos['CUOTA'],
+  tipoPago: TiposPagos['PARCIAL'],
   descripcion: 'Mascotas Parafarmacia calculating',
 };
 
@@ -33,7 +33,7 @@ export const sampleWithFullData: ICobros = {
   saldo: 96854,
   fechaRegistro: dayjs('2023-04-05'),
   fechaPago: dayjs('2023-04-05'),
-  tipoPago: TiposPagos['UNICO'],
+  tipoPago: TiposPagos['DIARIO'],
   descripcion: 'Algodón',
 };
 
@@ -43,7 +43,7 @@ export const sampleWithNewData: NewCobros = {
   saldo: 4725,
   fechaRegistro: dayjs('2023-04-05'),
   fechaPago: dayjs('2023-04-05'),
-  tipoPago: TiposPagos['UNICO'],
+  tipoPago: TiposPagos['DIARIO'],
   descripcion: 'cross-platform convergence withdrawal',
   id: null,
 };

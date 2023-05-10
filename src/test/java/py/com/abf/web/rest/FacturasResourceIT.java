@@ -56,6 +56,9 @@ class FacturasResourceIT {
     private static final Integer UPDATED_TIMBRADO = 2;
     private static final Integer SMALLER_TIMBRADO = 1 - 1;
 
+    private static final String DEFAULT_RAZON_SOCIAL = "AAAAAAAAAA";
+    private static final String UPDATED_RAZON_SOCIAL = "BBBBBBBBBB";
+
     private static final Integer DEFAULT_RUC = 1;
     private static final Integer UPDATED_RUC = 2;
     private static final Integer SMALLER_RUC = 1 - 1;
@@ -132,6 +135,7 @@ class FacturasResourceIT {
             .fecha(DEFAULT_FECHA)
             .facturaNro(DEFAULT_FACTURA_NRO)
             .timbrado(DEFAULT_TIMBRADO)
+            .razonSocial(DEFAULT_RAZON_SOCIAL)
             .ruc(DEFAULT_RUC)
             .condicionVenta(DEFAULT_CONDICION_VENTA)
             .cantidad(DEFAULT_CANTIDAD)
@@ -167,6 +171,7 @@ class FacturasResourceIT {
             .fecha(UPDATED_FECHA)
             .facturaNro(UPDATED_FACTURA_NRO)
             .timbrado(UPDATED_TIMBRADO)
+            .razonSocial(UPDATED_RAZON_SOCIAL)
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
             .cantidad(UPDATED_CANTIDAD)
@@ -212,6 +217,7 @@ class FacturasResourceIT {
         assertThat(testFacturas.getFecha()).isEqualTo(DEFAULT_FECHA);
         assertThat(testFacturas.getFacturaNro()).isEqualTo(DEFAULT_FACTURA_NRO);
         assertThat(testFacturas.getTimbrado()).isEqualTo(DEFAULT_TIMBRADO);
+        assertThat(testFacturas.getRazonSocial()).isEqualTo(DEFAULT_RAZON_SOCIAL);
         assertThat(testFacturas.getRuc()).isEqualTo(DEFAULT_RUC);
         assertThat(testFacturas.getCondicionVenta()).isEqualTo(DEFAULT_CONDICION_VENTA);
         assertThat(testFacturas.getCantidad()).isEqualTo(DEFAULT_CANTIDAD);
@@ -296,6 +302,23 @@ class FacturasResourceIT {
 
     @Test
     @Transactional
+    void checkRazonSocialIsRequired() throws Exception {
+        int databaseSizeBeforeTest = facturasRepository.findAll().size();
+        // set the field null
+        facturas.setRazonSocial(null);
+
+        // Create the Facturas, which fails.
+
+        restFacturasMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(facturas)))
+            .andExpect(status().isBadRequest());
+
+        List<Facturas> facturasList = facturasRepository.findAll();
+        assertThat(facturasList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkRucIsRequired() throws Exception {
         int databaseSizeBeforeTest = facturasRepository.findAll().size();
         // set the field null
@@ -343,6 +366,7 @@ class FacturasResourceIT {
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].facturaNro").value(hasItem(DEFAULT_FACTURA_NRO)))
             .andExpect(jsonPath("$.[*].timbrado").value(hasItem(DEFAULT_TIMBRADO)))
+            .andExpect(jsonPath("$.[*].razonSocial").value(hasItem(DEFAULT_RAZON_SOCIAL)))
             .andExpect(jsonPath("$.[*].ruc").value(hasItem(DEFAULT_RUC)))
             .andExpect(jsonPath("$.[*].condicionVenta").value(hasItem(DEFAULT_CONDICION_VENTA.toString())))
             .andExpect(jsonPath("$.[*].cantidad").value(hasItem(DEFAULT_CANTIDAD)))
@@ -388,6 +412,7 @@ class FacturasResourceIT {
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
             .andExpect(jsonPath("$.facturaNro").value(DEFAULT_FACTURA_NRO))
             .andExpect(jsonPath("$.timbrado").value(DEFAULT_TIMBRADO))
+            .andExpect(jsonPath("$.razonSocial").value(DEFAULT_RAZON_SOCIAL))
             .andExpect(jsonPath("$.ruc").value(DEFAULT_RUC))
             .andExpect(jsonPath("$.condicionVenta").value(DEFAULT_CONDICION_VENTA.toString()))
             .andExpect(jsonPath("$.cantidad").value(DEFAULT_CANTIDAD))
@@ -664,6 +689,71 @@ class FacturasResourceIT {
 
         // Get all the facturasList where timbrado is greater than SMALLER_TIMBRADO
         defaultFacturasShouldBeFound("timbrado.greaterThan=" + SMALLER_TIMBRADO);
+    }
+
+    @Test
+    @Transactional
+    void getAllFacturasByRazonSocialIsEqualToSomething() throws Exception {
+        // Initialize the database
+        facturasRepository.saveAndFlush(facturas);
+
+        // Get all the facturasList where razonSocial equals to DEFAULT_RAZON_SOCIAL
+        defaultFacturasShouldBeFound("razonSocial.equals=" + DEFAULT_RAZON_SOCIAL);
+
+        // Get all the facturasList where razonSocial equals to UPDATED_RAZON_SOCIAL
+        defaultFacturasShouldNotBeFound("razonSocial.equals=" + UPDATED_RAZON_SOCIAL);
+    }
+
+    @Test
+    @Transactional
+    void getAllFacturasByRazonSocialIsInShouldWork() throws Exception {
+        // Initialize the database
+        facturasRepository.saveAndFlush(facturas);
+
+        // Get all the facturasList where razonSocial in DEFAULT_RAZON_SOCIAL or UPDATED_RAZON_SOCIAL
+        defaultFacturasShouldBeFound("razonSocial.in=" + DEFAULT_RAZON_SOCIAL + "," + UPDATED_RAZON_SOCIAL);
+
+        // Get all the facturasList where razonSocial equals to UPDATED_RAZON_SOCIAL
+        defaultFacturasShouldNotBeFound("razonSocial.in=" + UPDATED_RAZON_SOCIAL);
+    }
+
+    @Test
+    @Transactional
+    void getAllFacturasByRazonSocialIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        facturasRepository.saveAndFlush(facturas);
+
+        // Get all the facturasList where razonSocial is not null
+        defaultFacturasShouldBeFound("razonSocial.specified=true");
+
+        // Get all the facturasList where razonSocial is null
+        defaultFacturasShouldNotBeFound("razonSocial.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllFacturasByRazonSocialContainsSomething() throws Exception {
+        // Initialize the database
+        facturasRepository.saveAndFlush(facturas);
+
+        // Get all the facturasList where razonSocial contains DEFAULT_RAZON_SOCIAL
+        defaultFacturasShouldBeFound("razonSocial.contains=" + DEFAULT_RAZON_SOCIAL);
+
+        // Get all the facturasList where razonSocial contains UPDATED_RAZON_SOCIAL
+        defaultFacturasShouldNotBeFound("razonSocial.contains=" + UPDATED_RAZON_SOCIAL);
+    }
+
+    @Test
+    @Transactional
+    void getAllFacturasByRazonSocialNotContainsSomething() throws Exception {
+        // Initialize the database
+        facturasRepository.saveAndFlush(facturas);
+
+        // Get all the facturasList where razonSocial does not contain DEFAULT_RAZON_SOCIAL
+        defaultFacturasShouldNotBeFound("razonSocial.doesNotContain=" + DEFAULT_RAZON_SOCIAL);
+
+        // Get all the facturasList where razonSocial does not contain UPDATED_RAZON_SOCIAL
+        defaultFacturasShouldBeFound("razonSocial.doesNotContain=" + UPDATED_RAZON_SOCIAL);
     }
 
     @Test
@@ -1647,6 +1737,7 @@ class FacturasResourceIT {
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].facturaNro").value(hasItem(DEFAULT_FACTURA_NRO)))
             .andExpect(jsonPath("$.[*].timbrado").value(hasItem(DEFAULT_TIMBRADO)))
+            .andExpect(jsonPath("$.[*].razonSocial").value(hasItem(DEFAULT_RAZON_SOCIAL)))
             .andExpect(jsonPath("$.[*].ruc").value(hasItem(DEFAULT_RUC)))
             .andExpect(jsonPath("$.[*].condicionVenta").value(hasItem(DEFAULT_CONDICION_VENTA.toString())))
             .andExpect(jsonPath("$.[*].cantidad").value(hasItem(DEFAULT_CANTIDAD)))
@@ -1709,6 +1800,7 @@ class FacturasResourceIT {
             .fecha(UPDATED_FECHA)
             .facturaNro(UPDATED_FACTURA_NRO)
             .timbrado(UPDATED_TIMBRADO)
+            .razonSocial(UPDATED_RAZON_SOCIAL)
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
             .cantidad(UPDATED_CANTIDAD)
@@ -1736,6 +1828,7 @@ class FacturasResourceIT {
         assertThat(testFacturas.getFecha()).isEqualTo(UPDATED_FECHA);
         assertThat(testFacturas.getFacturaNro()).isEqualTo(UPDATED_FACTURA_NRO);
         assertThat(testFacturas.getTimbrado()).isEqualTo(UPDATED_TIMBRADO);
+        assertThat(testFacturas.getRazonSocial()).isEqualTo(UPDATED_RAZON_SOCIAL);
         assertThat(testFacturas.getRuc()).isEqualTo(UPDATED_RUC);
         assertThat(testFacturas.getCondicionVenta()).isEqualTo(UPDATED_CONDICION_VENTA);
         assertThat(testFacturas.getCantidad()).isEqualTo(UPDATED_CANTIDAD);
@@ -1820,6 +1913,7 @@ class FacturasResourceIT {
         partialUpdatedFacturas
             .facturaNro(UPDATED_FACTURA_NRO)
             .timbrado(UPDATED_TIMBRADO)
+            .razonSocial(UPDATED_RAZON_SOCIAL)
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
             .cantidad(UPDATED_CANTIDAD)
@@ -1827,7 +1921,7 @@ class FacturasResourceIT {
             .precioUnitario(UPDATED_PRECIO_UNITARIO)
             .valor5(UPDATED_VALOR_5)
             .valor10(UPDATED_VALOR_10)
-            .total(UPDATED_TOTAL)
+            .total10(UPDATED_TOTAL_10)
             .totalIva(UPDATED_TOTAL_IVA);
 
         restFacturasMockMvc
@@ -1845,6 +1939,7 @@ class FacturasResourceIT {
         assertThat(testFacturas.getFecha()).isEqualTo(DEFAULT_FECHA);
         assertThat(testFacturas.getFacturaNro()).isEqualTo(UPDATED_FACTURA_NRO);
         assertThat(testFacturas.getTimbrado()).isEqualTo(UPDATED_TIMBRADO);
+        assertThat(testFacturas.getRazonSocial()).isEqualTo(UPDATED_RAZON_SOCIAL);
         assertThat(testFacturas.getRuc()).isEqualTo(UPDATED_RUC);
         assertThat(testFacturas.getCondicionVenta()).isEqualTo(UPDATED_CONDICION_VENTA);
         assertThat(testFacturas.getCantidad()).isEqualTo(UPDATED_CANTIDAD);
@@ -1852,9 +1947,9 @@ class FacturasResourceIT {
         assertThat(testFacturas.getPrecioUnitario()).isEqualTo(UPDATED_PRECIO_UNITARIO);
         assertThat(testFacturas.getValor5()).isEqualTo(UPDATED_VALOR_5);
         assertThat(testFacturas.getValor10()).isEqualTo(UPDATED_VALOR_10);
-        assertThat(testFacturas.getTotal()).isEqualTo(UPDATED_TOTAL);
+        assertThat(testFacturas.getTotal()).isEqualTo(DEFAULT_TOTAL);
         assertThat(testFacturas.getTotal5()).isEqualTo(DEFAULT_TOTAL_5);
-        assertThat(testFacturas.getTotal10()).isEqualTo(DEFAULT_TOTAL_10);
+        assertThat(testFacturas.getTotal10()).isEqualTo(UPDATED_TOTAL_10);
         assertThat(testFacturas.getTotalIva()).isEqualTo(UPDATED_TOTAL_IVA);
     }
 
@@ -1874,6 +1969,7 @@ class FacturasResourceIT {
             .fecha(UPDATED_FECHA)
             .facturaNro(UPDATED_FACTURA_NRO)
             .timbrado(UPDATED_TIMBRADO)
+            .razonSocial(UPDATED_RAZON_SOCIAL)
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
             .cantidad(UPDATED_CANTIDAD)
@@ -1901,6 +1997,7 @@ class FacturasResourceIT {
         assertThat(testFacturas.getFecha()).isEqualTo(UPDATED_FECHA);
         assertThat(testFacturas.getFacturaNro()).isEqualTo(UPDATED_FACTURA_NRO);
         assertThat(testFacturas.getTimbrado()).isEqualTo(UPDATED_TIMBRADO);
+        assertThat(testFacturas.getRazonSocial()).isEqualTo(UPDATED_RAZON_SOCIAL);
         assertThat(testFacturas.getRuc()).isEqualTo(UPDATED_RUC);
         assertThat(testFacturas.getCondicionVenta()).isEqualTo(UPDATED_CONDICION_VENTA);
         assertThat(testFacturas.getCantidad()).isEqualTo(UPDATED_CANTIDAD);

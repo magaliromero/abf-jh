@@ -22,7 +22,7 @@ export const sampleWithPartialData: IPagos = {
   saldo: 22940,
   fechaRegistro: dayjs('2023-03-13'),
   fechaPago: dayjs('2023-03-13'),
-  tipoPago: TiposPagos['MENSUAL'],
+  tipoPago: TiposPagos['CUOTA'],
   descripcion: 'Lugar',
 };
 
@@ -33,7 +33,7 @@ export const sampleWithFullData: IPagos = {
   saldo: 57695,
   fechaRegistro: dayjs('2023-03-13'),
   fechaPago: dayjs('2023-03-13'),
-  tipoPago: TiposPagos['UNICO'],
+  tipoPago: TiposPagos['DIARIO'],
   descripcion: 'COM',
 };
 
@@ -43,7 +43,7 @@ export const sampleWithNewData: NewPagos = {
   saldo: 50968,
   fechaRegistro: dayjs('2023-03-13'),
   fechaPago: dayjs('2023-03-13'),
-  tipoPago: TiposPagos['DIARIO'],
+  tipoPago: TiposPagos['MENSUAL'],
   descripcion: 'Violeta',
   id: null,
 };

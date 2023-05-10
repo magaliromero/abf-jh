@@ -94,6 +94,9 @@ public class FacturasQueryService extends QueryService<Facturas> {
             if (criteria.getTimbrado() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getTimbrado(), Facturas_.timbrado));
             }
+            if (criteria.getRazonSocial() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getRazonSocial(), Facturas_.razonSocial));
+            }
             if (criteria.getRuc() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getRuc(), Facturas_.ruc));
             }

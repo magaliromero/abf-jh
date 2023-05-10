@@ -21,6 +21,11 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "razonSocial",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "ruc",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]

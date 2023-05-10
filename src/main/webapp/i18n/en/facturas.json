@@ -21,6 +21,7 @@
       "fecha": "Fecha",
       "facturaNro": "Factura Nro",
       "timbrado": "Timbrado",
+      "razonSocial": "Razon Social",
       "ruc": "Ruc",
       "condicionVenta": "Condicion Venta",
       "cantidad": "Cantidad",

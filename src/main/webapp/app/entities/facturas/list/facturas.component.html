@@ -58,6 +58,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="razonSocial">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.facturas.razonSocial">Razon Social</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" jhiSortBy="ruc">
             <div class="d-flex">
               <span jhiTranslate="abfApp.facturas.ruc">Ruc</span>
@@ -141,6 +147,7 @@
           <td>{{ facturas.fecha | formatMediumDate }}</td>
           <td>{{ facturas.facturaNro }}</td>
           <td>{{ facturas.timbrado }}</td>
+          <td>{{ facturas.razonSocial }}</td>
           <td>{{ facturas.ruc }}</td>
           <td jhiTranslate="{{ 'abfApp.CondVenta.' + facturas.condicionVenta }}">{{ facturas.condicionVenta }}</td>
           <td>{{ facturas.cantidad }}</td>
