@@ -14,7 +14,9 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.pagos.montoPago" for="field_montoPago">Monto Pago</label>
+          <label class="form-label" jhiTranslate="abfApp.pagos.montoPago" for="field_montoPago"
+            >Monto Pago (es el monto que la Academia paga)
+          </label>
           <input
             type="number"
             class="form-control"
@@ -43,7 +45,9 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.pagos.montoInicial" for="field_montoInicial">Monto Inicial</label>
+          <label class="form-label" jhiTranslate="abfApp.pagos.montoInicial" for="field_montoInicial"
+            >Monto Inicial (Monto que la Academia adeuda)</label
+          >
           <input
             type="number"
             class="form-control"
@@ -74,7 +78,9 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.pagos.saldo" for="field_saldo">Saldo</label>
+          <label class="form-label" jhiTranslate="abfApp.pagos.saldo" for="field_saldo"
+            >Saldo (Monto que la Academia sigue adeudando luego de este pago)</label
+          >
           <input type="number" class="form-control" name="saldo" id="field_saldo" data-cy="saldo" formControlName="saldo" />
           <div *ngIf="editForm.get('saldo')!.invalid && (editForm.get('saldo')!.dirty || editForm.get('saldo')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('saldo')?.errors?.required" jhiTranslate="entity.validation.required">
