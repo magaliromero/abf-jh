@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="MallaCurricularHeading">
-    <span jhiTranslate="abfApp.mallaCurricular.home.title">Malla Curriculars</span>
+    <span jhiTranslate="abfApp.mallaCurricular.home.title">Malla Curricular</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
@@ -15,7 +15,7 @@
         [routerLink]="['/malla-curricular/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="abfApp.mallaCurricular.home.createLabel"> Crear nuevo Malla Curricular </span>
+        <span jhiTranslate="abfApp.mallaCurricular.home.createLabel"> Crear nueva Malla Curricular </span>
       </button>
     </div>
   </h2>
@@ -27,7 +27,7 @@
   <jhi-filter [filters]="filters"></jhi-filter>
 
   <div class="alert alert-warning" id="no-result" *ngIf="mallaCurriculars?.length === 0">
-    <span jhiTranslate="abfApp.mallaCurricular.home.notFound">Ningún Malla Curriculars encontrado</span>
+    <span jhiTranslate="abfApp.mallaCurricular.home.notFound">Ningún Malla Curricular encontrado</span>
   </div>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="mallaCurriculars && mallaCurriculars.length > 0">
