@@ -54,14 +54,23 @@ export class CobrosUpdateComponent implements OnInit {
     window.history.back();
   }
 
+  calcularDiferencia(): void {
+    this.editForm.value;
+    console.log(this.editForm.value);
+    let MontoInicial = this.editForm.value.montoInicial || 0;
+    let MontoPago = this.editForm.value.montoPago || 0;
+    this.editForm.controls.saldo.setValue(MontoInicial - MontoPago);
+  }
+
   save(): void {
     this.isSaving = true;
     const cobros = this.cobrosFormService.getCobros(this.editForm);
-    if (cobros.id !== null) {
+    console.log(cobros);
+    /*if (cobros.id !== null) {
       this.subscribeToSaveResponse(this.cobrosService.update(cobros));
     } else {
       this.subscribeToSaveResponse(this.cobrosService.create(cobros));
-    }
+    }*/
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ICobros>>): void {
