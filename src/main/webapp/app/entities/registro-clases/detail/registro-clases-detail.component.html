@@ -26,38 +26,26 @@
         <dd>
           <span>{{ registroClases.asistenciaAlumno }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.registroClases.cursos">Cursos</span></dt>
+        <dt><span jhiTranslate="abfApp.registroClases.tema">Tema</span></dt>
         <dd>
-          <div *ngIf="registroClases.cursos">
-            <a [routerLink]="['/cursos', registroClases.cursos.id, 'view']">{{ registroClases.cursos.nombreCurso }}</a>
+          <div *ngIf="registroClases.tema">
+            <a [routerLink]="['/temas', registroClases.tema.id, 'view']">{{ registroClases.tema.descripcion }}</a>
           </div>
         </dd>
-        <dt><span jhiTranslate="abfApp.registroClases.temas">Temas</span></dt>
+        <dt><span jhiTranslate="abfApp.registroClases.funcionario">Funcionario</span></dt>
         <dd>
-          <div *ngIf="registroClases.temas">
-            <a [routerLink]="['/temas', registroClases.temas.id, 'view']">{{ registroClases.temas.titulo }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="abfApp.registroClases.funcionarios">Funcionarios</span></dt>
-        <dd>
-          <div *ngIf="registroClases.funcionarios">
-            <a [routerLink]="['/funcionarios', registroClases.funcionarios.id, 'view']">{{ registroClases.funcionarios.nombreCompleto }}</a>
-          </div>
-        </dd>
-        <dt><span jhiTranslate="abfApp.registroClases.alumnos">Alumnos</span></dt>
-        <dd>
-          <div *ngIf="registroClases.alumnos">
-            <a [routerLink]="['/alumnos', registroClases.alumnos.id, 'view']">{{ registroClases.alumnos.nombreCompleto }}</a>
+          <div *ngIf="registroClases.funcionario">
+            <a [routerLink]="['/funcionarios', registroClases.funcionario.id, 'view']">{{ registroClases.funcionario.nombreCompleto }}</a>
           </div>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
       <button type="button" [routerLink]="['/registro-clases', registroClases.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
   </div>

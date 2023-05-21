@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="abfApp.temas.home.refreshListLabel">Refrescar lista</span>
+        <span jhiTranslate="abfApp.temas.home.refreshListLabel">Refresh list</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/temas/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="abfApp.temas.home.createLabel"> Crear nuevo Temas </span>
+        <span jhiTranslate="abfApp.temas.home.createLabel"> Create a new Temas </span>
       </button>
     </div>
   </h2>
@@ -27,7 +27,7 @@
   <jhi-filter [filters]="filters"></jhi-filter>
 
   <div class="alert alert-warning" id="no-result" *ngIf="temas?.length === 0">
-    <span jhiTranslate="abfApp.temas.home.notFound">Ningún Temas encontrado</span>
+    <span jhiTranslate="abfApp.temas.home.notFound">No Temas found</span>
   </div>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="temas && temas.length > 0">
@@ -52,6 +52,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" jhiSortBy="nivel">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.temas.nivel">Nivel</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -62,12 +68,13 @@
           </td>
           <td>{{ temas.titulo }}</td>
           <td>{{ temas.descripcion }}</td>
+          <td jhiTranslate="{{ 'abfApp.Niveles.' + temas.nivel }}">{{ temas.nivel }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button
                 type="submit"
                 [routerLink]="['/registro-clases']"
-                [queryParams]="{ 'filter[temasId.in]': temas.id }"
+                [queryParams]="{ 'filter[temaId.in]': temas.id }"
                 class="btn btn-info btn-sm"
                 data-cy="filterOtherEntityButton"
               >
@@ -79,34 +86,19 @@
                   >Show Registro Clases</span
                 >
               </button>
-              <button
-                type="submit"
-                [routerLink]="['/malla-curricular']"
-                [queryParams]="{ 'filter[temasId.in]': temas.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  jhiTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('abfApp.temas.mallaCurricular' | translate) }"
-                  >Show Malla Curricular</span
-                >
-              </button>
               <button type="submit" [routerLink]="['/temas', temas.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
               <button type="submit" [routerLink]="['/temas', temas.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(temas)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

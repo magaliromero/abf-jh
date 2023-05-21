@@ -3,7 +3,6 @@ package py.com.abf.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
-import py.com.abf.domain.enumeration.EstadosMateriales;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -20,34 +19,15 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class MaterialesCriteria implements Serializable, Criteria {
 
-    /**
-     * Class for filtering EstadosMateriales
-     */
-    public static class EstadosMaterialesFilter extends Filter<EstadosMateriales> {
-
-        public EstadosMaterialesFilter() {}
-
-        public EstadosMaterialesFilter(EstadosMaterialesFilter filter) {
-            super(filter);
-        }
-
-        @Override
-        public EstadosMaterialesFilter copy() {
-            return new EstadosMaterialesFilter(this);
-        }
-    }
-
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
 
     private StringFilter descripcion;
 
-    private EstadosMaterialesFilter estado;
+    private IntegerFilter cantidad;
 
-    private IntegerFilter cantidadStock;
-
-    private IntegerFilter cantidadPrestamo;
+    private IntegerFilter cantidadEnPrestamo;
 
     private LongFilter prestamosId;
 
@@ -58,9 +38,8 @@ public class MaterialesCriteria implements Serializable, Criteria {
     public MaterialesCriteria(MaterialesCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.descripcion = other.descripcion == null ? null : other.descripcion.copy();
-        this.estado = other.estado == null ? null : other.estado.copy();
-        this.cantidadStock = other.cantidadStock == null ? null : other.cantidadStock.copy();
-        this.cantidadPrestamo = other.cantidadPrestamo == null ? null : other.cantidadPrestamo.copy();
+        this.cantidad = other.cantidad == null ? null : other.cantidad.copy();
+        this.cantidadEnPrestamo = other.cantidadEnPrestamo == null ? null : other.cantidadEnPrestamo.copy();
         this.prestamosId = other.prestamosId == null ? null : other.prestamosId.copy();
         this.distinct = other.distinct;
     }
@@ -100,49 +79,34 @@ public class MaterialesCriteria implements Serializable, Criteria {
         this.descripcion = descripcion;
     }
 
-    public EstadosMaterialesFilter getEstado() {
-        return estado;
+    public IntegerFilter getCantidad() {
+        return cantidad;
     }
 
-    public EstadosMaterialesFilter estado() {
-        if (estado == null) {
-            estado = new EstadosMaterialesFilter();
+    public IntegerFilter cantidad() {
+        if (cantidad == null) {
+            cantidad = new IntegerFilter();
         }
-        return estado;
+        return cantidad;
     }
 
-    public void setEstado(EstadosMaterialesFilter estado) {
-        this.estado = estado;
+    public void setCantidad(IntegerFilter cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public IntegerFilter getCantidadStock() {
-        return cantidadStock;
+    public IntegerFilter getCantidadEnPrestamo() {
+        return cantidadEnPrestamo;
     }
 
-    public IntegerFilter cantidadStock() {
-        if (cantidadStock == null) {
-            cantidadStock = new IntegerFilter();
+    public IntegerFilter cantidadEnPrestamo() {
+        if (cantidadEnPrestamo == null) {
+            cantidadEnPrestamo = new IntegerFilter();
         }
-        return cantidadStock;
+        return cantidadEnPrestamo;
     }
 
-    public void setCantidadStock(IntegerFilter cantidadStock) {
-        this.cantidadStock = cantidadStock;
-    }
-
-    public IntegerFilter getCantidadPrestamo() {
-        return cantidadPrestamo;
-    }
-
-    public IntegerFilter cantidadPrestamo() {
-        if (cantidadPrestamo == null) {
-            cantidadPrestamo = new IntegerFilter();
-        }
-        return cantidadPrestamo;
-    }
-
-    public void setCantidadPrestamo(IntegerFilter cantidadPrestamo) {
-        this.cantidadPrestamo = cantidadPrestamo;
+    public void setCantidadEnPrestamo(IntegerFilter cantidadEnPrestamo) {
+        this.cantidadEnPrestamo = cantidadEnPrestamo;
     }
 
     public LongFilter getPrestamosId() {
@@ -180,9 +144,8 @@ public class MaterialesCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(descripcion, that.descripcion) &&
-            Objects.equals(estado, that.estado) &&
-            Objects.equals(cantidadStock, that.cantidadStock) &&
-            Objects.equals(cantidadPrestamo, that.cantidadPrestamo) &&
+            Objects.equals(cantidad, that.cantidad) &&
+            Objects.equals(cantidadEnPrestamo, that.cantidadEnPrestamo) &&
             Objects.equals(prestamosId, that.prestamosId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -190,7 +153,7 @@ public class MaterialesCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, descripcion, estado, cantidadStock, cantidadPrestamo, prestamosId, distinct);
+        return Objects.hash(id, descripcion, cantidad, cantidadEnPrestamo, prestamosId, distinct);
     }
 
     // prettier-ignore
@@ -199,9 +162,8 @@ public class MaterialesCriteria implements Serializable, Criteria {
         return "MaterialesCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (descripcion != null ? "descripcion=" + descripcion + ", " : "") +
-            (estado != null ? "estado=" + estado + ", " : "") +
-            (cantidadStock != null ? "cantidadStock=" + cantidadStock + ", " : "") +
-            (cantidadPrestamo != null ? "cantidadPrestamo=" + cantidadPrestamo + ", " : "") +
+            (cantidad != null ? "cantidad=" + cantidad + ", " : "") +
+            (cantidadEnPrestamo != null ? "cantidadEnPrestamo=" + cantidadEnPrestamo + ", " : "") +
             (prestamosId != null ? "prestamosId=" + prestamosId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

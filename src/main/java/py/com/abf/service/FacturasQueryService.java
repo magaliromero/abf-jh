@@ -98,48 +98,21 @@ public class FacturasQueryService extends QueryService<Facturas> {
                 specification = specification.and(buildStringSpecification(criteria.getRazonSocial(), Facturas_.razonSocial));
             }
             if (criteria.getRuc() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getRuc(), Facturas_.ruc));
+                specification = specification.and(buildStringSpecification(criteria.getRuc(), Facturas_.ruc));
             }
             if (criteria.getCondicionVenta() != null) {
                 specification = specification.and(buildSpecification(criteria.getCondicionVenta(), Facturas_.condicionVenta));
             }
-            if (criteria.getCantidad() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCantidad(), Facturas_.cantidad));
-            }
-            if (criteria.getDescripcion() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getDescripcion(), Facturas_.descripcion));
-            }
-            if (criteria.getPrecioUnitario() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPrecioUnitario(), Facturas_.precioUnitario));
-            }
-            if (criteria.getValor5() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getValor5(), Facturas_.valor5));
-            }
-            if (criteria.getValor10() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getValor10(), Facturas_.valor10));
-            }
             if (criteria.getTotal() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getTotal(), Facturas_.total));
             }
-            if (criteria.getTotal5() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getTotal5(), Facturas_.total5));
-            }
-            if (criteria.getTotal10() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getTotal10(), Facturas_.total10));
-            }
-            if (criteria.getTotalIva() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getTotalIva(), Facturas_.totalIva));
-            }
-            if (criteria.getCobrosId() != null) {
+            if (criteria.getFacturaDetalleId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(criteria.getCobrosId(), root -> root.join(Facturas_.cobros, JoinType.LEFT).get(Cobros_.id))
-                    );
-            }
-            if (criteria.getAlumnosId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getAlumnosId(), root -> root.join(Facturas_.alumnos, JoinType.LEFT).get(Alumnos_.id))
+                        buildSpecification(
+                            criteria.getFacturaDetalleId(),
+                            root -> root.join(Facturas_.facturaDetalles, JoinType.LEFT).get(FacturaDetalle_.id)
+                        )
                     );
             }
         }

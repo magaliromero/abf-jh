@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230313233742",
+  "applications": ["abf"],
+  "changelogDate": "20230521155757",
   "dto": "no",
   "embedded": false,
   "entityTableName": "prestamos",
@@ -11,14 +11,14 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "vigenciaPrestamo",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldName": "fechaDevolucion",
+      "fieldType": "LocalDate"
     },
     {
-      "fieldName": "fechaDevolucion",
-      "fieldType": "LocalDate",
-      "fieldValidateRules": ["required"]
+      "fieldName": "estado",
+      "fieldType": "EstadosPrestamos",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "DISPONIBLE (Disponible),PRESTADO (En Prestamo),VENCIDO (No devuelto)"
     }
   ],
   "fluentMethods": true,
@@ -32,7 +32,16 @@
       "otherEntityName": "materiales",
       "otherEntityRelationshipName": "prestamos",
       "relationshipName": "materiales",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nombreCompleto",
+      "otherEntityName": "alumnos",
+      "otherEntityRelationshipName": "prestamos",
+      "relationshipName": "alumnos",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceImpl"

@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="abfApp.funcionarios.home.refreshListLabel">Refrescar lista</span>
+        <span jhiTranslate="abfApp.funcionarios.home.refreshListLabel">Refresh list</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/funcionarios/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="abfApp.funcionarios.home.createLabel"> Crear nuevo Funcionarios </span>
+        <span jhiTranslate="abfApp.funcionarios.home.createLabel"> Create a new Funcionarios </span>
       </button>
     </div>
   </h2>
@@ -27,7 +27,7 @@
   <jhi-filter [filters]="filters"></jhi-filter>
 
   <div class="alert alert-warning" id="no-result" *ngIf="funcionarios?.length === 0">
-    <span jhiTranslate="abfApp.funcionarios.home.notFound">Ningún Funcionarios encontrado</span>
+    <span jhiTranslate="abfApp.funcionarios.home.notFound">No Funcionarios found</span>
   </div>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="funcionarios && funcionarios.length > 0">
@@ -142,23 +142,8 @@
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/registro-clases']"
-                [queryParams]="{ 'filter[funcionariosId.in]': funcionarios.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  jhiTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('abfApp.funcionarios.registroClases' | translate) }"
-                  >Show Registro Clases</span
-                >
-              </button>
-              <button
-                type="submit"
                 [routerLink]="['/pagos']"
-                [queryParams]="{ 'filter[funcionariosId.in]': funcionarios.id }"
+                [queryParams]="{ 'filter[funcionarioId.in]': funcionarios.id }"
                 class="btn btn-info btn-sm"
                 data-cy="filterOtherEntityButton"
               >
@@ -172,12 +157,27 @@
               </button>
               <button
                 type="submit"
+                [routerLink]="['/registro-clases']"
+                [queryParams]="{ 'filter[funcionarioId.in]': funcionarios.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.funcionarios.registroClases' | translate) }"
+                  >Show Registro Clases</span
+                >
+              </button>
+              <button
+                type="submit"
                 [routerLink]="['/funcionarios', funcionarios.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
               <button
@@ -187,12 +187,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(funcionarios)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

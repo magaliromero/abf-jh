@@ -9,8 +9,7 @@ import { PagosService, RestPagos } from './pagos.service';
 
 const requireRestSample: RestPagos = {
   ...sampleWithRequiredData,
-  fechaRegistro: sampleWithRequiredData.fechaRegistro?.format(DATE_FORMAT),
-  fechaPago: sampleWithRequiredData.fechaPago?.format(DATE_FORMAT),
+  fecha: sampleWithRequiredData.fecha?.format(DATE_FORMAT),
 };
 
 describe('Pagos Service', () => {

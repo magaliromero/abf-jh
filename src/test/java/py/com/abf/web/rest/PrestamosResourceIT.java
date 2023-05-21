@@ -28,8 +28,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
+import py.com.abf.domain.Alumnos;
 import py.com.abf.domain.Materiales;
 import py.com.abf.domain.Prestamos;
+import py.com.abf.domain.enumeration.EstadosPrestamos;
 import py.com.abf.repository.PrestamosRepository;
 import py.com.abf.service.PrestamosService;
 import py.com.abf.service.criteria.PrestamosCriteria;
@@ -47,13 +49,12 @@ class PrestamosResourceIT {
     private static final LocalDate UPDATED_FECHA_PRESTAMO = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_FECHA_PRESTAMO = LocalDate.ofEpochDay(-1L);
 
-    private static final Integer DEFAULT_VIGENCIA_PRESTAMO = 1;
-    private static final Integer UPDATED_VIGENCIA_PRESTAMO = 2;
-    private static final Integer SMALLER_VIGENCIA_PRESTAMO = 1 - 1;
-
     private static final LocalDate DEFAULT_FECHA_DEVOLUCION = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FECHA_DEVOLUCION = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_FECHA_DEVOLUCION = LocalDate.ofEpochDay(-1L);
+
+    private static final EstadosPrestamos DEFAULT_ESTADO = EstadosPrestamos.DISPONIBLE;
+    private static final EstadosPrestamos UPDATED_ESTADO = EstadosPrestamos.PRESTADO;
 
     private static final String ENTITY_API_URL = "/api/prestamos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -87,8 +88,28 @@ class PrestamosResourceIT {
     public static Prestamos createEntity(EntityManager em) {
         Prestamos prestamos = new Prestamos()
             .fechaPrestamo(DEFAULT_FECHA_PRESTAMO)
-            .vigenciaPrestamo(DEFAULT_VIGENCIA_PRESTAMO)
-            .fechaDevolucion(DEFAULT_FECHA_DEVOLUCION);
+            .fechaDevolucion(DEFAULT_FECHA_DEVOLUCION)
+            .estado(DEFAULT_ESTADO);
+        // Add required entity
+        Materiales materiales;
+        if (TestUtil.findAll(em, Materiales.class).isEmpty()) {
+            materiales = MaterialesResourceIT.createEntity(em);
+            em.persist(materiales);
+            em.flush();
+        } else {
+            materiales = TestUtil.findAll(em, Materiales.class).get(0);
+        }
+        prestamos.setMateriales(materiales);
+        // Add required entity
+        Alumnos alumnos;
+        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
+            alumnos = AlumnosResourceIT.createEntity(em);
+            em.persist(alumnos);
+            em.flush();
+        } else {
+            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
+        }
+        prestamos.setAlumnos(alumnos);
         return prestamos;
     }
 
@@ -101,8 +122,28 @@ class PrestamosResourceIT {
     public static Prestamos createUpdatedEntity(EntityManager em) {
         Prestamos prestamos = new Prestamos()
             .fechaPrestamo(UPDATED_FECHA_PRESTAMO)
-            .vigenciaPrestamo(UPDATED_VIGENCIA_PRESTAMO)
-            .fechaDevolucion(UPDATED_FECHA_DEVOLUCION);
+            .fechaDevolucion(UPDATED_FECHA_DEVOLUCION)
+            .estado(UPDATED_ESTADO);
+        // Add required entity
+        Materiales materiales;
+        if (TestUtil.findAll(em, Materiales.class).isEmpty()) {
+            materiales = MaterialesResourceIT.createUpdatedEntity(em);
+            em.persist(materiales);
+            em.flush();
+        } else {
+            materiales = TestUtil.findAll(em, Materiales.class).get(0);
+        }
+        prestamos.setMateriales(materiales);
+        // Add required entity
+        Alumnos alumnos;
+        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
+            alumnos = AlumnosResourceIT.createUpdatedEntity(em);
+            em.persist(alumnos);
+            em.flush();
+        } else {
+            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
+        }
+        prestamos.setAlumnos(alumnos);
         return prestamos;
     }
 
@@ -125,8 +166,8 @@ class PrestamosResourceIT {
         assertThat(prestamosList).hasSize(databaseSizeBeforeCreate + 1);
         Prestamos testPrestamos = prestamosList.get(prestamosList.size() - 1);
         assertThat(testPrestamos.getFechaPrestamo()).isEqualTo(DEFAULT_FECHA_PRESTAMO);
-        assertThat(testPrestamos.getVigenciaPrestamo()).isEqualTo(DEFAULT_VIGENCIA_PRESTAMO);
         assertThat(testPrestamos.getFechaDevolucion()).isEqualTo(DEFAULT_FECHA_DEVOLUCION);
+        assertThat(testPrestamos.getEstado()).isEqualTo(DEFAULT_ESTADO);
     }
 
     @Test
@@ -166,27 +207,10 @@ class PrestamosResourceIT {
 
     @Test
     @Transactional
-    void checkVigenciaPrestamoIsRequired() throws Exception {
+    void checkEstadoIsRequired() throws Exception {
         int databaseSizeBeforeTest = prestamosRepository.findAll().size();
         // set the field null
-        prestamos.setVigenciaPrestamo(null);
-
-        // Create the Prestamos, which fails.
-
-        restPrestamosMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(prestamos)))
-            .andExpect(status().isBadRequest());
-
-        List<Prestamos> prestamosList = prestamosRepository.findAll();
-        assertThat(prestamosList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkFechaDevolucionIsRequired() throws Exception {
-        int databaseSizeBeforeTest = prestamosRepository.findAll().size();
-        // set the field null
-        prestamos.setFechaDevolucion(null);
+        prestamos.setEstado(null);
 
         // Create the Prestamos, which fails.
 
@@ -211,8 +235,8 @@ class PrestamosResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(prestamos.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaPrestamo").value(hasItem(DEFAULT_FECHA_PRESTAMO.toString())))
-            .andExpect(jsonPath("$.[*].vigenciaPrestamo").value(hasItem(DEFAULT_VIGENCIA_PRESTAMO)))
-            .andExpect(jsonPath("$.[*].fechaDevolucion").value(hasItem(DEFAULT_FECHA_DEVOLUCION.toString())));
+            .andExpect(jsonPath("$.[*].fechaDevolucion").value(hasItem(DEFAULT_FECHA_DEVOLUCION.toString())))
+            .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -245,8 +269,8 @@ class PrestamosResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(prestamos.getId().intValue()))
             .andExpect(jsonPath("$.fechaPrestamo").value(DEFAULT_FECHA_PRESTAMO.toString()))
-            .andExpect(jsonPath("$.vigenciaPrestamo").value(DEFAULT_VIGENCIA_PRESTAMO))
-            .andExpect(jsonPath("$.fechaDevolucion").value(DEFAULT_FECHA_DEVOLUCION.toString()));
+            .andExpect(jsonPath("$.fechaDevolucion").value(DEFAULT_FECHA_DEVOLUCION.toString()))
+            .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO.toString()));
     }
 
     @Test
@@ -360,97 +384,6 @@ class PrestamosResourceIT {
 
     @Test
     @Transactional
-    void getAllPrestamosByVigenciaPrestamoIsEqualToSomething() throws Exception {
-        // Initialize the database
-        prestamosRepository.saveAndFlush(prestamos);
-
-        // Get all the prestamosList where vigenciaPrestamo equals to DEFAULT_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldBeFound("vigenciaPrestamo.equals=" + DEFAULT_VIGENCIA_PRESTAMO);
-
-        // Get all the prestamosList where vigenciaPrestamo equals to UPDATED_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldNotBeFound("vigenciaPrestamo.equals=" + UPDATED_VIGENCIA_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPrestamosByVigenciaPrestamoIsInShouldWork() throws Exception {
-        // Initialize the database
-        prestamosRepository.saveAndFlush(prestamos);
-
-        // Get all the prestamosList where vigenciaPrestamo in DEFAULT_VIGENCIA_PRESTAMO or UPDATED_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldBeFound("vigenciaPrestamo.in=" + DEFAULT_VIGENCIA_PRESTAMO + "," + UPDATED_VIGENCIA_PRESTAMO);
-
-        // Get all the prestamosList where vigenciaPrestamo equals to UPDATED_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldNotBeFound("vigenciaPrestamo.in=" + UPDATED_VIGENCIA_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPrestamosByVigenciaPrestamoIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        prestamosRepository.saveAndFlush(prestamos);
-
-        // Get all the prestamosList where vigenciaPrestamo is not null
-        defaultPrestamosShouldBeFound("vigenciaPrestamo.specified=true");
-
-        // Get all the prestamosList where vigenciaPrestamo is null
-        defaultPrestamosShouldNotBeFound("vigenciaPrestamo.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllPrestamosByVigenciaPrestamoIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        prestamosRepository.saveAndFlush(prestamos);
-
-        // Get all the prestamosList where vigenciaPrestamo is greater than or equal to DEFAULT_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldBeFound("vigenciaPrestamo.greaterThanOrEqual=" + DEFAULT_VIGENCIA_PRESTAMO);
-
-        // Get all the prestamosList where vigenciaPrestamo is greater than or equal to UPDATED_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldNotBeFound("vigenciaPrestamo.greaterThanOrEqual=" + UPDATED_VIGENCIA_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPrestamosByVigenciaPrestamoIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        prestamosRepository.saveAndFlush(prestamos);
-
-        // Get all the prestamosList where vigenciaPrestamo is less than or equal to DEFAULT_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldBeFound("vigenciaPrestamo.lessThanOrEqual=" + DEFAULT_VIGENCIA_PRESTAMO);
-
-        // Get all the prestamosList where vigenciaPrestamo is less than or equal to SMALLER_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldNotBeFound("vigenciaPrestamo.lessThanOrEqual=" + SMALLER_VIGENCIA_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPrestamosByVigenciaPrestamoIsLessThanSomething() throws Exception {
-        // Initialize the database
-        prestamosRepository.saveAndFlush(prestamos);
-
-        // Get all the prestamosList where vigenciaPrestamo is less than DEFAULT_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldNotBeFound("vigenciaPrestamo.lessThan=" + DEFAULT_VIGENCIA_PRESTAMO);
-
-        // Get all the prestamosList where vigenciaPrestamo is less than UPDATED_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldBeFound("vigenciaPrestamo.lessThan=" + UPDATED_VIGENCIA_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
-    void getAllPrestamosByVigenciaPrestamoIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        prestamosRepository.saveAndFlush(prestamos);
-
-        // Get all the prestamosList where vigenciaPrestamo is greater than DEFAULT_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldNotBeFound("vigenciaPrestamo.greaterThan=" + DEFAULT_VIGENCIA_PRESTAMO);
-
-        // Get all the prestamosList where vigenciaPrestamo is greater than SMALLER_VIGENCIA_PRESTAMO
-        defaultPrestamosShouldBeFound("vigenciaPrestamo.greaterThan=" + SMALLER_VIGENCIA_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
     void getAllPrestamosByFechaDevolucionIsEqualToSomething() throws Exception {
         // Initialize the database
         prestamosRepository.saveAndFlush(prestamos);
@@ -542,6 +475,45 @@ class PrestamosResourceIT {
 
     @Test
     @Transactional
+    void getAllPrestamosByEstadoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        prestamosRepository.saveAndFlush(prestamos);
+
+        // Get all the prestamosList where estado equals to DEFAULT_ESTADO
+        defaultPrestamosShouldBeFound("estado.equals=" + DEFAULT_ESTADO);
+
+        // Get all the prestamosList where estado equals to UPDATED_ESTADO
+        defaultPrestamosShouldNotBeFound("estado.equals=" + UPDATED_ESTADO);
+    }
+
+    @Test
+    @Transactional
+    void getAllPrestamosByEstadoIsInShouldWork() throws Exception {
+        // Initialize the database
+        prestamosRepository.saveAndFlush(prestamos);
+
+        // Get all the prestamosList where estado in DEFAULT_ESTADO or UPDATED_ESTADO
+        defaultPrestamosShouldBeFound("estado.in=" + DEFAULT_ESTADO + "," + UPDATED_ESTADO);
+
+        // Get all the prestamosList where estado equals to UPDATED_ESTADO
+        defaultPrestamosShouldNotBeFound("estado.in=" + UPDATED_ESTADO);
+    }
+
+    @Test
+    @Transactional
+    void getAllPrestamosByEstadoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        prestamosRepository.saveAndFlush(prestamos);
+
+        // Get all the prestamosList where estado is not null
+        defaultPrestamosShouldBeFound("estado.specified=true");
+
+        // Get all the prestamosList where estado is null
+        defaultPrestamosShouldNotBeFound("estado.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllPrestamosByMaterialesIsEqualToSomething() throws Exception {
         Materiales materiales;
         if (TestUtil.findAll(em, Materiales.class).isEmpty()) {
@@ -563,6 +535,29 @@ class PrestamosResourceIT {
         defaultPrestamosShouldNotBeFound("materialesId.equals=" + (materialesId + 1));
     }
 
+    @Test
+    @Transactional
+    void getAllPrestamosByAlumnosIsEqualToSomething() throws Exception {
+        Alumnos alumnos;
+        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
+            prestamosRepository.saveAndFlush(prestamos);
+            alumnos = AlumnosResourceIT.createEntity(em);
+        } else {
+            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
+        }
+        em.persist(alumnos);
+        em.flush();
+        prestamos.setAlumnos(alumnos);
+        prestamosRepository.saveAndFlush(prestamos);
+        Long alumnosId = alumnos.getId();
+
+        // Get all the prestamosList where alumnos equals to alumnosId
+        defaultPrestamosShouldBeFound("alumnosId.equals=" + alumnosId);
+
+        // Get all the prestamosList where alumnos equals to (alumnosId + 1)
+        defaultPrestamosShouldNotBeFound("alumnosId.equals=" + (alumnosId + 1));
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -573,8 +568,8 @@ class PrestamosResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(prestamos.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaPrestamo").value(hasItem(DEFAULT_FECHA_PRESTAMO.toString())))
-            .andExpect(jsonPath("$.[*].vigenciaPrestamo").value(hasItem(DEFAULT_VIGENCIA_PRESTAMO)))
-            .andExpect(jsonPath("$.[*].fechaDevolucion").value(hasItem(DEFAULT_FECHA_DEVOLUCION.toString())));
+            .andExpect(jsonPath("$.[*].fechaDevolucion").value(hasItem(DEFAULT_FECHA_DEVOLUCION.toString())))
+            .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())));
 
         // Check, that the count call also returns 1
         restPrestamosMockMvc
@@ -622,10 +617,7 @@ class PrestamosResourceIT {
         Prestamos updatedPrestamos = prestamosRepository.findById(prestamos.getId()).get();
         // Disconnect from session so that the updates on updatedPrestamos are not directly saved in db
         em.detach(updatedPrestamos);
-        updatedPrestamos
-            .fechaPrestamo(UPDATED_FECHA_PRESTAMO)
-            .vigenciaPrestamo(UPDATED_VIGENCIA_PRESTAMO)
-            .fechaDevolucion(UPDATED_FECHA_DEVOLUCION);
+        updatedPrestamos.fechaPrestamo(UPDATED_FECHA_PRESTAMO).fechaDevolucion(UPDATED_FECHA_DEVOLUCION).estado(UPDATED_ESTADO);
 
         restPrestamosMockMvc
             .perform(
@@ -640,8 +632,8 @@ class PrestamosResourceIT {
         assertThat(prestamosList).hasSize(databaseSizeBeforeUpdate);
         Prestamos testPrestamos = prestamosList.get(prestamosList.size() - 1);
         assertThat(testPrestamos.getFechaPrestamo()).isEqualTo(UPDATED_FECHA_PRESTAMO);
-        assertThat(testPrestamos.getVigenciaPrestamo()).isEqualTo(UPDATED_VIGENCIA_PRESTAMO);
         assertThat(testPrestamos.getFechaDevolucion()).isEqualTo(UPDATED_FECHA_DEVOLUCION);
+        assertThat(testPrestamos.getEstado()).isEqualTo(UPDATED_ESTADO);
     }
 
     @Test
@@ -725,8 +717,8 @@ class PrestamosResourceIT {
         assertThat(prestamosList).hasSize(databaseSizeBeforeUpdate);
         Prestamos testPrestamos = prestamosList.get(prestamosList.size() - 1);
         assertThat(testPrestamos.getFechaPrestamo()).isEqualTo(DEFAULT_FECHA_PRESTAMO);
-        assertThat(testPrestamos.getVigenciaPrestamo()).isEqualTo(DEFAULT_VIGENCIA_PRESTAMO);
         assertThat(testPrestamos.getFechaDevolucion()).isEqualTo(DEFAULT_FECHA_DEVOLUCION);
+        assertThat(testPrestamos.getEstado()).isEqualTo(DEFAULT_ESTADO);
     }
 
     @Test
@@ -741,10 +733,7 @@ class PrestamosResourceIT {
         Prestamos partialUpdatedPrestamos = new Prestamos();
         partialUpdatedPrestamos.setId(prestamos.getId());
 
-        partialUpdatedPrestamos
-            .fechaPrestamo(UPDATED_FECHA_PRESTAMO)
-            .vigenciaPrestamo(UPDATED_VIGENCIA_PRESTAMO)
-            .fechaDevolucion(UPDATED_FECHA_DEVOLUCION);
+        partialUpdatedPrestamos.fechaPrestamo(UPDATED_FECHA_PRESTAMO).fechaDevolucion(UPDATED_FECHA_DEVOLUCION).estado(UPDATED_ESTADO);
 
         restPrestamosMockMvc
             .perform(
@@ -759,8 +748,8 @@ class PrestamosResourceIT {
         assertThat(prestamosList).hasSize(databaseSizeBeforeUpdate);
         Prestamos testPrestamos = prestamosList.get(prestamosList.size() - 1);
         assertThat(testPrestamos.getFechaPrestamo()).isEqualTo(UPDATED_FECHA_PRESTAMO);
-        assertThat(testPrestamos.getVigenciaPrestamo()).isEqualTo(UPDATED_VIGENCIA_PRESTAMO);
         assertThat(testPrestamos.getFechaDevolucion()).isEqualTo(UPDATED_FECHA_DEVOLUCION);
+        assertThat(testPrestamos.getEstado()).isEqualTo(UPDATED_ESTADO);
     }
 
     @Test

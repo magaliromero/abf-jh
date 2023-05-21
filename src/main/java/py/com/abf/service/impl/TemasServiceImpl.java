@@ -51,6 +51,9 @@ public class TemasServiceImpl implements TemasService {
                 if (temas.getDescripcion() != null) {
                     existingTemas.setDescripcion(temas.getDescripcion());
                 }
+                if (temas.getNivel() != null) {
+                    existingTemas.setNivel(temas.getNivel());
+                }
 
                 return existingTemas;
             })

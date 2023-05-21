@@ -116,7 +116,6 @@ export class FacturasComponent implements OnInit {
     const queryObject: any = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
-      eagerload: true,
       sort: this.getSortQueryParam(predicate, ascending),
     };
     filterOptions?.forEach(filterOption => {

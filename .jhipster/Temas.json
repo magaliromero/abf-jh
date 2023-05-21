@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230227212246",
+  "applications": ["abf"],
+  "changelogDate": "20230521154757",
   "dto": "no",
   "embedded": false,
   "entityTableName": "temas",
@@ -14,6 +14,12 @@
       "fieldName": "descripcion",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nivel",
+      "fieldType": "Niveles",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PREAJEDREZ (Pre-Ajedrez),INICIAL (Inicial),PRINCIPIANTE (Principiante),INTERMEDIO (Intermedio),AVANZADO (Avanzado),TODOS (Todos los niveles)"
     }
   ],
   "fluentMethods": true,
@@ -24,18 +30,9 @@
   "relationships": [
     {
       "otherEntityName": "registroClases",
-      "otherEntityRelationshipName": "temas",
+      "otherEntityRelationshipName": "tema",
       "relationshipName": "registroClases",
       "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityField": "titulo",
-      "otherEntityName": "mallaCurricular",
-      "otherEntityRelationshipName": "temas",
-      "ownerSide": false,
-      "relationshipName": "mallaCurricular",
-      "relationshipType": "many-to-many",
-      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceImpl"

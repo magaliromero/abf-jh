@@ -1,3 +1,14 @@
+application {
+  config {
+    baseName abf,
+    applicationType monolith,
+    packageName py.com.abf,
+    authenticationType jwt,
+    clientFramework angular
+  }
+  entities *
+}
+
 enum EstadosPagos{
  	PAGADO(Pagado)
     ANULADO(Anulado)
@@ -6,6 +17,15 @@ enum EstadosPagos{
 enum EstadosPersona{
 	 ACTIVO(Activo),
   	 INACTIVO(Inactivo)
+}
+
+enum CondicionVenta {
+	CONTADO(Contado)
+    CREDITO(Credito)
+}
+enum TipoProductos {
+	PRODUCTO(Producto)
+    SERVICIO(Servicio)
 }
 enum TipoFuncionarios{
 	PROFESORES(Profesores)
@@ -20,6 +40,25 @@ enum Niveles{
     AVANZADO(Avanzado)
     TODOS("Todos los niveles")
 }
+
+enum EstadosPrestamos{
+ 	DISPONIBLE(Disponible)
+    PRESTADO("En Prestamo")
+    VENCIDO("No devuelto") 
+}
+
+entity Temas(temas){
+	titulo String required,
+    descripcion String required,
+	nivel Niveles required,
+}
+
+entity RegistroClases(registro_clases){
+	fecha LocalDate  required
+    cantidadHoras Integer required
+    asistenciaAlumno Boolean
+}
+
 entity TiposDocumentos(tipos_documentos){
 	codigo String required,
     descripcion String required
@@ -33,7 +72,7 @@ entity Alumnos(alumnos){
     nombreCompleto String required,
 	email String,
 	telefono String required,
-	fechaNacimiento LocalDate  required,
+	fechaNacimiento LocalDate required,
 	documento String required,
     estado EstadosPersona required
 }
@@ -52,188 +91,94 @@ entity Funcionarios(funcionarios){
     tipoFuncionario TipoFuncionarios
 }
 
-entity Temas(temas){
-	titulo String required,
-    descripcion String required
+entity Facturas(factura){
+    fecha LocalDate required,
+    facturaNro String required,
+    timbrado Integer required,
+    razonSocial String required,
+    ruc String required,
+    condicionVenta CondicionVenta required,
+	total Integer required
+}
+entity Pagos(pagos){
+    fecha LocalDate required,
+	total Integer required,
+    cantidadHoras Integer required
 }
 
-entity MallaCurricular(malla_curricular){
-	titulo String required
-    nivel Niveles required,
+entity Productos(productos){
+    tipoProducto TipoProductos required,
+	precioUnitario Integer required,
+	porcentajeIva Integer required,
+	descripcion String required
+    
+}
+entity FacturaDetalle(factura_detalle){
+	cantidad Integer,
+    precioUnitario Integer,
+    subtotal Integer,
+	porcentajeIva Integer,
+	valorPorcentaje Integer
+}
+
+entity Materiales(materiales){
+	descripcion String required,
+    cantidad Integer,
+    cantidadEnPrestamo Integer,
+}
+
+
+entity Prestamos(prestamos){
+    fechaPrestamo LocalDate required,
+    fechaDevolucion LocalDate,
+	estado EstadosPrestamos required
 }
 
 entity Matricula(matricula){
+	concepto String required
+    monto Integer required
 	fechaInscripcion  LocalDate  required
     fechaInicio  LocalDate  required
     fechaPago LocalDate
     estado EstadosPagos required
 }
 
-entity RegistroClases(registro_clases){
-	fecha LocalDate  required
-    cantidadHoras Integer required
-    asistenciaAlumno Boolean
-   
+relationship OneToMany {
+	Productos to Pagos { producto(descripcion) required }
+    Funcionarios to Pagos { funcionario(nombreCompleto) } 
 }
-
-enum TiposPagos{
-    PARCIAL (Parcial)
- 	CUOTA(Cuota)
-    MENSUAL(Mensual)
-    DIARIO(Diario)
-    UNICO (Unico) 
-}
-
-entity Pagos(pagos){
-    montoPago Integer required,
-    montoInicial Integer required,
-    saldo Integer required,
-	fechaRegistro LocalDate  required,
-    fechaPago LocalDate required,
-    tipoPago TiposPagos required,
-    descripcion String required,
-}
-entity Cobros(cobros){
-    montoPago Integer required,
-    montoInicial Integer required,
-    saldo Integer required,
-	fechaRegistro LocalDate  required,
-    fechaPago LocalDate required,
-    tipoPago TiposPagos required,
-    descripcion String required,
-}
-enum CondVenta{
- 	CONTADO(Contado)
-    CREDITO(Credito)
-}
-
-entity Facturas(factura){
-    fecha LocalDate required,
-    facturaNro String required,
-    timbrado Integer required,
-    razonSocial String required,
-    ruc Integer required,
-    condicionVenta CondVenta,
-    cantidad Integer,
-    descripcion String required,
-    precioUnitario Integer,
-    valor5 Integer,
-    valor10 Integer,
-    total Integer,
-    total5 Integer,
-    total10 Integer,
-    totalIva Integer,  
-}
-
-entity Usuarios(usuarios){
-    documento Integer required,
-    idRol Integer required
-}
-
-entity Prestamos(prestamos){
-    fechaPrestamo LocalDate required,
-    vigenciaPrestamo Integer required,
-    fechaDevolucion LocalDate required
-}
-enum TiposTorneos{
- 	INTERNO(Interno)
-    NACIONAL(Nacional)
-    INTERNACIONAL(Internacional) 
-}
-entity Torneos(torneos){
-    nombreTorneo String required,
-    fechaInicio LocalDate required,
-    fechaFin  LocalDate required,
-    lugar String required,
-    tiempo String,
-    tipoTorneo TiposTorneos required,
-    torneoEvaluado Boolean required,
-    federado Boolean required,
-}
-
-enum EstadosMateriales{
- 	DISPONIBLE(Disponible)
-    PRESTADO("En Prestamo")
-    VENCIDO("No devuelto") 
-}
-
-entity Materiales(materiales){
-	descripcion String required,
-    estado EstadosMateriales required, 
-    cantidadStock Integer required,
-    cantidadPrestamo Integer required,
-}
-
-entity FichaPartidasTorneos(fichas){
-	nombreContrincante String,
-    duracion Integer,
-    winner String,
-    resultado String,
-    comentarios String,
-    nombreArbitro String,
-}
-
-entity Cursos(cursos){
-	nombreCurso String,
-}
-
-
-enum TiposEvaluaciones{
- 	FINAL(Final)
-    ACUMULATIVA(Acumulativa)
-    FORMATIVA(Formativa) 
-}
-
-entity Evaluaciones (evaluaciones){
-    tipoEvaluacion TiposEvaluaciones required,
-    idExamen Integer,
-    idActa Integer, 
-    fecha LocalDate required,
-    puntosLogrados Integer,
-    porcentaje Integer,
-    comentarios String,
-
-}
-
-entity Inscripciones (inscripciones){
-    fecha LocalDate,
-}
-
 
 relationship OneToMany {
+	Alumnos to Matricula { alumno(nombreCompleto) required }
+}
+
+relationship OneToMany {
+	Productos to FacturaDetalle { producto(descripcion) required }
+}
+
+relationship OneToMany {
+	Facturas to FacturaDetalle{ factura(facturaNro) required }
+}
+relationship OneToMany{
 	TiposDocumentos to Alumnos { tipoDocumentos(descripcion) required },
+}
+relationship OneToMany{
     TiposDocumentos to Funcionarios { tipoDocumentos(descripcion) required },
-    Alumnos to Matricula  { alumnos(nombreCompleto) required },
-    Cursos to RegistroClases{Cursos(nombreCurso) required},
-    Temas to RegistroClases{temas(titulo) required},
-    Funcionarios to RegistroClases{funcionarios(nombreCompleto) required},
-    Alumnos to RegistroClases {alumnos(nombreCompleto) required},
-    Alumnos to Cobros {alumnos(nombreCompleto) required},
-    Funcionarios to Pagos {funcionarios(nombreCompleto) required},
-    Alumnos to Evaluaciones{alumnos(nombreCompleto) required}
-    Alumnos to Inscripciones  { alumnos(nombreCompleto) required },
-    Torneos to FichaPartidasTorneos {torneos (nombreTorneo) required},
-    Alumnos to FichaPartidasTorneos {alumnos(nombreCompleto)required},
-    Materiales to Prestamos {Materiales(descripcion)},
-    Alumnos to Facturas {alumnos (nombreCompleto)required},
-    Facturas to Cobros {factura(facturaNro)required}
 }
 
-relationship ManyToMany{
-
-	MallaCurricular {temas(titulo) required} to Temas{mallaCurricular(titulo) required} 
+relationship OneToMany{
+    Materiales to Prestamos {Materiales(descripcion) required},
+}
+relationship OneToMany{
+ 	Alumnos to Prestamos {alumnos(nombreCompleto) required},
 }
 
- 
-
+relationship OneToMany{
+ 	Temas to RegistroClases {tema(descripcion) required},
+    Funcionarios to RegistroClases { funcionario(nombreCompleto) }
+}
 
 service all with serviceClass
 service all with serviceImpl
 paginate all with pagination
 filter all
-
-
-
-
-
-

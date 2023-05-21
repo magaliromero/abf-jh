@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="abfApp.registroClases.home.refreshListLabel">Refrescar lista</span>
+        <span jhiTranslate="abfApp.registroClases.home.refreshListLabel">Refresh list</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/registro-clases/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="abfApp.registroClases.home.createLabel"> Crear nuevo Registro Clases </span>
+        <span jhiTranslate="abfApp.registroClases.home.createLabel"> Create a new Registro Clases </span>
       </button>
     </div>
   </h2>
@@ -27,7 +27,7 @@
   <jhi-filter [filters]="filters"></jhi-filter>
 
   <div class="alert alert-warning" id="no-result" *ngIf="registroClases?.length === 0">
-    <span jhiTranslate="abfApp.registroClases.home.notFound">Ningún Registro Clases encontrado</span>
+    <span jhiTranslate="abfApp.registroClases.home.notFound">No Registro Clases found</span>
   </div>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="registroClases && registroClases.length > 0">
@@ -58,27 +58,15 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="cursos.nombreCurso">
+          <th scope="col" jhiSortBy="tema.descripcion">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.registroClases.cursos">Cursos</span>
+              <span jhiTranslate="abfApp.registroClases.tema">Tema</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="temas.titulo">
+          <th scope="col" jhiSortBy="funcionario.nombreCompleto">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.registroClases.temas">Temas</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="funcionarios.nombreCompleto">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.registroClases.funcionarios">Funcionarios</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="alumnos.nombreCompleto">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.registroClases.alumnos">Alumnos</span>
+              <span jhiTranslate="abfApp.registroClases.funcionario">Funcionario</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -94,25 +82,13 @@
           <td>{{ registroClases.cantidadHoras }}</td>
           <td>{{ registroClases.asistenciaAlumno }}</td>
           <td>
-            <div *ngIf="registroClases.cursos">
-              <a [routerLink]="['/cursos', registroClases.cursos.id, 'view']">{{ registroClases.cursos.nombreCurso }}</a>
+            <div *ngIf="registroClases.tema">
+              <a [routerLink]="['/temas', registroClases.tema.id, 'view']">{{ registroClases.tema.descripcion }}</a>
             </div>
           </td>
           <td>
-            <div *ngIf="registroClases.temas">
-              <a [routerLink]="['/temas', registroClases.temas.id, 'view']">{{ registroClases.temas.titulo }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="registroClases.funcionarios">
-              <a [routerLink]="['/funcionarios', registroClases.funcionarios.id, 'view']">{{
-                registroClases.funcionarios.nombreCompleto
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="registroClases.alumnos">
-              <a [routerLink]="['/alumnos', registroClases.alumnos.id, 'view']">{{ registroClases.alumnos.nombreCompleto }}</a>
+            <div *ngIf="registroClases.funcionario">
+              <a [routerLink]="['/funcionarios', registroClases.funcionario.id, 'view']">{{ registroClases.funcionario.nombreCompleto }}</a>
             </div>
           </td>
           <td class="text-end">
@@ -124,7 +100,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
               <button
@@ -134,12 +110,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(registroClases)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

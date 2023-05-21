@@ -1,26 +1,26 @@
 <div>
   <div class="d-flex justify-content-center">
     <div class="col-md-8">
-      <h1 jhiTranslate="register.title" data-cy="registerTitle">Registro</h1>
+      <h1 jhiTranslate="register.title" data-cy="registerTitle">Registration</h1>
 
       <div class="alert alert-success" *ngIf="success" jhiTranslate="register.messages.success">
-        <strong>¡Registro guardado!</strong> Por favor, revise su correo electrónico para confirmar.
+        <strong>Registration saved!</strong> Please check your email for confirmation.
       </div>
 
       <div class="alert alert-danger" *ngIf="error" jhiTranslate="register.messages.error.fail">
-        <strong>¡El registro ha fallado!</strong> Por favor, inténtelo de nuevo más tarde.
+        <strong>Registration failed!</strong> Please try again later.
       </div>
 
       <div class="alert alert-danger" *ngIf="errorUserExists" jhiTranslate="register.messages.error.userexists">
-        <strong>¡El nombre de usuario ya está registrado!</strong> Por favor, escoja otro usuario.
+        <strong>Login name already registered!</strong> Please choose another one.
       </div>
 
       <div class="alert alert-danger" *ngIf="errorEmailExists" jhiTranslate="register.messages.error.emailexists">
-        <strong>¡El correo electrónico ya está en uso!</strong> Por favor, escoja otro email.
+        <strong>Email is already in use!</strong> Please choose another one.
       </div>
 
       <div class="alert alert-danger" *ngIf="doNotMatch" jhiTranslate="global.messages.error.dontmatch">
-        ¡La contraseña y la confirmación de contraseña no coinciden!
+        The password and its confirmation do not match!
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@
     <div class="col-md-8">
       <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
         <div class="mb-3">
-          <label class="form-label" for="login" jhiTranslate="global.form.username.label">Usuario</label>
+          <label class="form-label" for="login" jhiTranslate="global.form.username.label">Username</label>
           <input
             type="text"
             class="form-control"
@@ -47,7 +47,7 @@
               *ngIf="registerForm.get('login')?.errors?.required"
               jhiTranslate="register.messages.validate.login.required"
             >
-              Su nombre de usuario es obligatorio.
+              Your username is required.
             </small>
 
             <small
@@ -55,7 +55,7 @@
               *ngIf="registerForm.get('login')?.errors?.minlength"
               jhiTranslate="register.messages.validate.login.minlength"
             >
-              Su nombre de usuario debe tener al menos 1 caracter.
+              Your username is required to be at least 1 character.
             </small>
 
             <small
@@ -63,7 +63,7 @@
               *ngIf="registerForm.get('login')?.errors?.maxlength"
               jhiTranslate="register.messages.validate.login.maxlength"
             >
-              Su nombre de usuario no puede tener más de 50 caracteres.
+              Your username cannot be longer than 50 characters.
             </small>
 
             <small
@@ -71,13 +71,13 @@
               *ngIf="registerForm.get('login')?.errors?.pattern"
               jhiTranslate="register.messages.validate.login.pattern"
             >
-              Su nombre de usuario no es válido.
+              Your username is invalid.
             </small>
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="email" jhiTranslate="global.form.email.label">Correo electrónico</label>
+          <label class="form-label" for="email" jhiTranslate="global.form.email.label">Email</label>
           <input
             type="email"
             class="form-control"
@@ -94,7 +94,7 @@
               *ngIf="registerForm.get('email')?.errors?.required"
               jhiTranslate="global.messages.validate.email.required"
             >
-              Se requiere un correo electrónico.
+              Your email is required.
             </small>
 
             <small
@@ -102,7 +102,7 @@
               *ngIf="registerForm.get('email')?.errors?.invalid"
               jhiTranslate="global.messages.validate.email.invalid"
             >
-              Su correo electrónico no es válido.
+              Your email is invalid.
             </small>
 
             <small
@@ -110,7 +110,7 @@
               *ngIf="registerForm.get('email')?.errors?.minlength"
               jhiTranslate="global.messages.validate.email.minlength"
             >
-              Se requiere que su correo electrónico tenga por lo menos 5 caracteres
+              Your email is required to be at least 5 characters.
             </small>
 
             <small
@@ -118,13 +118,13 @@
               *ngIf="registerForm.get('email')?.errors?.maxlength"
               jhiTranslate="global.messages.validate.email.maxlength"
             >
-              Su correo electrónico no puede tener más de 50 caracteres
+              Your email cannot be longer than 50 characters.
             </small>
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="password" jhiTranslate="global.form.newpassword.label">Nueva contraseña</label>
+          <label class="form-label" for="password" jhiTranslate="global.form.newpassword.label">New password</label>
           <input
             type="password"
             class="form-control"
@@ -143,7 +143,7 @@
               *ngIf="registerForm.get('password')?.errors?.required"
               jhiTranslate="global.messages.validate.newpassword.required"
             >
-              Se requiere que ingrese una contraseña.
+              Your password is required.
             </small>
 
             <small
@@ -151,7 +151,7 @@
               *ngIf="registerForm.get('password')?.errors?.minlength"
               jhiTranslate="global.messages.validate.newpassword.minlength"
             >
-              Se requiere que su contraseña tenga por lo menos 4 caracteres
+              Your password is required to be at least 4 characters.
             </small>
 
             <small
@@ -159,7 +159,7 @@
               *ngIf="registerForm.get('password')?.errors?.maxlength"
               jhiTranslate="global.messages.validate.newpassword.maxlength"
             >
-              Su contraseña no puede tener más de 50 caracteres
+              Your password cannot be longer than 50 characters.
             </small>
           </div>
 
@@ -167,9 +167,7 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="confirmPassword" jhiTranslate="global.form.confirmpassword.label"
-            >Confirmación de la nueva contraseña</label
-          >
+          <label class="form-label" for="confirmPassword" jhiTranslate="global.form.confirmpassword.label">New password confirmation</label>
           <input
             type="password"
             class="form-control"
@@ -191,7 +189,7 @@
               *ngIf="registerForm.get('confirmPassword')?.errors?.required"
               jhiTranslate="global.messages.validate.confirmpassword.required"
             >
-              Se requiere que confirme la contraseña.
+              Your confirmation password is required.
             </small>
 
             <small
@@ -199,7 +197,7 @@
               *ngIf="registerForm.get('confirmPassword')?.errors?.minlength"
               jhiTranslate="global.messages.validate.confirmpassword.minlength"
             >
-              Se requiere que su contraseña de confirmación tenga por lo menos 4 caracteres
+              Your confirmation password is required to be at least 4 characters.
             </small>
 
             <small
@@ -207,7 +205,7 @@
               *ngIf="registerForm.get('confirmPassword')?.errors?.maxlength"
               jhiTranslate="global.messages.validate.confirmpassword.maxlength"
             >
-              Su contraseña de confirmación no puede tener más de 50 caracteres
+              Your confirmation password cannot be longer than 50 characters.
             </small>
           </div>
         </div>
@@ -219,16 +217,16 @@
           jhiTranslate="register.form.button"
           data-cy="submit"
         >
-          Crear la cuenta
+          Register
         </button>
       </form>
 
       <div class="mt-3 alert alert-warning">
-        <span jhiTranslate="global.messages.info.authenticated.prefix">Si desea </span>
-        <a class="alert-link" routerLink="/login" jhiTranslate="global.messages.info.authenticated.link">iniciar sesión</a
+        <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
+        <a class="alert-link" routerLink="/login" jhiTranslate="global.messages.info.authenticated.link">sign in</a
         ><span jhiTranslate="global.messages.info.authenticated.suffix"
-          >, puede intentar con las cuentas predeterminadas:<br />- Administrador (usuario="admin" y contraseña="admin") <br />- Usuario
-          (usuario="user" y contraseña="user").</span
+          >, you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />- User (login="user" and
+          password="user").</span
         >
       </div>
     </div>

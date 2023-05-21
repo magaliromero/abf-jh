@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { TemasFormService, TemasFormGroup } from './temas-form.service';
 import { ITemas } from '../temas.model';
 import { TemasService } from '../service/temas.service';
+import { Niveles } from 'app/entities/enumerations/niveles.model';
 
 @Component({
   selector: 'jhi-temas-update',
@@ -15,6 +16,7 @@ import { TemasService } from '../service/temas.service';
 export class TemasUpdateComponent implements OnInit {
   isSaving = false;
   temas: ITemas | null = null;
+  nivelesValues = Object.keys(Niveles);
 
   editForm: TemasFormGroup = this.temasFormService.createTemasFormGroup();
 

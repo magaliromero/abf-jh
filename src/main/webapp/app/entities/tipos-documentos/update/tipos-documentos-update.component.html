@@ -6,7 +6,7 @@
         data-cy="TiposDocumentosCreateUpdateHeading"
         jhiTranslate="abfApp.tiposDocumentos.home.createOrEditLabel"
       >
-        Crear o editar Tipos Documentos
+        Create or edit a Tipos Documentos
       </h2>
 
       <div>
@@ -22,7 +22,7 @@
           <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
           <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" jhiTranslate="entity.validation.required">
-              Este campo es obligatorio.
+              This field is required.
             </small>
           </div>
         </div>
@@ -43,7 +43,7 @@
               *ngIf="editForm.get('descripcion')?.errors?.required"
               jhiTranslate="entity.validation.required"
             >
-              Este campo es obligatorio.
+              This field is required.
             </small>
           </div>
         </div>
@@ -51,7 +51,7 @@
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
         <button
@@ -61,7 +61,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
       </div>
     </form>

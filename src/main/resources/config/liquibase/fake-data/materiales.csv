@@ -1,11 +1,11 @@
-id;descripcion;estado;cantidad_stock;cantidad_prestamo
-1;synthesizing;VENCIDO;5612;26732
-2;enable proactive;VENCIDO;7672;68324
-3;Central Planificador;VENCIDO;60445;57376
-4;24/365 Checking éxito;VENCIDO;32148;50092
-5;Algodón Humano TCP;PRESTADO;4529;26397
-6;Account markets Comunidad;VENCIDO;11586;96009
-7;Artesanal International Seguridada;DISPONIBLE;27040;71343
-8;Refinado Increible;DISPONIBLE;21687;21430
-9;Account copy;PRESTADO;80764;17876
-10;Berkshire;DISPONIBLE;51588;15806
+id;descripcion;cantidad;cantidad_en_prestamo
+1;synthesizing;67508;5612
+2;Berkshire;56462;36253
+3;olive;68324;40914
+4;Berkshire Account Account;35544;39918
+5;Checking success;93211;32148
+6;Liaison Fresh;64963;87867
+7;Garden;26397;85682
+8;Uruguay Refined;54558;21181
+9;Frozen Generic International;94874;10741
+10;black revolutionary Car;20789;68304

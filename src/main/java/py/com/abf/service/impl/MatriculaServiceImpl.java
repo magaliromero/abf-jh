@@ -45,6 +45,12 @@ public class MatriculaServiceImpl implements MatriculaService {
         return matriculaRepository
             .findById(matricula.getId())
             .map(existingMatricula -> {
+                if (matricula.getConcepto() != null) {
+                    existingMatricula.setConcepto(matricula.getConcepto());
+                }
+                if (matricula.getMonto() != null) {
+                    existingMatricula.setMonto(matricula.getMonto());
+                }
                 if (matricula.getFechaInscripcion() != null) {
                     existingMatricula.setFechaInscripcion(matricula.getFechaInscripcion());
                 }

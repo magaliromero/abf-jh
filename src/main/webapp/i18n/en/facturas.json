@@ -24,17 +24,8 @@
       "razonSocial": "Razon Social",
       "ruc": "Ruc",
       "condicionVenta": "Condicion Venta",
-      "cantidad": "Cantidad",
-      "descripcion": "Descripcion",
-      "precioUnitario": "Precio Unitario",
-      "valor5": "Valor 5",
-      "valor10": "Valor 10",
       "total": "Total",
-      "total5": "Total 5",
-      "total10": "Total 10",
-      "totalIva": "Total Iva",
-      "cobros": "Cobros",
-      "alumnos": "Alumnos"
+      "facturaDetalle": "Factura Detalle"
     }
   }
 }

@@ -118,6 +118,12 @@ public class FuncionariosQueryService extends QueryService<Funcionarios> {
             if (criteria.getTipoFuncionario() != null) {
                 specification = specification.and(buildSpecification(criteria.getTipoFuncionario(), Funcionarios_.tipoFuncionario));
             }
+            if (criteria.getPagosId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getPagosId(), root -> root.join(Funcionarios_.pagos, JoinType.LEFT).get(Pagos_.id))
+                    );
+            }
             if (criteria.getRegistroClasesId() != null) {
                 specification =
                     specification.and(
@@ -125,12 +131,6 @@ public class FuncionariosQueryService extends QueryService<Funcionarios> {
                             criteria.getRegistroClasesId(),
                             root -> root.join(Funcionarios_.registroClases, JoinType.LEFT).get(RegistroClases_.id)
                         )
-                    );
-            }
-            if (criteria.getPagosId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getPagosId(), root -> root.join(Funcionarios_.pagos, JoinType.LEFT).get(Pagos_.id))
                     );
             }
             if (criteria.getTipoDocumentosId() != null) {

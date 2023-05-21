@@ -18,14 +18,11 @@
         "title": "Pagos"
       },
       "id": "ID",
-      "montoPago": "Monto Pago",
-      "montoInicial": "Monto Inicial",
-      "saldo": "Saldo",
-      "fechaRegistro": "Fecha Registro",
-      "fechaPago": "Fecha Pago",
-      "tipoPago": "Tipo Pago",
-      "descripcion": "Descripcion",
-      "funcionarios": "Funcionarios"
+      "fecha": "Fecha",
+      "total": "Total",
+      "cantidadHoras": "Cantidad Horas",
+      "producto": "Producto",
+      "funcionario": "Funcionario"
     }
   }
 }

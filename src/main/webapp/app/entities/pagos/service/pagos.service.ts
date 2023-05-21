@@ -12,9 +12,8 @@ import { IPagos, NewPagos } from '../pagos.model';
 
 export type PartialUpdatePagos = Partial<IPagos> & Pick<IPagos, 'id'>;
 
-type RestOf<T extends IPagos | NewPagos> = Omit<T, 'fechaRegistro' | 'fechaPago'> & {
-  fechaRegistro?: string | null;
-  fechaPago?: string | null;
+type RestOf<T extends IPagos | NewPagos> = Omit<T, 'fecha'> & {
+  fecha?: string | null;
 };
 
 export type RestPagos = RestOf<IPagos>;
@@ -99,16 +98,14 @@ export class PagosService {
   protected convertDateFromClient<T extends IPagos | NewPagos | PartialUpdatePagos>(pagos: T): RestOf<T> {
     return {
       ...pagos,
-      fechaRegistro: pagos.fechaRegistro?.format(DATE_FORMAT) ?? null,
-      fechaPago: pagos.fechaPago?.format(DATE_FORMAT) ?? null,
+      fecha: pagos.fecha?.format(DATE_FORMAT) ?? null,
     };
   }
 
   protected convertDateFromServer(restPagos: RestPagos): IPagos {
     return {
       ...restPagos,
-      fechaRegistro: restPagos.fechaRegistro ? dayjs(restPagos.fechaRegistro) : undefined,
-      fechaPago: restPagos.fechaPago ? dayjs(restPagos.fechaPago) : undefined,
+      fecha: restPagos.fecha ? dayjs(restPagos.fecha) : undefined,
     };
   }
 

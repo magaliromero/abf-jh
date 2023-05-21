@@ -18,11 +18,13 @@
         "title": "Matricula"
       },
       "id": "ID",
+      "concepto": "Concepto",
+      "monto": "Monto",
       "fechaInscripcion": "Fecha Inscripcion",
       "fechaInicio": "Fecha Inicio",
       "fechaPago": "Fecha Pago",
       "estado": "Estado",
-      "alumnos": "Alumnos"
+      "alumno": "Alumno"
     }
   }
 }

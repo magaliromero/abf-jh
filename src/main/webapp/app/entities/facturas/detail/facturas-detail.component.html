@@ -36,58 +36,20 @@
         </dd>
         <dt><span jhiTranslate="abfApp.facturas.condicionVenta">Condicion Venta</span></dt>
         <dd>
-          <span jhiTranslate="{{ 'abfApp.CondVenta.' + facturas.condicionVenta }}">{{ facturas.condicionVenta }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.facturas.cantidad">Cantidad</span></dt>
-        <dd>
-          <span>{{ facturas.cantidad }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.facturas.descripcion">Descripcion</span></dt>
-        <dd>
-          <span>{{ facturas.descripcion }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.facturas.precioUnitario">Precio Unitario</span></dt>
-        <dd>
-          <span>{{ facturas.precioUnitario }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.facturas.valor5">Valor 5</span></dt>
-        <dd>
-          <span>{{ facturas.valor5 }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.facturas.valor10">Valor 10</span></dt>
-        <dd>
-          <span>{{ facturas.valor10 }}</span>
+          <span jhiTranslate="{{ 'abfApp.CondicionVenta.' + facturas.condicionVenta }}">{{ facturas.condicionVenta }}</span>
         </dd>
         <dt><span jhiTranslate="abfApp.facturas.total">Total</span></dt>
         <dd>
           <span>{{ facturas.total }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.facturas.total5">Total 5</span></dt>
-        <dd>
-          <span>{{ facturas.total5 }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.facturas.total10">Total 10</span></dt>
-        <dd>
-          <span>{{ facturas.total10 }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.facturas.totalIva">Total Iva</span></dt>
-        <dd>
-          <span>{{ facturas.totalIva }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.facturas.alumnos">Alumnos</span></dt>
-        <dd>
-          <div *ngIf="facturas.alumnos">
-            <a [routerLink]="['/alumnos', facturas.alumnos.id, 'view']">{{ facturas.alumnos.nombreCompleto }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
       <button type="button" [routerLink]="['/facturas', facturas.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
   </div>

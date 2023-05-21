@@ -41,6 +41,10 @@ public class MatriculaCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
+    private StringFilter concepto;
+
+    private IntegerFilter monto;
+
     private LocalDateFilter fechaInscripcion;
 
     private LocalDateFilter fechaInicio;
@@ -49,7 +53,7 @@ public class MatriculaCriteria implements Serializable, Criteria {
 
     private EstadosPagosFilter estado;
 
-    private LongFilter alumnosId;
+    private LongFilter alumnoId;
 
     private Boolean distinct;
 
@@ -57,11 +61,13 @@ public class MatriculaCriteria implements Serializable, Criteria {
 
     public MatriculaCriteria(MatriculaCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
+        this.concepto = other.concepto == null ? null : other.concepto.copy();
+        this.monto = other.monto == null ? null : other.monto.copy();
         this.fechaInscripcion = other.fechaInscripcion == null ? null : other.fechaInscripcion.copy();
         this.fechaInicio = other.fechaInicio == null ? null : other.fechaInicio.copy();
         this.fechaPago = other.fechaPago == null ? null : other.fechaPago.copy();
         this.estado = other.estado == null ? null : other.estado.copy();
-        this.alumnosId = other.alumnosId == null ? null : other.alumnosId.copy();
+        this.alumnoId = other.alumnoId == null ? null : other.alumnoId.copy();
         this.distinct = other.distinct;
     }
 
@@ -83,6 +89,36 @@ public class MatriculaCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    public StringFilter getConcepto() {
+        return concepto;
+    }
+
+    public StringFilter concepto() {
+        if (concepto == null) {
+            concepto = new StringFilter();
+        }
+        return concepto;
+    }
+
+    public void setConcepto(StringFilter concepto) {
+        this.concepto = concepto;
+    }
+
+    public IntegerFilter getMonto() {
+        return monto;
+    }
+
+    public IntegerFilter monto() {
+        if (monto == null) {
+            monto = new IntegerFilter();
+        }
+        return monto;
+    }
+
+    public void setMonto(IntegerFilter monto) {
+        this.monto = monto;
     }
 
     public LocalDateFilter getFechaInscripcion() {
@@ -145,19 +181,19 @@ public class MatriculaCriteria implements Serializable, Criteria {
         this.estado = estado;
     }
 
-    public LongFilter getAlumnosId() {
-        return alumnosId;
+    public LongFilter getAlumnoId() {
+        return alumnoId;
     }
 
-    public LongFilter alumnosId() {
-        if (alumnosId == null) {
-            alumnosId = new LongFilter();
+    public LongFilter alumnoId() {
+        if (alumnoId == null) {
+            alumnoId = new LongFilter();
         }
-        return alumnosId;
+        return alumnoId;
     }
 
-    public void setAlumnosId(LongFilter alumnosId) {
-        this.alumnosId = alumnosId;
+    public void setAlumnoId(LongFilter alumnoId) {
+        this.alumnoId = alumnoId;
     }
 
     public Boolean getDistinct() {
@@ -179,18 +215,20 @@ public class MatriculaCriteria implements Serializable, Criteria {
         final MatriculaCriteria that = (MatriculaCriteria) o;
         return (
             Objects.equals(id, that.id) &&
+            Objects.equals(concepto, that.concepto) &&
+            Objects.equals(monto, that.monto) &&
             Objects.equals(fechaInscripcion, that.fechaInscripcion) &&
             Objects.equals(fechaInicio, that.fechaInicio) &&
             Objects.equals(fechaPago, that.fechaPago) &&
             Objects.equals(estado, that.estado) &&
-            Objects.equals(alumnosId, that.alumnosId) &&
+            Objects.equals(alumnoId, that.alumnoId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fechaInscripcion, fechaInicio, fechaPago, estado, alumnosId, distinct);
+        return Objects.hash(id, concepto, monto, fechaInscripcion, fechaInicio, fechaPago, estado, alumnoId, distinct);
     }
 
     // prettier-ignore
@@ -198,11 +236,13 @@ public class MatriculaCriteria implements Serializable, Criteria {
     public String toString() {
         return "MatriculaCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
+            (concepto != null ? "concepto=" + concepto + ", " : "") +
+            (monto != null ? "monto=" + monto + ", " : "") +
             (fechaInscripcion != null ? "fechaInscripcion=" + fechaInscripcion + ", " : "") +
             (fechaInicio != null ? "fechaInicio=" + fechaInicio + ", " : "") +
             (fechaPago != null ? "fechaPago=" + fechaPago + ", " : "") +
             (estado != null ? "estado=" + estado + ", " : "") +
-            (alumnosId != null ? "alumnosId=" + alumnosId + ", " : "") +
+            (alumnoId != null ? "alumnoId=" + alumnoId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

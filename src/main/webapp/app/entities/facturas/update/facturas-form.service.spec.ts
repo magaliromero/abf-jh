@@ -26,16 +26,7 @@ describe('Facturas Form Service', () => {
             razonSocial: expect.any(Object),
             ruc: expect.any(Object),
             condicionVenta: expect.any(Object),
-            cantidad: expect.any(Object),
-            descripcion: expect.any(Object),
-            precioUnitario: expect.any(Object),
-            valor5: expect.any(Object),
-            valor10: expect.any(Object),
             total: expect.any(Object),
-            total5: expect.any(Object),
-            total10: expect.any(Object),
-            totalIva: expect.any(Object),
-            alumnos: expect.any(Object),
           })
         );
       });
@@ -52,16 +43,7 @@ describe('Facturas Form Service', () => {
             razonSocial: expect.any(Object),
             ruc: expect.any(Object),
             condicionVenta: expect.any(Object),
-            cantidad: expect.any(Object),
-            descripcion: expect.any(Object),
-            precioUnitario: expect.any(Object),
-            valor5: expect.any(Object),
-            valor10: expect.any(Object),
             total: expect.any(Object),
-            total5: expect.any(Object),
-            total10: expect.any(Object),
-            totalIva: expect.any(Object),
-            alumnos: expect.any(Object),
           })
         );
       });

@@ -29,12 +29,7 @@
       "documento": "Documento",
       "estado": "Estado",
       "matricula": "Matricula",
-      "registroClases": "Registro Clases",
-      "cobros": "Cobros",
-      "evaluaciones": "Evaluaciones",
-      "inscripciones": "Inscripciones",
-      "fichaPartidasTorneos": "Ficha Partidas Torneos",
-      "facturas": "Facturas",
+      "prestamos": "Prestamos",
       "tipoDocumentos": "Tipo Documentos"
     }
   }

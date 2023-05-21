@@ -29,8 +29,8 @@
       "documento": "Documento",
       "estado": "Estado",
       "tipoFuncionario": "Tipo Funcionario",
-      "registroClases": "Registro Clases",
       "pagos": "Pagos",
+      "registroClases": "Registro Clases",
       "tipoDocumentos": "Tipo Documentos"
     }
   }

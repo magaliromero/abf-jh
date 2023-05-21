@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230425234913",
+  "applications": ["abf"],
+  "changelogDate": "20230521155257",
   "dto": "no",
   "embedded": false,
   "entityTableName": "factura",
@@ -27,50 +27,19 @@
     },
     {
       "fieldName": "ruc",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "condicionVenta",
-      "fieldType": "CondVenta",
-      "fieldValues": "CONTADO (Contado),CREDITO (Credito)"
-    },
-    {
-      "fieldName": "cantidad",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "descripcion",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "precioUnitario",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "valor5",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "valor10",
-      "fieldType": "Integer"
+      "fieldName": "condicionVenta",
+      "fieldType": "CondicionVenta",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "CONTADO (Contado),CREDITO (Credito)"
     },
     {
       "fieldName": "total",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "total5",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "total10",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "totalIva",
-      "fieldType": "Integer"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,
@@ -80,18 +49,10 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "cobros",
+      "otherEntityName": "facturaDetalle",
       "otherEntityRelationshipName": "factura",
-      "relationshipName": "cobros",
+      "relationshipName": "facturaDetalle",
       "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityField": "nombreCompleto",
-      "otherEntityName": "alumnos",
-      "otherEntityRelationshipName": "facturas",
-      "relationshipName": "alumnos",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceImpl"

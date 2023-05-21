@@ -2,45 +2,34 @@ package py.com.abf.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
-import py.com.abf.domain.Alumnos;
-import py.com.abf.domain.Cobros;
+import py.com.abf.domain.FacturaDetalle;
 import py.com.abf.domain.Facturas;
-import py.com.abf.domain.enumeration.CondVenta;
+import py.com.abf.domain.enumeration.CondicionVenta;
 import py.com.abf.repository.FacturasRepository;
-import py.com.abf.service.FacturasService;
 import py.com.abf.service.criteria.FacturasCriteria;
 
 /**
  * Integration tests for the {@link FacturasResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class FacturasResourceIT {
@@ -59,47 +48,15 @@ class FacturasResourceIT {
     private static final String DEFAULT_RAZON_SOCIAL = "AAAAAAAAAA";
     private static final String UPDATED_RAZON_SOCIAL = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_RUC = 1;
-    private static final Integer UPDATED_RUC = 2;
-    private static final Integer SMALLER_RUC = 1 - 1;
+    private static final String DEFAULT_RUC = "AAAAAAAAAA";
+    private static final String UPDATED_RUC = "BBBBBBBBBB";
 
-    private static final CondVenta DEFAULT_CONDICION_VENTA = CondVenta.CONTADO;
-    private static final CondVenta UPDATED_CONDICION_VENTA = CondVenta.CREDITO;
-
-    private static final Integer DEFAULT_CANTIDAD = 1;
-    private static final Integer UPDATED_CANTIDAD = 2;
-    private static final Integer SMALLER_CANTIDAD = 1 - 1;
-
-    private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
-
-    private static final Integer DEFAULT_PRECIO_UNITARIO = 1;
-    private static final Integer UPDATED_PRECIO_UNITARIO = 2;
-    private static final Integer SMALLER_PRECIO_UNITARIO = 1 - 1;
-
-    private static final Integer DEFAULT_VALOR_5 = 1;
-    private static final Integer UPDATED_VALOR_5 = 2;
-    private static final Integer SMALLER_VALOR_5 = 1 - 1;
-
-    private static final Integer DEFAULT_VALOR_10 = 1;
-    private static final Integer UPDATED_VALOR_10 = 2;
-    private static final Integer SMALLER_VALOR_10 = 1 - 1;
+    private static final CondicionVenta DEFAULT_CONDICION_VENTA = CondicionVenta.CONTADO;
+    private static final CondicionVenta UPDATED_CONDICION_VENTA = CondicionVenta.CREDITO;
 
     private static final Integer DEFAULT_TOTAL = 1;
     private static final Integer UPDATED_TOTAL = 2;
     private static final Integer SMALLER_TOTAL = 1 - 1;
-
-    private static final Integer DEFAULT_TOTAL_5 = 1;
-    private static final Integer UPDATED_TOTAL_5 = 2;
-    private static final Integer SMALLER_TOTAL_5 = 1 - 1;
-
-    private static final Integer DEFAULT_TOTAL_10 = 1;
-    private static final Integer UPDATED_TOTAL_10 = 2;
-    private static final Integer SMALLER_TOTAL_10 = 1 - 1;
-
-    private static final Integer DEFAULT_TOTAL_IVA = 1;
-    private static final Integer UPDATED_TOTAL_IVA = 2;
-    private static final Integer SMALLER_TOTAL_IVA = 1 - 1;
 
     private static final String ENTITY_API_URL = "/api/facturas";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -109,12 +66,6 @@ class FacturasResourceIT {
 
     @Autowired
     private FacturasRepository facturasRepository;
-
-    @Mock
-    private FacturasRepository facturasRepositoryMock;
-
-    @Mock
-    private FacturasService facturasServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -138,25 +89,7 @@ class FacturasResourceIT {
             .razonSocial(DEFAULT_RAZON_SOCIAL)
             .ruc(DEFAULT_RUC)
             .condicionVenta(DEFAULT_CONDICION_VENTA)
-            .cantidad(DEFAULT_CANTIDAD)
-            .descripcion(DEFAULT_DESCRIPCION)
-            .precioUnitario(DEFAULT_PRECIO_UNITARIO)
-            .valor5(DEFAULT_VALOR_5)
-            .valor10(DEFAULT_VALOR_10)
-            .total(DEFAULT_TOTAL)
-            .total5(DEFAULT_TOTAL_5)
-            .total10(DEFAULT_TOTAL_10)
-            .totalIva(DEFAULT_TOTAL_IVA);
-        // Add required entity
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            alumnos = AlumnosResourceIT.createEntity(em);
-            em.persist(alumnos);
-            em.flush();
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        facturas.setAlumnos(alumnos);
+            .total(DEFAULT_TOTAL);
         return facturas;
     }
 
@@ -174,25 +107,7 @@ class FacturasResourceIT {
             .razonSocial(UPDATED_RAZON_SOCIAL)
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
-            .cantidad(UPDATED_CANTIDAD)
-            .descripcion(UPDATED_DESCRIPCION)
-            .precioUnitario(UPDATED_PRECIO_UNITARIO)
-            .valor5(UPDATED_VALOR_5)
-            .valor10(UPDATED_VALOR_10)
-            .total(UPDATED_TOTAL)
-            .total5(UPDATED_TOTAL_5)
-            .total10(UPDATED_TOTAL_10)
-            .totalIva(UPDATED_TOTAL_IVA);
-        // Add required entity
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            alumnos = AlumnosResourceIT.createUpdatedEntity(em);
-            em.persist(alumnos);
-            em.flush();
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        facturas.setAlumnos(alumnos);
+            .total(UPDATED_TOTAL);
         return facturas;
     }
 
@@ -220,15 +135,7 @@ class FacturasResourceIT {
         assertThat(testFacturas.getRazonSocial()).isEqualTo(DEFAULT_RAZON_SOCIAL);
         assertThat(testFacturas.getRuc()).isEqualTo(DEFAULT_RUC);
         assertThat(testFacturas.getCondicionVenta()).isEqualTo(DEFAULT_CONDICION_VENTA);
-        assertThat(testFacturas.getCantidad()).isEqualTo(DEFAULT_CANTIDAD);
-        assertThat(testFacturas.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
-        assertThat(testFacturas.getPrecioUnitario()).isEqualTo(DEFAULT_PRECIO_UNITARIO);
-        assertThat(testFacturas.getValor5()).isEqualTo(DEFAULT_VALOR_5);
-        assertThat(testFacturas.getValor10()).isEqualTo(DEFAULT_VALOR_10);
         assertThat(testFacturas.getTotal()).isEqualTo(DEFAULT_TOTAL);
-        assertThat(testFacturas.getTotal5()).isEqualTo(DEFAULT_TOTAL_5);
-        assertThat(testFacturas.getTotal10()).isEqualTo(DEFAULT_TOTAL_10);
-        assertThat(testFacturas.getTotalIva()).isEqualTo(DEFAULT_TOTAL_IVA);
     }
 
     @Test
@@ -336,10 +243,27 @@ class FacturasResourceIT {
 
     @Test
     @Transactional
-    void checkDescripcionIsRequired() throws Exception {
+    void checkCondicionVentaIsRequired() throws Exception {
         int databaseSizeBeforeTest = facturasRepository.findAll().size();
         // set the field null
-        facturas.setDescripcion(null);
+        facturas.setCondicionVenta(null);
+
+        // Create the Facturas, which fails.
+
+        restFacturasMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(facturas)))
+            .andExpect(status().isBadRequest());
+
+        List<Facturas> facturasList = facturasRepository.findAll();
+        assertThat(facturasList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkTotalIsRequired() throws Exception {
+        int databaseSizeBeforeTest = facturasRepository.findAll().size();
+        // set the field null
+        facturas.setTotal(null);
 
         // Create the Facturas, which fails.
 
@@ -369,32 +293,7 @@ class FacturasResourceIT {
             .andExpect(jsonPath("$.[*].razonSocial").value(hasItem(DEFAULT_RAZON_SOCIAL)))
             .andExpect(jsonPath("$.[*].ruc").value(hasItem(DEFAULT_RUC)))
             .andExpect(jsonPath("$.[*].condicionVenta").value(hasItem(DEFAULT_CONDICION_VENTA.toString())))
-            .andExpect(jsonPath("$.[*].cantidad").value(hasItem(DEFAULT_CANTIDAD)))
-            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
-            .andExpect(jsonPath("$.[*].precioUnitario").value(hasItem(DEFAULT_PRECIO_UNITARIO)))
-            .andExpect(jsonPath("$.[*].valor5").value(hasItem(DEFAULT_VALOR_5)))
-            .andExpect(jsonPath("$.[*].valor10").value(hasItem(DEFAULT_VALOR_10)))
-            .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)))
-            .andExpect(jsonPath("$.[*].total5").value(hasItem(DEFAULT_TOTAL_5)))
-            .andExpect(jsonPath("$.[*].total10").value(hasItem(DEFAULT_TOTAL_10)))
-            .andExpect(jsonPath("$.[*].totalIva").value(hasItem(DEFAULT_TOTAL_IVA)));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllFacturasWithEagerRelationshipsIsEnabled() throws Exception {
-        when(facturasServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restFacturasMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(facturasServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllFacturasWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(facturasServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restFacturasMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
-        verify(facturasRepositoryMock, times(1)).findAll(any(Pageable.class));
+            .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)));
     }
 
     @Test
@@ -415,15 +314,7 @@ class FacturasResourceIT {
             .andExpect(jsonPath("$.razonSocial").value(DEFAULT_RAZON_SOCIAL))
             .andExpect(jsonPath("$.ruc").value(DEFAULT_RUC))
             .andExpect(jsonPath("$.condicionVenta").value(DEFAULT_CONDICION_VENTA.toString()))
-            .andExpect(jsonPath("$.cantidad").value(DEFAULT_CANTIDAD))
-            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION))
-            .andExpect(jsonPath("$.precioUnitario").value(DEFAULT_PRECIO_UNITARIO))
-            .andExpect(jsonPath("$.valor5").value(DEFAULT_VALOR_5))
-            .andExpect(jsonPath("$.valor10").value(DEFAULT_VALOR_10))
-            .andExpect(jsonPath("$.total").value(DEFAULT_TOTAL))
-            .andExpect(jsonPath("$.total5").value(DEFAULT_TOTAL_5))
-            .andExpect(jsonPath("$.total10").value(DEFAULT_TOTAL_10))
-            .andExpect(jsonPath("$.totalIva").value(DEFAULT_TOTAL_IVA));
+            .andExpect(jsonPath("$.total").value(DEFAULT_TOTAL));
     }
 
     @Test
@@ -797,54 +688,28 @@ class FacturasResourceIT {
 
     @Test
     @Transactional
-    void getAllFacturasByRucIsGreaterThanOrEqualToSomething() throws Exception {
+    void getAllFacturasByRucContainsSomething() throws Exception {
         // Initialize the database
         facturasRepository.saveAndFlush(facturas);
 
-        // Get all the facturasList where ruc is greater than or equal to DEFAULT_RUC
-        defaultFacturasShouldBeFound("ruc.greaterThanOrEqual=" + DEFAULT_RUC);
+        // Get all the facturasList where ruc contains DEFAULT_RUC
+        defaultFacturasShouldBeFound("ruc.contains=" + DEFAULT_RUC);
 
-        // Get all the facturasList where ruc is greater than or equal to UPDATED_RUC
-        defaultFacturasShouldNotBeFound("ruc.greaterThanOrEqual=" + UPDATED_RUC);
+        // Get all the facturasList where ruc contains UPDATED_RUC
+        defaultFacturasShouldNotBeFound("ruc.contains=" + UPDATED_RUC);
     }
 
     @Test
     @Transactional
-    void getAllFacturasByRucIsLessThanOrEqualToSomething() throws Exception {
+    void getAllFacturasByRucNotContainsSomething() throws Exception {
         // Initialize the database
         facturasRepository.saveAndFlush(facturas);
 
-        // Get all the facturasList where ruc is less than or equal to DEFAULT_RUC
-        defaultFacturasShouldBeFound("ruc.lessThanOrEqual=" + DEFAULT_RUC);
+        // Get all the facturasList where ruc does not contain DEFAULT_RUC
+        defaultFacturasShouldNotBeFound("ruc.doesNotContain=" + DEFAULT_RUC);
 
-        // Get all the facturasList where ruc is less than or equal to SMALLER_RUC
-        defaultFacturasShouldNotBeFound("ruc.lessThanOrEqual=" + SMALLER_RUC);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByRucIsLessThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where ruc is less than DEFAULT_RUC
-        defaultFacturasShouldNotBeFound("ruc.lessThan=" + DEFAULT_RUC);
-
-        // Get all the facturasList where ruc is less than UPDATED_RUC
-        defaultFacturasShouldBeFound("ruc.lessThan=" + UPDATED_RUC);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByRucIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where ruc is greater than DEFAULT_RUC
-        defaultFacturasShouldNotBeFound("ruc.greaterThan=" + DEFAULT_RUC);
-
-        // Get all the facturasList where ruc is greater than SMALLER_RUC
-        defaultFacturasShouldBeFound("ruc.greaterThan=" + SMALLER_RUC);
+        // Get all the facturasList where ruc does not contain UPDATED_RUC
+        defaultFacturasShouldBeFound("ruc.doesNotContain=" + UPDATED_RUC);
     }
 
     @Test
@@ -884,435 +749,6 @@ class FacturasResourceIT {
 
         // Get all the facturasList where condicionVenta is null
         defaultFacturasShouldNotBeFound("condicionVenta.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByCantidadIsEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where cantidad equals to DEFAULT_CANTIDAD
-        defaultFacturasShouldBeFound("cantidad.equals=" + DEFAULT_CANTIDAD);
-
-        // Get all the facturasList where cantidad equals to UPDATED_CANTIDAD
-        defaultFacturasShouldNotBeFound("cantidad.equals=" + UPDATED_CANTIDAD);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByCantidadIsInShouldWork() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where cantidad in DEFAULT_CANTIDAD or UPDATED_CANTIDAD
-        defaultFacturasShouldBeFound("cantidad.in=" + DEFAULT_CANTIDAD + "," + UPDATED_CANTIDAD);
-
-        // Get all the facturasList where cantidad equals to UPDATED_CANTIDAD
-        defaultFacturasShouldNotBeFound("cantidad.in=" + UPDATED_CANTIDAD);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByCantidadIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where cantidad is not null
-        defaultFacturasShouldBeFound("cantidad.specified=true");
-
-        // Get all the facturasList where cantidad is null
-        defaultFacturasShouldNotBeFound("cantidad.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByCantidadIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where cantidad is greater than or equal to DEFAULT_CANTIDAD
-        defaultFacturasShouldBeFound("cantidad.greaterThanOrEqual=" + DEFAULT_CANTIDAD);
-
-        // Get all the facturasList where cantidad is greater than or equal to UPDATED_CANTIDAD
-        defaultFacturasShouldNotBeFound("cantidad.greaterThanOrEqual=" + UPDATED_CANTIDAD);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByCantidadIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where cantidad is less than or equal to DEFAULT_CANTIDAD
-        defaultFacturasShouldBeFound("cantidad.lessThanOrEqual=" + DEFAULT_CANTIDAD);
-
-        // Get all the facturasList where cantidad is less than or equal to SMALLER_CANTIDAD
-        defaultFacturasShouldNotBeFound("cantidad.lessThanOrEqual=" + SMALLER_CANTIDAD);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByCantidadIsLessThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where cantidad is less than DEFAULT_CANTIDAD
-        defaultFacturasShouldNotBeFound("cantidad.lessThan=" + DEFAULT_CANTIDAD);
-
-        // Get all the facturasList where cantidad is less than UPDATED_CANTIDAD
-        defaultFacturasShouldBeFound("cantidad.lessThan=" + UPDATED_CANTIDAD);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByCantidadIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where cantidad is greater than DEFAULT_CANTIDAD
-        defaultFacturasShouldNotBeFound("cantidad.greaterThan=" + DEFAULT_CANTIDAD);
-
-        // Get all the facturasList where cantidad is greater than SMALLER_CANTIDAD
-        defaultFacturasShouldBeFound("cantidad.greaterThan=" + SMALLER_CANTIDAD);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByDescripcionIsEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where descripcion equals to DEFAULT_DESCRIPCION
-        defaultFacturasShouldBeFound("descripcion.equals=" + DEFAULT_DESCRIPCION);
-
-        // Get all the facturasList where descripcion equals to UPDATED_DESCRIPCION
-        defaultFacturasShouldNotBeFound("descripcion.equals=" + UPDATED_DESCRIPCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByDescripcionIsInShouldWork() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where descripcion in DEFAULT_DESCRIPCION or UPDATED_DESCRIPCION
-        defaultFacturasShouldBeFound("descripcion.in=" + DEFAULT_DESCRIPCION + "," + UPDATED_DESCRIPCION);
-
-        // Get all the facturasList where descripcion equals to UPDATED_DESCRIPCION
-        defaultFacturasShouldNotBeFound("descripcion.in=" + UPDATED_DESCRIPCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByDescripcionIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where descripcion is not null
-        defaultFacturasShouldBeFound("descripcion.specified=true");
-
-        // Get all the facturasList where descripcion is null
-        defaultFacturasShouldNotBeFound("descripcion.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByDescripcionContainsSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where descripcion contains DEFAULT_DESCRIPCION
-        defaultFacturasShouldBeFound("descripcion.contains=" + DEFAULT_DESCRIPCION);
-
-        // Get all the facturasList where descripcion contains UPDATED_DESCRIPCION
-        defaultFacturasShouldNotBeFound("descripcion.contains=" + UPDATED_DESCRIPCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByDescripcionNotContainsSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where descripcion does not contain DEFAULT_DESCRIPCION
-        defaultFacturasShouldNotBeFound("descripcion.doesNotContain=" + DEFAULT_DESCRIPCION);
-
-        // Get all the facturasList where descripcion does not contain UPDATED_DESCRIPCION
-        defaultFacturasShouldBeFound("descripcion.doesNotContain=" + UPDATED_DESCRIPCION);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByPrecioUnitarioIsEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where precioUnitario equals to DEFAULT_PRECIO_UNITARIO
-        defaultFacturasShouldBeFound("precioUnitario.equals=" + DEFAULT_PRECIO_UNITARIO);
-
-        // Get all the facturasList where precioUnitario equals to UPDATED_PRECIO_UNITARIO
-        defaultFacturasShouldNotBeFound("precioUnitario.equals=" + UPDATED_PRECIO_UNITARIO);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByPrecioUnitarioIsInShouldWork() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where precioUnitario in DEFAULT_PRECIO_UNITARIO or UPDATED_PRECIO_UNITARIO
-        defaultFacturasShouldBeFound("precioUnitario.in=" + DEFAULT_PRECIO_UNITARIO + "," + UPDATED_PRECIO_UNITARIO);
-
-        // Get all the facturasList where precioUnitario equals to UPDATED_PRECIO_UNITARIO
-        defaultFacturasShouldNotBeFound("precioUnitario.in=" + UPDATED_PRECIO_UNITARIO);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByPrecioUnitarioIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where precioUnitario is not null
-        defaultFacturasShouldBeFound("precioUnitario.specified=true");
-
-        // Get all the facturasList where precioUnitario is null
-        defaultFacturasShouldNotBeFound("precioUnitario.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByPrecioUnitarioIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where precioUnitario is greater than or equal to DEFAULT_PRECIO_UNITARIO
-        defaultFacturasShouldBeFound("precioUnitario.greaterThanOrEqual=" + DEFAULT_PRECIO_UNITARIO);
-
-        // Get all the facturasList where precioUnitario is greater than or equal to UPDATED_PRECIO_UNITARIO
-        defaultFacturasShouldNotBeFound("precioUnitario.greaterThanOrEqual=" + UPDATED_PRECIO_UNITARIO);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByPrecioUnitarioIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where precioUnitario is less than or equal to DEFAULT_PRECIO_UNITARIO
-        defaultFacturasShouldBeFound("precioUnitario.lessThanOrEqual=" + DEFAULT_PRECIO_UNITARIO);
-
-        // Get all the facturasList where precioUnitario is less than or equal to SMALLER_PRECIO_UNITARIO
-        defaultFacturasShouldNotBeFound("precioUnitario.lessThanOrEqual=" + SMALLER_PRECIO_UNITARIO);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByPrecioUnitarioIsLessThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where precioUnitario is less than DEFAULT_PRECIO_UNITARIO
-        defaultFacturasShouldNotBeFound("precioUnitario.lessThan=" + DEFAULT_PRECIO_UNITARIO);
-
-        // Get all the facturasList where precioUnitario is less than UPDATED_PRECIO_UNITARIO
-        defaultFacturasShouldBeFound("precioUnitario.lessThan=" + UPDATED_PRECIO_UNITARIO);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByPrecioUnitarioIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where precioUnitario is greater than DEFAULT_PRECIO_UNITARIO
-        defaultFacturasShouldNotBeFound("precioUnitario.greaterThan=" + DEFAULT_PRECIO_UNITARIO);
-
-        // Get all the facturasList where precioUnitario is greater than SMALLER_PRECIO_UNITARIO
-        defaultFacturasShouldBeFound("precioUnitario.greaterThan=" + SMALLER_PRECIO_UNITARIO);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor5IsEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor5 equals to DEFAULT_VALOR_5
-        defaultFacturasShouldBeFound("valor5.equals=" + DEFAULT_VALOR_5);
-
-        // Get all the facturasList where valor5 equals to UPDATED_VALOR_5
-        defaultFacturasShouldNotBeFound("valor5.equals=" + UPDATED_VALOR_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor5IsInShouldWork() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor5 in DEFAULT_VALOR_5 or UPDATED_VALOR_5
-        defaultFacturasShouldBeFound("valor5.in=" + DEFAULT_VALOR_5 + "," + UPDATED_VALOR_5);
-
-        // Get all the facturasList where valor5 equals to UPDATED_VALOR_5
-        defaultFacturasShouldNotBeFound("valor5.in=" + UPDATED_VALOR_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor5IsNullOrNotNull() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor5 is not null
-        defaultFacturasShouldBeFound("valor5.specified=true");
-
-        // Get all the facturasList where valor5 is null
-        defaultFacturasShouldNotBeFound("valor5.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor5IsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor5 is greater than or equal to DEFAULT_VALOR_5
-        defaultFacturasShouldBeFound("valor5.greaterThanOrEqual=" + DEFAULT_VALOR_5);
-
-        // Get all the facturasList where valor5 is greater than or equal to UPDATED_VALOR_5
-        defaultFacturasShouldNotBeFound("valor5.greaterThanOrEqual=" + UPDATED_VALOR_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor5IsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor5 is less than or equal to DEFAULT_VALOR_5
-        defaultFacturasShouldBeFound("valor5.lessThanOrEqual=" + DEFAULT_VALOR_5);
-
-        // Get all the facturasList where valor5 is less than or equal to SMALLER_VALOR_5
-        defaultFacturasShouldNotBeFound("valor5.lessThanOrEqual=" + SMALLER_VALOR_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor5IsLessThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor5 is less than DEFAULT_VALOR_5
-        defaultFacturasShouldNotBeFound("valor5.lessThan=" + DEFAULT_VALOR_5);
-
-        // Get all the facturasList where valor5 is less than UPDATED_VALOR_5
-        defaultFacturasShouldBeFound("valor5.lessThan=" + UPDATED_VALOR_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor5IsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor5 is greater than DEFAULT_VALOR_5
-        defaultFacturasShouldNotBeFound("valor5.greaterThan=" + DEFAULT_VALOR_5);
-
-        // Get all the facturasList where valor5 is greater than SMALLER_VALOR_5
-        defaultFacturasShouldBeFound("valor5.greaterThan=" + SMALLER_VALOR_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor10IsEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor10 equals to DEFAULT_VALOR_10
-        defaultFacturasShouldBeFound("valor10.equals=" + DEFAULT_VALOR_10);
-
-        // Get all the facturasList where valor10 equals to UPDATED_VALOR_10
-        defaultFacturasShouldNotBeFound("valor10.equals=" + UPDATED_VALOR_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor10IsInShouldWork() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor10 in DEFAULT_VALOR_10 or UPDATED_VALOR_10
-        defaultFacturasShouldBeFound("valor10.in=" + DEFAULT_VALOR_10 + "," + UPDATED_VALOR_10);
-
-        // Get all the facturasList where valor10 equals to UPDATED_VALOR_10
-        defaultFacturasShouldNotBeFound("valor10.in=" + UPDATED_VALOR_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor10IsNullOrNotNull() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor10 is not null
-        defaultFacturasShouldBeFound("valor10.specified=true");
-
-        // Get all the facturasList where valor10 is null
-        defaultFacturasShouldNotBeFound("valor10.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor10IsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor10 is greater than or equal to DEFAULT_VALOR_10
-        defaultFacturasShouldBeFound("valor10.greaterThanOrEqual=" + DEFAULT_VALOR_10);
-
-        // Get all the facturasList where valor10 is greater than or equal to UPDATED_VALOR_10
-        defaultFacturasShouldNotBeFound("valor10.greaterThanOrEqual=" + UPDATED_VALOR_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor10IsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor10 is less than or equal to DEFAULT_VALOR_10
-        defaultFacturasShouldBeFound("valor10.lessThanOrEqual=" + DEFAULT_VALOR_10);
-
-        // Get all the facturasList where valor10 is less than or equal to SMALLER_VALOR_10
-        defaultFacturasShouldNotBeFound("valor10.lessThanOrEqual=" + SMALLER_VALOR_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor10IsLessThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor10 is less than DEFAULT_VALOR_10
-        defaultFacturasShouldNotBeFound("valor10.lessThan=" + DEFAULT_VALOR_10);
-
-        // Get all the facturasList where valor10 is less than UPDATED_VALOR_10
-        defaultFacturasShouldBeFound("valor10.lessThan=" + UPDATED_VALOR_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByValor10IsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where valor10 is greater than DEFAULT_VALOR_10
-        defaultFacturasShouldNotBeFound("valor10.greaterThan=" + DEFAULT_VALOR_10);
-
-        // Get all the facturasList where valor10 is greater than SMALLER_VALOR_10
-        defaultFacturasShouldBeFound("valor10.greaterThan=" + SMALLER_VALOR_10);
     }
 
     @Test
@@ -1408,321 +844,25 @@ class FacturasResourceIT {
 
     @Test
     @Transactional
-    void getAllFacturasByTotal5IsEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total5 equals to DEFAULT_TOTAL_5
-        defaultFacturasShouldBeFound("total5.equals=" + DEFAULT_TOTAL_5);
-
-        // Get all the facturasList where total5 equals to UPDATED_TOTAL_5
-        defaultFacturasShouldNotBeFound("total5.equals=" + UPDATED_TOTAL_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal5IsInShouldWork() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total5 in DEFAULT_TOTAL_5 or UPDATED_TOTAL_5
-        defaultFacturasShouldBeFound("total5.in=" + DEFAULT_TOTAL_5 + "," + UPDATED_TOTAL_5);
-
-        // Get all the facturasList where total5 equals to UPDATED_TOTAL_5
-        defaultFacturasShouldNotBeFound("total5.in=" + UPDATED_TOTAL_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal5IsNullOrNotNull() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total5 is not null
-        defaultFacturasShouldBeFound("total5.specified=true");
-
-        // Get all the facturasList where total5 is null
-        defaultFacturasShouldNotBeFound("total5.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal5IsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total5 is greater than or equal to DEFAULT_TOTAL_5
-        defaultFacturasShouldBeFound("total5.greaterThanOrEqual=" + DEFAULT_TOTAL_5);
-
-        // Get all the facturasList where total5 is greater than or equal to UPDATED_TOTAL_5
-        defaultFacturasShouldNotBeFound("total5.greaterThanOrEqual=" + UPDATED_TOTAL_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal5IsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total5 is less than or equal to DEFAULT_TOTAL_5
-        defaultFacturasShouldBeFound("total5.lessThanOrEqual=" + DEFAULT_TOTAL_5);
-
-        // Get all the facturasList where total5 is less than or equal to SMALLER_TOTAL_5
-        defaultFacturasShouldNotBeFound("total5.lessThanOrEqual=" + SMALLER_TOTAL_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal5IsLessThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total5 is less than DEFAULT_TOTAL_5
-        defaultFacturasShouldNotBeFound("total5.lessThan=" + DEFAULT_TOTAL_5);
-
-        // Get all the facturasList where total5 is less than UPDATED_TOTAL_5
-        defaultFacturasShouldBeFound("total5.lessThan=" + UPDATED_TOTAL_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal5IsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total5 is greater than DEFAULT_TOTAL_5
-        defaultFacturasShouldNotBeFound("total5.greaterThan=" + DEFAULT_TOTAL_5);
-
-        // Get all the facturasList where total5 is greater than SMALLER_TOTAL_5
-        defaultFacturasShouldBeFound("total5.greaterThan=" + SMALLER_TOTAL_5);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal10IsEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total10 equals to DEFAULT_TOTAL_10
-        defaultFacturasShouldBeFound("total10.equals=" + DEFAULT_TOTAL_10);
-
-        // Get all the facturasList where total10 equals to UPDATED_TOTAL_10
-        defaultFacturasShouldNotBeFound("total10.equals=" + UPDATED_TOTAL_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal10IsInShouldWork() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total10 in DEFAULT_TOTAL_10 or UPDATED_TOTAL_10
-        defaultFacturasShouldBeFound("total10.in=" + DEFAULT_TOTAL_10 + "," + UPDATED_TOTAL_10);
-
-        // Get all the facturasList where total10 equals to UPDATED_TOTAL_10
-        defaultFacturasShouldNotBeFound("total10.in=" + UPDATED_TOTAL_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal10IsNullOrNotNull() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total10 is not null
-        defaultFacturasShouldBeFound("total10.specified=true");
-
-        // Get all the facturasList where total10 is null
-        defaultFacturasShouldNotBeFound("total10.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal10IsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total10 is greater than or equal to DEFAULT_TOTAL_10
-        defaultFacturasShouldBeFound("total10.greaterThanOrEqual=" + DEFAULT_TOTAL_10);
-
-        // Get all the facturasList where total10 is greater than or equal to UPDATED_TOTAL_10
-        defaultFacturasShouldNotBeFound("total10.greaterThanOrEqual=" + UPDATED_TOTAL_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal10IsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total10 is less than or equal to DEFAULT_TOTAL_10
-        defaultFacturasShouldBeFound("total10.lessThanOrEqual=" + DEFAULT_TOTAL_10);
-
-        // Get all the facturasList where total10 is less than or equal to SMALLER_TOTAL_10
-        defaultFacturasShouldNotBeFound("total10.lessThanOrEqual=" + SMALLER_TOTAL_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal10IsLessThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total10 is less than DEFAULT_TOTAL_10
-        defaultFacturasShouldNotBeFound("total10.lessThan=" + DEFAULT_TOTAL_10);
-
-        // Get all the facturasList where total10 is less than UPDATED_TOTAL_10
-        defaultFacturasShouldBeFound("total10.lessThan=" + UPDATED_TOTAL_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotal10IsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where total10 is greater than DEFAULT_TOTAL_10
-        defaultFacturasShouldNotBeFound("total10.greaterThan=" + DEFAULT_TOTAL_10);
-
-        // Get all the facturasList where total10 is greater than SMALLER_TOTAL_10
-        defaultFacturasShouldBeFound("total10.greaterThan=" + SMALLER_TOTAL_10);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotalIvaIsEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where totalIva equals to DEFAULT_TOTAL_IVA
-        defaultFacturasShouldBeFound("totalIva.equals=" + DEFAULT_TOTAL_IVA);
-
-        // Get all the facturasList where totalIva equals to UPDATED_TOTAL_IVA
-        defaultFacturasShouldNotBeFound("totalIva.equals=" + UPDATED_TOTAL_IVA);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotalIvaIsInShouldWork() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where totalIva in DEFAULT_TOTAL_IVA or UPDATED_TOTAL_IVA
-        defaultFacturasShouldBeFound("totalIva.in=" + DEFAULT_TOTAL_IVA + "," + UPDATED_TOTAL_IVA);
-
-        // Get all the facturasList where totalIva equals to UPDATED_TOTAL_IVA
-        defaultFacturasShouldNotBeFound("totalIva.in=" + UPDATED_TOTAL_IVA);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotalIvaIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where totalIva is not null
-        defaultFacturasShouldBeFound("totalIva.specified=true");
-
-        // Get all the facturasList where totalIva is null
-        defaultFacturasShouldNotBeFound("totalIva.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotalIvaIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where totalIva is greater than or equal to DEFAULT_TOTAL_IVA
-        defaultFacturasShouldBeFound("totalIva.greaterThanOrEqual=" + DEFAULT_TOTAL_IVA);
-
-        // Get all the facturasList where totalIva is greater than or equal to UPDATED_TOTAL_IVA
-        defaultFacturasShouldNotBeFound("totalIva.greaterThanOrEqual=" + UPDATED_TOTAL_IVA);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotalIvaIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where totalIva is less than or equal to DEFAULT_TOTAL_IVA
-        defaultFacturasShouldBeFound("totalIva.lessThanOrEqual=" + DEFAULT_TOTAL_IVA);
-
-        // Get all the facturasList where totalIva is less than or equal to SMALLER_TOTAL_IVA
-        defaultFacturasShouldNotBeFound("totalIva.lessThanOrEqual=" + SMALLER_TOTAL_IVA);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotalIvaIsLessThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where totalIva is less than DEFAULT_TOTAL_IVA
-        defaultFacturasShouldNotBeFound("totalIva.lessThan=" + DEFAULT_TOTAL_IVA);
-
-        // Get all the facturasList where totalIva is less than UPDATED_TOTAL_IVA
-        defaultFacturasShouldBeFound("totalIva.lessThan=" + UPDATED_TOTAL_IVA);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByTotalIvaIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        facturasRepository.saveAndFlush(facturas);
-
-        // Get all the facturasList where totalIva is greater than DEFAULT_TOTAL_IVA
-        defaultFacturasShouldNotBeFound("totalIva.greaterThan=" + DEFAULT_TOTAL_IVA);
-
-        // Get all the facturasList where totalIva is greater than SMALLER_TOTAL_IVA
-        defaultFacturasShouldBeFound("totalIva.greaterThan=" + SMALLER_TOTAL_IVA);
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByCobrosIsEqualToSomething() throws Exception {
-        Cobros cobros;
-        if (TestUtil.findAll(em, Cobros.class).isEmpty()) {
+    void getAllFacturasByFacturaDetalleIsEqualToSomething() throws Exception {
+        FacturaDetalle facturaDetalle;
+        if (TestUtil.findAll(em, FacturaDetalle.class).isEmpty()) {
             facturasRepository.saveAndFlush(facturas);
-            cobros = CobrosResourceIT.createEntity(em);
+            facturaDetalle = FacturaDetalleResourceIT.createEntity(em);
         } else {
-            cobros = TestUtil.findAll(em, Cobros.class).get(0);
+            facturaDetalle = TestUtil.findAll(em, FacturaDetalle.class).get(0);
         }
-        em.persist(cobros);
+        em.persist(facturaDetalle);
         em.flush();
-        facturas.addCobros(cobros);
+        facturas.addFacturaDetalle(facturaDetalle);
         facturasRepository.saveAndFlush(facturas);
-        Long cobrosId = cobros.getId();
+        Long facturaDetalleId = facturaDetalle.getId();
 
-        // Get all the facturasList where cobros equals to cobrosId
-        defaultFacturasShouldBeFound("cobrosId.equals=" + cobrosId);
+        // Get all the facturasList where facturaDetalle equals to facturaDetalleId
+        defaultFacturasShouldBeFound("facturaDetalleId.equals=" + facturaDetalleId);
 
-        // Get all the facturasList where cobros equals to (cobrosId + 1)
-        defaultFacturasShouldNotBeFound("cobrosId.equals=" + (cobrosId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllFacturasByAlumnosIsEqualToSomething() throws Exception {
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            facturasRepository.saveAndFlush(facturas);
-            alumnos = AlumnosResourceIT.createEntity(em);
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        em.persist(alumnos);
-        em.flush();
-        facturas.setAlumnos(alumnos);
-        facturasRepository.saveAndFlush(facturas);
-        Long alumnosId = alumnos.getId();
-
-        // Get all the facturasList where alumnos equals to alumnosId
-        defaultFacturasShouldBeFound("alumnosId.equals=" + alumnosId);
-
-        // Get all the facturasList where alumnos equals to (alumnosId + 1)
-        defaultFacturasShouldNotBeFound("alumnosId.equals=" + (alumnosId + 1));
+        // Get all the facturasList where facturaDetalle equals to (facturaDetalleId + 1)
+        defaultFacturasShouldNotBeFound("facturaDetalleId.equals=" + (facturaDetalleId + 1));
     }
 
     /**
@@ -1740,15 +880,7 @@ class FacturasResourceIT {
             .andExpect(jsonPath("$.[*].razonSocial").value(hasItem(DEFAULT_RAZON_SOCIAL)))
             .andExpect(jsonPath("$.[*].ruc").value(hasItem(DEFAULT_RUC)))
             .andExpect(jsonPath("$.[*].condicionVenta").value(hasItem(DEFAULT_CONDICION_VENTA.toString())))
-            .andExpect(jsonPath("$.[*].cantidad").value(hasItem(DEFAULT_CANTIDAD)))
-            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
-            .andExpect(jsonPath("$.[*].precioUnitario").value(hasItem(DEFAULT_PRECIO_UNITARIO)))
-            .andExpect(jsonPath("$.[*].valor5").value(hasItem(DEFAULT_VALOR_5)))
-            .andExpect(jsonPath("$.[*].valor10").value(hasItem(DEFAULT_VALOR_10)))
-            .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)))
-            .andExpect(jsonPath("$.[*].total5").value(hasItem(DEFAULT_TOTAL_5)))
-            .andExpect(jsonPath("$.[*].total10").value(hasItem(DEFAULT_TOTAL_10)))
-            .andExpect(jsonPath("$.[*].totalIva").value(hasItem(DEFAULT_TOTAL_IVA)));
+            .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)));
 
         // Check, that the count call also returns 1
         restFacturasMockMvc
@@ -1803,15 +935,7 @@ class FacturasResourceIT {
             .razonSocial(UPDATED_RAZON_SOCIAL)
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
-            .cantidad(UPDATED_CANTIDAD)
-            .descripcion(UPDATED_DESCRIPCION)
-            .precioUnitario(UPDATED_PRECIO_UNITARIO)
-            .valor5(UPDATED_VALOR_5)
-            .valor10(UPDATED_VALOR_10)
-            .total(UPDATED_TOTAL)
-            .total5(UPDATED_TOTAL_5)
-            .total10(UPDATED_TOTAL_10)
-            .totalIva(UPDATED_TOTAL_IVA);
+            .total(UPDATED_TOTAL);
 
         restFacturasMockMvc
             .perform(
@@ -1831,15 +955,7 @@ class FacturasResourceIT {
         assertThat(testFacturas.getRazonSocial()).isEqualTo(UPDATED_RAZON_SOCIAL);
         assertThat(testFacturas.getRuc()).isEqualTo(UPDATED_RUC);
         assertThat(testFacturas.getCondicionVenta()).isEqualTo(UPDATED_CONDICION_VENTA);
-        assertThat(testFacturas.getCantidad()).isEqualTo(UPDATED_CANTIDAD);
-        assertThat(testFacturas.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testFacturas.getPrecioUnitario()).isEqualTo(UPDATED_PRECIO_UNITARIO);
-        assertThat(testFacturas.getValor5()).isEqualTo(UPDATED_VALOR_5);
-        assertThat(testFacturas.getValor10()).isEqualTo(UPDATED_VALOR_10);
         assertThat(testFacturas.getTotal()).isEqualTo(UPDATED_TOTAL);
-        assertThat(testFacturas.getTotal5()).isEqualTo(UPDATED_TOTAL_5);
-        assertThat(testFacturas.getTotal10()).isEqualTo(UPDATED_TOTAL_10);
-        assertThat(testFacturas.getTotalIva()).isEqualTo(UPDATED_TOTAL_IVA);
     }
 
     @Test
@@ -1916,13 +1032,7 @@ class FacturasResourceIT {
             .razonSocial(UPDATED_RAZON_SOCIAL)
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
-            .cantidad(UPDATED_CANTIDAD)
-            .descripcion(UPDATED_DESCRIPCION)
-            .precioUnitario(UPDATED_PRECIO_UNITARIO)
-            .valor5(UPDATED_VALOR_5)
-            .valor10(UPDATED_VALOR_10)
-            .total10(UPDATED_TOTAL_10)
-            .totalIva(UPDATED_TOTAL_IVA);
+            .total(UPDATED_TOTAL);
 
         restFacturasMockMvc
             .perform(
@@ -1942,15 +1052,7 @@ class FacturasResourceIT {
         assertThat(testFacturas.getRazonSocial()).isEqualTo(UPDATED_RAZON_SOCIAL);
         assertThat(testFacturas.getRuc()).isEqualTo(UPDATED_RUC);
         assertThat(testFacturas.getCondicionVenta()).isEqualTo(UPDATED_CONDICION_VENTA);
-        assertThat(testFacturas.getCantidad()).isEqualTo(UPDATED_CANTIDAD);
-        assertThat(testFacturas.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testFacturas.getPrecioUnitario()).isEqualTo(UPDATED_PRECIO_UNITARIO);
-        assertThat(testFacturas.getValor5()).isEqualTo(UPDATED_VALOR_5);
-        assertThat(testFacturas.getValor10()).isEqualTo(UPDATED_VALOR_10);
-        assertThat(testFacturas.getTotal()).isEqualTo(DEFAULT_TOTAL);
-        assertThat(testFacturas.getTotal5()).isEqualTo(DEFAULT_TOTAL_5);
-        assertThat(testFacturas.getTotal10()).isEqualTo(UPDATED_TOTAL_10);
-        assertThat(testFacturas.getTotalIva()).isEqualTo(UPDATED_TOTAL_IVA);
+        assertThat(testFacturas.getTotal()).isEqualTo(UPDATED_TOTAL);
     }
 
     @Test
@@ -1972,15 +1074,7 @@ class FacturasResourceIT {
             .razonSocial(UPDATED_RAZON_SOCIAL)
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
-            .cantidad(UPDATED_CANTIDAD)
-            .descripcion(UPDATED_DESCRIPCION)
-            .precioUnitario(UPDATED_PRECIO_UNITARIO)
-            .valor5(UPDATED_VALOR_5)
-            .valor10(UPDATED_VALOR_10)
-            .total(UPDATED_TOTAL)
-            .total5(UPDATED_TOTAL_5)
-            .total10(UPDATED_TOTAL_10)
-            .totalIva(UPDATED_TOTAL_IVA);
+            .total(UPDATED_TOTAL);
 
         restFacturasMockMvc
             .perform(
@@ -2000,15 +1094,7 @@ class FacturasResourceIT {
         assertThat(testFacturas.getRazonSocial()).isEqualTo(UPDATED_RAZON_SOCIAL);
         assertThat(testFacturas.getRuc()).isEqualTo(UPDATED_RUC);
         assertThat(testFacturas.getCondicionVenta()).isEqualTo(UPDATED_CONDICION_VENTA);
-        assertThat(testFacturas.getCantidad()).isEqualTo(UPDATED_CANTIDAD);
-        assertThat(testFacturas.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testFacturas.getPrecioUnitario()).isEqualTo(UPDATED_PRECIO_UNITARIO);
-        assertThat(testFacturas.getValor5()).isEqualTo(UPDATED_VALOR_5);
-        assertThat(testFacturas.getValor10()).isEqualTo(UPDATED_VALOR_10);
         assertThat(testFacturas.getTotal()).isEqualTo(UPDATED_TOTAL);
-        assertThat(testFacturas.getTotal5()).isEqualTo(UPDATED_TOTAL_5);
-        assertThat(testFacturas.getTotal10()).isEqualTo(UPDATED_TOTAL_10);
-        assertThat(testFacturas.getTotalIva()).isEqualTo(UPDATED_TOTAL_IVA);
     }
 
     @Test

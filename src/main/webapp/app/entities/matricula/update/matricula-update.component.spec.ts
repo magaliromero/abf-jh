@@ -51,12 +51,12 @@ describe('Matricula Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Alumnos query and add missing value', () => {
       const matricula: IMatricula = { id: 456 };
-      const alumnos: IAlumnos = { id: 33220 };
-      matricula.alumnos = alumnos;
+      const alumno: IAlumnos = { id: 33220 };
+      matricula.alumno = alumno;
 
       const alumnosCollection: IAlumnos[] = [{ id: 26642 }];
       jest.spyOn(alumnosService, 'query').mockReturnValue(of(new HttpResponse({ body: alumnosCollection })));
-      const additionalAlumnos = [alumnos];
+      const additionalAlumnos = [alumno];
       const expectedCollection: IAlumnos[] = [...additionalAlumnos, ...alumnosCollection];
       jest.spyOn(alumnosService, 'addAlumnosToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -73,13 +73,13 @@ describe('Matricula Management Update Component', () => {
 
     it('Should update editForm', () => {
       const matricula: IMatricula = { id: 456 };
-      const alumnos: IAlumnos = { id: 55885 };
-      matricula.alumnos = alumnos;
+      const alumno: IAlumnos = { id: 55885 };
+      matricula.alumno = alumno;
 
       activatedRoute.data = of({ matricula });
       comp.ngOnInit();
 
-      expect(comp.alumnosSharedCollection).toContain(alumnos);
+      expect(comp.alumnosSharedCollection).toContain(alumno);
       expect(comp.matricula).toEqual(matricula);
     });
   });

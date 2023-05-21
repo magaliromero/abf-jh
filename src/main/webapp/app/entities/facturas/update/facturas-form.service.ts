@@ -24,16 +24,7 @@ type FacturasFormGroupContent = {
   razonSocial: FormControl<IFacturas['razonSocial']>;
   ruc: FormControl<IFacturas['ruc']>;
   condicionVenta: FormControl<IFacturas['condicionVenta']>;
-  cantidad: FormControl<IFacturas['cantidad']>;
-  descripcion: FormControl<IFacturas['descripcion']>;
-  precioUnitario: FormControl<IFacturas['precioUnitario']>;
-  valor5: FormControl<IFacturas['valor5']>;
-  valor10: FormControl<IFacturas['valor10']>;
   total: FormControl<IFacturas['total']>;
-  total5: FormControl<IFacturas['total5']>;
-  total10: FormControl<IFacturas['total10']>;
-  totalIva: FormControl<IFacturas['totalIva']>;
-  alumnos: FormControl<IFacturas['alumnos']>;
 };
 
 export type FacturasFormGroup = FormGroup<FacturasFormGroupContent>;
@@ -68,19 +59,10 @@ export class FacturasFormService {
       ruc: new FormControl(facturasRawValue.ruc, {
         validators: [Validators.required],
       }),
-      condicionVenta: new FormControl(facturasRawValue.condicionVenta),
-      cantidad: new FormControl(facturasRawValue.cantidad),
-      descripcion: new FormControl(facturasRawValue.descripcion, {
+      condicionVenta: new FormControl(facturasRawValue.condicionVenta, {
         validators: [Validators.required],
       }),
-      precioUnitario: new FormControl(facturasRawValue.precioUnitario),
-      valor5: new FormControl(facturasRawValue.valor5),
-      valor10: new FormControl(facturasRawValue.valor10),
-      total: new FormControl(facturasRawValue.total),
-      total5: new FormControl(facturasRawValue.total5),
-      total10: new FormControl(facturasRawValue.total10),
-      totalIva: new FormControl(facturasRawValue.totalIva),
-      alumnos: new FormControl(facturasRawValue.alumnos, {
+      total: new FormControl(facturasRawValue.total, {
         validators: [Validators.required],
       }),
     });

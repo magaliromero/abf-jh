@@ -1,44 +1,23 @@
 {
-  "applications": "*",
-  "changelogDate": "20230313233740",
+  "applications": ["abf"],
+  "changelogDate": "20230521155357",
   "dto": "no",
   "embedded": false,
   "entityTableName": "pagos",
   "fields": [
     {
-      "fieldName": "montoPago",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "montoInicial",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "saldo",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "fechaRegistro",
+      "fieldName": "fecha",
       "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "fechaPago",
-      "fieldType": "LocalDate",
+      "fieldName": "total",
+      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "tipoPago",
-      "fieldType": "TiposPagos",
-      "fieldValidateRules": ["required"],
-      "fieldValues": "PARCIAL (Parcial),CUOTA (Cuota),MENSUAL (Mensual),DIARIO (Diario),UNICO (Unico)"
-    },
-    {
-      "fieldName": "descripcion",
-      "fieldType": "String",
+      "fieldName": "cantidadHoras",
+      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     }
   ],
@@ -49,12 +28,19 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "descripcion",
+      "otherEntityName": "productos",
+      "otherEntityRelationshipName": "pagos",
+      "relationshipName": "producto",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
       "otherEntityField": "nombreCompleto",
       "otherEntityName": "funcionarios",
       "otherEntityRelationshipName": "pagos",
-      "relationshipName": "funcionarios",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
+      "relationshipName": "funcionario",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

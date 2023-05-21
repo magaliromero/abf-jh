@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230313233744",
+  "applications": ["abf"],
+  "changelogDate": "20230521155657",
   "dto": "no",
   "embedded": false,
   "entityTableName": "materiales",
@@ -11,20 +11,12 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "estado",
-      "fieldType": "EstadosMateriales",
-      "fieldValidateRules": ["required"],
-      "fieldValues": "DISPONIBLE (Disponible),PRESTADO (En Prestamo),VENCIDO (No devuelto)"
+      "fieldName": "cantidad",
+      "fieldType": "Integer"
     },
     {
-      "fieldName": "cantidadStock",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "cantidadPrestamo",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldName": "cantidadEnPrestamo",
+      "fieldType": "Integer"
     }
   ],
   "fluentMethods": true,

@@ -3,7 +3,6 @@ package py.com.abf.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
-import py.com.abf.domain.enumeration.TiposPagos;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -20,42 +19,19 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class PagosCriteria implements Serializable, Criteria {
 
-    /**
-     * Class for filtering TiposPagos
-     */
-    public static class TiposPagosFilter extends Filter<TiposPagos> {
-
-        public TiposPagosFilter() {}
-
-        public TiposPagosFilter(TiposPagosFilter filter) {
-            super(filter);
-        }
-
-        @Override
-        public TiposPagosFilter copy() {
-            return new TiposPagosFilter(this);
-        }
-    }
-
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
 
-    private IntegerFilter montoPago;
+    private LocalDateFilter fecha;
 
-    private IntegerFilter montoInicial;
+    private IntegerFilter total;
 
-    private IntegerFilter saldo;
+    private IntegerFilter cantidadHoras;
 
-    private LocalDateFilter fechaRegistro;
+    private LongFilter productoId;
 
-    private LocalDateFilter fechaPago;
-
-    private TiposPagosFilter tipoPago;
-
-    private StringFilter descripcion;
-
-    private LongFilter funcionariosId;
+    private LongFilter funcionarioId;
 
     private Boolean distinct;
 
@@ -63,14 +39,11 @@ public class PagosCriteria implements Serializable, Criteria {
 
     public PagosCriteria(PagosCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
-        this.montoPago = other.montoPago == null ? null : other.montoPago.copy();
-        this.montoInicial = other.montoInicial == null ? null : other.montoInicial.copy();
-        this.saldo = other.saldo == null ? null : other.saldo.copy();
-        this.fechaRegistro = other.fechaRegistro == null ? null : other.fechaRegistro.copy();
-        this.fechaPago = other.fechaPago == null ? null : other.fechaPago.copy();
-        this.tipoPago = other.tipoPago == null ? null : other.tipoPago.copy();
-        this.descripcion = other.descripcion == null ? null : other.descripcion.copy();
-        this.funcionariosId = other.funcionariosId == null ? null : other.funcionariosId.copy();
+        this.fecha = other.fecha == null ? null : other.fecha.copy();
+        this.total = other.total == null ? null : other.total.copy();
+        this.cantidadHoras = other.cantidadHoras == null ? null : other.cantidadHoras.copy();
+        this.productoId = other.productoId == null ? null : other.productoId.copy();
+        this.funcionarioId = other.funcionarioId == null ? null : other.funcionarioId.copy();
         this.distinct = other.distinct;
     }
 
@@ -94,124 +67,79 @@ public class PagosCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public IntegerFilter getMontoPago() {
-        return montoPago;
+    public LocalDateFilter getFecha() {
+        return fecha;
     }
 
-    public IntegerFilter montoPago() {
-        if (montoPago == null) {
-            montoPago = new IntegerFilter();
+    public LocalDateFilter fecha() {
+        if (fecha == null) {
+            fecha = new LocalDateFilter();
         }
-        return montoPago;
+        return fecha;
     }
 
-    public void setMontoPago(IntegerFilter montoPago) {
-        this.montoPago = montoPago;
+    public void setFecha(LocalDateFilter fecha) {
+        this.fecha = fecha;
     }
 
-    public IntegerFilter getMontoInicial() {
-        return montoInicial;
+    public IntegerFilter getTotal() {
+        return total;
     }
 
-    public IntegerFilter montoInicial() {
-        if (montoInicial == null) {
-            montoInicial = new IntegerFilter();
+    public IntegerFilter total() {
+        if (total == null) {
+            total = new IntegerFilter();
         }
-        return montoInicial;
+        return total;
     }
 
-    public void setMontoInicial(IntegerFilter montoInicial) {
-        this.montoInicial = montoInicial;
+    public void setTotal(IntegerFilter total) {
+        this.total = total;
     }
 
-    public IntegerFilter getSaldo() {
-        return saldo;
+    public IntegerFilter getCantidadHoras() {
+        return cantidadHoras;
     }
 
-    public IntegerFilter saldo() {
-        if (saldo == null) {
-            saldo = new IntegerFilter();
+    public IntegerFilter cantidadHoras() {
+        if (cantidadHoras == null) {
+            cantidadHoras = new IntegerFilter();
         }
-        return saldo;
+        return cantidadHoras;
     }
 
-    public void setSaldo(IntegerFilter saldo) {
-        this.saldo = saldo;
+    public void setCantidadHoras(IntegerFilter cantidadHoras) {
+        this.cantidadHoras = cantidadHoras;
     }
 
-    public LocalDateFilter getFechaRegistro() {
-        return fechaRegistro;
+    public LongFilter getProductoId() {
+        return productoId;
     }
 
-    public LocalDateFilter fechaRegistro() {
-        if (fechaRegistro == null) {
-            fechaRegistro = new LocalDateFilter();
+    public LongFilter productoId() {
+        if (productoId == null) {
+            productoId = new LongFilter();
         }
-        return fechaRegistro;
+        return productoId;
     }
 
-    public void setFechaRegistro(LocalDateFilter fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
+    public void setProductoId(LongFilter productoId) {
+        this.productoId = productoId;
     }
 
-    public LocalDateFilter getFechaPago() {
-        return fechaPago;
+    public LongFilter getFuncionarioId() {
+        return funcionarioId;
     }
 
-    public LocalDateFilter fechaPago() {
-        if (fechaPago == null) {
-            fechaPago = new LocalDateFilter();
+    public LongFilter funcionarioId() {
+        if (funcionarioId == null) {
+            funcionarioId = new LongFilter();
         }
-        return fechaPago;
+        return funcionarioId;
     }
 
-    public void setFechaPago(LocalDateFilter fechaPago) {
-        this.fechaPago = fechaPago;
-    }
-
-    public TiposPagosFilter getTipoPago() {
-        return tipoPago;
-    }
-
-    public TiposPagosFilter tipoPago() {
-        if (tipoPago == null) {
-            tipoPago = new TiposPagosFilter();
-        }
-        return tipoPago;
-    }
-
-    public void setTipoPago(TiposPagosFilter tipoPago) {
-        this.tipoPago = tipoPago;
-    }
-
-    public StringFilter getDescripcion() {
-        return descripcion;
-    }
-
-    public StringFilter descripcion() {
-        if (descripcion == null) {
-            descripcion = new StringFilter();
-        }
-        return descripcion;
-    }
-
-    public void setDescripcion(StringFilter descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public LongFilter getFuncionariosId() {
-        return funcionariosId;
-    }
-
-    public LongFilter funcionariosId() {
-        if (funcionariosId == null) {
-            funcionariosId = new LongFilter();
-        }
-        return funcionariosId;
-    }
-
-    public void setFuncionariosId(LongFilter funcionariosId) {
-        this.funcionariosId = funcionariosId;
+    public void setFuncionarioId(LongFilter funcionarioId) {
+        this.funcionarioId = funcionarioId;
     }
 
     public Boolean getDistinct() {
@@ -233,21 +161,18 @@ public class PagosCriteria implements Serializable, Criteria {
         final PagosCriteria that = (PagosCriteria) o;
         return (
             Objects.equals(id, that.id) &&
-            Objects.equals(montoPago, that.montoPago) &&
-            Objects.equals(montoInicial, that.montoInicial) &&
-            Objects.equals(saldo, that.saldo) &&
-            Objects.equals(fechaRegistro, that.fechaRegistro) &&
-            Objects.equals(fechaPago, that.fechaPago) &&
-            Objects.equals(tipoPago, that.tipoPago) &&
-            Objects.equals(descripcion, that.descripcion) &&
-            Objects.equals(funcionariosId, that.funcionariosId) &&
+            Objects.equals(fecha, that.fecha) &&
+            Objects.equals(total, that.total) &&
+            Objects.equals(cantidadHoras, that.cantidadHoras) &&
+            Objects.equals(productoId, that.productoId) &&
+            Objects.equals(funcionarioId, that.funcionarioId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, montoPago, montoInicial, saldo, fechaRegistro, fechaPago, tipoPago, descripcion, funcionariosId, distinct);
+        return Objects.hash(id, fecha, total, cantidadHoras, productoId, funcionarioId, distinct);
     }
 
     // prettier-ignore
@@ -255,14 +180,11 @@ public class PagosCriteria implements Serializable, Criteria {
     public String toString() {
         return "PagosCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
-            (montoPago != null ? "montoPago=" + montoPago + ", " : "") +
-            (montoInicial != null ? "montoInicial=" + montoInicial + ", " : "") +
-            (saldo != null ? "saldo=" + saldo + ", " : "") +
-            (fechaRegistro != null ? "fechaRegistro=" + fechaRegistro + ", " : "") +
-            (fechaPago != null ? "fechaPago=" + fechaPago + ", " : "") +
-            (tipoPago != null ? "tipoPago=" + tipoPago + ", " : "") +
-            (descripcion != null ? "descripcion=" + descripcion + ", " : "") +
-            (funcionariosId != null ? "funcionariosId=" + funcionariosId + ", " : "") +
+            (fecha != null ? "fecha=" + fecha + ", " : "") +
+            (total != null ? "total=" + total + ", " : "") +
+            (cantidadHoras != null ? "cantidadHoras=" + cantidadHoras + ", " : "") +
+            (productoId != null ? "productoId=" + productoId + ", " : "") +
+            (funcionarioId != null ? "funcionarioId=" + funcionarioId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

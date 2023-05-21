@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Materiales;
 import py.com.abf.domain.Prestamos;
-import py.com.abf.domain.enumeration.EstadosMateriales;
 import py.com.abf.repository.MaterialesRepository;
 import py.com.abf.service.criteria.MaterialesCriteria;
 
@@ -35,16 +34,13 @@ class MaterialesResourceIT {
     private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
 
-    private static final EstadosMateriales DEFAULT_ESTADO = EstadosMateriales.DISPONIBLE;
-    private static final EstadosMateriales UPDATED_ESTADO = EstadosMateriales.PRESTADO;
+    private static final Integer DEFAULT_CANTIDAD = 1;
+    private static final Integer UPDATED_CANTIDAD = 2;
+    private static final Integer SMALLER_CANTIDAD = 1 - 1;
 
-    private static final Integer DEFAULT_CANTIDAD_STOCK = 1;
-    private static final Integer UPDATED_CANTIDAD_STOCK = 2;
-    private static final Integer SMALLER_CANTIDAD_STOCK = 1 - 1;
-
-    private static final Integer DEFAULT_CANTIDAD_PRESTAMO = 1;
-    private static final Integer UPDATED_CANTIDAD_PRESTAMO = 2;
-    private static final Integer SMALLER_CANTIDAD_PRESTAMO = 1 - 1;
+    private static final Integer DEFAULT_CANTIDAD_EN_PRESTAMO = 1;
+    private static final Integer UPDATED_CANTIDAD_EN_PRESTAMO = 2;
+    private static final Integer SMALLER_CANTIDAD_EN_PRESTAMO = 1 - 1;
 
     private static final String ENTITY_API_URL = "/api/materiales";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -72,9 +68,8 @@ class MaterialesResourceIT {
     public static Materiales createEntity(EntityManager em) {
         Materiales materiales = new Materiales()
             .descripcion(DEFAULT_DESCRIPCION)
-            .estado(DEFAULT_ESTADO)
-            .cantidadStock(DEFAULT_CANTIDAD_STOCK)
-            .cantidadPrestamo(DEFAULT_CANTIDAD_PRESTAMO);
+            .cantidad(DEFAULT_CANTIDAD)
+            .cantidadEnPrestamo(DEFAULT_CANTIDAD_EN_PRESTAMO);
         return materiales;
     }
 
@@ -87,9 +82,8 @@ class MaterialesResourceIT {
     public static Materiales createUpdatedEntity(EntityManager em) {
         Materiales materiales = new Materiales()
             .descripcion(UPDATED_DESCRIPCION)
-            .estado(UPDATED_ESTADO)
-            .cantidadStock(UPDATED_CANTIDAD_STOCK)
-            .cantidadPrestamo(UPDATED_CANTIDAD_PRESTAMO);
+            .cantidad(UPDATED_CANTIDAD)
+            .cantidadEnPrestamo(UPDATED_CANTIDAD_EN_PRESTAMO);
         return materiales;
     }
 
@@ -112,9 +106,8 @@ class MaterialesResourceIT {
         assertThat(materialesList).hasSize(databaseSizeBeforeCreate + 1);
         Materiales testMateriales = materialesList.get(materialesList.size() - 1);
         assertThat(testMateriales.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
-        assertThat(testMateriales.getEstado()).isEqualTo(DEFAULT_ESTADO);
-        assertThat(testMateriales.getCantidadStock()).isEqualTo(DEFAULT_CANTIDAD_STOCK);
-        assertThat(testMateriales.getCantidadPrestamo()).isEqualTo(DEFAULT_CANTIDAD_PRESTAMO);
+        assertThat(testMateriales.getCantidad()).isEqualTo(DEFAULT_CANTIDAD);
+        assertThat(testMateriales.getCantidadEnPrestamo()).isEqualTo(DEFAULT_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
@@ -154,57 +147,6 @@ class MaterialesResourceIT {
 
     @Test
     @Transactional
-    void checkEstadoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = materialesRepository.findAll().size();
-        // set the field null
-        materiales.setEstado(null);
-
-        // Create the Materiales, which fails.
-
-        restMaterialesMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(materiales)))
-            .andExpect(status().isBadRequest());
-
-        List<Materiales> materialesList = materialesRepository.findAll();
-        assertThat(materialesList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkCantidadStockIsRequired() throws Exception {
-        int databaseSizeBeforeTest = materialesRepository.findAll().size();
-        // set the field null
-        materiales.setCantidadStock(null);
-
-        // Create the Materiales, which fails.
-
-        restMaterialesMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(materiales)))
-            .andExpect(status().isBadRequest());
-
-        List<Materiales> materialesList = materialesRepository.findAll();
-        assertThat(materialesList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkCantidadPrestamoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = materialesRepository.findAll().size();
-        // set the field null
-        materiales.setCantidadPrestamo(null);
-
-        // Create the Materiales, which fails.
-
-        restMaterialesMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(materiales)))
-            .andExpect(status().isBadRequest());
-
-        List<Materiales> materialesList = materialesRepository.findAll();
-        assertThat(materialesList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllMateriales() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
@@ -216,9 +158,8 @@ class MaterialesResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(materiales.getId().intValue())))
             .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
-            .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
-            .andExpect(jsonPath("$.[*].cantidadStock").value(hasItem(DEFAULT_CANTIDAD_STOCK)))
-            .andExpect(jsonPath("$.[*].cantidadPrestamo").value(hasItem(DEFAULT_CANTIDAD_PRESTAMO)));
+            .andExpect(jsonPath("$.[*].cantidad").value(hasItem(DEFAULT_CANTIDAD)))
+            .andExpect(jsonPath("$.[*].cantidadEnPrestamo").value(hasItem(DEFAULT_CANTIDAD_EN_PRESTAMO)));
     }
 
     @Test
@@ -234,9 +175,8 @@ class MaterialesResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(materiales.getId().intValue()))
             .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION))
-            .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO.toString()))
-            .andExpect(jsonPath("$.cantidadStock").value(DEFAULT_CANTIDAD_STOCK))
-            .andExpect(jsonPath("$.cantidadPrestamo").value(DEFAULT_CANTIDAD_PRESTAMO));
+            .andExpect(jsonPath("$.cantidad").value(DEFAULT_CANTIDAD))
+            .andExpect(jsonPath("$.cantidadEnPrestamo").value(DEFAULT_CANTIDAD_EN_PRESTAMO));
     }
 
     @Test
@@ -324,223 +264,184 @@ class MaterialesResourceIT {
 
     @Test
     @Transactional
-    void getAllMaterialesByEstadoIsEqualToSomething() throws Exception {
+    void getAllMaterialesByCantidadIsEqualToSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where estado equals to DEFAULT_ESTADO
-        defaultMaterialesShouldBeFound("estado.equals=" + DEFAULT_ESTADO);
+        // Get all the materialesList where cantidad equals to DEFAULT_CANTIDAD
+        defaultMaterialesShouldBeFound("cantidad.equals=" + DEFAULT_CANTIDAD);
 
-        // Get all the materialesList where estado equals to UPDATED_ESTADO
-        defaultMaterialesShouldNotBeFound("estado.equals=" + UPDATED_ESTADO);
+        // Get all the materialesList where cantidad equals to UPDATED_CANTIDAD
+        defaultMaterialesShouldNotBeFound("cantidad.equals=" + UPDATED_CANTIDAD);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByEstadoIsInShouldWork() throws Exception {
+    void getAllMaterialesByCantidadIsInShouldWork() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where estado in DEFAULT_ESTADO or UPDATED_ESTADO
-        defaultMaterialesShouldBeFound("estado.in=" + DEFAULT_ESTADO + "," + UPDATED_ESTADO);
+        // Get all the materialesList where cantidad in DEFAULT_CANTIDAD or UPDATED_CANTIDAD
+        defaultMaterialesShouldBeFound("cantidad.in=" + DEFAULT_CANTIDAD + "," + UPDATED_CANTIDAD);
 
-        // Get all the materialesList where estado equals to UPDATED_ESTADO
-        defaultMaterialesShouldNotBeFound("estado.in=" + UPDATED_ESTADO);
+        // Get all the materialesList where cantidad equals to UPDATED_CANTIDAD
+        defaultMaterialesShouldNotBeFound("cantidad.in=" + UPDATED_CANTIDAD);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByEstadoIsNullOrNotNull() throws Exception {
+    void getAllMaterialesByCantidadIsNullOrNotNull() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where estado is not null
-        defaultMaterialesShouldBeFound("estado.specified=true");
+        // Get all the materialesList where cantidad is not null
+        defaultMaterialesShouldBeFound("cantidad.specified=true");
 
-        // Get all the materialesList where estado is null
-        defaultMaterialesShouldNotBeFound("estado.specified=false");
+        // Get all the materialesList where cantidad is null
+        defaultMaterialesShouldNotBeFound("cantidad.specified=false");
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadStockIsEqualToSomething() throws Exception {
+    void getAllMaterialesByCantidadIsGreaterThanOrEqualToSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadStock equals to DEFAULT_CANTIDAD_STOCK
-        defaultMaterialesShouldBeFound("cantidadStock.equals=" + DEFAULT_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidad is greater than or equal to DEFAULT_CANTIDAD
+        defaultMaterialesShouldBeFound("cantidad.greaterThanOrEqual=" + DEFAULT_CANTIDAD);
 
-        // Get all the materialesList where cantidadStock equals to UPDATED_CANTIDAD_STOCK
-        defaultMaterialesShouldNotBeFound("cantidadStock.equals=" + UPDATED_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidad is greater than or equal to UPDATED_CANTIDAD
+        defaultMaterialesShouldNotBeFound("cantidad.greaterThanOrEqual=" + UPDATED_CANTIDAD);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadStockIsInShouldWork() throws Exception {
+    void getAllMaterialesByCantidadIsLessThanOrEqualToSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadStock in DEFAULT_CANTIDAD_STOCK or UPDATED_CANTIDAD_STOCK
-        defaultMaterialesShouldBeFound("cantidadStock.in=" + DEFAULT_CANTIDAD_STOCK + "," + UPDATED_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidad is less than or equal to DEFAULT_CANTIDAD
+        defaultMaterialesShouldBeFound("cantidad.lessThanOrEqual=" + DEFAULT_CANTIDAD);
 
-        // Get all the materialesList where cantidadStock equals to UPDATED_CANTIDAD_STOCK
-        defaultMaterialesShouldNotBeFound("cantidadStock.in=" + UPDATED_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidad is less than or equal to SMALLER_CANTIDAD
+        defaultMaterialesShouldNotBeFound("cantidad.lessThanOrEqual=" + SMALLER_CANTIDAD);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadStockIsNullOrNotNull() throws Exception {
+    void getAllMaterialesByCantidadIsLessThanSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadStock is not null
-        defaultMaterialesShouldBeFound("cantidadStock.specified=true");
+        // Get all the materialesList where cantidad is less than DEFAULT_CANTIDAD
+        defaultMaterialesShouldNotBeFound("cantidad.lessThan=" + DEFAULT_CANTIDAD);
 
-        // Get all the materialesList where cantidadStock is null
-        defaultMaterialesShouldNotBeFound("cantidadStock.specified=false");
+        // Get all the materialesList where cantidad is less than UPDATED_CANTIDAD
+        defaultMaterialesShouldBeFound("cantidad.lessThan=" + UPDATED_CANTIDAD);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadStockIsGreaterThanOrEqualToSomething() throws Exception {
+    void getAllMaterialesByCantidadIsGreaterThanSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadStock is greater than or equal to DEFAULT_CANTIDAD_STOCK
-        defaultMaterialesShouldBeFound("cantidadStock.greaterThanOrEqual=" + DEFAULT_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidad is greater than DEFAULT_CANTIDAD
+        defaultMaterialesShouldNotBeFound("cantidad.greaterThan=" + DEFAULT_CANTIDAD);
 
-        // Get all the materialesList where cantidadStock is greater than or equal to UPDATED_CANTIDAD_STOCK
-        defaultMaterialesShouldNotBeFound("cantidadStock.greaterThanOrEqual=" + UPDATED_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidad is greater than SMALLER_CANTIDAD
+        defaultMaterialesShouldBeFound("cantidad.greaterThan=" + SMALLER_CANTIDAD);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadStockIsLessThanOrEqualToSomething() throws Exception {
+    void getAllMaterialesByCantidadEnPrestamoIsEqualToSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadStock is less than or equal to DEFAULT_CANTIDAD_STOCK
-        defaultMaterialesShouldBeFound("cantidadStock.lessThanOrEqual=" + DEFAULT_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidadEnPrestamo equals to DEFAULT_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldBeFound("cantidadEnPrestamo.equals=" + DEFAULT_CANTIDAD_EN_PRESTAMO);
 
-        // Get all the materialesList where cantidadStock is less than or equal to SMALLER_CANTIDAD_STOCK
-        defaultMaterialesShouldNotBeFound("cantidadStock.lessThanOrEqual=" + SMALLER_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidadEnPrestamo equals to UPDATED_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldNotBeFound("cantidadEnPrestamo.equals=" + UPDATED_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadStockIsLessThanSomething() throws Exception {
+    void getAllMaterialesByCantidadEnPrestamoIsInShouldWork() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadStock is less than DEFAULT_CANTIDAD_STOCK
-        defaultMaterialesShouldNotBeFound("cantidadStock.lessThan=" + DEFAULT_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidadEnPrestamo in DEFAULT_CANTIDAD_EN_PRESTAMO or UPDATED_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldBeFound("cantidadEnPrestamo.in=" + DEFAULT_CANTIDAD_EN_PRESTAMO + "," + UPDATED_CANTIDAD_EN_PRESTAMO);
 
-        // Get all the materialesList where cantidadStock is less than UPDATED_CANTIDAD_STOCK
-        defaultMaterialesShouldBeFound("cantidadStock.lessThan=" + UPDATED_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidadEnPrestamo equals to UPDATED_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldNotBeFound("cantidadEnPrestamo.in=" + UPDATED_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadStockIsGreaterThanSomething() throws Exception {
+    void getAllMaterialesByCantidadEnPrestamoIsNullOrNotNull() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadStock is greater than DEFAULT_CANTIDAD_STOCK
-        defaultMaterialesShouldNotBeFound("cantidadStock.greaterThan=" + DEFAULT_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidadEnPrestamo is not null
+        defaultMaterialesShouldBeFound("cantidadEnPrestamo.specified=true");
 
-        // Get all the materialesList where cantidadStock is greater than SMALLER_CANTIDAD_STOCK
-        defaultMaterialesShouldBeFound("cantidadStock.greaterThan=" + SMALLER_CANTIDAD_STOCK);
+        // Get all the materialesList where cantidadEnPrestamo is null
+        defaultMaterialesShouldNotBeFound("cantidadEnPrestamo.specified=false");
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadPrestamoIsEqualToSomething() throws Exception {
+    void getAllMaterialesByCantidadEnPrestamoIsGreaterThanOrEqualToSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadPrestamo equals to DEFAULT_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldBeFound("cantidadPrestamo.equals=" + DEFAULT_CANTIDAD_PRESTAMO);
+        // Get all the materialesList where cantidadEnPrestamo is greater than or equal to DEFAULT_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldBeFound("cantidadEnPrestamo.greaterThanOrEqual=" + DEFAULT_CANTIDAD_EN_PRESTAMO);
 
-        // Get all the materialesList where cantidadPrestamo equals to UPDATED_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldNotBeFound("cantidadPrestamo.equals=" + UPDATED_CANTIDAD_PRESTAMO);
+        // Get all the materialesList where cantidadEnPrestamo is greater than or equal to UPDATED_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldNotBeFound("cantidadEnPrestamo.greaterThanOrEqual=" + UPDATED_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadPrestamoIsInShouldWork() throws Exception {
+    void getAllMaterialesByCantidadEnPrestamoIsLessThanOrEqualToSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadPrestamo in DEFAULT_CANTIDAD_PRESTAMO or UPDATED_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldBeFound("cantidadPrestamo.in=" + DEFAULT_CANTIDAD_PRESTAMO + "," + UPDATED_CANTIDAD_PRESTAMO);
+        // Get all the materialesList where cantidadEnPrestamo is less than or equal to DEFAULT_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldBeFound("cantidadEnPrestamo.lessThanOrEqual=" + DEFAULT_CANTIDAD_EN_PRESTAMO);
 
-        // Get all the materialesList where cantidadPrestamo equals to UPDATED_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldNotBeFound("cantidadPrestamo.in=" + UPDATED_CANTIDAD_PRESTAMO);
+        // Get all the materialesList where cantidadEnPrestamo is less than or equal to SMALLER_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldNotBeFound("cantidadEnPrestamo.lessThanOrEqual=" + SMALLER_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadPrestamoIsNullOrNotNull() throws Exception {
+    void getAllMaterialesByCantidadEnPrestamoIsLessThanSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadPrestamo is not null
-        defaultMaterialesShouldBeFound("cantidadPrestamo.specified=true");
+        // Get all the materialesList where cantidadEnPrestamo is less than DEFAULT_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldNotBeFound("cantidadEnPrestamo.lessThan=" + DEFAULT_CANTIDAD_EN_PRESTAMO);
 
-        // Get all the materialesList where cantidadPrestamo is null
-        defaultMaterialesShouldNotBeFound("cantidadPrestamo.specified=false");
+        // Get all the materialesList where cantidadEnPrestamo is less than UPDATED_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldBeFound("cantidadEnPrestamo.lessThan=" + UPDATED_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
     @Transactional
-    void getAllMaterialesByCantidadPrestamoIsGreaterThanOrEqualToSomething() throws Exception {
+    void getAllMaterialesByCantidadEnPrestamoIsGreaterThanSomething() throws Exception {
         // Initialize the database
         materialesRepository.saveAndFlush(materiales);
 
-        // Get all the materialesList where cantidadPrestamo is greater than or equal to DEFAULT_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldBeFound("cantidadPrestamo.greaterThanOrEqual=" + DEFAULT_CANTIDAD_PRESTAMO);
+        // Get all the materialesList where cantidadEnPrestamo is greater than DEFAULT_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldNotBeFound("cantidadEnPrestamo.greaterThan=" + DEFAULT_CANTIDAD_EN_PRESTAMO);
 
-        // Get all the materialesList where cantidadPrestamo is greater than or equal to UPDATED_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldNotBeFound("cantidadPrestamo.greaterThanOrEqual=" + UPDATED_CANTIDAD_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
-    void getAllMaterialesByCantidadPrestamoIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        materialesRepository.saveAndFlush(materiales);
-
-        // Get all the materialesList where cantidadPrestamo is less than or equal to DEFAULT_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldBeFound("cantidadPrestamo.lessThanOrEqual=" + DEFAULT_CANTIDAD_PRESTAMO);
-
-        // Get all the materialesList where cantidadPrestamo is less than or equal to SMALLER_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldNotBeFound("cantidadPrestamo.lessThanOrEqual=" + SMALLER_CANTIDAD_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
-    void getAllMaterialesByCantidadPrestamoIsLessThanSomething() throws Exception {
-        // Initialize the database
-        materialesRepository.saveAndFlush(materiales);
-
-        // Get all the materialesList where cantidadPrestamo is less than DEFAULT_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldNotBeFound("cantidadPrestamo.lessThan=" + DEFAULT_CANTIDAD_PRESTAMO);
-
-        // Get all the materialesList where cantidadPrestamo is less than UPDATED_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldBeFound("cantidadPrestamo.lessThan=" + UPDATED_CANTIDAD_PRESTAMO);
-    }
-
-    @Test
-    @Transactional
-    void getAllMaterialesByCantidadPrestamoIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        materialesRepository.saveAndFlush(materiales);
-
-        // Get all the materialesList where cantidadPrestamo is greater than DEFAULT_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldNotBeFound("cantidadPrestamo.greaterThan=" + DEFAULT_CANTIDAD_PRESTAMO);
-
-        // Get all the materialesList where cantidadPrestamo is greater than SMALLER_CANTIDAD_PRESTAMO
-        defaultMaterialesShouldBeFound("cantidadPrestamo.greaterThan=" + SMALLER_CANTIDAD_PRESTAMO);
+        // Get all the materialesList where cantidadEnPrestamo is greater than SMALLER_CANTIDAD_EN_PRESTAMO
+        defaultMaterialesShouldBeFound("cantidadEnPrestamo.greaterThan=" + SMALLER_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
@@ -576,9 +477,8 @@ class MaterialesResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(materiales.getId().intValue())))
             .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
-            .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
-            .andExpect(jsonPath("$.[*].cantidadStock").value(hasItem(DEFAULT_CANTIDAD_STOCK)))
-            .andExpect(jsonPath("$.[*].cantidadPrestamo").value(hasItem(DEFAULT_CANTIDAD_PRESTAMO)));
+            .andExpect(jsonPath("$.[*].cantidad").value(hasItem(DEFAULT_CANTIDAD)))
+            .andExpect(jsonPath("$.[*].cantidadEnPrestamo").value(hasItem(DEFAULT_CANTIDAD_EN_PRESTAMO)));
 
         // Check, that the count call also returns 1
         restMaterialesMockMvc
@@ -626,11 +526,7 @@ class MaterialesResourceIT {
         Materiales updatedMateriales = materialesRepository.findById(materiales.getId()).get();
         // Disconnect from session so that the updates on updatedMateriales are not directly saved in db
         em.detach(updatedMateriales);
-        updatedMateriales
-            .descripcion(UPDATED_DESCRIPCION)
-            .estado(UPDATED_ESTADO)
-            .cantidadStock(UPDATED_CANTIDAD_STOCK)
-            .cantidadPrestamo(UPDATED_CANTIDAD_PRESTAMO);
+        updatedMateriales.descripcion(UPDATED_DESCRIPCION).cantidad(UPDATED_CANTIDAD).cantidadEnPrestamo(UPDATED_CANTIDAD_EN_PRESTAMO);
 
         restMaterialesMockMvc
             .perform(
@@ -645,9 +541,8 @@ class MaterialesResourceIT {
         assertThat(materialesList).hasSize(databaseSizeBeforeUpdate);
         Materiales testMateriales = materialesList.get(materialesList.size() - 1);
         assertThat(testMateriales.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testMateriales.getEstado()).isEqualTo(UPDATED_ESTADO);
-        assertThat(testMateriales.getCantidadStock()).isEqualTo(UPDATED_CANTIDAD_STOCK);
-        assertThat(testMateriales.getCantidadPrestamo()).isEqualTo(UPDATED_CANTIDAD_PRESTAMO);
+        assertThat(testMateriales.getCantidad()).isEqualTo(UPDATED_CANTIDAD);
+        assertThat(testMateriales.getCantidadEnPrestamo()).isEqualTo(UPDATED_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
@@ -718,7 +613,7 @@ class MaterialesResourceIT {
         Materiales partialUpdatedMateriales = new Materiales();
         partialUpdatedMateriales.setId(materiales.getId());
 
-        partialUpdatedMateriales.descripcion(UPDATED_DESCRIPCION).cantidadStock(UPDATED_CANTIDAD_STOCK);
+        partialUpdatedMateriales.descripcion(UPDATED_DESCRIPCION).cantidadEnPrestamo(UPDATED_CANTIDAD_EN_PRESTAMO);
 
         restMaterialesMockMvc
             .perform(
@@ -733,9 +628,8 @@ class MaterialesResourceIT {
         assertThat(materialesList).hasSize(databaseSizeBeforeUpdate);
         Materiales testMateriales = materialesList.get(materialesList.size() - 1);
         assertThat(testMateriales.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testMateriales.getEstado()).isEqualTo(DEFAULT_ESTADO);
-        assertThat(testMateriales.getCantidadStock()).isEqualTo(UPDATED_CANTIDAD_STOCK);
-        assertThat(testMateriales.getCantidadPrestamo()).isEqualTo(DEFAULT_CANTIDAD_PRESTAMO);
+        assertThat(testMateriales.getCantidad()).isEqualTo(DEFAULT_CANTIDAD);
+        assertThat(testMateriales.getCantidadEnPrestamo()).isEqualTo(UPDATED_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test
@@ -752,9 +646,8 @@ class MaterialesResourceIT {
 
         partialUpdatedMateriales
             .descripcion(UPDATED_DESCRIPCION)
-            .estado(UPDATED_ESTADO)
-            .cantidadStock(UPDATED_CANTIDAD_STOCK)
-            .cantidadPrestamo(UPDATED_CANTIDAD_PRESTAMO);
+            .cantidad(UPDATED_CANTIDAD)
+            .cantidadEnPrestamo(UPDATED_CANTIDAD_EN_PRESTAMO);
 
         restMaterialesMockMvc
             .perform(
@@ -769,9 +662,8 @@ class MaterialesResourceIT {
         assertThat(materialesList).hasSize(databaseSizeBeforeUpdate);
         Materiales testMateriales = materialesList.get(materialesList.size() - 1);
         assertThat(testMateriales.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testMateriales.getEstado()).isEqualTo(UPDATED_ESTADO);
-        assertThat(testMateriales.getCantidadStock()).isEqualTo(UPDATED_CANTIDAD_STOCK);
-        assertThat(testMateriales.getCantidadPrestamo()).isEqualTo(UPDATED_CANTIDAD_PRESTAMO);
+        assertThat(testMateriales.getCantidad()).isEqualTo(UPDATED_CANTIDAD);
+        assertThat(testMateriales.getCantidadEnPrestamo()).isEqualTo(UPDATED_CANTIDAD_EN_PRESTAMO);
     }
 
     @Test

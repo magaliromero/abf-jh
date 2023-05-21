@@ -20,11 +20,13 @@ describe('Matricula Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            concepto: expect.any(Object),
+            monto: expect.any(Object),
             fechaInscripcion: expect.any(Object),
             fechaInicio: expect.any(Object),
             fechaPago: expect.any(Object),
             estado: expect.any(Object),
-            alumnos: expect.any(Object),
+            alumno: expect.any(Object),
           })
         );
       });
@@ -35,11 +37,13 @@ describe('Matricula Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            concepto: expect.any(Object),
+            monto: expect.any(Object),
             fechaInscripcion: expect.any(Object),
             fechaInicio: expect.any(Object),
             fechaPago: expect.any(Object),
             estado: expect.any(Object),
-            alumnos: expect.any(Object),
+            alumno: expect.any(Object),
           })
         );
       });

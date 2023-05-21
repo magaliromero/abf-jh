@@ -1183,29 +1183,6 @@ class FuncionariosResourceIT {
 
     @Test
     @Transactional
-    void getAllFuncionariosByRegistroClasesIsEqualToSomething() throws Exception {
-        RegistroClases registroClases;
-        if (TestUtil.findAll(em, RegistroClases.class).isEmpty()) {
-            funcionariosRepository.saveAndFlush(funcionarios);
-            registroClases = RegistroClasesResourceIT.createEntity(em);
-        } else {
-            registroClases = TestUtil.findAll(em, RegistroClases.class).get(0);
-        }
-        em.persist(registroClases);
-        em.flush();
-        funcionarios.addRegistroClases(registroClases);
-        funcionariosRepository.saveAndFlush(funcionarios);
-        Long registroClasesId = registroClases.getId();
-
-        // Get all the funcionariosList where registroClases equals to registroClasesId
-        defaultFuncionariosShouldBeFound("registroClasesId.equals=" + registroClasesId);
-
-        // Get all the funcionariosList where registroClases equals to (registroClasesId + 1)
-        defaultFuncionariosShouldNotBeFound("registroClasesId.equals=" + (registroClasesId + 1));
-    }
-
-    @Test
-    @Transactional
     void getAllFuncionariosByPagosIsEqualToSomething() throws Exception {
         Pagos pagos;
         if (TestUtil.findAll(em, Pagos.class).isEmpty()) {
@@ -1225,6 +1202,29 @@ class FuncionariosResourceIT {
 
         // Get all the funcionariosList where pagos equals to (pagosId + 1)
         defaultFuncionariosShouldNotBeFound("pagosId.equals=" + (pagosId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllFuncionariosByRegistroClasesIsEqualToSomething() throws Exception {
+        RegistroClases registroClases;
+        if (TestUtil.findAll(em, RegistroClases.class).isEmpty()) {
+            funcionariosRepository.saveAndFlush(funcionarios);
+            registroClases = RegistroClasesResourceIT.createEntity(em);
+        } else {
+            registroClases = TestUtil.findAll(em, RegistroClases.class).get(0);
+        }
+        em.persist(registroClases);
+        em.flush();
+        funcionarios.addRegistroClases(registroClases);
+        funcionariosRepository.saveAndFlush(funcionarios);
+        Long registroClasesId = registroClases.getId();
+
+        // Get all the funcionariosList where registroClases equals to registroClasesId
+        defaultFuncionariosShouldBeFound("registroClasesId.equals=" + registroClasesId);
+
+        // Get all the funcionariosList where registroClases equals to (registroClasesId + 1)
+        defaultFuncionariosShouldNotBeFound("registroClasesId.equals=" + (registroClasesId + 1));
     }
 
     @Test

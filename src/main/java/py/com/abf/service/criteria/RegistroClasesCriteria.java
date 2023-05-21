@@ -29,13 +29,9 @@ public class RegistroClasesCriteria implements Serializable, Criteria {
 
     private BooleanFilter asistenciaAlumno;
 
-    private LongFilter cursosId;
+    private LongFilter temaId;
 
-    private LongFilter temasId;
-
-    private LongFilter funcionariosId;
-
-    private LongFilter alumnosId;
+    private LongFilter funcionarioId;
 
     private Boolean distinct;
 
@@ -46,10 +42,8 @@ public class RegistroClasesCriteria implements Serializable, Criteria {
         this.fecha = other.fecha == null ? null : other.fecha.copy();
         this.cantidadHoras = other.cantidadHoras == null ? null : other.cantidadHoras.copy();
         this.asistenciaAlumno = other.asistenciaAlumno == null ? null : other.asistenciaAlumno.copy();
-        this.cursosId = other.cursosId == null ? null : other.cursosId.copy();
-        this.temasId = other.temasId == null ? null : other.temasId.copy();
-        this.funcionariosId = other.funcionariosId == null ? null : other.funcionariosId.copy();
-        this.alumnosId = other.alumnosId == null ? null : other.alumnosId.copy();
+        this.temaId = other.temaId == null ? null : other.temaId.copy();
+        this.funcionarioId = other.funcionarioId == null ? null : other.funcionarioId.copy();
         this.distinct = other.distinct;
     }
 
@@ -118,64 +112,34 @@ public class RegistroClasesCriteria implements Serializable, Criteria {
         this.asistenciaAlumno = asistenciaAlumno;
     }
 
-    public LongFilter getCursosId() {
-        return cursosId;
+    public LongFilter getTemaId() {
+        return temaId;
     }
 
-    public LongFilter cursosId() {
-        if (cursosId == null) {
-            cursosId = new LongFilter();
+    public LongFilter temaId() {
+        if (temaId == null) {
+            temaId = new LongFilter();
         }
-        return cursosId;
+        return temaId;
     }
 
-    public void setCursosId(LongFilter cursosId) {
-        this.cursosId = cursosId;
+    public void setTemaId(LongFilter temaId) {
+        this.temaId = temaId;
     }
 
-    public LongFilter getTemasId() {
-        return temasId;
+    public LongFilter getFuncionarioId() {
+        return funcionarioId;
     }
 
-    public LongFilter temasId() {
-        if (temasId == null) {
-            temasId = new LongFilter();
+    public LongFilter funcionarioId() {
+        if (funcionarioId == null) {
+            funcionarioId = new LongFilter();
         }
-        return temasId;
+        return funcionarioId;
     }
 
-    public void setTemasId(LongFilter temasId) {
-        this.temasId = temasId;
-    }
-
-    public LongFilter getFuncionariosId() {
-        return funcionariosId;
-    }
-
-    public LongFilter funcionariosId() {
-        if (funcionariosId == null) {
-            funcionariosId = new LongFilter();
-        }
-        return funcionariosId;
-    }
-
-    public void setFuncionariosId(LongFilter funcionariosId) {
-        this.funcionariosId = funcionariosId;
-    }
-
-    public LongFilter getAlumnosId() {
-        return alumnosId;
-    }
-
-    public LongFilter alumnosId() {
-        if (alumnosId == null) {
-            alumnosId = new LongFilter();
-        }
-        return alumnosId;
-    }
-
-    public void setAlumnosId(LongFilter alumnosId) {
-        this.alumnosId = alumnosId;
+    public void setFuncionarioId(LongFilter funcionarioId) {
+        this.funcionarioId = funcionarioId;
     }
 
     public Boolean getDistinct() {
@@ -200,17 +164,15 @@ public class RegistroClasesCriteria implements Serializable, Criteria {
             Objects.equals(fecha, that.fecha) &&
             Objects.equals(cantidadHoras, that.cantidadHoras) &&
             Objects.equals(asistenciaAlumno, that.asistenciaAlumno) &&
-            Objects.equals(cursosId, that.cursosId) &&
-            Objects.equals(temasId, that.temasId) &&
-            Objects.equals(funcionariosId, that.funcionariosId) &&
-            Objects.equals(alumnosId, that.alumnosId) &&
+            Objects.equals(temaId, that.temaId) &&
+            Objects.equals(funcionarioId, that.funcionarioId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fecha, cantidadHoras, asistenciaAlumno, cursosId, temasId, funcionariosId, alumnosId, distinct);
+        return Objects.hash(id, fecha, cantidadHoras, asistenciaAlumno, temaId, funcionarioId, distinct);
     }
 
     // prettier-ignore
@@ -221,10 +183,8 @@ public class RegistroClasesCriteria implements Serializable, Criteria {
             (fecha != null ? "fecha=" + fecha + ", " : "") +
             (cantidadHoras != null ? "cantidadHoras=" + cantidadHoras + ", " : "") +
             (asistenciaAlumno != null ? "asistenciaAlumno=" + asistenciaAlumno + ", " : "") +
-            (cursosId != null ? "cursosId=" + cursosId + ", " : "") +
-            (temasId != null ? "temasId=" + temasId + ", " : "") +
-            (funcionariosId != null ? "funcionariosId=" + funcionariosId + ", " : "") +
-            (alumnosId != null ? "alumnosId=" + alumnosId + ", " : "") +
+            (temaId != null ? "temaId=" + temaId + ", " : "") +
+            (funcionarioId != null ? "funcionarioId=" + funcionarioId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

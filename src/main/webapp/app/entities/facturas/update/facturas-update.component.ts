@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { FacturasFormService, FacturasFormGroup } from './facturas-form.service';
 import { IFacturas } from '../facturas.model';
 import { FacturasService } from '../service/facturas.service';
-import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
-import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
-import { CondVenta } from 'app/entities/enumerations/cond-venta.model';
+import { CondicionVenta } from 'app/entities/enumerations/condicion-venta.model';
 
 @Component({
   selector: 'jhi-facturas-update',
@@ -18,20 +16,15 @@ import { CondVenta } from 'app/entities/enumerations/cond-venta.model';
 export class FacturasUpdateComponent implements OnInit {
   isSaving = false;
   facturas: IFacturas | null = null;
-  condVentaValues = Object.keys(CondVenta);
-
-  alumnosSharedCollection: IAlumnos[] = [];
+  condicionVentaValues = Object.keys(CondicionVenta);
 
   editForm: FacturasFormGroup = this.facturasFormService.createFacturasFormGroup();
 
   constructor(
     protected facturasService: FacturasService,
     protected facturasFormService: FacturasFormService,
-    protected alumnosService: AlumnosService,
     protected activatedRoute: ActivatedRoute
   ) {}
-
-  compareAlumnos = (o1: IAlumnos | null, o2: IAlumnos | null): boolean => this.alumnosService.compareAlumnos(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ facturas }) => {
@@ -39,8 +32,6 @@ export class FacturasUpdateComponent implements OnInit {
       if (facturas) {
         this.updateForm(facturas);
       }
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -80,18 +71,5 @@ export class FacturasUpdateComponent implements OnInit {
   protected updateForm(facturas: IFacturas): void {
     this.facturas = facturas;
     this.facturasFormService.resetForm(this.editForm, facturas);
-
-    this.alumnosSharedCollection = this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(
-      this.alumnosSharedCollection,
-      facturas.alumnos
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.alumnosService
-      .query()
-      .pipe(map((res: HttpResponse<IAlumnos[]>) => res.body ?? []))
-      .pipe(map((alumnos: IAlumnos[]) => this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(alumnos, this.facturas?.alumnos)))
-      .subscribe((alumnos: IAlumnos[]) => (this.alumnosSharedCollection = alumnos));
   }
 }

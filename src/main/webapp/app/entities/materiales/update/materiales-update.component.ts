@@ -7,7 +7,6 @@ import { finalize } from 'rxjs/operators';
 import { MaterialesFormService, MaterialesFormGroup } from './materiales-form.service';
 import { IMateriales } from '../materiales.model';
 import { MaterialesService } from '../service/materiales.service';
-import { EstadosMateriales } from 'app/entities/enumerations/estados-materiales.model';
 
 @Component({
   selector: 'jhi-materiales-update',
@@ -16,7 +15,6 @@ import { EstadosMateriales } from 'app/entities/enumerations/estados-materiales.
 export class MaterialesUpdateComponent implements OnInit {
   isSaving = false;
   materiales: IMateriales | null = null;
-  estadosMaterialesValues = Object.keys(EstadosMateriales);
 
   editForm: MaterialesFormGroup = this.materialesFormService.createMaterialesFormGroup();
 

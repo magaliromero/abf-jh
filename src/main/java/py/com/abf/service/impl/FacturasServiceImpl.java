@@ -63,32 +63,8 @@ public class FacturasServiceImpl implements FacturasService {
                 if (facturas.getCondicionVenta() != null) {
                     existingFacturas.setCondicionVenta(facturas.getCondicionVenta());
                 }
-                if (facturas.getCantidad() != null) {
-                    existingFacturas.setCantidad(facturas.getCantidad());
-                }
-                if (facturas.getDescripcion() != null) {
-                    existingFacturas.setDescripcion(facturas.getDescripcion());
-                }
-                if (facturas.getPrecioUnitario() != null) {
-                    existingFacturas.setPrecioUnitario(facturas.getPrecioUnitario());
-                }
-                if (facturas.getValor5() != null) {
-                    existingFacturas.setValor5(facturas.getValor5());
-                }
-                if (facturas.getValor10() != null) {
-                    existingFacturas.setValor10(facturas.getValor10());
-                }
                 if (facturas.getTotal() != null) {
                     existingFacturas.setTotal(facturas.getTotal());
-                }
-                if (facturas.getTotal5() != null) {
-                    existingFacturas.setTotal5(facturas.getTotal5());
-                }
-                if (facturas.getTotal10() != null) {
-                    existingFacturas.setTotal10(facturas.getTotal10());
-                }
-                if (facturas.getTotalIva() != null) {
-                    existingFacturas.setTotalIva(facturas.getTotalIva());
                 }
 
                 return existingFacturas;
@@ -103,15 +79,11 @@ public class FacturasServiceImpl implements FacturasService {
         return facturasRepository.findAll(pageable);
     }
 
-    public Page<Facturas> findAllWithEagerRelationships(Pageable pageable) {
-        return facturasRepository.findAllWithEagerRelationships(pageable);
-    }
-
     @Override
     @Transactional(readOnly = true)
     public Optional<Facturas> findOne(Long id) {
         log.debug("Request to get Facturas : {}", id);
-        return facturasRepository.findOneWithEagerRelationships(id);
+        return facturasRepository.findById(id);
     }
 
     @Override

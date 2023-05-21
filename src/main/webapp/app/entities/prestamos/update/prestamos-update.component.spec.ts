@@ -11,6 +11,8 @@ import { PrestamosService } from '../service/prestamos.service';
 import { IPrestamos } from '../prestamos.model';
 import { IMateriales } from 'app/entities/materiales/materiales.model';
 import { MaterialesService } from 'app/entities/materiales/service/materiales.service';
+import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
+import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
 
 import { PrestamosUpdateComponent } from './prestamos-update.component';
 
@@ -21,6 +23,7 @@ describe('Prestamos Management Update Component', () => {
   let prestamosFormService: PrestamosFormService;
   let prestamosService: PrestamosService;
   let materialesService: MaterialesService;
+  let alumnosService: AlumnosService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -44,6 +47,7 @@ describe('Prestamos Management Update Component', () => {
     prestamosFormService = TestBed.inject(PrestamosFormService);
     prestamosService = TestBed.inject(PrestamosService);
     materialesService = TestBed.inject(MaterialesService);
+    alumnosService = TestBed.inject(AlumnosService);
 
     comp = fixture.componentInstance;
   });
@@ -71,15 +75,40 @@ describe('Prestamos Management Update Component', () => {
       expect(comp.materialesSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call Alumnos query and add missing value', () => {
+      const prestamos: IPrestamos = { id: 456 };
+      const alumnos: IAlumnos = { id: 73984 };
+      prestamos.alumnos = alumnos;
+
+      const alumnosCollection: IAlumnos[] = [{ id: 86220 }];
+      jest.spyOn(alumnosService, 'query').mockReturnValue(of(new HttpResponse({ body: alumnosCollection })));
+      const additionalAlumnos = [alumnos];
+      const expectedCollection: IAlumnos[] = [...additionalAlumnos, ...alumnosCollection];
+      jest.spyOn(alumnosService, 'addAlumnosToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ prestamos });
+      comp.ngOnInit();
+
+      expect(alumnosService.query).toHaveBeenCalled();
+      expect(alumnosService.addAlumnosToCollectionIfMissing).toHaveBeenCalledWith(
+        alumnosCollection,
+        ...additionalAlumnos.map(expect.objectContaining)
+      );
+      expect(comp.alumnosSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const prestamos: IPrestamos = { id: 456 };
       const materiales: IMateriales = { id: 77994 };
       prestamos.materiales = materiales;
+      const alumnos: IAlumnos = { id: 81930 };
+      prestamos.alumnos = alumnos;
 
       activatedRoute.data = of({ prestamos });
       comp.ngOnInit();
 
       expect(comp.materialesSharedCollection).toContain(materiales);
+      expect(comp.alumnosSharedCollection).toContain(alumnos);
       expect(comp.prestamos).toEqual(prestamos);
     });
   });
@@ -160,6 +189,16 @@ describe('Prestamos Management Update Component', () => {
         jest.spyOn(materialesService, 'compareMateriales');
         comp.compareMateriales(entity, entity2);
         expect(materialesService.compareMateriales).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareAlumnos', () => {
+      it('Should forward to alumnosService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(alumnosService, 'compareAlumnos');
+        comp.compareAlumnos(entity, entity2);
+        expect(alumnosService.compareAlumnos).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

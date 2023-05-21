@@ -19,9 +19,10 @@
       },
       "id": "ID",
       "fechaPrestamo": "Fecha Prestamo",
-      "vigenciaPrestamo": "Vigencia Prestamo",
       "fechaDevolucion": "Fecha Devolucion",
-      "materiales": "Materiales"
+      "estado": "Estado",
+      "materiales": "Materiales",
+      "alumnos": "Alumnos"
     }
   }
 }

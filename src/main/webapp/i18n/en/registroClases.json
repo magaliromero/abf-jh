@@ -21,10 +21,8 @@
       "fecha": "Fecha",
       "cantidadHoras": "Cantidad Horas",
       "asistenciaAlumno": "Asistencia Alumno",
-      "cursos": "Cursos",
-      "temas": "Temas",
-      "funcionarios": "Funcionarios",
-      "alumnos": "Alumnos"
+      "tema": "Tema",
+      "funcionario": "Funcionario"
     }
   }
 }

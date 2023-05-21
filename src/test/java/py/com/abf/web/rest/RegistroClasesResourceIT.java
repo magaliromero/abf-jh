@@ -28,8 +28,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
-import py.com.abf.domain.Alumnos;
-import py.com.abf.domain.Cursos;
 import py.com.abf.domain.Funcionarios;
 import py.com.abf.domain.RegistroClases;
 import py.com.abf.domain.Temas;
@@ -92,16 +90,6 @@ class RegistroClasesResourceIT {
             .cantidadHoras(DEFAULT_CANTIDAD_HORAS)
             .asistenciaAlumno(DEFAULT_ASISTENCIA_ALUMNO);
         // Add required entity
-        Cursos cursos;
-        if (TestUtil.findAll(em, Cursos.class).isEmpty()) {
-            cursos = CursosResourceIT.createEntity(em);
-            em.persist(cursos);
-            em.flush();
-        } else {
-            cursos = TestUtil.findAll(em, Cursos.class).get(0);
-        }
-        registroClases.setCursos(cursos);
-        // Add required entity
         Temas temas;
         if (TestUtil.findAll(em, Temas.class).isEmpty()) {
             temas = TemasResourceIT.createEntity(em);
@@ -110,27 +98,7 @@ class RegistroClasesResourceIT {
         } else {
             temas = TestUtil.findAll(em, Temas.class).get(0);
         }
-        registroClases.setTemas(temas);
-        // Add required entity
-        Funcionarios funcionarios;
-        if (TestUtil.findAll(em, Funcionarios.class).isEmpty()) {
-            funcionarios = FuncionariosResourceIT.createEntity(em);
-            em.persist(funcionarios);
-            em.flush();
-        } else {
-            funcionarios = TestUtil.findAll(em, Funcionarios.class).get(0);
-        }
-        registroClases.setFuncionarios(funcionarios);
-        // Add required entity
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            alumnos = AlumnosResourceIT.createEntity(em);
-            em.persist(alumnos);
-            em.flush();
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        registroClases.setAlumnos(alumnos);
+        registroClases.setTema(temas);
         return registroClases;
     }
 
@@ -146,16 +114,6 @@ class RegistroClasesResourceIT {
             .cantidadHoras(UPDATED_CANTIDAD_HORAS)
             .asistenciaAlumno(UPDATED_ASISTENCIA_ALUMNO);
         // Add required entity
-        Cursos cursos;
-        if (TestUtil.findAll(em, Cursos.class).isEmpty()) {
-            cursos = CursosResourceIT.createUpdatedEntity(em);
-            em.persist(cursos);
-            em.flush();
-        } else {
-            cursos = TestUtil.findAll(em, Cursos.class).get(0);
-        }
-        registroClases.setCursos(cursos);
-        // Add required entity
         Temas temas;
         if (TestUtil.findAll(em, Temas.class).isEmpty()) {
             temas = TemasResourceIT.createUpdatedEntity(em);
@@ -164,27 +122,7 @@ class RegistroClasesResourceIT {
         } else {
             temas = TestUtil.findAll(em, Temas.class).get(0);
         }
-        registroClases.setTemas(temas);
-        // Add required entity
-        Funcionarios funcionarios;
-        if (TestUtil.findAll(em, Funcionarios.class).isEmpty()) {
-            funcionarios = FuncionariosResourceIT.createUpdatedEntity(em);
-            em.persist(funcionarios);
-            em.flush();
-        } else {
-            funcionarios = TestUtil.findAll(em, Funcionarios.class).get(0);
-        }
-        registroClases.setFuncionarios(funcionarios);
-        // Add required entity
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            alumnos = AlumnosResourceIT.createUpdatedEntity(em);
-            em.persist(alumnos);
-            em.flush();
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        registroClases.setAlumnos(alumnos);
+        registroClases.setTema(temas);
         return registroClases;
     }
 
@@ -563,94 +501,48 @@ class RegistroClasesResourceIT {
 
     @Test
     @Transactional
-    void getAllRegistroClasesByCursosIsEqualToSomething() throws Exception {
-        Cursos cursos;
-        if (TestUtil.findAll(em, Cursos.class).isEmpty()) {
-            registroClasesRepository.saveAndFlush(registroClases);
-            cursos = CursosResourceIT.createEntity(em);
-        } else {
-            cursos = TestUtil.findAll(em, Cursos.class).get(0);
-        }
-        em.persist(cursos);
-        em.flush();
-        registroClases.setCursos(cursos);
-        registroClasesRepository.saveAndFlush(registroClases);
-        Long cursosId = cursos.getId();
-
-        // Get all the registroClasesList where cursos equals to cursosId
-        defaultRegistroClasesShouldBeFound("cursosId.equals=" + cursosId);
-
-        // Get all the registroClasesList where cursos equals to (cursosId + 1)
-        defaultRegistroClasesShouldNotBeFound("cursosId.equals=" + (cursosId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllRegistroClasesByTemasIsEqualToSomething() throws Exception {
-        Temas temas;
+    void getAllRegistroClasesByTemaIsEqualToSomething() throws Exception {
+        Temas tema;
         if (TestUtil.findAll(em, Temas.class).isEmpty()) {
             registroClasesRepository.saveAndFlush(registroClases);
-            temas = TemasResourceIT.createEntity(em);
+            tema = TemasResourceIT.createEntity(em);
         } else {
-            temas = TestUtil.findAll(em, Temas.class).get(0);
+            tema = TestUtil.findAll(em, Temas.class).get(0);
         }
-        em.persist(temas);
+        em.persist(tema);
         em.flush();
-        registroClases.setTemas(temas);
+        registroClases.setTema(tema);
         registroClasesRepository.saveAndFlush(registroClases);
-        Long temasId = temas.getId();
+        Long temaId = tema.getId();
 
-        // Get all the registroClasesList where temas equals to temasId
-        defaultRegistroClasesShouldBeFound("temasId.equals=" + temasId);
+        // Get all the registroClasesList where tema equals to temaId
+        defaultRegistroClasesShouldBeFound("temaId.equals=" + temaId);
 
-        // Get all the registroClasesList where temas equals to (temasId + 1)
-        defaultRegistroClasesShouldNotBeFound("temasId.equals=" + (temasId + 1));
+        // Get all the registroClasesList where tema equals to (temaId + 1)
+        defaultRegistroClasesShouldNotBeFound("temaId.equals=" + (temaId + 1));
     }
 
     @Test
     @Transactional
-    void getAllRegistroClasesByFuncionariosIsEqualToSomething() throws Exception {
-        Funcionarios funcionarios;
+    void getAllRegistroClasesByFuncionarioIsEqualToSomething() throws Exception {
+        Funcionarios funcionario;
         if (TestUtil.findAll(em, Funcionarios.class).isEmpty()) {
             registroClasesRepository.saveAndFlush(registroClases);
-            funcionarios = FuncionariosResourceIT.createEntity(em);
+            funcionario = FuncionariosResourceIT.createEntity(em);
         } else {
-            funcionarios = TestUtil.findAll(em, Funcionarios.class).get(0);
+            funcionario = TestUtil.findAll(em, Funcionarios.class).get(0);
         }
-        em.persist(funcionarios);
+        em.persist(funcionario);
         em.flush();
-        registroClases.setFuncionarios(funcionarios);
+        registroClases.setFuncionario(funcionario);
         registroClasesRepository.saveAndFlush(registroClases);
-        Long funcionariosId = funcionarios.getId();
+        Long funcionarioId = funcionario.getId();
 
-        // Get all the registroClasesList where funcionarios equals to funcionariosId
-        defaultRegistroClasesShouldBeFound("funcionariosId.equals=" + funcionariosId);
+        // Get all the registroClasesList where funcionario equals to funcionarioId
+        defaultRegistroClasesShouldBeFound("funcionarioId.equals=" + funcionarioId);
 
-        // Get all the registroClasesList where funcionarios equals to (funcionariosId + 1)
-        defaultRegistroClasesShouldNotBeFound("funcionariosId.equals=" + (funcionariosId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllRegistroClasesByAlumnosIsEqualToSomething() throws Exception {
-        Alumnos alumnos;
-        if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
-            registroClasesRepository.saveAndFlush(registroClases);
-            alumnos = AlumnosResourceIT.createEntity(em);
-        } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
-        }
-        em.persist(alumnos);
-        em.flush();
-        registroClases.setAlumnos(alumnos);
-        registroClasesRepository.saveAndFlush(registroClases);
-        Long alumnosId = alumnos.getId();
-
-        // Get all the registroClasesList where alumnos equals to alumnosId
-        defaultRegistroClasesShouldBeFound("alumnosId.equals=" + alumnosId);
-
-        // Get all the registroClasesList where alumnos equals to (alumnosId + 1)
-        defaultRegistroClasesShouldNotBeFound("alumnosId.equals=" + (alumnosId + 1));
+        // Get all the registroClasesList where funcionario equals to (funcionarioId + 1)
+        defaultRegistroClasesShouldNotBeFound("funcionarioId.equals=" + (funcionarioId + 1));
     }
 
     /**

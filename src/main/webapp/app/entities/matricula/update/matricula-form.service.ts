@@ -18,11 +18,13 @@ type MatriculaFormDefaults = Pick<NewMatricula, 'id'>;
 
 type MatriculaFormGroupContent = {
   id: FormControl<IMatricula['id'] | NewMatricula['id']>;
+  concepto: FormControl<IMatricula['concepto']>;
+  monto: FormControl<IMatricula['monto']>;
   fechaInscripcion: FormControl<IMatricula['fechaInscripcion']>;
   fechaInicio: FormControl<IMatricula['fechaInicio']>;
   fechaPago: FormControl<IMatricula['fechaPago']>;
   estado: FormControl<IMatricula['estado']>;
-  alumnos: FormControl<IMatricula['alumnos']>;
+  alumno: FormControl<IMatricula['alumno']>;
 };
 
 export type MatriculaFormGroup = FormGroup<MatriculaFormGroupContent>;
@@ -42,6 +44,12 @@ export class MatriculaFormService {
           validators: [Validators.required],
         }
       ),
+      concepto: new FormControl(matriculaRawValue.concepto, {
+        validators: [Validators.required],
+      }),
+      monto: new FormControl(matriculaRawValue.monto, {
+        validators: [Validators.required],
+      }),
       fechaInscripcion: new FormControl(matriculaRawValue.fechaInscripcion, {
         validators: [Validators.required],
       }),
@@ -52,7 +60,7 @@ export class MatriculaFormService {
       estado: new FormControl(matriculaRawValue.estado, {
         validators: [Validators.required],
       }),
-      alumnos: new FormControl(matriculaRawValue.alumnos, {
+      alumno: new FormControl(matriculaRawValue.alumno, {
         validators: [Validators.required],
       }),
     });

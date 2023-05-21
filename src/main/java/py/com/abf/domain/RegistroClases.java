@@ -39,27 +39,11 @@ public class RegistroClases implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "registroClases" }, allowSetters = true)
-    private Cursos cursos;
+    private Temas tema;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "registroClases", "mallaCurriculars" }, allowSetters = true)
-    private Temas temas;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "registroClases", "pagos", "tipoDocumentos" }, allowSetters = true)
-    private Funcionarios funcionarios;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(
-        value = {
-            "matriculas", "registroClases", "cobros", "evaluaciones", "inscripciones", "fichaPartidasTorneos", "facturas", "tipoDocumentos",
-        },
-        allowSetters = true
-    )
-    private Alumnos alumnos;
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "pagos", "registroClases", "tipoDocumentos" }, allowSetters = true)
+    private Funcionarios funcionario;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -115,55 +99,29 @@ public class RegistroClases implements Serializable {
         this.asistenciaAlumno = asistenciaAlumno;
     }
 
-    public Cursos getCursos() {
-        return this.cursos;
+    public Temas getTema() {
+        return this.tema;
     }
 
-    public void setCursos(Cursos cursos) {
-        this.cursos = cursos;
+    public void setTema(Temas temas) {
+        this.tema = temas;
     }
 
-    public RegistroClases cursos(Cursos cursos) {
-        this.setCursos(cursos);
+    public RegistroClases tema(Temas temas) {
+        this.setTema(temas);
         return this;
     }
 
-    public Temas getTemas() {
-        return this.temas;
+    public Funcionarios getFuncionario() {
+        return this.funcionario;
     }
 
-    public void setTemas(Temas temas) {
-        this.temas = temas;
+    public void setFuncionario(Funcionarios funcionarios) {
+        this.funcionario = funcionarios;
     }
 
-    public RegistroClases temas(Temas temas) {
-        this.setTemas(temas);
-        return this;
-    }
-
-    public Funcionarios getFuncionarios() {
-        return this.funcionarios;
-    }
-
-    public void setFuncionarios(Funcionarios funcionarios) {
-        this.funcionarios = funcionarios;
-    }
-
-    public RegistroClases funcionarios(Funcionarios funcionarios) {
-        this.setFuncionarios(funcionarios);
-        return this;
-    }
-
-    public Alumnos getAlumnos() {
-        return this.alumnos;
-    }
-
-    public void setAlumnos(Alumnos alumnos) {
-        this.alumnos = alumnos;
-    }
-
-    public RegistroClases alumnos(Alumnos alumnos) {
-        this.setAlumnos(alumnos);
+    public RegistroClases funcionario(Funcionarios funcionarios) {
+        this.setFuncionario(funcionarios);
         return this;
     }
 

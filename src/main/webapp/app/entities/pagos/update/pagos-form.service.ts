@@ -18,14 +18,11 @@ type PagosFormDefaults = Pick<NewPagos, 'id'>;
 
 type PagosFormGroupContent = {
   id: FormControl<IPagos['id'] | NewPagos['id']>;
-  montoPago: FormControl<IPagos['montoPago']>;
-  montoInicial: FormControl<IPagos['montoInicial']>;
-  saldo: FormControl<IPagos['saldo']>;
-  fechaRegistro: FormControl<IPagos['fechaRegistro']>;
-  fechaPago: FormControl<IPagos['fechaPago']>;
-  tipoPago: FormControl<IPagos['tipoPago']>;
-  descripcion: FormControl<IPagos['descripcion']>;
-  funcionarios: FormControl<IPagos['funcionarios']>;
+  fecha: FormControl<IPagos['fecha']>;
+  total: FormControl<IPagos['total']>;
+  cantidadHoras: FormControl<IPagos['cantidadHoras']>;
+  producto: FormControl<IPagos['producto']>;
+  funcionario: FormControl<IPagos['funcionario']>;
 };
 
 export type PagosFormGroup = FormGroup<PagosFormGroupContent>;
@@ -45,30 +42,19 @@ export class PagosFormService {
           validators: [Validators.required],
         }
       ),
-      montoPago: new FormControl(pagosRawValue.montoPago, {
+      fecha: new FormControl(pagosRawValue.fecha, {
         validators: [Validators.required],
       }),
-      montoInicial: new FormControl(pagosRawValue.montoInicial, {
+      total: new FormControl(pagosRawValue.total, {
         validators: [Validators.required],
       }),
-      saldo: new FormControl(pagosRawValue.saldo, {
+      cantidadHoras: new FormControl(pagosRawValue.cantidadHoras, {
         validators: [Validators.required],
       }),
-      fechaRegistro: new FormControl(pagosRawValue.fechaRegistro, {
+      producto: new FormControl(pagosRawValue.producto, {
         validators: [Validators.required],
       }),
-      fechaPago: new FormControl(pagosRawValue.fechaPago, {
-        validators: [Validators.required],
-      }),
-      tipoPago: new FormControl(pagosRawValue.tipoPago, {
-        validators: [Validators.required],
-      }),
-      descripcion: new FormControl(pagosRawValue.descripcion, {
-        validators: [Validators.required],
-      }),
-      funcionarios: new FormControl(pagosRawValue.funcionarios, {
-        validators: [Validators.required],
-      }),
+      funcionario: new FormControl(pagosRawValue.funcionario),
     });
   }
 

@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import py.com.abf.domain.enumeration.EstadosMateriales;
 
 /**
  * A Materiales.
@@ -31,22 +30,15 @@ public class Materiales implements Serializable {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "estado", nullable = false)
-    private EstadosMateriales estado;
+    @Column(name = "cantidad")
+    private Integer cantidad;
 
-    @NotNull
-    @Column(name = "cantidad_stock", nullable = false)
-    private Integer cantidadStock;
-
-    @NotNull
-    @Column(name = "cantidad_prestamo", nullable = false)
-    private Integer cantidadPrestamo;
+    @Column(name = "cantidad_en_prestamo")
+    private Integer cantidadEnPrestamo;
 
     @OneToMany(mappedBy = "materiales")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "materiales" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "materiales", "alumnos" }, allowSetters = true)
     private Set<Prestamos> prestamos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -77,43 +69,30 @@ public class Materiales implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public EstadosMateriales getEstado() {
-        return this.estado;
+    public Integer getCantidad() {
+        return this.cantidad;
     }
 
-    public Materiales estado(EstadosMateriales estado) {
-        this.setEstado(estado);
+    public Materiales cantidad(Integer cantidad) {
+        this.setCantidad(cantidad);
         return this;
     }
 
-    public void setEstado(EstadosMateriales estado) {
-        this.estado = estado;
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public Integer getCantidadStock() {
-        return this.cantidadStock;
+    public Integer getCantidadEnPrestamo() {
+        return this.cantidadEnPrestamo;
     }
 
-    public Materiales cantidadStock(Integer cantidadStock) {
-        this.setCantidadStock(cantidadStock);
+    public Materiales cantidadEnPrestamo(Integer cantidadEnPrestamo) {
+        this.setCantidadEnPrestamo(cantidadEnPrestamo);
         return this;
     }
 
-    public void setCantidadStock(Integer cantidadStock) {
-        this.cantidadStock = cantidadStock;
-    }
-
-    public Integer getCantidadPrestamo() {
-        return this.cantidadPrestamo;
-    }
-
-    public Materiales cantidadPrestamo(Integer cantidadPrestamo) {
-        this.setCantidadPrestamo(cantidadPrestamo);
-        return this;
-    }
-
-    public void setCantidadPrestamo(Integer cantidadPrestamo) {
-        this.cantidadPrestamo = cantidadPrestamo;
+    public void setCantidadEnPrestamo(Integer cantidadEnPrestamo) {
+        this.cantidadEnPrestamo = cantidadEnPrestamo;
     }
 
     public Set<Prestamos> getPrestamos() {
@@ -172,9 +151,8 @@ public class Materiales implements Serializable {
         return "Materiales{" +
             "id=" + getId() +
             ", descripcion='" + getDescripcion() + "'" +
-            ", estado='" + getEstado() + "'" +
-            ", cantidadStock=" + getCantidadStock() +
-            ", cantidadPrestamo=" + getCantidadPrestamo() +
+            ", cantidad=" + getCantidad() +
+            ", cantidadEnPrestamo=" + getCantidadEnPrestamo() +
             "}";
     }
 }

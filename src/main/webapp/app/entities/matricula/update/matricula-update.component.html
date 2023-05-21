@@ -2,7 +2,7 @@
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-matricula-heading" data-cy="MatriculaCreateUpdateHeading" jhiTranslate="abfApp.matricula.home.createOrEditLabel">
-        Crear o editar Matricula
+        Create or edit a Matricula
       </h2>
 
       <div>
@@ -11,6 +11,33 @@
         <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.matricula.concepto" for="field_concepto">Concepto</label>
+          <input type="text" class="form-control" name="concepto" id="field_concepto" data-cy="concepto" formControlName="concepto" />
+          <div *ngIf="editForm.get('concepto')!.invalid && (editForm.get('concepto')!.dirty || editForm.get('concepto')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('concepto')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.matricula.monto" for="field_monto">Monto</label>
+          <input type="number" class="form-control" name="monto" id="field_monto" data-cy="monto" formControlName="monto" />
+          <div *ngIf="editForm.get('monto')!.invalid && (editForm.get('monto')!.dirty || editForm.get('monto')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('monto')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('monto')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
         </div>
 
         <div class="row mb-3">
@@ -41,7 +68,7 @@
               *ngIf="editForm.get('fechaInscripcion')?.errors?.required"
               jhiTranslate="entity.validation.required"
             >
-              Este campo es obligatorio.
+              This field is required.
             </small>
           </div>
         </div>
@@ -69,7 +96,7 @@
               *ngIf="editForm.get('fechaInicio')?.errors?.required"
               jhiTranslate="entity.validation.required"
             >
-              Este campo es obligatorio.
+              This field is required.
             </small>
           </div>
         </div>
@@ -101,41 +128,37 @@
           </select>
           <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" jhiTranslate="entity.validation.required">
-              Este campo es obligatorio.
+              This field is required.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.matricula.alumnos" for="field_alumnos">Alumnos</label>
+          <label class="form-label" jhiTranslate="abfApp.matricula.alumno" for="field_alumno">Alumno</label>
           <select
             class="form-control"
-            id="field_alumnos"
-            data-cy="alumnos"
-            name="alumnos"
-            formControlName="alumnos"
+            id="field_alumno"
+            data-cy="alumno"
+            name="alumno"
+            formControlName="alumno"
             [compareWith]="compareAlumnos"
           >
-            <option *ngIf="editForm.get(['alumnos'])!.value == null" [ngValue]="null" selected></option>
+            <option *ngIf="editForm.get(['alumno'])!.value == null" [ngValue]="null" selected></option>
             <option [ngValue]="alumnosOption" *ngFor="let alumnosOption of alumnosSharedCollection">
               {{ alumnosOption.nombreCompleto }}
             </option>
           </select>
         </div>
-        <div *ngIf="editForm.get(['alumnos'])!.invalid && (editForm.get(['alumnos'])!.dirty || editForm.get(['alumnos'])!.touched)">
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['alumnos'])?.errors?.required"
-            jhiTranslate="entity.validation.required"
-          >
-            Este campo es obligatorio.
+        <div *ngIf="editForm.get(['alumno'])!.invalid && (editForm.get(['alumno'])!.dirty || editForm.get(['alumno'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['alumno'])?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
           </small>
         </div>
       </div>
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
         <button
@@ -145,7 +168,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
       </div>
     </form>

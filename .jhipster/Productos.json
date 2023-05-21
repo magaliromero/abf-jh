@@ -1,0 +1,50 @@
+{
+  "applications": ["abf"],
+  "changelogDate": "20230521155457",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "productos",
+  "fields": [
+    {
+      "fieldName": "tipoProducto",
+      "fieldType": "TipoProductos",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PRODUCTO (Producto),SERVICIO (Servicio)"
+    },
+    {
+      "fieldName": "precioUnitario",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "porcentajeIva",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Productos",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "pagos",
+      "otherEntityRelationshipName": "producto",
+      "relationshipName": "pagos",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "facturaDetalle",
+      "otherEntityRelationshipName": "producto",
+      "relationshipName": "facturaDetalle",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

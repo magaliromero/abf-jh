@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="abfApp.facturas.home.refreshListLabel">Refrescar lista</span>
+        <span jhiTranslate="abfApp.facturas.home.refreshListLabel">Refresh list</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/facturas/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="abfApp.facturas.home.createLabel"> Crear nuevo Facturas </span>
+        <span jhiTranslate="abfApp.facturas.home.createLabel"> Create a new Facturas </span>
       </button>
     </div>
   </h2>
@@ -27,7 +27,7 @@
   <jhi-filter [filters]="filters"></jhi-filter>
 
   <div class="alert alert-warning" id="no-result" *ngIf="facturas?.length === 0">
-    <span jhiTranslate="abfApp.facturas.home.notFound">Ningún Facturas encontrado</span>
+    <span jhiTranslate="abfApp.facturas.home.notFound">No Facturas found</span>
   </div>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="facturas && facturas.length > 0">
@@ -76,63 +76,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="cantidad">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.cantidad">Cantidad</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="descripcion">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.descripcion">Descripcion</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="precioUnitario">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.precioUnitario">Precio Unitario</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="valor5">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.valor5">Valor 5</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="valor10">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.valor10">Valor 10</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="total">
             <div class="d-flex">
               <span jhiTranslate="abfApp.facturas.total">Total</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="total5">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.total5">Total 5</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="total10">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.total10">Total 10</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="totalIva">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.totalIva">Total Iva</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="alumnos.nombreCompleto">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.facturas.alumnos">Alumnos</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -149,26 +95,13 @@
           <td>{{ facturas.timbrado }}</td>
           <td>{{ facturas.razonSocial }}</td>
           <td>{{ facturas.ruc }}</td>
-          <td jhiTranslate="{{ 'abfApp.CondVenta.' + facturas.condicionVenta }}">{{ facturas.condicionVenta }}</td>
-          <td>{{ facturas.cantidad }}</td>
-          <td>{{ facturas.descripcion }}</td>
-          <td>{{ facturas.precioUnitario }}</td>
-          <td>{{ facturas.valor5 }}</td>
-          <td>{{ facturas.valor10 }}</td>
+          <td jhiTranslate="{{ 'abfApp.CondicionVenta.' + facturas.condicionVenta }}">{{ facturas.condicionVenta }}</td>
           <td>{{ facturas.total }}</td>
-          <td>{{ facturas.total5 }}</td>
-          <td>{{ facturas.total10 }}</td>
-          <td>{{ facturas.totalIva }}</td>
-          <td>
-            <div *ngIf="facturas.alumnos">
-              <a [routerLink]="['/alumnos', facturas.alumnos.id, 'view']">{{ facturas.alumnos.nombreCompleto }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button
                 type="submit"
-                [routerLink]="['/cobros']"
+                [routerLink]="['/factura-detalle']"
                 [queryParams]="{ 'filter[facturaId.in]': facturas.id }"
                 class="btn btn-info btn-sm"
                 data-cy="filterOtherEntityButton"
@@ -177,8 +110,8 @@
                 <span
                   class="d-none d-md-inline"
                   jhiTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('abfApp.facturas.cobros' | translate) }"
-                  >Show Cobros</span
+                  [translateValues]="{ otherEntity: ('abfApp.facturas.facturaDetalle' | translate) }"
+                  >Show Factura Detalle</span
                 >
               </button>
               <button
@@ -188,7 +121,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
               <button
@@ -198,12 +131,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(facturas)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

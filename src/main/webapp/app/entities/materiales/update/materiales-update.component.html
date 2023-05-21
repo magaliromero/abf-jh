@@ -2,7 +2,7 @@
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-materiales-heading" data-cy="MaterialesCreateUpdateHeading" jhiTranslate="abfApp.materiales.home.createOrEditLabel">
-        Crear o editar Materiales
+        Create or edit a Materiales
       </h2>
 
       <div>
@@ -29,95 +29,34 @@
               *ngIf="editForm.get('descripcion')?.errors?.required"
               jhiTranslate="entity.validation.required"
             >
-              Este campo es obligatorio.
+              This field is required.
             </small>
           </div>
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.materiales.estado" for="field_estado">Estado</label>
-          <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
-            <option [ngValue]="null">{{ 'abfApp.EstadosMateriales.null' | translate }}</option>
-            <option *ngFor="let estadosMateriales of estadosMaterialesValues" [value]="estadosMateriales">
-              {{ 'abfApp.EstadosMateriales.' + estadosMateriales | translate }}
-            </option>
-          </select>
-          <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" jhiTranslate="entity.validation.required">
-              Este campo es obligatorio.
-            </small>
-          </div>
+          <label class="form-label" jhiTranslate="abfApp.materiales.cantidad" for="field_cantidad">Cantidad</label>
+          <input type="number" class="form-control" name="cantidad" id="field_cantidad" data-cy="cantidad" formControlName="cantidad" />
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.materiales.cantidadStock" for="field_cantidadStock">Cantidad Stock</label>
+          <label class="form-label" jhiTranslate="abfApp.materiales.cantidadEnPrestamo" for="field_cantidadEnPrestamo"
+            >Cantidad En Prestamo</label
+          >
           <input
             type="number"
             class="form-control"
-            name="cantidadStock"
-            id="field_cantidadStock"
-            data-cy="cantidadStock"
-            formControlName="cantidadStock"
+            name="cantidadEnPrestamo"
+            id="field_cantidadEnPrestamo"
+            data-cy="cantidadEnPrestamo"
+            formControlName="cantidadEnPrestamo"
           />
-          <div
-            *ngIf="
-              editForm.get('cantidadStock')!.invalid && (editForm.get('cantidadStock')!.dirty || editForm.get('cantidadStock')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('cantidadStock')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              Este campo es obligatorio.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('cantidadStock')?.errors?.number"
-              jhiTranslate="entity.validation.number"
-            >
-              Este campo debe ser un número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.materiales.cantidadPrestamo" for="field_cantidadPrestamo">Cantidad Prestamo</label>
-          <input
-            type="number"
-            class="form-control"
-            name="cantidadPrestamo"
-            id="field_cantidadPrestamo"
-            data-cy="cantidadPrestamo"
-            formControlName="cantidadPrestamo"
-          />
-          <div
-            *ngIf="
-              editForm.get('cantidadPrestamo')!.invalid &&
-              (editForm.get('cantidadPrestamo')!.dirty || editForm.get('cantidadPrestamo')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('cantidadPrestamo')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              Este campo es obligatorio.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('cantidadPrestamo')?.errors?.number"
-              jhiTranslate="entity.validation.number"
-            >
-              Este campo debe ser un número.
-            </small>
-          </div>
         </div>
       </div>
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
         <button
@@ -127,7 +66,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
       </div>
     </form>

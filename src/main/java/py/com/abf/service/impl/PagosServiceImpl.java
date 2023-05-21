@@ -45,26 +45,14 @@ public class PagosServiceImpl implements PagosService {
         return pagosRepository
             .findById(pagos.getId())
             .map(existingPagos -> {
-                if (pagos.getMontoPago() != null) {
-                    existingPagos.setMontoPago(pagos.getMontoPago());
+                if (pagos.getFecha() != null) {
+                    existingPagos.setFecha(pagos.getFecha());
                 }
-                if (pagos.getMontoInicial() != null) {
-                    existingPagos.setMontoInicial(pagos.getMontoInicial());
+                if (pagos.getTotal() != null) {
+                    existingPagos.setTotal(pagos.getTotal());
                 }
-                if (pagos.getSaldo() != null) {
-                    existingPagos.setSaldo(pagos.getSaldo());
-                }
-                if (pagos.getFechaRegistro() != null) {
-                    existingPagos.setFechaRegistro(pagos.getFechaRegistro());
-                }
-                if (pagos.getFechaPago() != null) {
-                    existingPagos.setFechaPago(pagos.getFechaPago());
-                }
-                if (pagos.getTipoPago() != null) {
-                    existingPagos.setTipoPago(pagos.getTipoPago());
-                }
-                if (pagos.getDescripcion() != null) {
-                    existingPagos.setDescripcion(pagos.getDescripcion());
+                if (pagos.getCantidadHoras() != null) {
+                    existingPagos.setCantidadHoras(pagos.getCantidadHoras());
                 }
 
                 return existingPagos;

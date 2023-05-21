@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="abfApp.pagos.home.refreshListLabel">Refrescar lista</span>
+        <span jhiTranslate="abfApp.pagos.home.refreshListLabel">Refresh list</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/pagos/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="abfApp.pagos.home.createLabel"> Crear nuevo Pagos </span>
+        <span jhiTranslate="abfApp.pagos.home.createLabel"> Create a new Pagos </span>
       </button>
     </div>
   </h2>
@@ -27,7 +27,7 @@
   <jhi-filter [filters]="filters"></jhi-filter>
 
   <div class="alert alert-warning" id="no-result" *ngIf="pagos?.length === 0">
-    <span jhiTranslate="abfApp.pagos.home.notFound">Ningún Pagos encontrado</span>
+    <span jhiTranslate="abfApp.pagos.home.notFound">No Pagos found</span>
   </div>
 
   <div class="table-responsive table-entities" id="entities" *ngIf="pagos && pagos.length > 0">
@@ -40,51 +40,33 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="montoPago">
+          <th scope="col" jhiSortBy="fecha">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.montoPago">Monto Pago</span>
+              <span jhiTranslate="abfApp.pagos.fecha">Fecha</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="montoInicial">
+          <th scope="col" jhiSortBy="total">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.montoInicial">Monto Inicial</span>
+              <span jhiTranslate="abfApp.pagos.total">Total</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="saldo">
+          <th scope="col" jhiSortBy="cantidadHoras">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.saldo">Saldo</span>
+              <span jhiTranslate="abfApp.pagos.cantidadHoras">Cantidad Horas</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="fechaRegistro">
+          <th scope="col" jhiSortBy="producto.descripcion">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.fechaRegistro">Fecha Registro</span>
+              <span jhiTranslate="abfApp.pagos.producto">Producto</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="fechaPago">
+          <th scope="col" jhiSortBy="funcionario.nombreCompleto">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.fechaPago">Fecha Pago</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="tipoPago">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.tipoPago">Tipo Pago</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="descripcion">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.descripcion">Descripcion</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="funcionarios.nombreCompleto">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.funcionarios">Funcionarios</span>
+              <span jhiTranslate="abfApp.pagos.funcionario">Funcionario</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -96,33 +78,34 @@
           <td>
             <a [routerLink]="['/pagos', pagos.id, 'view']">{{ pagos.id }}</a>
           </td>
-          <td>{{ pagos.montoPago }}</td>
-          <td>{{ pagos.montoInicial }}</td>
-          <td>{{ pagos.saldo }}</td>
-          <td>{{ pagos.fechaRegistro | formatMediumDate }}</td>
-          <td>{{ pagos.fechaPago | formatMediumDate }}</td>
-          <td jhiTranslate="{{ 'abfApp.TiposPagos.' + pagos.tipoPago }}">{{ pagos.tipoPago }}</td>
-          <td>{{ pagos.descripcion }}</td>
+          <td>{{ pagos.fecha | formatMediumDate }}</td>
+          <td>{{ pagos.total }}</td>
+          <td>{{ pagos.cantidadHoras }}</td>
           <td>
-            <div *ngIf="pagos.funcionarios">
-              <a [routerLink]="['/funcionarios', pagos.funcionarios.id, 'view']">{{ pagos.funcionarios.nombreCompleto }}</a>
+            <div *ngIf="pagos.producto">
+              <a [routerLink]="['/productos', pagos.producto.id, 'view']">{{ pagos.producto.descripcion }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="pagos.funcionario">
+              <a [routerLink]="['/funcionarios', pagos.funcionario.id, 'view']">{{ pagos.funcionario.nombreCompleto }}</a>
             </div>
           </td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/pagos', pagos.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vista</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
               </button>
 
               <button type="submit" [routerLink]="['/pagos', pagos.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
               </button>
 
               <button type="submit" (click)="delete(pagos)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Eliminar</span>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
               </button>
             </div>
           </td>

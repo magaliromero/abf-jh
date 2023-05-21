@@ -20,14 +20,11 @@ describe('Pagos Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            montoPago: expect.any(Object),
-            montoInicial: expect.any(Object),
-            saldo: expect.any(Object),
-            fechaRegistro: expect.any(Object),
-            fechaPago: expect.any(Object),
-            tipoPago: expect.any(Object),
-            descripcion: expect.any(Object),
-            funcionarios: expect.any(Object),
+            fecha: expect.any(Object),
+            total: expect.any(Object),
+            cantidadHoras: expect.any(Object),
+            producto: expect.any(Object),
+            funcionario: expect.any(Object),
           })
         );
       });
@@ -38,14 +35,11 @@ describe('Pagos Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            montoPago: expect.any(Object),
-            montoInicial: expect.any(Object),
-            saldo: expect.any(Object),
-            fechaRegistro: expect.any(Object),
-            fechaPago: expect.any(Object),
-            tipoPago: expect.any(Object),
-            descripcion: expect.any(Object),
-            funcionarios: expect.any(Object),
+            fecha: expect.any(Object),
+            total: expect.any(Object),
+            cantidadHoras: expect.any(Object),
+            producto: expect.any(Object),
+            funcionario: expect.any(Object),
           })
         );
       });

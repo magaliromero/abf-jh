@@ -3,7 +3,7 @@ package py.com.abf.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
-import py.com.abf.domain.enumeration.CondVenta;
+import py.com.abf.domain.enumeration.CondicionVenta;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -21,19 +21,19 @@ import tech.jhipster.service.filter.*;
 public class FacturasCriteria implements Serializable, Criteria {
 
     /**
-     * Class for filtering CondVenta
+     * Class for filtering CondicionVenta
      */
-    public static class CondVentaFilter extends Filter<CondVenta> {
+    public static class CondicionVentaFilter extends Filter<CondicionVenta> {
 
-        public CondVentaFilter() {}
+        public CondicionVentaFilter() {}
 
-        public CondVentaFilter(CondVentaFilter filter) {
+        public CondicionVentaFilter(CondicionVentaFilter filter) {
             super(filter);
         }
 
         @Override
-        public CondVentaFilter copy() {
-            return new CondVentaFilter(this);
+        public CondicionVentaFilter copy() {
+            return new CondicionVentaFilter(this);
         }
     }
 
@@ -49,31 +49,13 @@ public class FacturasCriteria implements Serializable, Criteria {
 
     private StringFilter razonSocial;
 
-    private IntegerFilter ruc;
+    private StringFilter ruc;
 
-    private CondVentaFilter condicionVenta;
-
-    private IntegerFilter cantidad;
-
-    private StringFilter descripcion;
-
-    private IntegerFilter precioUnitario;
-
-    private IntegerFilter valor5;
-
-    private IntegerFilter valor10;
+    private CondicionVentaFilter condicionVenta;
 
     private IntegerFilter total;
 
-    private IntegerFilter total5;
-
-    private IntegerFilter total10;
-
-    private IntegerFilter totalIva;
-
-    private LongFilter cobrosId;
-
-    private LongFilter alumnosId;
+    private LongFilter facturaDetalleId;
 
     private Boolean distinct;
 
@@ -87,17 +69,8 @@ public class FacturasCriteria implements Serializable, Criteria {
         this.razonSocial = other.razonSocial == null ? null : other.razonSocial.copy();
         this.ruc = other.ruc == null ? null : other.ruc.copy();
         this.condicionVenta = other.condicionVenta == null ? null : other.condicionVenta.copy();
-        this.cantidad = other.cantidad == null ? null : other.cantidad.copy();
-        this.descripcion = other.descripcion == null ? null : other.descripcion.copy();
-        this.precioUnitario = other.precioUnitario == null ? null : other.precioUnitario.copy();
-        this.valor5 = other.valor5 == null ? null : other.valor5.copy();
-        this.valor10 = other.valor10 == null ? null : other.valor10.copy();
         this.total = other.total == null ? null : other.total.copy();
-        this.total5 = other.total5 == null ? null : other.total5.copy();
-        this.total10 = other.total10 == null ? null : other.total10.copy();
-        this.totalIva = other.totalIva == null ? null : other.totalIva.copy();
-        this.cobrosId = other.cobrosId == null ? null : other.cobrosId.copy();
-        this.alumnosId = other.alumnosId == null ? null : other.alumnosId.copy();
+        this.facturaDetalleId = other.facturaDetalleId == null ? null : other.facturaDetalleId.copy();
         this.distinct = other.distinct;
     }
 
@@ -181,109 +154,34 @@ public class FacturasCriteria implements Serializable, Criteria {
         this.razonSocial = razonSocial;
     }
 
-    public IntegerFilter getRuc() {
+    public StringFilter getRuc() {
         return ruc;
     }
 
-    public IntegerFilter ruc() {
+    public StringFilter ruc() {
         if (ruc == null) {
-            ruc = new IntegerFilter();
+            ruc = new StringFilter();
         }
         return ruc;
     }
 
-    public void setRuc(IntegerFilter ruc) {
+    public void setRuc(StringFilter ruc) {
         this.ruc = ruc;
     }
 
-    public CondVentaFilter getCondicionVenta() {
+    public CondicionVentaFilter getCondicionVenta() {
         return condicionVenta;
     }
 
-    public CondVentaFilter condicionVenta() {
+    public CondicionVentaFilter condicionVenta() {
         if (condicionVenta == null) {
-            condicionVenta = new CondVentaFilter();
+            condicionVenta = new CondicionVentaFilter();
         }
         return condicionVenta;
     }
 
-    public void setCondicionVenta(CondVentaFilter condicionVenta) {
+    public void setCondicionVenta(CondicionVentaFilter condicionVenta) {
         this.condicionVenta = condicionVenta;
-    }
-
-    public IntegerFilter getCantidad() {
-        return cantidad;
-    }
-
-    public IntegerFilter cantidad() {
-        if (cantidad == null) {
-            cantidad = new IntegerFilter();
-        }
-        return cantidad;
-    }
-
-    public void setCantidad(IntegerFilter cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public StringFilter getDescripcion() {
-        return descripcion;
-    }
-
-    public StringFilter descripcion() {
-        if (descripcion == null) {
-            descripcion = new StringFilter();
-        }
-        return descripcion;
-    }
-
-    public void setDescripcion(StringFilter descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public IntegerFilter getPrecioUnitario() {
-        return precioUnitario;
-    }
-
-    public IntegerFilter precioUnitario() {
-        if (precioUnitario == null) {
-            precioUnitario = new IntegerFilter();
-        }
-        return precioUnitario;
-    }
-
-    public void setPrecioUnitario(IntegerFilter precioUnitario) {
-        this.precioUnitario = precioUnitario;
-    }
-
-    public IntegerFilter getValor5() {
-        return valor5;
-    }
-
-    public IntegerFilter valor5() {
-        if (valor5 == null) {
-            valor5 = new IntegerFilter();
-        }
-        return valor5;
-    }
-
-    public void setValor5(IntegerFilter valor5) {
-        this.valor5 = valor5;
-    }
-
-    public IntegerFilter getValor10() {
-        return valor10;
-    }
-
-    public IntegerFilter valor10() {
-        if (valor10 == null) {
-            valor10 = new IntegerFilter();
-        }
-        return valor10;
-    }
-
-    public void setValor10(IntegerFilter valor10) {
-        this.valor10 = valor10;
     }
 
     public IntegerFilter getTotal() {
@@ -301,79 +199,19 @@ public class FacturasCriteria implements Serializable, Criteria {
         this.total = total;
     }
 
-    public IntegerFilter getTotal5() {
-        return total5;
+    public LongFilter getFacturaDetalleId() {
+        return facturaDetalleId;
     }
 
-    public IntegerFilter total5() {
-        if (total5 == null) {
-            total5 = new IntegerFilter();
+    public LongFilter facturaDetalleId() {
+        if (facturaDetalleId == null) {
+            facturaDetalleId = new LongFilter();
         }
-        return total5;
+        return facturaDetalleId;
     }
 
-    public void setTotal5(IntegerFilter total5) {
-        this.total5 = total5;
-    }
-
-    public IntegerFilter getTotal10() {
-        return total10;
-    }
-
-    public IntegerFilter total10() {
-        if (total10 == null) {
-            total10 = new IntegerFilter();
-        }
-        return total10;
-    }
-
-    public void setTotal10(IntegerFilter total10) {
-        this.total10 = total10;
-    }
-
-    public IntegerFilter getTotalIva() {
-        return totalIva;
-    }
-
-    public IntegerFilter totalIva() {
-        if (totalIva == null) {
-            totalIva = new IntegerFilter();
-        }
-        return totalIva;
-    }
-
-    public void setTotalIva(IntegerFilter totalIva) {
-        this.totalIva = totalIva;
-    }
-
-    public LongFilter getCobrosId() {
-        return cobrosId;
-    }
-
-    public LongFilter cobrosId() {
-        if (cobrosId == null) {
-            cobrosId = new LongFilter();
-        }
-        return cobrosId;
-    }
-
-    public void setCobrosId(LongFilter cobrosId) {
-        this.cobrosId = cobrosId;
-    }
-
-    public LongFilter getAlumnosId() {
-        return alumnosId;
-    }
-
-    public LongFilter alumnosId() {
-        if (alumnosId == null) {
-            alumnosId = new LongFilter();
-        }
-        return alumnosId;
-    }
-
-    public void setAlumnosId(LongFilter alumnosId) {
-        this.alumnosId = alumnosId;
+    public void setFacturaDetalleId(LongFilter facturaDetalleId) {
+        this.facturaDetalleId = facturaDetalleId;
     }
 
     public Boolean getDistinct() {
@@ -401,44 +239,15 @@ public class FacturasCriteria implements Serializable, Criteria {
             Objects.equals(razonSocial, that.razonSocial) &&
             Objects.equals(ruc, that.ruc) &&
             Objects.equals(condicionVenta, that.condicionVenta) &&
-            Objects.equals(cantidad, that.cantidad) &&
-            Objects.equals(descripcion, that.descripcion) &&
-            Objects.equals(precioUnitario, that.precioUnitario) &&
-            Objects.equals(valor5, that.valor5) &&
-            Objects.equals(valor10, that.valor10) &&
             Objects.equals(total, that.total) &&
-            Objects.equals(total5, that.total5) &&
-            Objects.equals(total10, that.total10) &&
-            Objects.equals(totalIva, that.totalIva) &&
-            Objects.equals(cobrosId, that.cobrosId) &&
-            Objects.equals(alumnosId, that.alumnosId) &&
+            Objects.equals(facturaDetalleId, that.facturaDetalleId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            fecha,
-            facturaNro,
-            timbrado,
-            razonSocial,
-            ruc,
-            condicionVenta,
-            cantidad,
-            descripcion,
-            precioUnitario,
-            valor5,
-            valor10,
-            total,
-            total5,
-            total10,
-            totalIva,
-            cobrosId,
-            alumnosId,
-            distinct
-        );
+        return Objects.hash(id, fecha, facturaNro, timbrado, razonSocial, ruc, condicionVenta, total, facturaDetalleId, distinct);
     }
 
     // prettier-ignore
@@ -452,17 +261,8 @@ public class FacturasCriteria implements Serializable, Criteria {
             (razonSocial != null ? "razonSocial=" + razonSocial + ", " : "") +
             (ruc != null ? "ruc=" + ruc + ", " : "") +
             (condicionVenta != null ? "condicionVenta=" + condicionVenta + ", " : "") +
-            (cantidad != null ? "cantidad=" + cantidad + ", " : "") +
-            (descripcion != null ? "descripcion=" + descripcion + ", " : "") +
-            (precioUnitario != null ? "precioUnitario=" + precioUnitario + ", " : "") +
-            (valor5 != null ? "valor5=" + valor5 + ", " : "") +
-            (valor10 != null ? "valor10=" + valor10 + ", " : "") +
             (total != null ? "total=" + total + ", " : "") +
-            (total5 != null ? "total5=" + total5 + ", " : "") +
-            (total10 != null ? "total10=" + total10 + ", " : "") +
-            (totalIva != null ? "totalIva=" + totalIva + ", " : "") +
-            (cobrosId != null ? "cobrosId=" + cobrosId + ", " : "") +
-            (alumnosId != null ? "alumnosId=" + alumnosId + ", " : "") +
+            (facturaDetalleId != null ? "facturaDetalleId=" + facturaDetalleId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

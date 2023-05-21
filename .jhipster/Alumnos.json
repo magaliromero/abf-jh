@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230227212046",
+  "applications": ["abf"],
+  "changelogDate": "20230521155057",
   "dto": "no",
   "embedded": false,
   "entityTableName": "alumnos",
@@ -62,44 +62,14 @@
   "relationships": [
     {
       "otherEntityName": "matricula",
-      "otherEntityRelationshipName": "alumnos",
+      "otherEntityRelationshipName": "alumno",
       "relationshipName": "matricula",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "registroClases",
+      "otherEntityName": "prestamos",
       "otherEntityRelationshipName": "alumnos",
-      "relationshipName": "registroClases",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "cobros",
-      "otherEntityRelationshipName": "alumnos",
-      "relationshipName": "cobros",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "evaluaciones",
-      "otherEntityRelationshipName": "alumnos",
-      "relationshipName": "evaluaciones",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "inscripciones",
-      "otherEntityRelationshipName": "alumnos",
-      "relationshipName": "inscripciones",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "fichaPartidasTorneos",
-      "otherEntityRelationshipName": "alumnos",
-      "relationshipName": "fichaPartidasTorneos",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "facturas",
-      "otherEntityRelationshipName": "alumnos",
-      "relationshipName": "facturas",
+      "relationshipName": "prestamos",
       "relationshipType": "one-to-many"
     },
     {

@@ -29,13 +29,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Alumnos;
-import py.com.abf.domain.Cobros;
-import py.com.abf.domain.Evaluaciones;
-import py.com.abf.domain.Facturas;
-import py.com.abf.domain.FichaPartidasTorneos;
-import py.com.abf.domain.Inscripciones;
 import py.com.abf.domain.Matricula;
-import py.com.abf.domain.RegistroClases;
+import py.com.abf.domain.Prestamos;
 import py.com.abf.domain.TiposDocumentos;
 import py.com.abf.domain.enumeration.EstadosPersona;
 import py.com.abf.repository.AlumnosRepository;
@@ -1146,140 +1141,25 @@ class AlumnosResourceIT {
 
     @Test
     @Transactional
-    void getAllAlumnosByRegistroClasesIsEqualToSomething() throws Exception {
-        RegistroClases registroClases;
-        if (TestUtil.findAll(em, RegistroClases.class).isEmpty()) {
+    void getAllAlumnosByPrestamosIsEqualToSomething() throws Exception {
+        Prestamos prestamos;
+        if (TestUtil.findAll(em, Prestamos.class).isEmpty()) {
             alumnosRepository.saveAndFlush(alumnos);
-            registroClases = RegistroClasesResourceIT.createEntity(em);
+            prestamos = PrestamosResourceIT.createEntity(em);
         } else {
-            registroClases = TestUtil.findAll(em, RegistroClases.class).get(0);
+            prestamos = TestUtil.findAll(em, Prestamos.class).get(0);
         }
-        em.persist(registroClases);
+        em.persist(prestamos);
         em.flush();
-        alumnos.addRegistroClases(registroClases);
+        alumnos.addPrestamos(prestamos);
         alumnosRepository.saveAndFlush(alumnos);
-        Long registroClasesId = registroClases.getId();
+        Long prestamosId = prestamos.getId();
 
-        // Get all the alumnosList where registroClases equals to registroClasesId
-        defaultAlumnosShouldBeFound("registroClasesId.equals=" + registroClasesId);
+        // Get all the alumnosList where prestamos equals to prestamosId
+        defaultAlumnosShouldBeFound("prestamosId.equals=" + prestamosId);
 
-        // Get all the alumnosList where registroClases equals to (registroClasesId + 1)
-        defaultAlumnosShouldNotBeFound("registroClasesId.equals=" + (registroClasesId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllAlumnosByCobrosIsEqualToSomething() throws Exception {
-        Cobros cobros;
-        if (TestUtil.findAll(em, Cobros.class).isEmpty()) {
-            alumnosRepository.saveAndFlush(alumnos);
-            cobros = CobrosResourceIT.createEntity(em);
-        } else {
-            cobros = TestUtil.findAll(em, Cobros.class).get(0);
-        }
-        em.persist(cobros);
-        em.flush();
-        alumnos.addCobros(cobros);
-        alumnosRepository.saveAndFlush(alumnos);
-        Long cobrosId = cobros.getId();
-
-        // Get all the alumnosList where cobros equals to cobrosId
-        defaultAlumnosShouldBeFound("cobrosId.equals=" + cobrosId);
-
-        // Get all the alumnosList where cobros equals to (cobrosId + 1)
-        defaultAlumnosShouldNotBeFound("cobrosId.equals=" + (cobrosId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllAlumnosByEvaluacionesIsEqualToSomething() throws Exception {
-        Evaluaciones evaluaciones;
-        if (TestUtil.findAll(em, Evaluaciones.class).isEmpty()) {
-            alumnosRepository.saveAndFlush(alumnos);
-            evaluaciones = EvaluacionesResourceIT.createEntity(em);
-        } else {
-            evaluaciones = TestUtil.findAll(em, Evaluaciones.class).get(0);
-        }
-        em.persist(evaluaciones);
-        em.flush();
-        alumnos.addEvaluaciones(evaluaciones);
-        alumnosRepository.saveAndFlush(alumnos);
-        Long evaluacionesId = evaluaciones.getId();
-
-        // Get all the alumnosList where evaluaciones equals to evaluacionesId
-        defaultAlumnosShouldBeFound("evaluacionesId.equals=" + evaluacionesId);
-
-        // Get all the alumnosList where evaluaciones equals to (evaluacionesId + 1)
-        defaultAlumnosShouldNotBeFound("evaluacionesId.equals=" + (evaluacionesId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllAlumnosByInscripcionesIsEqualToSomething() throws Exception {
-        Inscripciones inscripciones;
-        if (TestUtil.findAll(em, Inscripciones.class).isEmpty()) {
-            alumnosRepository.saveAndFlush(alumnos);
-            inscripciones = InscripcionesResourceIT.createEntity(em);
-        } else {
-            inscripciones = TestUtil.findAll(em, Inscripciones.class).get(0);
-        }
-        em.persist(inscripciones);
-        em.flush();
-        alumnos.addInscripciones(inscripciones);
-        alumnosRepository.saveAndFlush(alumnos);
-        Long inscripcionesId = inscripciones.getId();
-
-        // Get all the alumnosList where inscripciones equals to inscripcionesId
-        defaultAlumnosShouldBeFound("inscripcionesId.equals=" + inscripcionesId);
-
-        // Get all the alumnosList where inscripciones equals to (inscripcionesId + 1)
-        defaultAlumnosShouldNotBeFound("inscripcionesId.equals=" + (inscripcionesId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllAlumnosByFichaPartidasTorneosIsEqualToSomething() throws Exception {
-        FichaPartidasTorneos fichaPartidasTorneos;
-        if (TestUtil.findAll(em, FichaPartidasTorneos.class).isEmpty()) {
-            alumnosRepository.saveAndFlush(alumnos);
-            fichaPartidasTorneos = FichaPartidasTorneosResourceIT.createEntity(em);
-        } else {
-            fichaPartidasTorneos = TestUtil.findAll(em, FichaPartidasTorneos.class).get(0);
-        }
-        em.persist(fichaPartidasTorneos);
-        em.flush();
-        alumnos.addFichaPartidasTorneos(fichaPartidasTorneos);
-        alumnosRepository.saveAndFlush(alumnos);
-        Long fichaPartidasTorneosId = fichaPartidasTorneos.getId();
-
-        // Get all the alumnosList where fichaPartidasTorneos equals to fichaPartidasTorneosId
-        defaultAlumnosShouldBeFound("fichaPartidasTorneosId.equals=" + fichaPartidasTorneosId);
-
-        // Get all the alumnosList where fichaPartidasTorneos equals to (fichaPartidasTorneosId + 1)
-        defaultAlumnosShouldNotBeFound("fichaPartidasTorneosId.equals=" + (fichaPartidasTorneosId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllAlumnosByFacturasIsEqualToSomething() throws Exception {
-        Facturas facturas;
-        if (TestUtil.findAll(em, Facturas.class).isEmpty()) {
-            alumnosRepository.saveAndFlush(alumnos);
-            facturas = FacturasResourceIT.createEntity(em);
-        } else {
-            facturas = TestUtil.findAll(em, Facturas.class).get(0);
-        }
-        em.persist(facturas);
-        em.flush();
-        alumnos.addFacturas(facturas);
-        alumnosRepository.saveAndFlush(alumnos);
-        Long facturasId = facturas.getId();
-
-        // Get all the alumnosList where facturas equals to facturasId
-        defaultAlumnosShouldBeFound("facturasId.equals=" + facturasId);
-
-        // Get all the alumnosList where facturas equals to (facturasId + 1)
-        defaultAlumnosShouldNotBeFound("facturasId.equals=" + (facturasId + 1));
+        // Get all the alumnosList where prestamos equals to (prestamosId + 1)
+        defaultAlumnosShouldNotBeFound("prestamosId.equals=" + (prestamosId + 1));
     }
 
     @Test

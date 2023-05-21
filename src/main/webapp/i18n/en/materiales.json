@@ -19,9 +19,8 @@
       },
       "id": "ID",
       "descripcion": "Descripcion",
-      "estado": "Estado",
-      "cantidadStock": "Cantidad Stock",
-      "cantidadPrestamo": "Cantidad Prestamo",
+      "cantidad": "Cantidad",
+      "cantidadEnPrestamo": "Cantidad En Prestamo",
       "prestamos": "Prestamos"
     }
   }

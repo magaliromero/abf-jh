@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import py.com.abf.domain.enumeration.Niveles;
 
 /**
  * A Temas.
@@ -34,15 +35,15 @@ public class Temas implements Serializable {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @OneToMany(mappedBy = "temas")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "cursos", "temas", "funcionarios", "alumnos" }, allowSetters = true)
-    private Set<RegistroClases> registroClases = new HashSet<>();
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nivel", nullable = false)
+    private Niveles nivel;
 
-    @ManyToMany(mappedBy = "temas")
+    @OneToMany(mappedBy = "tema")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "temas" }, allowSetters = true)
-    private Set<MallaCurricular> mallaCurriculars = new HashSet<>();
+    @JsonIgnoreProperties(value = { "tema", "funcionario" }, allowSetters = true)
+    private Set<RegistroClases> registroClases = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -85,16 +86,29 @@ public class Temas implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Niveles getNivel() {
+        return this.nivel;
+    }
+
+    public Temas nivel(Niveles nivel) {
+        this.setNivel(nivel);
+        return this;
+    }
+
+    public void setNivel(Niveles nivel) {
+        this.nivel = nivel;
+    }
+
     public Set<RegistroClases> getRegistroClases() {
         return this.registroClases;
     }
 
     public void setRegistroClases(Set<RegistroClases> registroClases) {
         if (this.registroClases != null) {
-            this.registroClases.forEach(i -> i.setTemas(null));
+            this.registroClases.forEach(i -> i.setTema(null));
         }
         if (registroClases != null) {
-            registroClases.forEach(i -> i.setTemas(this));
+            registroClases.forEach(i -> i.setTema(this));
         }
         this.registroClases = registroClases;
     }
@@ -106,44 +120,13 @@ public class Temas implements Serializable {
 
     public Temas addRegistroClases(RegistroClases registroClases) {
         this.registroClases.add(registroClases);
-        registroClases.setTemas(this);
+        registroClases.setTema(this);
         return this;
     }
 
     public Temas removeRegistroClases(RegistroClases registroClases) {
         this.registroClases.remove(registroClases);
-        registroClases.setTemas(null);
-        return this;
-    }
-
-    public Set<MallaCurricular> getMallaCurriculars() {
-        return this.mallaCurriculars;
-    }
-
-    public void setMallaCurriculars(Set<MallaCurricular> mallaCurriculars) {
-        if (this.mallaCurriculars != null) {
-            this.mallaCurriculars.forEach(i -> i.removeTemas(this));
-        }
-        if (mallaCurriculars != null) {
-            mallaCurriculars.forEach(i -> i.addTemas(this));
-        }
-        this.mallaCurriculars = mallaCurriculars;
-    }
-
-    public Temas mallaCurriculars(Set<MallaCurricular> mallaCurriculars) {
-        this.setMallaCurriculars(mallaCurriculars);
-        return this;
-    }
-
-    public Temas addMallaCurricular(MallaCurricular mallaCurricular) {
-        this.mallaCurriculars.add(mallaCurricular);
-        mallaCurricular.getTemas().add(this);
-        return this;
-    }
-
-    public Temas removeMallaCurricular(MallaCurricular mallaCurricular) {
-        this.mallaCurriculars.remove(mallaCurricular);
-        mallaCurricular.getTemas().remove(this);
+        registroClases.setTema(null);
         return this;
     }
 
@@ -173,6 +156,7 @@ public class Temas implements Serializable {
             "id=" + getId() +
             ", titulo='" + getTitulo() + "'" +
             ", descripcion='" + getDescripcion() + "'" +
+            ", nivel='" + getNivel() + "'" +
             "}";
     }
 }

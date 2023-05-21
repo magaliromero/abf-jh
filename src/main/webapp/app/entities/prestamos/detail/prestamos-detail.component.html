@@ -18,13 +18,13 @@
         <dd>
           <span>{{ prestamos.fechaPrestamo | formatMediumDate }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.prestamos.vigenciaPrestamo">Vigencia Prestamo</span></dt>
-        <dd>
-          <span>{{ prestamos.vigenciaPrestamo }}</span>
-        </dd>
         <dt><span jhiTranslate="abfApp.prestamos.fechaDevolucion">Fecha Devolucion</span></dt>
         <dd>
           <span>{{ prestamos.fechaDevolucion | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.prestamos.estado">Estado</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'abfApp.EstadosPrestamos.' + prestamos.estado }}">{{ prestamos.estado }}</span>
         </dd>
         <dt><span jhiTranslate="abfApp.prestamos.materiales">Materiales</span></dt>
         <dd>
@@ -32,14 +32,20 @@
             <a [routerLink]="['/materiales', prestamos.materiales.id, 'view']">{{ prestamos.materiales.descripcion }}</a>
           </div>
         </dd>
+        <dt><span jhiTranslate="abfApp.prestamos.alumnos">Alumnos</span></dt>
+        <dd>
+          <div *ngIf="prestamos.alumnos">
+            <a [routerLink]="['/alumnos', prestamos.alumnos.id, 'view']">{{ prestamos.alumnos.nombreCompleto }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
       <button type="button" [routerLink]="['/prestamos', prestamos.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
   </div>

@@ -7,14 +7,10 @@ import { finalize, map } from 'rxjs/operators';
 import { RegistroClasesFormService, RegistroClasesFormGroup } from './registro-clases-form.service';
 import { IRegistroClases } from '../registro-clases.model';
 import { RegistroClasesService } from '../service/registro-clases.service';
-import { ICursos } from 'app/entities/cursos/cursos.model';
-import { CursosService } from 'app/entities/cursos/service/cursos.service';
 import { ITemas } from 'app/entities/temas/temas.model';
 import { TemasService } from 'app/entities/temas/service/temas.service';
 import { IFuncionarios } from 'app/entities/funcionarios/funcionarios.model';
 import { FuncionariosService } from 'app/entities/funcionarios/service/funcionarios.service';
-import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
-import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
 
 @Component({
   selector: 'jhi-registro-clases-update',
@@ -24,31 +20,23 @@ export class RegistroClasesUpdateComponent implements OnInit {
   isSaving = false;
   registroClases: IRegistroClases | null = null;
 
-  cursosSharedCollection: ICursos[] = [];
   temasSharedCollection: ITemas[] = [];
   funcionariosSharedCollection: IFuncionarios[] = [];
-  alumnosSharedCollection: IAlumnos[] = [];
 
   editForm: RegistroClasesFormGroup = this.registroClasesFormService.createRegistroClasesFormGroup();
 
   constructor(
     protected registroClasesService: RegistroClasesService,
     protected registroClasesFormService: RegistroClasesFormService,
-    protected cursosService: CursosService,
     protected temasService: TemasService,
     protected funcionariosService: FuncionariosService,
-    protected alumnosService: AlumnosService,
     protected activatedRoute: ActivatedRoute
   ) {}
-
-  compareCursos = (o1: ICursos | null, o2: ICursos | null): boolean => this.cursosService.compareCursos(o1, o2);
 
   compareTemas = (o1: ITemas | null, o2: ITemas | null): boolean => this.temasService.compareTemas(o1, o2);
 
   compareFuncionarios = (o1: IFuncionarios | null, o2: IFuncionarios | null): boolean =>
     this.funcionariosService.compareFuncionarios(o1, o2);
-
-  compareAlumnos = (o1: IAlumnos | null, o2: IAlumnos | null): boolean => this.alumnosService.compareAlumnos(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ registroClases }) => {
@@ -98,32 +86,18 @@ export class RegistroClasesUpdateComponent implements OnInit {
     this.registroClases = registroClases;
     this.registroClasesFormService.resetForm(this.editForm, registroClases);
 
-    this.cursosSharedCollection = this.cursosService.addCursosToCollectionIfMissing<ICursos>(
-      this.cursosSharedCollection,
-      registroClases.cursos
-    );
-    this.temasSharedCollection = this.temasService.addTemasToCollectionIfMissing<ITemas>(this.temasSharedCollection, registroClases.temas);
+    this.temasSharedCollection = this.temasService.addTemasToCollectionIfMissing<ITemas>(this.temasSharedCollection, registroClases.tema);
     this.funcionariosSharedCollection = this.funcionariosService.addFuncionariosToCollectionIfMissing<IFuncionarios>(
       this.funcionariosSharedCollection,
-      registroClases.funcionarios
-    );
-    this.alumnosSharedCollection = this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(
-      this.alumnosSharedCollection,
-      registroClases.alumnos
+      registroClases.funcionario
     );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.cursosService
-      .query()
-      .pipe(map((res: HttpResponse<ICursos[]>) => res.body ?? []))
-      .pipe(map((cursos: ICursos[]) => this.cursosService.addCursosToCollectionIfMissing<ICursos>(cursos, this.registroClases?.cursos)))
-      .subscribe((cursos: ICursos[]) => (this.cursosSharedCollection = cursos));
-
     this.temasService
       .query()
       .pipe(map((res: HttpResponse<ITemas[]>) => res.body ?? []))
-      .pipe(map((temas: ITemas[]) => this.temasService.addTemasToCollectionIfMissing<ITemas>(temas, this.registroClases?.temas)))
+      .pipe(map((temas: ITemas[]) => this.temasService.addTemasToCollectionIfMissing<ITemas>(temas, this.registroClases?.tema)))
       .subscribe((temas: ITemas[]) => (this.temasSharedCollection = temas));
 
     this.funcionariosService
@@ -131,17 +105,9 @@ export class RegistroClasesUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IFuncionarios[]>) => res.body ?? []))
       .pipe(
         map((funcionarios: IFuncionarios[]) =>
-          this.funcionariosService.addFuncionariosToCollectionIfMissing<IFuncionarios>(funcionarios, this.registroClases?.funcionarios)
+          this.funcionariosService.addFuncionariosToCollectionIfMissing<IFuncionarios>(funcionarios, this.registroClases?.funcionario)
         )
       )
       .subscribe((funcionarios: IFuncionarios[]) => (this.funcionariosSharedCollection = funcionarios));
-
-    this.alumnosService
-      .query()
-      .pipe(map((res: HttpResponse<IAlumnos[]>) => res.body ?? []))
-      .pipe(
-        map((alumnos: IAlumnos[]) => this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(alumnos, this.registroClases?.alumnos))
-      )
-      .subscribe((alumnos: IAlumnos[]) => (this.alumnosSharedCollection = alumnos));
   }
 }

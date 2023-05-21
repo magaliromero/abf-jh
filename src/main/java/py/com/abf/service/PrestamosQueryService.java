@@ -88,11 +88,11 @@ public class PrestamosQueryService extends QueryService<Prestamos> {
             if (criteria.getFechaPrestamo() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFechaPrestamo(), Prestamos_.fechaPrestamo));
             }
-            if (criteria.getVigenciaPrestamo() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getVigenciaPrestamo(), Prestamos_.vigenciaPrestamo));
-            }
             if (criteria.getFechaDevolucion() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFechaDevolucion(), Prestamos_.fechaDevolucion));
+            }
+            if (criteria.getEstado() != null) {
+                specification = specification.and(buildSpecification(criteria.getEstado(), Prestamos_.estado));
             }
             if (criteria.getMaterialesId() != null) {
                 specification =
@@ -101,6 +101,12 @@ public class PrestamosQueryService extends QueryService<Prestamos> {
                             criteria.getMaterialesId(),
                             root -> root.join(Prestamos_.materiales, JoinType.LEFT).get(Materiales_.id)
                         )
+                    );
+            }
+            if (criteria.getAlumnosId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(criteria.getAlumnosId(), root -> root.join(Prestamos_.alumnos, JoinType.LEFT).get(Alumnos_.id))
                     );
             }
         }

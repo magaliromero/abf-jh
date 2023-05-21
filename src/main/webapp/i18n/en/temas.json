@@ -20,8 +20,8 @@
       "id": "ID",
       "titulo": "Titulo",
       "descripcion": "Descripcion",
-      "registroClases": "Registro Clases",
-      "mallaCurricular": "Malla Curricular"
+      "nivel": "Nivel",
+      "registroClases": "Registro Clases"
     }
   }
 }

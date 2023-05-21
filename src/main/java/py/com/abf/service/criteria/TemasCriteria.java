@@ -3,6 +3,7 @@ package py.com.abf.service.criteria;
 import java.io.Serializable;
 import java.util.Objects;
 import org.springdoc.api.annotations.ParameterObject;
+import py.com.abf.domain.enumeration.Niveles;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.*;
 
@@ -19,6 +20,23 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class TemasCriteria implements Serializable, Criteria {
 
+    /**
+     * Class for filtering Niveles
+     */
+    public static class NivelesFilter extends Filter<Niveles> {
+
+        public NivelesFilter() {}
+
+        public NivelesFilter(NivelesFilter filter) {
+            super(filter);
+        }
+
+        @Override
+        public NivelesFilter copy() {
+            return new NivelesFilter(this);
+        }
+    }
+
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
@@ -27,9 +45,9 @@ public class TemasCriteria implements Serializable, Criteria {
 
     private StringFilter descripcion;
 
-    private LongFilter registroClasesId;
+    private NivelesFilter nivel;
 
-    private LongFilter mallaCurricularId;
+    private LongFilter registroClasesId;
 
     private Boolean distinct;
 
@@ -39,8 +57,8 @@ public class TemasCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.titulo = other.titulo == null ? null : other.titulo.copy();
         this.descripcion = other.descripcion == null ? null : other.descripcion.copy();
+        this.nivel = other.nivel == null ? null : other.nivel.copy();
         this.registroClasesId = other.registroClasesId == null ? null : other.registroClasesId.copy();
-        this.mallaCurricularId = other.mallaCurricularId == null ? null : other.mallaCurricularId.copy();
         this.distinct = other.distinct;
     }
 
@@ -94,6 +112,21 @@ public class TemasCriteria implements Serializable, Criteria {
         this.descripcion = descripcion;
     }
 
+    public NivelesFilter getNivel() {
+        return nivel;
+    }
+
+    public NivelesFilter nivel() {
+        if (nivel == null) {
+            nivel = new NivelesFilter();
+        }
+        return nivel;
+    }
+
+    public void setNivel(NivelesFilter nivel) {
+        this.nivel = nivel;
+    }
+
     public LongFilter getRegistroClasesId() {
         return registroClasesId;
     }
@@ -107,21 +140,6 @@ public class TemasCriteria implements Serializable, Criteria {
 
     public void setRegistroClasesId(LongFilter registroClasesId) {
         this.registroClasesId = registroClasesId;
-    }
-
-    public LongFilter getMallaCurricularId() {
-        return mallaCurricularId;
-    }
-
-    public LongFilter mallaCurricularId() {
-        if (mallaCurricularId == null) {
-            mallaCurricularId = new LongFilter();
-        }
-        return mallaCurricularId;
-    }
-
-    public void setMallaCurricularId(LongFilter mallaCurricularId) {
-        this.mallaCurricularId = mallaCurricularId;
     }
 
     public Boolean getDistinct() {
@@ -145,15 +163,15 @@ public class TemasCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(titulo, that.titulo) &&
             Objects.equals(descripcion, that.descripcion) &&
+            Objects.equals(nivel, that.nivel) &&
             Objects.equals(registroClasesId, that.registroClasesId) &&
-            Objects.equals(mallaCurricularId, that.mallaCurricularId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, titulo, descripcion, registroClasesId, mallaCurricularId, distinct);
+        return Objects.hash(id, titulo, descripcion, nivel, registroClasesId, distinct);
     }
 
     // prettier-ignore
@@ -163,8 +181,8 @@ public class TemasCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (titulo != null ? "titulo=" + titulo + ", " : "") +
             (descripcion != null ? "descripcion=" + descripcion + ", " : "") +
+            (nivel != null ? "nivel=" + nivel + ", " : "") +
             (registroClasesId != null ? "registroClasesId=" + registroClasesId + ", " : "") +
-            (mallaCurricularId != null ? "mallaCurricularId=" + mallaCurricularId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

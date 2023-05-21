@@ -124,52 +124,13 @@ public class AlumnosQueryService extends QueryService<Alumnos> {
                         )
                     );
             }
-            if (criteria.getRegistroClasesId() != null) {
+            if (criteria.getPrestamosId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getRegistroClasesId(),
-                            root -> root.join(Alumnos_.registroClases, JoinType.LEFT).get(RegistroClases_.id)
+                            criteria.getPrestamosId(),
+                            root -> root.join(Alumnos_.prestamos, JoinType.LEFT).get(Prestamos_.id)
                         )
-                    );
-            }
-            if (criteria.getCobrosId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getCobrosId(), root -> root.join(Alumnos_.cobros, JoinType.LEFT).get(Cobros_.id))
-                    );
-            }
-            if (criteria.getEvaluacionesId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getEvaluacionesId(),
-                            root -> root.join(Alumnos_.evaluaciones, JoinType.LEFT).get(Evaluaciones_.id)
-                        )
-                    );
-            }
-            if (criteria.getInscripcionesId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getInscripcionesId(),
-                            root -> root.join(Alumnos_.inscripciones, JoinType.LEFT).get(Inscripciones_.id)
-                        )
-                    );
-            }
-            if (criteria.getFichaPartidasTorneosId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getFichaPartidasTorneosId(),
-                            root -> root.join(Alumnos_.fichaPartidasTorneos, JoinType.LEFT).get(FichaPartidasTorneos_.id)
-                        )
-                    );
-            }
-            if (criteria.getFacturasId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getFacturasId(), root -> root.join(Alumnos_.facturas, JoinType.LEFT).get(Facturas_.id))
                     );
             }
             if (criteria.getTipoDocumentosId() != null) {

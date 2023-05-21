@@ -1,10 +1,20 @@
 {
   "applications": ["abf"],
-  "changelogDate": "20230227212446",
+  "changelogDate": "20230521155857",
   "dto": "no",
   "embedded": false,
   "entityTableName": "matricula",
   "fields": [
+    {
+      "fieldName": "concepto",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "monto",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
     {
       "fieldName": "fechaInscripcion",
       "fieldType": "LocalDate",
@@ -36,7 +46,7 @@
       "otherEntityField": "nombreCompleto",
       "otherEntityName": "alumnos",
       "otherEntityRelationshipName": "matricula",
-      "relationshipName": "alumnos",
+      "relationshipName": "alumno",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     }

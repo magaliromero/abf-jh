@@ -44,6 +44,13 @@ import py.com.abf.service.criteria.MatriculaCriteria;
 @WithMockUser
 class MatriculaResourceIT {
 
+    private static final String DEFAULT_CONCEPTO = "AAAAAAAAAA";
+    private static final String UPDATED_CONCEPTO = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_MONTO = 1;
+    private static final Integer UPDATED_MONTO = 2;
+    private static final Integer SMALLER_MONTO = 1 - 1;
+
     private static final LocalDate DEFAULT_FECHA_INSCRIPCION = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FECHA_INSCRIPCION = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_FECHA_INSCRIPCION = LocalDate.ofEpochDay(-1L);
@@ -90,6 +97,8 @@ class MatriculaResourceIT {
      */
     public static Matricula createEntity(EntityManager em) {
         Matricula matricula = new Matricula()
+            .concepto(DEFAULT_CONCEPTO)
+            .monto(DEFAULT_MONTO)
             .fechaInscripcion(DEFAULT_FECHA_INSCRIPCION)
             .fechaInicio(DEFAULT_FECHA_INICIO)
             .fechaPago(DEFAULT_FECHA_PAGO)
@@ -103,7 +112,7 @@ class MatriculaResourceIT {
         } else {
             alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
         }
-        matricula.setAlumnos(alumnos);
+        matricula.setAlumno(alumnos);
         return matricula;
     }
 
@@ -115,6 +124,8 @@ class MatriculaResourceIT {
      */
     public static Matricula createUpdatedEntity(EntityManager em) {
         Matricula matricula = new Matricula()
+            .concepto(UPDATED_CONCEPTO)
+            .monto(UPDATED_MONTO)
             .fechaInscripcion(UPDATED_FECHA_INSCRIPCION)
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaPago(UPDATED_FECHA_PAGO)
@@ -128,7 +139,7 @@ class MatriculaResourceIT {
         } else {
             alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
         }
-        matricula.setAlumnos(alumnos);
+        matricula.setAlumno(alumnos);
         return matricula;
     }
 
@@ -150,6 +161,8 @@ class MatriculaResourceIT {
         List<Matricula> matriculaList = matriculaRepository.findAll();
         assertThat(matriculaList).hasSize(databaseSizeBeforeCreate + 1);
         Matricula testMatricula = matriculaList.get(matriculaList.size() - 1);
+        assertThat(testMatricula.getConcepto()).isEqualTo(DEFAULT_CONCEPTO);
+        assertThat(testMatricula.getMonto()).isEqualTo(DEFAULT_MONTO);
         assertThat(testMatricula.getFechaInscripcion()).isEqualTo(DEFAULT_FECHA_INSCRIPCION);
         assertThat(testMatricula.getFechaInicio()).isEqualTo(DEFAULT_FECHA_INICIO);
         assertThat(testMatricula.getFechaPago()).isEqualTo(DEFAULT_FECHA_PAGO);
@@ -172,6 +185,40 @@ class MatriculaResourceIT {
         // Validate the Matricula in the database
         List<Matricula> matriculaList = matriculaRepository.findAll();
         assertThat(matriculaList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkConceptoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = matriculaRepository.findAll().size();
+        // set the field null
+        matricula.setConcepto(null);
+
+        // Create the Matricula, which fails.
+
+        restMatriculaMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(matricula)))
+            .andExpect(status().isBadRequest());
+
+        List<Matricula> matriculaList = matriculaRepository.findAll();
+        assertThat(matriculaList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkMontoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = matriculaRepository.findAll().size();
+        // set the field null
+        matricula.setMonto(null);
+
+        // Create the Matricula, which fails.
+
+        restMatriculaMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(matricula)))
+            .andExpect(status().isBadRequest());
+
+        List<Matricula> matriculaList = matriculaRepository.findAll();
+        assertThat(matriculaList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -237,6 +284,8 @@ class MatriculaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(matricula.getId().intValue())))
+            .andExpect(jsonPath("$.[*].concepto").value(hasItem(DEFAULT_CONCEPTO)))
+            .andExpect(jsonPath("$.[*].monto").value(hasItem(DEFAULT_MONTO)))
             .andExpect(jsonPath("$.[*].fechaInscripcion").value(hasItem(DEFAULT_FECHA_INSCRIPCION.toString())))
             .andExpect(jsonPath("$.[*].fechaInicio").value(hasItem(DEFAULT_FECHA_INICIO.toString())))
             .andExpect(jsonPath("$.[*].fechaPago").value(hasItem(DEFAULT_FECHA_PAGO.toString())))
@@ -272,6 +321,8 @@ class MatriculaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(matricula.getId().intValue()))
+            .andExpect(jsonPath("$.concepto").value(DEFAULT_CONCEPTO))
+            .andExpect(jsonPath("$.monto").value(DEFAULT_MONTO))
             .andExpect(jsonPath("$.fechaInscripcion").value(DEFAULT_FECHA_INSCRIPCION.toString()))
             .andExpect(jsonPath("$.fechaInicio").value(DEFAULT_FECHA_INICIO.toString()))
             .andExpect(jsonPath("$.fechaPago").value(DEFAULT_FECHA_PAGO.toString()))
@@ -294,6 +345,162 @@ class MatriculaResourceIT {
 
         defaultMatriculaShouldBeFound("id.lessThanOrEqual=" + id);
         defaultMatriculaShouldNotBeFound("id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByConceptoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where concepto equals to DEFAULT_CONCEPTO
+        defaultMatriculaShouldBeFound("concepto.equals=" + DEFAULT_CONCEPTO);
+
+        // Get all the matriculaList where concepto equals to UPDATED_CONCEPTO
+        defaultMatriculaShouldNotBeFound("concepto.equals=" + UPDATED_CONCEPTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByConceptoIsInShouldWork() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where concepto in DEFAULT_CONCEPTO or UPDATED_CONCEPTO
+        defaultMatriculaShouldBeFound("concepto.in=" + DEFAULT_CONCEPTO + "," + UPDATED_CONCEPTO);
+
+        // Get all the matriculaList where concepto equals to UPDATED_CONCEPTO
+        defaultMatriculaShouldNotBeFound("concepto.in=" + UPDATED_CONCEPTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByConceptoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where concepto is not null
+        defaultMatriculaShouldBeFound("concepto.specified=true");
+
+        // Get all the matriculaList where concepto is null
+        defaultMatriculaShouldNotBeFound("concepto.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByConceptoContainsSomething() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where concepto contains DEFAULT_CONCEPTO
+        defaultMatriculaShouldBeFound("concepto.contains=" + DEFAULT_CONCEPTO);
+
+        // Get all the matriculaList where concepto contains UPDATED_CONCEPTO
+        defaultMatriculaShouldNotBeFound("concepto.contains=" + UPDATED_CONCEPTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByConceptoNotContainsSomething() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where concepto does not contain DEFAULT_CONCEPTO
+        defaultMatriculaShouldNotBeFound("concepto.doesNotContain=" + DEFAULT_CONCEPTO);
+
+        // Get all the matriculaList where concepto does not contain UPDATED_CONCEPTO
+        defaultMatriculaShouldBeFound("concepto.doesNotContain=" + UPDATED_CONCEPTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByMontoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where monto equals to DEFAULT_MONTO
+        defaultMatriculaShouldBeFound("monto.equals=" + DEFAULT_MONTO);
+
+        // Get all the matriculaList where monto equals to UPDATED_MONTO
+        defaultMatriculaShouldNotBeFound("monto.equals=" + UPDATED_MONTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByMontoIsInShouldWork() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where monto in DEFAULT_MONTO or UPDATED_MONTO
+        defaultMatriculaShouldBeFound("monto.in=" + DEFAULT_MONTO + "," + UPDATED_MONTO);
+
+        // Get all the matriculaList where monto equals to UPDATED_MONTO
+        defaultMatriculaShouldNotBeFound("monto.in=" + UPDATED_MONTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByMontoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where monto is not null
+        defaultMatriculaShouldBeFound("monto.specified=true");
+
+        // Get all the matriculaList where monto is null
+        defaultMatriculaShouldNotBeFound("monto.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByMontoIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where monto is greater than or equal to DEFAULT_MONTO
+        defaultMatriculaShouldBeFound("monto.greaterThanOrEqual=" + DEFAULT_MONTO);
+
+        // Get all the matriculaList where monto is greater than or equal to UPDATED_MONTO
+        defaultMatriculaShouldNotBeFound("monto.greaterThanOrEqual=" + UPDATED_MONTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByMontoIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where monto is less than or equal to DEFAULT_MONTO
+        defaultMatriculaShouldBeFound("monto.lessThanOrEqual=" + DEFAULT_MONTO);
+
+        // Get all the matriculaList where monto is less than or equal to SMALLER_MONTO
+        defaultMatriculaShouldNotBeFound("monto.lessThanOrEqual=" + SMALLER_MONTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByMontoIsLessThanSomething() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where monto is less than DEFAULT_MONTO
+        defaultMatriculaShouldNotBeFound("monto.lessThan=" + DEFAULT_MONTO);
+
+        // Get all the matriculaList where monto is less than UPDATED_MONTO
+        defaultMatriculaShouldBeFound("monto.lessThan=" + UPDATED_MONTO);
+    }
+
+    @Test
+    @Transactional
+    void getAllMatriculasByMontoIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        matriculaRepository.saveAndFlush(matricula);
+
+        // Get all the matriculaList where monto is greater than DEFAULT_MONTO
+        defaultMatriculaShouldNotBeFound("monto.greaterThan=" + DEFAULT_MONTO);
+
+        // Get all the matriculaList where monto is greater than SMALLER_MONTO
+        defaultMatriculaShouldBeFound("monto.greaterThan=" + SMALLER_MONTO);
     }
 
     @Test
@@ -610,25 +817,25 @@ class MatriculaResourceIT {
 
     @Test
     @Transactional
-    void getAllMatriculasByAlumnosIsEqualToSomething() throws Exception {
-        Alumnos alumnos;
+    void getAllMatriculasByAlumnoIsEqualToSomething() throws Exception {
+        Alumnos alumno;
         if (TestUtil.findAll(em, Alumnos.class).isEmpty()) {
             matriculaRepository.saveAndFlush(matricula);
-            alumnos = AlumnosResourceIT.createEntity(em);
+            alumno = AlumnosResourceIT.createEntity(em);
         } else {
-            alumnos = TestUtil.findAll(em, Alumnos.class).get(0);
+            alumno = TestUtil.findAll(em, Alumnos.class).get(0);
         }
-        em.persist(alumnos);
+        em.persist(alumno);
         em.flush();
-        matricula.setAlumnos(alumnos);
+        matricula.setAlumno(alumno);
         matriculaRepository.saveAndFlush(matricula);
-        Long alumnosId = alumnos.getId();
+        Long alumnoId = alumno.getId();
 
-        // Get all the matriculaList where alumnos equals to alumnosId
-        defaultMatriculaShouldBeFound("alumnosId.equals=" + alumnosId);
+        // Get all the matriculaList where alumno equals to alumnoId
+        defaultMatriculaShouldBeFound("alumnoId.equals=" + alumnoId);
 
-        // Get all the matriculaList where alumnos equals to (alumnosId + 1)
-        defaultMatriculaShouldNotBeFound("alumnosId.equals=" + (alumnosId + 1));
+        // Get all the matriculaList where alumno equals to (alumnoId + 1)
+        defaultMatriculaShouldNotBeFound("alumnoId.equals=" + (alumnoId + 1));
     }
 
     /**
@@ -640,6 +847,8 @@ class MatriculaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(matricula.getId().intValue())))
+            .andExpect(jsonPath("$.[*].concepto").value(hasItem(DEFAULT_CONCEPTO)))
+            .andExpect(jsonPath("$.[*].monto").value(hasItem(DEFAULT_MONTO)))
             .andExpect(jsonPath("$.[*].fechaInscripcion").value(hasItem(DEFAULT_FECHA_INSCRIPCION.toString())))
             .andExpect(jsonPath("$.[*].fechaInicio").value(hasItem(DEFAULT_FECHA_INICIO.toString())))
             .andExpect(jsonPath("$.[*].fechaPago").value(hasItem(DEFAULT_FECHA_PAGO.toString())))
@@ -692,6 +901,8 @@ class MatriculaResourceIT {
         // Disconnect from session so that the updates on updatedMatricula are not directly saved in db
         em.detach(updatedMatricula);
         updatedMatricula
+            .concepto(UPDATED_CONCEPTO)
+            .monto(UPDATED_MONTO)
             .fechaInscripcion(UPDATED_FECHA_INSCRIPCION)
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaPago(UPDATED_FECHA_PAGO)
@@ -709,6 +920,8 @@ class MatriculaResourceIT {
         List<Matricula> matriculaList = matriculaRepository.findAll();
         assertThat(matriculaList).hasSize(databaseSizeBeforeUpdate);
         Matricula testMatricula = matriculaList.get(matriculaList.size() - 1);
+        assertThat(testMatricula.getConcepto()).isEqualTo(UPDATED_CONCEPTO);
+        assertThat(testMatricula.getMonto()).isEqualTo(UPDATED_MONTO);
         assertThat(testMatricula.getFechaInscripcion()).isEqualTo(UPDATED_FECHA_INSCRIPCION);
         assertThat(testMatricula.getFechaInicio()).isEqualTo(UPDATED_FECHA_INICIO);
         assertThat(testMatricula.getFechaPago()).isEqualTo(UPDATED_FECHA_PAGO);
@@ -783,7 +996,7 @@ class MatriculaResourceIT {
         Matricula partialUpdatedMatricula = new Matricula();
         partialUpdatedMatricula.setId(matricula.getId());
 
-        partialUpdatedMatricula.fechaInicio(UPDATED_FECHA_INICIO).estado(UPDATED_ESTADO);
+        partialUpdatedMatricula.monto(UPDATED_MONTO).fechaInicio(UPDATED_FECHA_INICIO).estado(UPDATED_ESTADO);
 
         restMatriculaMockMvc
             .perform(
@@ -797,6 +1010,8 @@ class MatriculaResourceIT {
         List<Matricula> matriculaList = matriculaRepository.findAll();
         assertThat(matriculaList).hasSize(databaseSizeBeforeUpdate);
         Matricula testMatricula = matriculaList.get(matriculaList.size() - 1);
+        assertThat(testMatricula.getConcepto()).isEqualTo(DEFAULT_CONCEPTO);
+        assertThat(testMatricula.getMonto()).isEqualTo(UPDATED_MONTO);
         assertThat(testMatricula.getFechaInscripcion()).isEqualTo(DEFAULT_FECHA_INSCRIPCION);
         assertThat(testMatricula.getFechaInicio()).isEqualTo(UPDATED_FECHA_INICIO);
         assertThat(testMatricula.getFechaPago()).isEqualTo(DEFAULT_FECHA_PAGO);
@@ -816,6 +1031,8 @@ class MatriculaResourceIT {
         partialUpdatedMatricula.setId(matricula.getId());
 
         partialUpdatedMatricula
+            .concepto(UPDATED_CONCEPTO)
+            .monto(UPDATED_MONTO)
             .fechaInscripcion(UPDATED_FECHA_INSCRIPCION)
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaPago(UPDATED_FECHA_PAGO)
@@ -833,6 +1050,8 @@ class MatriculaResourceIT {
         List<Matricula> matriculaList = matriculaRepository.findAll();
         assertThat(matriculaList).hasSize(databaseSizeBeforeUpdate);
         Matricula testMatricula = matriculaList.get(matriculaList.size() - 1);
+        assertThat(testMatricula.getConcepto()).isEqualTo(UPDATED_CONCEPTO);
+        assertThat(testMatricula.getMonto()).isEqualTo(UPDATED_MONTO);
         assertThat(testMatricula.getFechaInscripcion()).isEqualTo(UPDATED_FECHA_INSCRIPCION);
         assertThat(testMatricula.getFechaInicio()).isEqualTo(UPDATED_FECHA_INICIO);
         assertThat(testMatricula.getFechaPago()).isEqualTo(UPDATED_FECHA_PAGO);

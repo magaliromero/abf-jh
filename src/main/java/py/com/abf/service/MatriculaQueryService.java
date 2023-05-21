@@ -85,6 +85,12 @@ public class MatriculaQueryService extends QueryService<Matricula> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Matricula_.id));
             }
+            if (criteria.getConcepto() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getConcepto(), Matricula_.concepto));
+            }
+            if (criteria.getMonto() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getMonto(), Matricula_.monto));
+            }
             if (criteria.getFechaInscripcion() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getFechaInscripcion(), Matricula_.fechaInscripcion));
             }
@@ -97,10 +103,10 @@ public class MatriculaQueryService extends QueryService<Matricula> {
             if (criteria.getEstado() != null) {
                 specification = specification.and(buildSpecification(criteria.getEstado(), Matricula_.estado));
             }
-            if (criteria.getAlumnosId() != null) {
+            if (criteria.getAlumnoId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(criteria.getAlumnosId(), root -> root.join(Matricula_.alumnos, JoinType.LEFT).get(Alumnos_.id))
+                        buildSpecification(criteria.getAlumnoId(), root -> root.join(Matricula_.alumno, JoinType.LEFT).get(Alumnos_.id))
                     );
             }
         }

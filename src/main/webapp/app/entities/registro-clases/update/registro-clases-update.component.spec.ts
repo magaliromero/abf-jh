@@ -9,14 +9,10 @@ import { of, Subject, from } from 'rxjs';
 import { RegistroClasesFormService } from './registro-clases-form.service';
 import { RegistroClasesService } from '../service/registro-clases.service';
 import { IRegistroClases } from '../registro-clases.model';
-import { ICursos } from 'app/entities/cursos/cursos.model';
-import { CursosService } from 'app/entities/cursos/service/cursos.service';
 import { ITemas } from 'app/entities/temas/temas.model';
 import { TemasService } from 'app/entities/temas/service/temas.service';
 import { IFuncionarios } from 'app/entities/funcionarios/funcionarios.model';
 import { FuncionariosService } from 'app/entities/funcionarios/service/funcionarios.service';
-import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
-import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
 
 import { RegistroClasesUpdateComponent } from './registro-clases-update.component';
 
@@ -26,10 +22,8 @@ describe('RegistroClases Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let registroClasesFormService: RegistroClasesFormService;
   let registroClasesService: RegistroClasesService;
-  let cursosService: CursosService;
   let temasService: TemasService;
   let funcionariosService: FuncionariosService;
-  let alumnosService: AlumnosService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -52,45 +46,21 @@ describe('RegistroClases Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     registroClasesFormService = TestBed.inject(RegistroClasesFormService);
     registroClasesService = TestBed.inject(RegistroClasesService);
-    cursosService = TestBed.inject(CursosService);
     temasService = TestBed.inject(TemasService);
     funcionariosService = TestBed.inject(FuncionariosService);
-    alumnosService = TestBed.inject(AlumnosService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Cursos query and add missing value', () => {
-      const registroClases: IRegistroClases = { id: 456 };
-      const cursos: ICursos = { id: 37962 };
-      registroClases.cursos = cursos;
-
-      const cursosCollection: ICursos[] = [{ id: 63621 }];
-      jest.spyOn(cursosService, 'query').mockReturnValue(of(new HttpResponse({ body: cursosCollection })));
-      const additionalCursos = [cursos];
-      const expectedCollection: ICursos[] = [...additionalCursos, ...cursosCollection];
-      jest.spyOn(cursosService, 'addCursosToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ registroClases });
-      comp.ngOnInit();
-
-      expect(cursosService.query).toHaveBeenCalled();
-      expect(cursosService.addCursosToCollectionIfMissing).toHaveBeenCalledWith(
-        cursosCollection,
-        ...additionalCursos.map(expect.objectContaining)
-      );
-      expect(comp.cursosSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should call Temas query and add missing value', () => {
       const registroClases: IRegistroClases = { id: 456 };
-      const temas: ITemas = { id: 74210 };
-      registroClases.temas = temas;
+      const tema: ITemas = { id: 74210 };
+      registroClases.tema = tema;
 
       const temasCollection: ITemas[] = [{ id: 80835 }];
       jest.spyOn(temasService, 'query').mockReturnValue(of(new HttpResponse({ body: temasCollection })));
-      const additionalTemas = [temas];
+      const additionalTemas = [tema];
       const expectedCollection: ITemas[] = [...additionalTemas, ...temasCollection];
       jest.spyOn(temasService, 'addTemasToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -107,12 +77,12 @@ describe('RegistroClases Management Update Component', () => {
 
     it('Should call Funcionarios query and add missing value', () => {
       const registroClases: IRegistroClases = { id: 456 };
-      const funcionarios: IFuncionarios = { id: 42041 };
-      registroClases.funcionarios = funcionarios;
+      const funcionario: IFuncionarios = { id: 42041 };
+      registroClases.funcionario = funcionario;
 
       const funcionariosCollection: IFuncionarios[] = [{ id: 74664 }];
       jest.spyOn(funcionariosService, 'query').mockReturnValue(of(new HttpResponse({ body: funcionariosCollection })));
-      const additionalFuncionarios = [funcionarios];
+      const additionalFuncionarios = [funcionario];
       const expectedCollection: IFuncionarios[] = [...additionalFuncionarios, ...funcionariosCollection];
       jest.spyOn(funcionariosService, 'addFuncionariosToCollectionIfMissing').mockReturnValue(expectedCollection);
 
@@ -127,46 +97,18 @@ describe('RegistroClases Management Update Component', () => {
       expect(comp.funcionariosSharedCollection).toEqual(expectedCollection);
     });
 
-    it('Should call Alumnos query and add missing value', () => {
-      const registroClases: IRegistroClases = { id: 456 };
-      const alumnos: IAlumnos = { id: 33826 };
-      registroClases.alumnos = alumnos;
-
-      const alumnosCollection: IAlumnos[] = [{ id: 99964 }];
-      jest.spyOn(alumnosService, 'query').mockReturnValue(of(new HttpResponse({ body: alumnosCollection })));
-      const additionalAlumnos = [alumnos];
-      const expectedCollection: IAlumnos[] = [...additionalAlumnos, ...alumnosCollection];
-      jest.spyOn(alumnosService, 'addAlumnosToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ registroClases });
-      comp.ngOnInit();
-
-      expect(alumnosService.query).toHaveBeenCalled();
-      expect(alumnosService.addAlumnosToCollectionIfMissing).toHaveBeenCalledWith(
-        alumnosCollection,
-        ...additionalAlumnos.map(expect.objectContaining)
-      );
-      expect(comp.alumnosSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const registroClases: IRegistroClases = { id: 456 };
-      const cursos: ICursos = { id: 56619 };
-      registroClases.cursos = cursos;
-      const temas: ITemas = { id: 99655 };
-      registroClases.temas = temas;
-      const funcionarios: IFuncionarios = { id: 14486 };
-      registroClases.funcionarios = funcionarios;
-      const alumnos: IAlumnos = { id: 82089 };
-      registroClases.alumnos = alumnos;
+      const tema: ITemas = { id: 99655 };
+      registroClases.tema = tema;
+      const funcionario: IFuncionarios = { id: 14486 };
+      registroClases.funcionario = funcionario;
 
       activatedRoute.data = of({ registroClases });
       comp.ngOnInit();
 
-      expect(comp.cursosSharedCollection).toContain(cursos);
-      expect(comp.temasSharedCollection).toContain(temas);
-      expect(comp.funcionariosSharedCollection).toContain(funcionarios);
-      expect(comp.alumnosSharedCollection).toContain(alumnos);
+      expect(comp.temasSharedCollection).toContain(tema);
+      expect(comp.funcionariosSharedCollection).toContain(funcionario);
       expect(comp.registroClases).toEqual(registroClases);
     });
   });
@@ -240,16 +182,6 @@ describe('RegistroClases Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareCursos', () => {
-      it('Should forward to cursosService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(cursosService, 'compareCursos');
-        comp.compareCursos(entity, entity2);
-        expect(cursosService.compareCursos).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
     describe('compareTemas', () => {
       it('Should forward to temasService', () => {
         const entity = { id: 123 };
@@ -267,16 +199,6 @@ describe('RegistroClases Management Update Component', () => {
         jest.spyOn(funcionariosService, 'compareFuncionarios');
         comp.compareFuncionarios(entity, entity2);
         expect(funcionariosService.compareFuncionarios).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
-    describe('compareAlumnos', () => {
-      it('Should forward to alumnosService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(alumnosService, 'compareAlumnos');
-        comp.compareAlumnos(entity, entity2);
-        expect(alumnosService.compareAlumnos).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

@@ -2,19 +2,19 @@
   <div class="d-flex justify-content-center">
     <div class="col-md-8">
       <h2 jhiTranslate="settings.title" [translateValues]="{ username: settingsForm.value.login }" *ngIf="settingsForm.value.login">
-        Ajustes del usuario [<strong>{{ settingsForm.value.login }}</strong
+        User settings for [<strong>{{ settingsForm.value.login }}</strong
         >]
       </h2>
 
       <div class="alert alert-success" *ngIf="success" jhiTranslate="settings.messages.success">
-        <strong>¡Ajustes guardados!</strong>
+        <strong>Settings saved!</strong>
       </div>
 
       <jhi-alert-error></jhi-alert-error>
 
       <form name="form" role="form" (ngSubmit)="save()" [formGroup]="settingsForm" *ngIf="settingsForm.value.login" novalidate>
         <div class="mb-3">
-          <label class="form-label" for="firstName" jhiTranslate="settings.form.firstname">Nombre</label>
+          <label class="form-label" for="firstName" jhiTranslate="settings.form.firstname">First Name</label>
           <input
             type="text"
             class="form-control"
@@ -35,7 +35,7 @@
               *ngIf="settingsForm.get('firstName')?.errors?.required"
               jhiTranslate="settings.messages.validate.firstname.required"
             >
-              Se requiere que ingrese su nombre.
+              Your first name is required.
             </small>
 
             <small
@@ -43,7 +43,7 @@
               *ngIf="settingsForm.get('firstName')?.errors?.minlength"
               jhiTranslate="settings.messages.validate.firstname.minlength"
             >
-              Se requiere que su nombre tenga por lo menos 1 caracter
+              Your first name is required to be at least 1 character
             </small>
 
             <small
@@ -51,13 +51,13 @@
               *ngIf="settingsForm.get('firstName')?.errors?.maxlength"
               jhiTranslate="settings.messages.validate.firstname.maxlength"
             >
-              Su nombre no puede tener más de 50 caracteres
+              Your first name cannot be longer than 50 characters
             </small>
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="lastName" jhiTranslate="settings.form.lastname">Apellidos</label>
+          <label class="form-label" for="lastName" jhiTranslate="settings.form.lastname">Last Name</label>
           <input
             type="text"
             class="form-control"
@@ -76,7 +76,7 @@
               *ngIf="settingsForm.get('lastName')?.errors?.required"
               jhiTranslate="settings.messages.validate.lastname.required"
             >
-              Se requiere que ingrese sus apellidos.
+              Your last name is required.
             </small>
 
             <small
@@ -84,7 +84,7 @@
               *ngIf="settingsForm.get('lastName')?.errors?.minlength"
               jhiTranslate="settings.messages.validate.lastname.minlength"
             >
-              Se requiere que sus apellidos tengan por lo menos 1 caracter
+              Your last name is required to be at least 1 character
             </small>
 
             <small
@@ -92,13 +92,13 @@
               *ngIf="settingsForm.get('lastName')?.errors?.maxlength"
               jhiTranslate="settings.messages.validate.lastname.maxlength"
             >
-              Sus apellidos no pueden tener más de 50 caracteres
+              Your last name cannot be longer than 50 characters
             </small>
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="email" jhiTranslate="global.form.email.label">Correo electrónico</label>
+          <label class="form-label" for="email" jhiTranslate="global.form.email.label">Email</label>
           <input
             type="email"
             class="form-control"
@@ -115,7 +115,7 @@
               *ngIf="settingsForm.get('email')?.errors?.required"
               jhiTranslate="global.messages.validate.email.required"
             >
-              Se requiere un correo electrónico.
+              Your email is required.
             </small>
 
             <small
@@ -123,7 +123,7 @@
               *ngIf="settingsForm.get('email')?.errors?.email"
               jhiTranslate="global.messages.validate.email.invalid"
             >
-              Su correo electrónico no es válido.
+              Your email is invalid.
             </small>
 
             <small
@@ -131,7 +131,7 @@
               *ngIf="settingsForm.get('email')?.errors?.minlength"
               jhiTranslate="global.messages.validate.email.minlength"
             >
-              Se requiere que su correo electrónico tenga por lo menos 5 caracteres
+              Your email is required to be at least 5 characters.
             </small>
 
             <small
@@ -139,13 +139,13 @@
               *ngIf="settingsForm.get('email')?.errors?.maxlength"
               jhiTranslate="global.messages.validate.email.maxlength"
             >
-              Su correo electrónico no puede tener más de 50 caracteres
+              Your email cannot be longer than 50 characters.
             </small>
           </div>
         </div>
 
         <div class="mb-3" *ngIf="languages && languages.length > 0">
-          <label for="langKey" jhiTranslate="settings.form.language">Idioma</label>
+          <label for="langKey" jhiTranslate="settings.form.language">Language</label>
           <select class="form-control" id="langKey" name="langKey" formControlName="langKey" data-cy="langKey">
             <option *ngFor="let language of languages" [value]="language">{{ language | findLanguageFromKey }}</option>
           </select>
@@ -158,7 +158,7 @@
           jhiTranslate="settings.form.button"
           data-cy="submit"
         >
-          Guardar
+          Save
         </button>
       </form>
     </div>

@@ -14,13 +14,13 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type TemasFormGroupInput = ITemas | PartialWithRequiredKeyOf<NewTemas>;
 
-type TemasFormDefaults = Pick<NewTemas, 'id' | 'mallaCurriculars'>;
+type TemasFormDefaults = Pick<NewTemas, 'id'>;
 
 type TemasFormGroupContent = {
   id: FormControl<ITemas['id'] | NewTemas['id']>;
   titulo: FormControl<ITemas['titulo']>;
   descripcion: FormControl<ITemas['descripcion']>;
-  mallaCurriculars: FormControl<ITemas['mallaCurriculars']>;
+  nivel: FormControl<ITemas['nivel']>;
 };
 
 export type TemasFormGroup = FormGroup<TemasFormGroupContent>;
@@ -46,7 +46,9 @@ export class TemasFormService {
       descripcion: new FormControl(temasRawValue.descripcion, {
         validators: [Validators.required],
       }),
-      mallaCurriculars: new FormControl(temasRawValue.mallaCurriculars ?? []),
+      nivel: new FormControl(temasRawValue.nivel, {
+        validators: [Validators.required],
+      }),
     });
   }
 
@@ -67,7 +69,6 @@ export class TemasFormService {
   private getFormDefaults(): TemasFormDefaults {
     return {
       id: null,
-      mallaCurriculars: [],
     };
   }
 }

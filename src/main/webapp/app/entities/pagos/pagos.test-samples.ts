@@ -1,50 +1,32 @@
 import dayjs from 'dayjs/esm';
 
-import { TiposPagos } from 'app/entities/enumerations/tipos-pagos.model';
-
 import { IPagos, NewPagos } from './pagos.model';
 
 export const sampleWithRequiredData: IPagos = {
   id: 35750,
-  montoPago: 69414,
-  montoInicial: 36645,
-  saldo: 2075,
-  fechaRegistro: dayjs('2023-03-13'),
-  fechaPago: dayjs('2023-03-13'),
-  tipoPago: TiposPagos['DIARIO'],
-  descripcion: 'Configuración añadido Market',
+  fecha: dayjs('2023-05-20'),
+  total: 36645,
+  cantidadHoras: 2075,
 };
 
 export const sampleWithPartialData: IPagos = {
-  id: 90317,
-  montoPago: 39482,
-  montoInicial: 75237,
-  saldo: 22940,
-  fechaRegistro: dayjs('2023-03-13'),
-  fechaPago: dayjs('2023-03-13'),
-  tipoPago: TiposPagos['CUOTA'],
-  descripcion: 'Lugar',
+  id: 12142,
+  fecha: dayjs('2023-05-20'),
+  total: 60113,
+  cantidadHoras: 85247,
 };
 
 export const sampleWithFullData: IPagos = {
-  id: 29917,
-  montoPago: 3506,
-  montoInicial: 94274,
-  saldo: 57695,
-  fechaRegistro: dayjs('2023-03-13'),
-  fechaPago: dayjs('2023-03-13'),
-  tipoPago: TiposPagos['DIARIO'],
-  descripcion: 'COM',
+  id: 92852,
+  fecha: dayjs('2023-05-20'),
+  total: 97277,
+  cantidadHoras: 29305,
 };
 
 export const sampleWithNewData: NewPagos = {
-  montoPago: 6073,
-  montoInicial: 17805,
-  saldo: 50968,
-  fechaRegistro: dayjs('2023-03-13'),
-  fechaPago: dayjs('2023-03-13'),
-  tipoPago: TiposPagos['MENSUAL'],
-  descripcion: 'Violeta',
+  fecha: dayjs('2023-05-20'),
+  total: 94228,
+  cantidadHoras: 60224,
   id: null,
 };
 

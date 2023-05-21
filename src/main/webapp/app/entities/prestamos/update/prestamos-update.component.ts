@@ -9,6 +9,9 @@ import { IPrestamos } from '../prestamos.model';
 import { PrestamosService } from '../service/prestamos.service';
 import { IMateriales } from 'app/entities/materiales/materiales.model';
 import { MaterialesService } from 'app/entities/materiales/service/materiales.service';
+import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
+import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
+import { EstadosPrestamos } from 'app/entities/enumerations/estados-prestamos.model';
 
 @Component({
   selector: 'jhi-prestamos-update',
@@ -17,8 +20,10 @@ import { MaterialesService } from 'app/entities/materiales/service/materiales.se
 export class PrestamosUpdateComponent implements OnInit {
   isSaving = false;
   prestamos: IPrestamos | null = null;
+  estadosPrestamosValues = Object.keys(EstadosPrestamos);
 
   materialesSharedCollection: IMateriales[] = [];
+  alumnosSharedCollection: IAlumnos[] = [];
 
   editForm: PrestamosFormGroup = this.prestamosFormService.createPrestamosFormGroup();
 
@@ -26,10 +31,13 @@ export class PrestamosUpdateComponent implements OnInit {
     protected prestamosService: PrestamosService,
     protected prestamosFormService: PrestamosFormService,
     protected materialesService: MaterialesService,
+    protected alumnosService: AlumnosService,
     protected activatedRoute: ActivatedRoute
   ) {}
 
   compareMateriales = (o1: IMateriales | null, o2: IMateriales | null): boolean => this.materialesService.compareMateriales(o1, o2);
+
+  compareAlumnos = (o1: IAlumnos | null, o2: IAlumnos | null): boolean => this.alumnosService.compareAlumnos(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ prestamos }) => {
@@ -83,6 +91,10 @@ export class PrestamosUpdateComponent implements OnInit {
       this.materialesSharedCollection,
       prestamos.materiales
     );
+    this.alumnosSharedCollection = this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(
+      this.alumnosSharedCollection,
+      prestamos.alumnos
+    );
   }
 
   protected loadRelationshipsOptions(): void {
@@ -95,5 +107,11 @@ export class PrestamosUpdateComponent implements OnInit {
         )
       )
       .subscribe((materiales: IMateriales[]) => (this.materialesSharedCollection = materiales));
+
+    this.alumnosService
+      .query()
+      .pipe(map((res: HttpResponse<IAlumnos[]>) => res.body ?? []))
+      .pipe(map((alumnos: IAlumnos[]) => this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(alumnos, this.prestamos?.alumnos)))
+      .subscribe((alumnos: IAlumnos[]) => (this.alumnosSharedCollection = alumnos));
   }
 }

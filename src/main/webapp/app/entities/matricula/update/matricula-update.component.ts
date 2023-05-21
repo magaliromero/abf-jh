@@ -83,7 +83,7 @@ export class MatriculaUpdateComponent implements OnInit {
 
     this.alumnosSharedCollection = this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(
       this.alumnosSharedCollection,
-      matricula.alumnos
+      matricula.alumno
     );
   }
 
@@ -91,7 +91,7 @@ export class MatriculaUpdateComponent implements OnInit {
     this.alumnosService
       .query()
       .pipe(map((res: HttpResponse<IAlumnos[]>) => res.body ?? []))
-      .pipe(map((alumnos: IAlumnos[]) => this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(alumnos, this.matricula?.alumnos)))
+      .pipe(map((alumnos: IAlumnos[]) => this.alumnosService.addAlumnosToCollectionIfMissing<IAlumnos>(alumnos, this.matricula?.alumno)))
       .subscribe((alumnos: IAlumnos[]) => (this.alumnosSharedCollection = alumnos));
   }
 }

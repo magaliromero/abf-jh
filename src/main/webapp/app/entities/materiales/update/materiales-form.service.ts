@@ -19,9 +19,8 @@ type MaterialesFormDefaults = Pick<NewMateriales, 'id'>;
 type MaterialesFormGroupContent = {
   id: FormControl<IMateriales['id'] | NewMateriales['id']>;
   descripcion: FormControl<IMateriales['descripcion']>;
-  estado: FormControl<IMateriales['estado']>;
-  cantidadStock: FormControl<IMateriales['cantidadStock']>;
-  cantidadPrestamo: FormControl<IMateriales['cantidadPrestamo']>;
+  cantidad: FormControl<IMateriales['cantidad']>;
+  cantidadEnPrestamo: FormControl<IMateriales['cantidadEnPrestamo']>;
 };
 
 export type MaterialesFormGroup = FormGroup<MaterialesFormGroupContent>;
@@ -44,15 +43,8 @@ export class MaterialesFormService {
       descripcion: new FormControl(materialesRawValue.descripcion, {
         validators: [Validators.required],
       }),
-      estado: new FormControl(materialesRawValue.estado, {
-        validators: [Validators.required],
-      }),
-      cantidadStock: new FormControl(materialesRawValue.cantidadStock, {
-        validators: [Validators.required],
-      }),
-      cantidadPrestamo: new FormControl(materialesRawValue.cantidadPrestamo, {
-        validators: [Validators.required],
-      }),
+      cantidad: new FormControl(materialesRawValue.cantidad),
+      cantidadEnPrestamo: new FormControl(materialesRawValue.cantidadEnPrestamo),
     });
   }
 

@@ -1,9 +1,9 @@
 <div>
   <h2>
-    <span id="health-page-heading" jhiTranslate="health.title" data-cy="healthPageHeading">Control de salud</span>
+    <span id="health-page-heading" jhiTranslate="health.title" data-cy="healthPageHeading">Health Checks</span>
 
     <button class="btn btn-primary float-end" (click)="refresh()">
-      <fa-icon icon="sync"></fa-icon> <span jhiTranslate="health.refresh.button">Refrescar</span>
+      <fa-icon icon="sync"></fa-icon> <span jhiTranslate="health.refresh.button">Refresh</span>
     </button>
   </h2>
 
@@ -11,9 +11,9 @@
     <table id="healthCheck" class="table table-striped" aria-describedby="health-page-heading">
       <thead>
         <tr>
-          <th scope="col" jhiTranslate="health.table.service">Nombre del servicio</th>
-          <th scope="col" class="text-center" jhiTranslate="health.table.status">Estado</th>
-          <th scope="col" class="text-center" jhiTranslate="health.details.details">Detalles</th>
+          <th scope="col" jhiTranslate="health.table.service">Service name</th>
+          <th scope="col" class="text-center" jhiTranslate="health.table.status">Status</th>
+          <th scope="col" class="text-center" jhiTranslate="health.details.details">Details</th>
         </tr>
       </thead>
       <tbody *ngIf="health">
@@ -28,9 +28,7 @@
               jhiTranslate="{{ 'health.status.' + componentHealth.value!.status }}"
             >
               {{
-                { UNKNOWN: 'DESCONOCIDO', UP: 'LEVANTADO', OUT_OF_SERVICE: 'OUT_OF_SERVICE', DOWN: 'CAÍDO' }[
-                  componentHealth.value!.status || 'UNKNOWN'
-                ]
+                { UNKNOWN: 'UNKNOWN', UP: 'UP', OUT_OF_SERVICE: 'OUT_OF_SERVICE', DOWN: 'DOWN' }[componentHealth.value!.status || 'UNKNOWN']
               }}
             </span>
           </td>

@@ -2,24 +2,24 @@ import { ITiposDocumentos, NewTiposDocumentos } from './tipos-documentos.model';
 
 export const sampleWithRequiredData: ITiposDocumentos = {
   id: 68091,
-  codigo: 'connect deposit Pequeño',
+  codigo: 'connect deposit Small',
   descripcion: 'Peso Avon Loan',
 };
 
 export const sampleWithPartialData: ITiposDocumentos = {
   id: 41468,
-  codigo: 'Asociado conocimiento applications',
-  descripcion: 'Urbanización dot-com',
+  codigo: 'Associate leverage applications',
+  descripcion: 'Ville dot-com',
 };
 
 export const sampleWithFullData: ITiposDocumentos = {
   id: 36840,
-  codigo: 'Analista Lituania',
+  codigo: 'Analyst Malaysia',
   descripcion: 'CSS SCSI',
 };
 
 export const sampleWithNewData: NewTiposDocumentos = {
-  codigo: 'Consultor Música Ladrillo',
+  codigo: 'Consultant Outdoors Soft',
   descripcion: 'RSS index',
   id: null,
 };

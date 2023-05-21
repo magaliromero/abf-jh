@@ -1,6 +1,6 @@
 {
   "applications": ["abf"],
-  "changelogDate": "20230227211946",
+  "changelogDate": "20230521154957",
   "dto": "no",
   "embedded": false,
   "entityTableName": "tipos_documentos",

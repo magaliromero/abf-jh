@@ -9,8 +9,6 @@ import { of, Subject, from } from 'rxjs';
 import { FacturasFormService } from './facturas-form.service';
 import { FacturasService } from '../service/facturas.service';
 import { IFacturas } from '../facturas.model';
-import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
-import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
 
 import { FacturasUpdateComponent } from './facturas-update.component';
 
@@ -20,7 +18,6 @@ describe('Facturas Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let facturasFormService: FacturasFormService;
   let facturasService: FacturasService;
-  let alumnosService: AlumnosService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,43 +40,17 @@ describe('Facturas Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     facturasFormService = TestBed.inject(FacturasFormService);
     facturasService = TestBed.inject(FacturasService);
-    alumnosService = TestBed.inject(AlumnosService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Alumnos query and add missing value', () => {
-      const facturas: IFacturas = { id: 456 };
-      const alumnos: IAlumnos = { id: 33547 };
-      facturas.alumnos = alumnos;
-
-      const alumnosCollection: IAlumnos[] = [{ id: 69390 }];
-      jest.spyOn(alumnosService, 'query').mockReturnValue(of(new HttpResponse({ body: alumnosCollection })));
-      const additionalAlumnos = [alumnos];
-      const expectedCollection: IAlumnos[] = [...additionalAlumnos, ...alumnosCollection];
-      jest.spyOn(alumnosService, 'addAlumnosToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ facturas });
-      comp.ngOnInit();
-
-      expect(alumnosService.query).toHaveBeenCalled();
-      expect(alumnosService.addAlumnosToCollectionIfMissing).toHaveBeenCalledWith(
-        alumnosCollection,
-        ...additionalAlumnos.map(expect.objectContaining)
-      );
-      expect(comp.alumnosSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const facturas: IFacturas = { id: 456 };
-      const alumnos: IAlumnos = { id: 24965 };
-      facturas.alumnos = alumnos;
 
       activatedRoute.data = of({ facturas });
       comp.ngOnInit();
 
-      expect(comp.alumnosSharedCollection).toContain(alumnos);
       expect(comp.facturas).toEqual(facturas);
     });
   });
@@ -149,18 +120,6 @@ describe('Facturas Management Update Component', () => {
       expect(facturasService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Compare relationships', () => {
-    describe('compareAlumnos', () => {
-      it('Should forward to alumnosService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(alumnosService, 'compareAlumnos');
-        comp.compareAlumnos(entity, entity2);
-        expect(alumnosService.compareAlumnos).toHaveBeenCalledWith(entity, entity2);
-      });
     });
   });
 });

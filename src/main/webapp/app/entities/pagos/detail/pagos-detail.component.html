@@ -14,48 +14,38 @@
         <dd>
           <span>{{ pagos.id }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.pagos.montoPago">Monto Pago</span></dt>
+        <dt><span jhiTranslate="abfApp.pagos.fecha">Fecha</span></dt>
         <dd>
-          <span>{{ pagos.montoPago }}</span>
+          <span>{{ pagos.fecha | formatMediumDate }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.pagos.montoInicial">Monto Inicial</span></dt>
+        <dt><span jhiTranslate="abfApp.pagos.total">Total</span></dt>
         <dd>
-          <span>{{ pagos.montoInicial }}</span>
+          <span>{{ pagos.total }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.pagos.saldo">Saldo</span></dt>
+        <dt><span jhiTranslate="abfApp.pagos.cantidadHoras">Cantidad Horas</span></dt>
         <dd>
-          <span>{{ pagos.saldo }}</span>
+          <span>{{ pagos.cantidadHoras }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.pagos.fechaRegistro">Fecha Registro</span></dt>
+        <dt><span jhiTranslate="abfApp.pagos.producto">Producto</span></dt>
         <dd>
-          <span>{{ pagos.fechaRegistro | formatMediumDate }}</span>
+          <div *ngIf="pagos.producto">
+            <a [routerLink]="['/productos', pagos.producto.id, 'view']">{{ pagos.producto.descripcion }}</a>
+          </div>
         </dd>
-        <dt><span jhiTranslate="abfApp.pagos.fechaPago">Fecha Pago</span></dt>
+        <dt><span jhiTranslate="abfApp.pagos.funcionario">Funcionario</span></dt>
         <dd>
-          <span>{{ pagos.fechaPago | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.pagos.tipoPago">Tipo Pago</span></dt>
-        <dd>
-          <span jhiTranslate="{{ 'abfApp.TiposPagos.' + pagos.tipoPago }}">{{ pagos.tipoPago }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.pagos.descripcion">Descripcion</span></dt>
-        <dd>
-          <span>{{ pagos.descripcion }}</span>
-        </dd>
-        <dt><span jhiTranslate="abfApp.pagos.funcionarios">Funcionarios</span></dt>
-        <dd>
-          <div *ngIf="pagos.funcionarios">
-            <a [routerLink]="['/funcionarios', pagos.funcionarios.id, 'view']">{{ pagos.funcionarios.nombreCompleto }}</a>
+          <div *ngIf="pagos.funcionario">
+            <a [routerLink]="['/funcionarios', pagos.funcionario.id, 'view']">{{ pagos.funcionario.nombreCompleto }}</a>
           </div>
         </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
       <button type="button" [routerLink]="['/pagos', pagos.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>
   </div>

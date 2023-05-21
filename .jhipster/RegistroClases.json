@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230227212546",
+  "applications": ["abf"],
+  "changelogDate": "20230521154857",
   "dto": "no",
   "embedded": false,
   "entityTableName": "registro_clases",
@@ -27,18 +27,10 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "nombreCurso",
-      "otherEntityName": "cursos",
-      "otherEntityRelationshipName": "registroClases",
-      "relationshipName": "cursos",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
-    },
-    {
-      "otherEntityField": "titulo",
+      "otherEntityField": "descripcion",
       "otherEntityName": "temas",
       "otherEntityRelationshipName": "registroClases",
-      "relationshipName": "temas",
+      "relationshipName": "tema",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
@@ -46,17 +38,8 @@
       "otherEntityField": "nombreCompleto",
       "otherEntityName": "funcionarios",
       "otherEntityRelationshipName": "registroClases",
-      "relationshipName": "funcionarios",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
-    },
-    {
-      "otherEntityField": "nombreCompleto",
-      "otherEntityName": "alumnos",
-      "otherEntityRelationshipName": "registroClases",
-      "relationshipName": "alumnos",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
+      "relationshipName": "funcionario",
+      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

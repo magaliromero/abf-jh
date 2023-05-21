@@ -2,7 +2,7 @@
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-prestamos-heading" data-cy="PrestamosCreateUpdateHeading" jhiTranslate="abfApp.prestamos.home.createOrEditLabel">
-        Crear o editar Prestamos
+        Create or edit a Prestamos
       </h2>
 
       <div>
@@ -40,40 +40,7 @@
               *ngIf="editForm.get('fechaPrestamo')?.errors?.required"
               jhiTranslate="entity.validation.required"
             >
-              Este campo es obligatorio.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.prestamos.vigenciaPrestamo" for="field_vigenciaPrestamo">Vigencia Prestamo</label>
-          <input
-            type="number"
-            class="form-control"
-            name="vigenciaPrestamo"
-            id="field_vigenciaPrestamo"
-            data-cy="vigenciaPrestamo"
-            formControlName="vigenciaPrestamo"
-          />
-          <div
-            *ngIf="
-              editForm.get('vigenciaPrestamo')!.invalid &&
-              (editForm.get('vigenciaPrestamo')!.dirty || editForm.get('vigenciaPrestamo')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('vigenciaPrestamo')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              Este campo es obligatorio.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('vigenciaPrestamo')?.errors?.number"
-              jhiTranslate="entity.validation.number"
-            >
-              Este campo debe ser un número.
+              This field is required.
             </small>
           </div>
         </div>
@@ -95,18 +62,19 @@
               <fa-icon icon="calendar-alt"></fa-icon>
             </button>
           </div>
-          <div
-            *ngIf="
-              editForm.get('fechaDevolucion')!.invalid &&
-              (editForm.get('fechaDevolucion')!.dirty || editForm.get('fechaDevolucion')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('fechaDevolucion')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              Este campo es obligatorio.
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.prestamos.estado" for="field_estado">Estado</label>
+          <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
+            <option [ngValue]="null">{{ 'abfApp.EstadosPrestamos.null' | translate }}</option>
+            <option *ngFor="let estadosPrestamos of estadosPrestamosValues" [value]="estadosPrestamos">
+              {{ 'abfApp.EstadosPrestamos.' + estadosPrestamos | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
             </small>
           </div>
         </div>
@@ -121,17 +89,54 @@
             formControlName="materiales"
             [compareWith]="compareMateriales"
           >
-            <option [ngValue]="null"></option>
+            <option *ngIf="editForm.get(['materiales'])!.value == null" [ngValue]="null" selected></option>
             <option [ngValue]="materialesOption" *ngFor="let materialesOption of materialesSharedCollection">
               {{ materialesOption.descripcion }}
             </option>
           </select>
         </div>
+        <div
+          *ngIf="editForm.get(['materiales'])!.invalid && (editForm.get(['materiales'])!.dirty || editForm.get(['materiales'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['materiales'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.prestamos.alumnos" for="field_alumnos">Alumnos</label>
+          <select
+            class="form-control"
+            id="field_alumnos"
+            data-cy="alumnos"
+            name="alumnos"
+            formControlName="alumnos"
+            [compareWith]="compareAlumnos"
+          >
+            <option *ngIf="editForm.get(['alumnos'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="alumnosOption" *ngFor="let alumnosOption of alumnosSharedCollection">
+              {{ alumnosOption.nombreCompleto }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['alumnos'])!.invalid && (editForm.get(['alumnos'])!.dirty || editForm.get(['alumnos'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['alumnos'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
       </div>
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
 
         <button
@@ -141,7 +146,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
       </div>
     </form>
