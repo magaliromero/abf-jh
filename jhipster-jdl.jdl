@@ -1,13 +1,5 @@
-application {
-  config {
-    baseName abf,
-    applicationType monolith,
-    packageName py.com.abf,
-    authenticationType jwt,
-    clientFramework angular
-  }
-  entities *
-}
+
+
 
 enum EstadosPagos{
  	PAGADO(Pagado)
@@ -42,7 +34,7 @@ enum Niveles{
 }
 
 enum EstadosPrestamos{
- 	DISPONIBLE(Disponible)
+ 	DEVUELTO(Devuelto)
     PRESTADO("En Prestamo")
     VENCIDO("No devuelto") 
 }
@@ -100,6 +92,15 @@ entity Facturas(factura){
     condicionVenta CondicionVenta required,
 	total Integer required
 }
+
+entity FacturaDetalle(factura_detalle){
+	cantidad Integer,
+    precioUnitario Integer,
+    subtotal Integer,
+	porcentajeIva Integer,
+	valorPorcentaje Integer
+}
+
 entity Pagos(pagos){
     fecha LocalDate required,
 	total Integer required,
@@ -113,13 +114,7 @@ entity Productos(productos){
 	descripcion String required
     
 }
-entity FacturaDetalle(factura_detalle){
-	cantidad Integer,
-    precioUnitario Integer,
-    subtotal Integer,
-	porcentajeIva Integer,
-	valorPorcentaje Integer
-}
+
 
 entity Materiales(materiales){
 	descripcion String required,
@@ -141,6 +136,22 @@ entity Matricula(matricula){
     fechaInicio  LocalDate  required
     fechaPago LocalDate
     estado EstadosPagos required
+}
+
+entity Evaluaciones (evaluaciones){
+    nroEvaluacion Integer required
+	fecha LocalDate required    
+}
+
+entity EvaluacionesDetalle(evaluaciones_detalle){
+    comentarios String required
+    puntaje Integer required
+}
+relationship OneToMany {
+	Evaluaciones to EvaluacionesDetalle { Evaluaciones(nroEvaluacion) required }
+    Alumnos to Evaluaciones{Alumnos(nombreCompleto) required}
+    Funcionarios to Evaluaciones {Funcionarios(nombreCompleto) required}
+    Temas to EvaluacionesDetalle { Temas(titulo) required}
 }
 
 relationship OneToMany {

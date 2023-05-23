@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="facturaDetalle">
+      <h2 data-cy="facturaDetalleDetailsHeading"><span jhiTranslate="abfApp.facturaDetalle.detail.title">Factura Detalle</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ facturaDetalle.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturaDetalle.cantidad">Cantidad</span></dt>
+        <dd>
+          <span>{{ facturaDetalle.cantidad }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturaDetalle.precioUnitario">Precio Unitario</span></dt>
+        <dd>
+          <span>{{ facturaDetalle.precioUnitario }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturaDetalle.subtotal">Subtotal</span></dt>
+        <dd>
+          <span>{{ facturaDetalle.subtotal }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturaDetalle.porcentajeIva">Porcentaje Iva</span></dt>
+        <dd>
+          <span>{{ facturaDetalle.porcentajeIva }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturaDetalle.valorPorcentaje">Valor Porcentaje</span></dt>
+        <dd>
+          <span>{{ facturaDetalle.valorPorcentaje }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturaDetalle.producto">Producto</span></dt>
+        <dd>
+          <div *ngIf="facturaDetalle.producto">
+            <a [routerLink]="['/productos', facturaDetalle.producto.id, 'view']">{{ facturaDetalle.producto.descripcion }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturaDetalle.factura">Factura</span></dt>
+        <dd>
+          <div *ngIf="facturaDetalle.factura">
+            <a [routerLink]="['/facturas', facturaDetalle.factura.id, 'view']">{{ facturaDetalle.factura.facturaNro }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/factura-detalle', facturaDetalle.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

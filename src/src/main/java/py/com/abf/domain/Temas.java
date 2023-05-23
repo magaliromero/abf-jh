@@ -1,0 +1,162 @@
+package py.com.abf.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.*;
+import javax.validation.constraints.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import py.com.abf.domain.enumeration.Niveles;
+
+/**
+ * A Temas.
+ */
+@Entity
+@Table(name = "temas")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@SuppressWarnings("common-java:DuplicatedBlocks")
+public class Temas implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    @Column(name = "id")
+    private Long id;
+
+    @NotNull
+    @Column(name = "titulo", nullable = false)
+    private String titulo;
+
+    @NotNull
+    @Column(name = "descripcion", nullable = false)
+    private String descripcion;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nivel", nullable = false)
+    private Niveles nivel;
+
+    @OneToMany(mappedBy = "tema")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "tema", "funcionario" }, allowSetters = true)
+    private Set<RegistroClases> registroClases = new HashSet<>();
+
+    // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public Temas id(Long id) {
+        this.setId(id);
+        return this;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return this.titulo;
+    }
+
+    public Temas titulo(String titulo) {
+        this.setTitulo(titulo);
+        return this;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+
+    public Temas descripcion(String descripcion) {
+        this.setDescripcion(descripcion);
+        return this;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Niveles getNivel() {
+        return this.nivel;
+    }
+
+    public Temas nivel(Niveles nivel) {
+        this.setNivel(nivel);
+        return this;
+    }
+
+    public void setNivel(Niveles nivel) {
+        this.nivel = nivel;
+    }
+
+    public Set<RegistroClases> getRegistroClases() {
+        return this.registroClases;
+    }
+
+    public void setRegistroClases(Set<RegistroClases> registroClases) {
+        if (this.registroClases != null) {
+            this.registroClases.forEach(i -> i.setTema(null));
+        }
+        if (registroClases != null) {
+            registroClases.forEach(i -> i.setTema(this));
+        }
+        this.registroClases = registroClases;
+    }
+
+    public Temas registroClases(Set<RegistroClases> registroClases) {
+        this.setRegistroClases(registroClases);
+        return this;
+    }
+
+    public Temas addRegistroClases(RegistroClases registroClases) {
+        this.registroClases.add(registroClases);
+        registroClases.setTema(this);
+        return this;
+    }
+
+    public Temas removeRegistroClases(RegistroClases registroClases) {
+        this.registroClases.remove(registroClases);
+        registroClases.setTema(null);
+        return this;
+    }
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Temas)) {
+            return false;
+        }
+        return id != null && id.equals(((Temas) o).id);
+    }
+
+    @Override
+    public int hashCode() {
+        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        return getClass().hashCode();
+    }
+
+    // prettier-ignore
+    @Override
+    public String toString() {
+        return "Temas{" +
+            "id=" + getId() +
+            ", titulo='" + getTitulo() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
+            ", nivel='" + getNivel() + "'" +
+            "}";
+    }
+}

@@ -1,6 +1,6 @@
 {
-  "applications": ["abf"],
-  "changelogDate": "20230521155157",
+  "applications": "*",
+  "changelogDate": "20230523011407",
   "dto": "no",
   "embedded": false,
   "entityTableName": "funcionarios",
@@ -66,6 +66,12 @@
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [
+    {
+      "otherEntityName": "evaluaciones",
+      "otherEntityRelationshipName": "funcionarios",
+      "relationshipName": "evaluaciones",
+      "relationshipType": "one-to-many"
+    },
     {
       "otherEntityName": "pagos",
       "otherEntityRelationshipName": "funcionario",

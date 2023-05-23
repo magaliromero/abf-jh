@@ -1,0 +1,28 @@
+{
+  "abfApp": {
+    "evaluaciones": {
+      "home": {
+        "title": "Evaluaciones",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Evaluaciones",
+        "createOrEditLabel": "Create or edit a Evaluaciones",
+        "notFound": "No Evaluaciones found"
+      },
+      "created": "A new Evaluaciones is created with identifier {{ param }}",
+      "updated": "A Evaluaciones is updated with identifier {{ param }}",
+      "deleted": "A Evaluaciones is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Evaluaciones {{ id }}?"
+      },
+      "detail": {
+        "title": "Evaluaciones"
+      },
+      "id": "ID",
+      "nroEvaluacion": "Nro Evaluacion",
+      "fecha": "Fecha",
+      "evaluacionesDetalle": "Evaluaciones Detalle",
+      "alumnos": "Alumnos",
+      "funcionarios": "Funcionarios"
+    }
+  }
+}

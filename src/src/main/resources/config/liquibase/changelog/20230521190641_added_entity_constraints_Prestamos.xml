@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Prestamos.
+    -->
+    <changeSet id="20230521190641-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="materiales_id"
+                                 baseTableName="prestamos"
+                                 constraintName="fk_prestamos__materiales_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="materiales"/>
+
+        <addForeignKeyConstraint baseColumnNames="alumnos_id"
+                                 baseTableName="prestamos"
+                                 constraintName="fk_prestamos__alumnos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="alumnos"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,139 @@
+<div>
+  <h2 id="page-heading" data-cy="EvaluacionesDetalleHeading">
+    <span jhiTranslate="abfApp.evaluacionesDetalle.home.title">Evaluaciones Detalles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="abfApp.evaluacionesDetalle.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-evaluaciones-detalle"
+        [routerLink]="['/evaluaciones-detalle/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="abfApp.evaluacionesDetalle.home.createLabel"> Create a new Evaluaciones Detalle </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="evaluacionesDetalles?.length === 0">
+    <span jhiTranslate="abfApp.evaluacionesDetalle.home.notFound">No Evaluaciones Detalles found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="evaluacionesDetalles && evaluacionesDetalles.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="comentarios">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.evaluacionesDetalle.comentarios">Comentarios</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="puntaje">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.evaluacionesDetalle.puntaje">Puntaje</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="evaluaciones.nroEvaluacion">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.evaluacionesDetalle.evaluaciones">Evaluaciones</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="temas.titulo">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.evaluacionesDetalle.temas">Temas</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evaluacionesDetalle of evaluacionesDetalles; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/evaluaciones-detalle', evaluacionesDetalle.id, 'view']">{{ evaluacionesDetalle.id }}</a>
+          </td>
+          <td>{{ evaluacionesDetalle.comentarios }}</td>
+          <td>{{ evaluacionesDetalle.puntaje }}</td>
+          <td>
+            <div *ngIf="evaluacionesDetalle.evaluaciones">
+              <a [routerLink]="['/evaluaciones', evaluacionesDetalle.evaluaciones.id, 'view']">{{
+                evaluacionesDetalle.evaluaciones.nroEvaluacion
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="evaluacionesDetalle.temas">
+              <a [routerLink]="['/temas', evaluacionesDetalle.temas.id, 'view']">{{ evaluacionesDetalle.temas.titulo }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/evaluaciones-detalle', evaluacionesDetalle.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/evaluaciones-detalle', evaluacionesDetalle.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(evaluacionesDetalle)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="evaluacionesDetalles && evaluacionesDetalles.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

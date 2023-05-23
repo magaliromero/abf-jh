@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="facturas">
+      <h2 data-cy="facturasDetailsHeading"><span jhiTranslate="abfApp.facturas.detail.title">Facturas</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ facturas.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.fecha">Fecha</span></dt>
+        <dd>
+          <span>{{ facturas.fecha | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.facturaNro">Factura Nro</span></dt>
+        <dd>
+          <span>{{ facturas.facturaNro }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.timbrado">Timbrado</span></dt>
+        <dd>
+          <span>{{ facturas.timbrado }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.razonSocial">Razon Social</span></dt>
+        <dd>
+          <span>{{ facturas.razonSocial }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.ruc">Ruc</span></dt>
+        <dd>
+          <span>{{ facturas.ruc }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.condicionVenta">Condicion Venta</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'abfApp.CondicionVenta.' + facturas.condicionVenta }}">{{ facturas.condicionVenta }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.facturas.total">Total</span></dt>
+        <dd>
+          <span>{{ facturas.total }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/facturas', facturas.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

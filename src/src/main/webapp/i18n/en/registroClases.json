@@ -1,0 +1,28 @@
+{
+  "abfApp": {
+    "registroClases": {
+      "home": {
+        "title": "Registro Clases",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Registro Clases",
+        "createOrEditLabel": "Create or edit a Registro Clases",
+        "notFound": "No Registro Clases found"
+      },
+      "created": "A new Registro Clases is created with identifier {{ param }}",
+      "updated": "A Registro Clases is updated with identifier {{ param }}",
+      "deleted": "A Registro Clases is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Registro Clases {{ id }}?"
+      },
+      "detail": {
+        "title": "Registro Clases"
+      },
+      "id": "ID",
+      "fecha": "Fecha",
+      "cantidadHoras": "Cantidad Horas",
+      "asistenciaAlumno": "Asistencia Alumno",
+      "tema": "Tema",
+      "funcionario": "Funcionario"
+    }
+  }
+}

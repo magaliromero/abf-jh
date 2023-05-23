@@ -1,0 +1,36 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="tiposDocumentos">
+      <h2 data-cy="tiposDocumentosDetailsHeading"><span jhiTranslate="abfApp.tiposDocumentos.detail.title">Tipos Documentos</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ tiposDocumentos.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.tiposDocumentos.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ tiposDocumentos.codigo }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.tiposDocumentos.descripcion">Descripcion</span></dt>
+        <dd>
+          <span>{{ tiposDocumentos.descripcion }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/tipos-documentos', tiposDocumentos.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

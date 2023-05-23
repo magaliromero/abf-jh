@@ -1,0 +1,28 @@
+{
+  "abfApp": {
+    "prestamos": {
+      "home": {
+        "title": "Prestamos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Prestamos",
+        "createOrEditLabel": "Create or edit a Prestamos",
+        "notFound": "No Prestamos found"
+      },
+      "created": "A new Prestamos is created with identifier {{ param }}",
+      "updated": "A Prestamos is updated with identifier {{ param }}",
+      "deleted": "A Prestamos is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Prestamos {{ id }}?"
+      },
+      "detail": {
+        "title": "Prestamos"
+      },
+      "id": "ID",
+      "fechaPrestamo": "Fecha Prestamo",
+      "fechaDevolucion": "Fecha Devolucion",
+      "estado": "Estado",
+      "materiales": "Materiales",
+      "alumnos": "Alumnos"
+    }
+  }
+}

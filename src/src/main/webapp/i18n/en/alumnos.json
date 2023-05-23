@@ -1,0 +1,36 @@
+{
+  "abfApp": {
+    "alumnos": {
+      "home": {
+        "title": "Alumnos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Alumnos",
+        "createOrEditLabel": "Create or edit a Alumnos",
+        "notFound": "No Alumnos found"
+      },
+      "created": "A new Alumnos is created with identifier {{ param }}",
+      "updated": "A Alumnos is updated with identifier {{ param }}",
+      "deleted": "A Alumnos is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Alumnos {{ id }}?"
+      },
+      "detail": {
+        "title": "Alumnos"
+      },
+      "id": "ID",
+      "elo": "Elo",
+      "fideId": "Fide Id",
+      "nombres": "Nombres",
+      "apellidos": "Apellidos",
+      "nombreCompleto": "Nombre Completo",
+      "email": "Email",
+      "telefono": "Telefono",
+      "fechaNacimiento": "Fecha Nacimiento",
+      "documento": "Documento",
+      "estado": "Estado",
+      "matricula": "Matricula",
+      "prestamos": "Prestamos",
+      "tipoDocumentos": "Tipo Documentos"
+    }
+  }
+}

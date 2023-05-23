@@ -1,6 +1,6 @@
 {
   "applications": ["abf"],
-  "changelogDate": "20230521155857",
+  "changelogDate": "20230523012107",
   "dto": "no",
   "embedded": false,
   "entityTableName": "matricula",

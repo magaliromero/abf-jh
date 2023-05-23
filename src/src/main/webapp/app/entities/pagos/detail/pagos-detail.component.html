@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="pagos">
+      <h2 data-cy="pagosDetailsHeading"><span jhiTranslate="abfApp.pagos.detail.title">Pagos</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ pagos.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.pagos.fecha">Fecha</span></dt>
+        <dd>
+          <span>{{ pagos.fecha | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.pagos.total">Total</span></dt>
+        <dd>
+          <span>{{ pagos.total }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.pagos.cantidadHoras">Cantidad Horas</span></dt>
+        <dd>
+          <span>{{ pagos.cantidadHoras }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.pagos.producto">Producto</span></dt>
+        <dd>
+          <div *ngIf="pagos.producto">
+            <a [routerLink]="['/productos', pagos.producto.id, 'view']">{{ pagos.producto.descripcion }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="abfApp.pagos.funcionario">Funcionario</span></dt>
+        <dd>
+          <div *ngIf="pagos.funcionario">
+            <a [routerLink]="['/funcionarios', pagos.funcionario.id, 'view']">{{ pagos.funcionario.nombreCompleto }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/pagos', pagos.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

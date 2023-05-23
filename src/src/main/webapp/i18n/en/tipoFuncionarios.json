@@ -1,0 +1,10 @@
+{
+  "abfApp": {
+    "TipoFuncionarios": {
+      "null": "",
+      "PROFESORES": "Profesores",
+      "FUNCIONARIOS": "Funcionarios",
+      "OTRO": "Otro"
+    }
+  }
+}

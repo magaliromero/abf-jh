@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="evaluaciones">
+      <h2 data-cy="evaluacionesDetailsHeading"><span jhiTranslate="abfApp.evaluaciones.detail.title">Evaluaciones</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ evaluaciones.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.evaluaciones.nroEvaluacion">Nro Evaluacion</span></dt>
+        <dd>
+          <span>{{ evaluaciones.nroEvaluacion }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.evaluaciones.fecha">Fecha</span></dt>
+        <dd>
+          <span>{{ evaluaciones.fecha | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.evaluaciones.alumnos">Alumnos</span></dt>
+        <dd>
+          <div *ngIf="evaluaciones.alumnos">
+            <a [routerLink]="['/alumnos', evaluaciones.alumnos.id, 'view']">{{ evaluaciones.alumnos.nombreCompleto }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="abfApp.evaluaciones.funcionarios">Funcionarios</span></dt>
+        <dd>
+          <div *ngIf="evaluaciones.funcionarios">
+            <a [routerLink]="['/funcionarios', evaluaciones.funcionarios.id, 'view']">{{ evaluaciones.funcionarios.nombreCompleto }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/evaluaciones', evaluaciones.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

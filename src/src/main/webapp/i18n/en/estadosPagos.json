@@ -1,0 +1,10 @@
+{
+  "abfApp": {
+    "EstadosPagos": {
+      "null": "",
+      "PAGADO": "Pagado",
+      "ANULADO": "Anulado",
+      "PENDIENTE": "Pendiente"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "applications": ["abf"],
-  "changelogDate": "20230521155057",
+  "applications": "*",
+  "changelogDate": "20230523011307",
   "dto": "no",
   "embedded": false,
   "entityTableName": "alumnos",
@@ -60,6 +60,12 @@
   "pagination": "pagination",
   "readOnly": false,
   "relationships": [
+    {
+      "otherEntityName": "evaluaciones",
+      "otherEntityRelationshipName": "alumnos",
+      "relationshipName": "evaluaciones",
+      "relationshipType": "one-to-many"
+    },
     {
       "otherEntityName": "matricula",
       "otherEntityRelationshipName": "alumno",

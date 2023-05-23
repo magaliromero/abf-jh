@@ -1,0 +1,123 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-evaluaciones-detalle-heading"
+        data-cy="EvaluacionesDetalleCreateUpdateHeading"
+        jhiTranslate="abfApp.evaluacionesDetalle.home.createOrEditLabel"
+      >
+        Create or edit a Evaluaciones Detalle
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.evaluacionesDetalle.comentarios" for="field_comentarios">Comentarios</label>
+          <input
+            type="text"
+            class="form-control"
+            name="comentarios"
+            id="field_comentarios"
+            data-cy="comentarios"
+            formControlName="comentarios"
+          />
+          <div *ngIf="editForm.get('comentarios')!.invalid && (editForm.get('comentarios')!.dirty || editForm.get('comentarios')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('comentarios')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.evaluacionesDetalle.puntaje" for="field_puntaje">Puntaje</label>
+          <input type="number" class="form-control" name="puntaje" id="field_puntaje" data-cy="puntaje" formControlName="puntaje" />
+          <div *ngIf="editForm.get('puntaje')!.invalid && (editForm.get('puntaje')!.dirty || editForm.get('puntaje')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('puntaje')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('puntaje')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.evaluacionesDetalle.evaluaciones" for="field_evaluaciones">Evaluaciones</label>
+          <select
+            class="form-control"
+            id="field_evaluaciones"
+            data-cy="evaluaciones"
+            name="evaluaciones"
+            formControlName="evaluaciones"
+            [compareWith]="compareEvaluaciones"
+          >
+            <option *ngIf="editForm.get(['evaluaciones'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="evaluacionesOption" *ngFor="let evaluacionesOption of evaluacionesSharedCollection">
+              {{ evaluacionesOption.nroEvaluacion }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['evaluaciones'])!.invalid && (editForm.get(['evaluaciones'])!.dirty || editForm.get(['evaluaciones'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['evaluaciones'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.evaluacionesDetalle.temas" for="field_temas">Temas</label>
+          <select class="form-control" id="field_temas" data-cy="temas" name="temas" formControlName="temas" [compareWith]="compareTemas">
+            <option *ngIf="editForm.get(['temas'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="temasOption" *ngFor="let temasOption of temasSharedCollection">{{ temasOption.titulo }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['temas'])!.invalid && (editForm.get(['temas'])!.dirty || editForm.get(['temas'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['temas'])?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

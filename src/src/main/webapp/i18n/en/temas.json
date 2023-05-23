@@ -1,0 +1,27 @@
+{
+  "abfApp": {
+    "temas": {
+      "home": {
+        "title": "Temas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Temas",
+        "createOrEditLabel": "Create or edit a Temas",
+        "notFound": "No Temas found"
+      },
+      "created": "A new Temas is created with identifier {{ param }}",
+      "updated": "A Temas is updated with identifier {{ param }}",
+      "deleted": "A Temas is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Temas {{ id }}?"
+      },
+      "detail": {
+        "title": "Temas"
+      },
+      "id": "ID",
+      "titulo": "Titulo",
+      "descripcion": "Descripcion",
+      "nivel": "Nivel",
+      "registroClases": "Registro Clases"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "applications": ["abf"],
-  "changelogDate": "20230521154857",
+  "changelogDate": "20230523011107",
   "dto": "no",
   "embedded": false,
   "entityTableName": "registro_clases",

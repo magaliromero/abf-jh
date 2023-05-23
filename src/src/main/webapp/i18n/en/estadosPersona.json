@@ -1,0 +1,9 @@
+{
+  "abfApp": {
+    "EstadosPersona": {
+      "null": "",
+      "ACTIVO": "Activo",
+      "INACTIVO": "Inactivo"
+    }
+  }
+}

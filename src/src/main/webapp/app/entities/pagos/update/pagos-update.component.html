@@ -1,0 +1,144 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-pagos-heading" data-cy="PagosCreateUpdateHeading" jhiTranslate="abfApp.pagos.home.createOrEditLabel">
+        Create or edit a Pagos
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.pagos.fecha" for="field_fecha">Fecha</label>
+          <div class="input-group">
+            <input
+              id="field_fecha"
+              data-cy="fecha"
+              type="text"
+              class="form-control"
+              name="fecha"
+              ngbDatepicker
+              #fechaDp="ngbDatepicker"
+              formControlName="fecha"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('fecha')!.invalid && (editForm.get('fecha')!.dirty || editForm.get('fecha')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('fecha')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.pagos.total" for="field_total">Total</label>
+          <input type="number" class="form-control" name="total" id="field_total" data-cy="total" formControlName="total" />
+          <div *ngIf="editForm.get('total')!.invalid && (editForm.get('total')!.dirty || editForm.get('total')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('total')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('total')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.pagos.cantidadHoras" for="field_cantidadHoras">Cantidad Horas</label>
+          <input
+            type="number"
+            class="form-control"
+            name="cantidadHoras"
+            id="field_cantidadHoras"
+            data-cy="cantidadHoras"
+            formControlName="cantidadHoras"
+          />
+          <div
+            *ngIf="
+              editForm.get('cantidadHoras')!.invalid && (editForm.get('cantidadHoras')!.dirty || editForm.get('cantidadHoras')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cantidadHoras')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('cantidadHoras')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.pagos.producto" for="field_producto">Producto</label>
+          <select
+            class="form-control"
+            id="field_producto"
+            data-cy="producto"
+            name="producto"
+            formControlName="producto"
+            [compareWith]="compareProductos"
+          >
+            <option *ngIf="editForm.get(['producto'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="productosOption" *ngFor="let productosOption of productosSharedCollection">
+              {{ productosOption.descripcion }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['producto'])!.invalid && (editForm.get(['producto'])!.dirty || editForm.get(['producto'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['producto'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.pagos.funcionario" for="field_funcionario">Funcionario</label>
+          <select
+            class="form-control"
+            id="field_funcionario"
+            data-cy="funcionario"
+            name="funcionario"
+            formControlName="funcionario"
+            [compareWith]="compareFuncionarios"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="funcionariosOption" *ngFor="let funcionariosOption of funcionariosSharedCollection">
+              {{ funcionariosOption.nombreCompleto }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

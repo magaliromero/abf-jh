@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="funcionarios">
+      <h2 data-cy="funcionariosDetailsHeading"><span jhiTranslate="abfApp.funcionarios.detail.title">Funcionarios</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ funcionarios.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.elo">Elo</span></dt>
+        <dd>
+          <span>{{ funcionarios.elo }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.fideId">Fide Id</span></dt>
+        <dd>
+          <span>{{ funcionarios.fideId }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.nombres">Nombres</span></dt>
+        <dd>
+          <span>{{ funcionarios.nombres }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.apellidos">Apellidos</span></dt>
+        <dd>
+          <span>{{ funcionarios.apellidos }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.nombreCompleto">Nombre Completo</span></dt>
+        <dd>
+          <span>{{ funcionarios.nombreCompleto }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.email">Email</span></dt>
+        <dd>
+          <span>{{ funcionarios.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.telefono">Telefono</span></dt>
+        <dd>
+          <span>{{ funcionarios.telefono }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.fechaNacimiento">Fecha Nacimiento</span></dt>
+        <dd>
+          <span>{{ funcionarios.fechaNacimiento | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.documento">Documento</span></dt>
+        <dd>
+          <span>{{ funcionarios.documento }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.estado">Estado</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'abfApp.EstadosPersona.' + funcionarios.estado }}">{{ funcionarios.estado }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.tipoFuncionario">Tipo Funcionario</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'abfApp.TipoFuncionarios.' + funcionarios.tipoFuncionario }}">{{ funcionarios.tipoFuncionario }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.funcionarios.tipoDocumentos">Tipo Documentos</span></dt>
+        <dd>
+          <div *ngIf="funcionarios.tipoDocumentos">
+            <a [routerLink]="['/tipos-documentos', funcionarios.tipoDocumentos.id, 'view']">{{
+              funcionarios.tipoDocumentos.descripcion
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/funcionarios', funcionarios.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
