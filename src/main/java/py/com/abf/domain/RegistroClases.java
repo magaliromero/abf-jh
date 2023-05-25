@@ -38,11 +38,11 @@ public class RegistroClases implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "registroClases" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "evaluacionesDetalles", "registroClases" }, allowSetters = true)
     private Temas tema;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "pagos", "registroClases", "tipoDocumentos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "evaluaciones", "pagos", "registroClases", "tipoDocumentos" }, allowSetters = true)
     private Funcionarios funcionario;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

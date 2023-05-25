@@ -133,6 +133,21 @@
             <div class="btn-group">
               <button
                 type="submit"
+                [routerLink]="['/evaluaciones']"
+                [queryParams]="{ 'filter[alumnosId.in]': alumnos.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.alumnos.evaluaciones' | translate) }"
+                  >Show Evaluaciones</span
+                >
+              </button>
+              <button
+                type="submit"
                 [routerLink]="['/matricula']"
                 [queryParams]="{ 'filter[alumnoId.in]': alumnos.id }"
                 class="btn btn-info btn-sm"

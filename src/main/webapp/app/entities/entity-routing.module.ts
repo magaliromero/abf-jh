@@ -35,6 +35,11 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./facturas/facturas.module').then(m => m.FacturasModule),
       },
       {
+        path: 'factura-detalle',
+        data: { pageTitle: 'abfApp.facturaDetalle.home.title' },
+        loadChildren: () => import('./factura-detalle/factura-detalle.module').then(m => m.FacturaDetalleModule),
+      },
+      {
         path: 'pagos',
         data: { pageTitle: 'abfApp.pagos.home.title' },
         loadChildren: () => import('./pagos/pagos.module').then(m => m.PagosModule),
@@ -43,11 +48,6 @@ import { RouterModule } from '@angular/router';
         path: 'productos',
         data: { pageTitle: 'abfApp.productos.home.title' },
         loadChildren: () => import('./productos/productos.module').then(m => m.ProductosModule),
-      },
-      {
-        path: 'factura-detalle',
-        data: { pageTitle: 'abfApp.facturaDetalle.home.title' },
-        loadChildren: () => import('./factura-detalle/factura-detalle.module').then(m => m.FacturaDetalleModule),
       },
       {
         path: 'materiales',
@@ -63,6 +63,16 @@ import { RouterModule } from '@angular/router';
         path: 'matricula',
         data: { pageTitle: 'abfApp.matricula.home.title' },
         loadChildren: () => import('./matricula/matricula.module').then(m => m.MatriculaModule),
+      },
+      {
+        path: 'evaluaciones',
+        data: { pageTitle: 'abfApp.evaluaciones.home.title' },
+        loadChildren: () => import('./evaluaciones/evaluaciones.module').then(m => m.EvaluacionesModule),
+      },
+      {
+        path: 'evaluaciones-detalle',
+        data: { pageTitle: 'abfApp.evaluacionesDetalle.home.title' },
+        loadChildren: () => import('./evaluaciones-detalle/evaluaciones-detalle.module').then(m => m.EvaluacionesDetalleModule),
       },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),

@@ -94,6 +94,15 @@ public class TemasQueryService extends QueryService<Temas> {
             if (criteria.getNivel() != null) {
                 specification = specification.and(buildSpecification(criteria.getNivel(), Temas_.nivel));
             }
+            if (criteria.getEvaluacionesDetalleId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getEvaluacionesDetalleId(),
+                            root -> root.join(Temas_.evaluacionesDetalles, JoinType.LEFT).get(EvaluacionesDetalle_.id)
+                        )
+                    );
+            }
             if (criteria.getRegistroClasesId() != null) {
                 specification =
                     specification.and(

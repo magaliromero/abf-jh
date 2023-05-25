@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { IPrestamos, NewPrestamos } from '../prestamos.model';
-import { EstadosPrestamos } from 'app/entities/enumerations/estados-prestamos.model';
 
 /**
  * A partial Type with required key is used as form input.
@@ -15,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type PrestamosFormGroupInput = IPrestamos | PartialWithRequiredKeyOf<NewPrestamos>;
 
-type PrestamosFormDefaults = Pick<NewPrestamos, 'id' | 'estado'>;
+type PrestamosFormDefaults = Pick<NewPrestamos, 'id'>;
 
 type PrestamosFormGroupContent = {
   id: FormControl<IPrestamos['id'] | NewPrestamos['id']>;
@@ -65,9 +64,6 @@ export class PrestamosFormService {
 
   resetForm(form: PrestamosFormGroup, prestamos: PrestamosFormGroupInput): void {
     const prestamosRawValue = { ...this.getFormDefaults(), ...prestamos };
-    console.log(' DEFAULT');
-    console.log(prestamosRawValue);
-
     form.reset(
       {
         ...prestamosRawValue,
@@ -79,7 +75,6 @@ export class PrestamosFormService {
   private getFormDefaults(): PrestamosFormDefaults {
     return {
       id: null,
-      estado: EstadosPrestamos.PRESTADO,
     };
   }
 }

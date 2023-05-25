@@ -1,4 +1,19 @@
 
+application {
+  config {
+    baseName abf
+    applicationType monolith
+    packageName py.com.abf
+    serviceDiscoveryType no
+    authenticationType jwt
+    prodDatabaseType postgresql
+    devDatabaseType postgresql
+    buildTool maven
+    clientFramework react
+  }
+  entities *
+}
+
 
 
 enum EstadosPagos{

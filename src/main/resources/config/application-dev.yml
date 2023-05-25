@@ -24,7 +24,7 @@ spring:
   devtools:
     restart:
       enabled: true
-      additional-exclude: static/**,.h2.server.properties
+      additional-exclude: static/**
     livereload:
       enabled: false # we use Webpack dev server + BrowserSync for livereload
   jackson:
@@ -32,17 +32,14 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:file:./target/h2db/db/abf;DB_CLOSE_DELAY=-1;MODE=LEGACY
-    username: abf
-    password:
+    url: jdbc:postgresql://188.166.149.126:5433/abf
+    username: postgres
+    password: abf
     hikari:
       poolName: Hikari
       auto-commit: false
-  h2:
-    console:
-      # disable spring boot built-in h2-console since we start it manually with correct configuration
-      enabled: false
   jpa:
+    database-platform: tech.jhipster.domain.util.FixedPostgreSQL10Dialect
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
@@ -85,7 +82,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: OTI0NTY2OTQwNzI4YjM0ZmU1MDg2ZTFjMzczZmMzN2Y0MDZlODMzMWU3MGJiN2IzMjYzMjRhZTA4OGM5ZjQ3ZTk1NTc4MDAyMjczZmNmYjBmMzU4YTMwZDc3M2RlMmU3YWI4Mjg4MjBkYzJjYzFhNGEzYTYyNjY5NWRiZDA5NTY=
+        base64-secret: Mzc3MzExMTRmZGJmZmE5YjY3MmY0MWQ2NzE3ZmJkNGRjZWFjOGFkYWRkMzk5ZTQzMDJiM2Y1NTc0OGUwMzE4YzlkMzRhNTk3OGIzOGNmYWZlMjU3ZDY3YWE4ZWQ3OWE3NWIzMDFlN2UwYTQxY2VlMjQxNjBhMjliMDg1MjljOTQ=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

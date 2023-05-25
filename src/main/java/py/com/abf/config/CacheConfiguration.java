@@ -49,28 +49,34 @@ public class CacheConfiguration {
             createCache(cm, py.com.abf.domain.Authority.class.getName());
             createCache(cm, py.com.abf.domain.User.class.getName() + ".authorities");
             createCache(cm, py.com.abf.domain.Temas.class.getName());
+            createCache(cm, py.com.abf.domain.Temas.class.getName() + ".evaluacionesDetalles");
             createCache(cm, py.com.abf.domain.Temas.class.getName() + ".registroClases");
             createCache(cm, py.com.abf.domain.RegistroClases.class.getName());
             createCache(cm, py.com.abf.domain.TiposDocumentos.class.getName());
             createCache(cm, py.com.abf.domain.TiposDocumentos.class.getName() + ".alumnos");
             createCache(cm, py.com.abf.domain.TiposDocumentos.class.getName() + ".funcionarios");
             createCache(cm, py.com.abf.domain.Alumnos.class.getName());
+            createCache(cm, py.com.abf.domain.Alumnos.class.getName() + ".evaluaciones");
             createCache(cm, py.com.abf.domain.Alumnos.class.getName() + ".matriculas");
             createCache(cm, py.com.abf.domain.Alumnos.class.getName() + ".prestamos");
             createCache(cm, py.com.abf.domain.Funcionarios.class.getName());
+            createCache(cm, py.com.abf.domain.Funcionarios.class.getName() + ".evaluaciones");
             createCache(cm, py.com.abf.domain.Funcionarios.class.getName() + ".pagos");
             createCache(cm, py.com.abf.domain.Funcionarios.class.getName() + ".registroClases");
             createCache(cm, py.com.abf.domain.Facturas.class.getName());
             createCache(cm, py.com.abf.domain.Facturas.class.getName() + ".facturaDetalles");
+            createCache(cm, py.com.abf.domain.FacturaDetalle.class.getName());
             createCache(cm, py.com.abf.domain.Pagos.class.getName());
             createCache(cm, py.com.abf.domain.Productos.class.getName());
             createCache(cm, py.com.abf.domain.Productos.class.getName() + ".pagos");
             createCache(cm, py.com.abf.domain.Productos.class.getName() + ".facturaDetalles");
-            createCache(cm, py.com.abf.domain.FacturaDetalle.class.getName());
             createCache(cm, py.com.abf.domain.Materiales.class.getName());
             createCache(cm, py.com.abf.domain.Materiales.class.getName() + ".prestamos");
             createCache(cm, py.com.abf.domain.Prestamos.class.getName());
             createCache(cm, py.com.abf.domain.Matricula.class.getName());
+            createCache(cm, py.com.abf.domain.Evaluaciones.class.getName());
+            createCache(cm, py.com.abf.domain.Evaluaciones.class.getName() + ".evaluacionesDetalles");
+            createCache(cm, py.com.abf.domain.EvaluacionesDetalle.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

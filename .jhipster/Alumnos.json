@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230523011307",
+  "applications": ["abf"],
+  "changelogDate": "20230523230537",
   "dto": "no",
   "embedded": false,
   "entityTableName": "alumnos",

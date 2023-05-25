@@ -18,6 +18,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
+import py.com.abf.domain.EvaluacionesDetalle;
 import py.com.abf.domain.RegistroClases;
 import py.com.abf.domain.Temas;
 import py.com.abf.domain.enumeration.Niveles;
@@ -391,6 +392,29 @@ class TemasResourceIT {
 
         // Get all the temasList where nivel is null
         defaultTemasShouldNotBeFound("nivel.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllTemasByEvaluacionesDetalleIsEqualToSomething() throws Exception {
+        EvaluacionesDetalle evaluacionesDetalle;
+        if (TestUtil.findAll(em, EvaluacionesDetalle.class).isEmpty()) {
+            temasRepository.saveAndFlush(temas);
+            evaluacionesDetalle = EvaluacionesDetalleResourceIT.createEntity(em);
+        } else {
+            evaluacionesDetalle = TestUtil.findAll(em, EvaluacionesDetalle.class).get(0);
+        }
+        em.persist(evaluacionesDetalle);
+        em.flush();
+        temas.addEvaluacionesDetalle(evaluacionesDetalle);
+        temasRepository.saveAndFlush(temas);
+        Long evaluacionesDetalleId = evaluacionesDetalle.getId();
+
+        // Get all the temasList where evaluacionesDetalle equals to evaluacionesDetalleId
+        defaultTemasShouldBeFound("evaluacionesDetalleId.equals=" + evaluacionesDetalleId);
+
+        // Get all the temasList where evaluacionesDetalle equals to (evaluacionesDetalleId + 1)
+        defaultTemasShouldNotBeFound("evaluacionesDetalleId.equals=" + (evaluacionesDetalleId + 1));
     }
 
     @Test

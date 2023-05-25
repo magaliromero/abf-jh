@@ -1,6 +1,6 @@
 {
   "applications": ["abf"],
-  "changelogDate": "20230523011807",
+  "changelogDate": "20230523231037",
   "dto": "no",
   "embedded": false,
   "entityTableName": "productos",

@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230523012109",
+  "applications": ["abf"],
+  "changelogDate": "20230523231537",
   "dto": "no",
   "embedded": false,
   "entityTableName": "evaluaciones_detalle",

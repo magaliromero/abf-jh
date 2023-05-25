@@ -29,6 +29,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Alumnos;
+import py.com.abf.domain.Evaluaciones;
 import py.com.abf.domain.Matricula;
 import py.com.abf.domain.Prestamos;
 import py.com.abf.domain.TiposDocumentos;
@@ -1114,6 +1115,29 @@ class AlumnosResourceIT {
 
         // Get all the alumnosList where estado is null
         defaultAlumnosShouldNotBeFound("estado.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllAlumnosByEvaluacionesIsEqualToSomething() throws Exception {
+        Evaluaciones evaluaciones;
+        if (TestUtil.findAll(em, Evaluaciones.class).isEmpty()) {
+            alumnosRepository.saveAndFlush(alumnos);
+            evaluaciones = EvaluacionesResourceIT.createEntity(em);
+        } else {
+            evaluaciones = TestUtil.findAll(em, Evaluaciones.class).get(0);
+        }
+        em.persist(evaluaciones);
+        em.flush();
+        alumnos.addEvaluaciones(evaluaciones);
+        alumnosRepository.saveAndFlush(alumnos);
+        Long evaluacionesId = evaluaciones.getId();
+
+        // Get all the alumnosList where evaluaciones equals to evaluacionesId
+        defaultAlumnosShouldBeFound("evaluacionesId.equals=" + evaluacionesId);
+
+        // Get all the alumnosList where evaluaciones equals to (evaluacionesId + 1)
+        defaultAlumnosShouldNotBeFound("evaluacionesId.equals=" + (evaluacionesId + 1));
     }
 
     @Test

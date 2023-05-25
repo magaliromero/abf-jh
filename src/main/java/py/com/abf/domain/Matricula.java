@@ -52,7 +52,7 @@ public class Matricula implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "matriculas", "prestamos", "tipoDocumentos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "evaluaciones", "matriculas", "prestamos", "tipoDocumentos" }, allowSetters = true)
     private Alumnos alumno;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

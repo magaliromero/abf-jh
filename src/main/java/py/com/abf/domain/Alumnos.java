@@ -66,6 +66,11 @@ public class Alumnos implements Serializable {
     @Column(name = "estado", nullable = false)
     private EstadosPersona estado;
 
+    @OneToMany(mappedBy = "alumnos")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "evaluacionesDetalles", "alumnos", "funcionarios" }, allowSetters = true)
+    private Set<Evaluaciones> evaluaciones = new HashSet<>();
+
     @OneToMany(mappedBy = "alumno")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "alumno" }, allowSetters = true)
@@ -224,6 +229,37 @@ public class Alumnos implements Serializable {
 
     public void setEstado(EstadosPersona estado) {
         this.estado = estado;
+    }
+
+    public Set<Evaluaciones> getEvaluaciones() {
+        return this.evaluaciones;
+    }
+
+    public void setEvaluaciones(Set<Evaluaciones> evaluaciones) {
+        if (this.evaluaciones != null) {
+            this.evaluaciones.forEach(i -> i.setAlumnos(null));
+        }
+        if (evaluaciones != null) {
+            evaluaciones.forEach(i -> i.setAlumnos(this));
+        }
+        this.evaluaciones = evaluaciones;
+    }
+
+    public Alumnos evaluaciones(Set<Evaluaciones> evaluaciones) {
+        this.setEvaluaciones(evaluaciones);
+        return this;
+    }
+
+    public Alumnos addEvaluaciones(Evaluaciones evaluaciones) {
+        this.evaluaciones.add(evaluaciones);
+        evaluaciones.setAlumnos(this);
+        return this;
+    }
+
+    public Alumnos removeEvaluaciones(Evaluaciones evaluaciones) {
+        this.evaluaciones.remove(evaluaciones);
+        evaluaciones.setAlumnos(null);
+        return this;
     }
 
     public Set<Matricula> getMatriculas() {

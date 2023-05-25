@@ -28,6 +28,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
+import py.com.abf.domain.Evaluaciones;
 import py.com.abf.domain.Funcionarios;
 import py.com.abf.domain.Pagos;
 import py.com.abf.domain.RegistroClases;
@@ -1179,6 +1180,29 @@ class FuncionariosResourceIT {
 
         // Get all the funcionariosList where tipoFuncionario is null
         defaultFuncionariosShouldNotBeFound("tipoFuncionario.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllFuncionariosByEvaluacionesIsEqualToSomething() throws Exception {
+        Evaluaciones evaluaciones;
+        if (TestUtil.findAll(em, Evaluaciones.class).isEmpty()) {
+            funcionariosRepository.saveAndFlush(funcionarios);
+            evaluaciones = EvaluacionesResourceIT.createEntity(em);
+        } else {
+            evaluaciones = TestUtil.findAll(em, Evaluaciones.class).get(0);
+        }
+        em.persist(evaluaciones);
+        em.flush();
+        funcionarios.addEvaluaciones(evaluaciones);
+        funcionariosRepository.saveAndFlush(funcionarios);
+        Long evaluacionesId = evaluaciones.getId();
+
+        // Get all the funcionariosList where evaluaciones equals to evaluacionesId
+        defaultFuncionariosShouldBeFound("evaluacionesId.equals=" + evaluacionesId);
+
+        // Get all the funcionariosList where evaluaciones equals to (evaluacionesId + 1)
+        defaultFuncionariosShouldNotBeFound("evaluacionesId.equals=" + (evaluacionesId + 1));
     }
 
     @Test

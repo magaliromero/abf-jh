@@ -47,6 +47,8 @@ public class TemasCriteria implements Serializable, Criteria {
 
     private NivelesFilter nivel;
 
+    private LongFilter evaluacionesDetalleId;
+
     private LongFilter registroClasesId;
 
     private Boolean distinct;
@@ -58,6 +60,7 @@ public class TemasCriteria implements Serializable, Criteria {
         this.titulo = other.titulo == null ? null : other.titulo.copy();
         this.descripcion = other.descripcion == null ? null : other.descripcion.copy();
         this.nivel = other.nivel == null ? null : other.nivel.copy();
+        this.evaluacionesDetalleId = other.evaluacionesDetalleId == null ? null : other.evaluacionesDetalleId.copy();
         this.registroClasesId = other.registroClasesId == null ? null : other.registroClasesId.copy();
         this.distinct = other.distinct;
     }
@@ -127,6 +130,21 @@ public class TemasCriteria implements Serializable, Criteria {
         this.nivel = nivel;
     }
 
+    public LongFilter getEvaluacionesDetalleId() {
+        return evaluacionesDetalleId;
+    }
+
+    public LongFilter evaluacionesDetalleId() {
+        if (evaluacionesDetalleId == null) {
+            evaluacionesDetalleId = new LongFilter();
+        }
+        return evaluacionesDetalleId;
+    }
+
+    public void setEvaluacionesDetalleId(LongFilter evaluacionesDetalleId) {
+        this.evaluacionesDetalleId = evaluacionesDetalleId;
+    }
+
     public LongFilter getRegistroClasesId() {
         return registroClasesId;
     }
@@ -164,6 +182,7 @@ public class TemasCriteria implements Serializable, Criteria {
             Objects.equals(titulo, that.titulo) &&
             Objects.equals(descripcion, that.descripcion) &&
             Objects.equals(nivel, that.nivel) &&
+            Objects.equals(evaluacionesDetalleId, that.evaluacionesDetalleId) &&
             Objects.equals(registroClasesId, that.registroClasesId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -171,7 +190,7 @@ public class TemasCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, titulo, descripcion, nivel, registroClasesId, distinct);
+        return Objects.hash(id, titulo, descripcion, nivel, evaluacionesDetalleId, registroClasesId, distinct);
     }
 
     // prettier-ignore
@@ -182,6 +201,7 @@ public class TemasCriteria implements Serializable, Criteria {
             (titulo != null ? "titulo=" + titulo + ", " : "") +
             (descripcion != null ? "descripcion=" + descripcion + ", " : "") +
             (nivel != null ? "nivel=" + nivel + ", " : "") +
+            (evaluacionesDetalleId != null ? "evaluacionesDetalleId=" + evaluacionesDetalleId + ", " : "") +
             (registroClasesId != null ? "registroClasesId=" + registroClasesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

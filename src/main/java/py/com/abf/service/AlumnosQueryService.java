@@ -115,6 +115,15 @@ public class AlumnosQueryService extends QueryService<Alumnos> {
             if (criteria.getEstado() != null) {
                 specification = specification.and(buildSpecification(criteria.getEstado(), Alumnos_.estado));
             }
+            if (criteria.getEvaluacionesId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getEvaluacionesId(),
+                            root -> root.join(Alumnos_.evaluaciones, JoinType.LEFT).get(Evaluaciones_.id)
+                        )
+                    );
+            }
             if (criteria.getMatriculaId() != null) {
                 specification =
                     specification.and(

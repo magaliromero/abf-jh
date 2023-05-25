@@ -28,6 +28,7 @@
       "fechaNacimiento": "Fecha Nacimiento",
       "documento": "Documento",
       "estado": "Estado",
+      "evaluaciones": "Evaluaciones",
       "matricula": "Matricula",
       "prestamos": "Prestamos",
       "tipoDocumentos": "Tipo Documentos"

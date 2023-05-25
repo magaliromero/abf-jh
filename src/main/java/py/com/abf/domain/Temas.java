@@ -40,6 +40,11 @@ public class Temas implements Serializable {
     @Column(name = "nivel", nullable = false)
     private Niveles nivel;
 
+    @OneToMany(mappedBy = "temas")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "evaluaciones", "temas" }, allowSetters = true)
+    private Set<EvaluacionesDetalle> evaluacionesDetalles = new HashSet<>();
+
     @OneToMany(mappedBy = "tema")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "tema", "funcionario" }, allowSetters = true)
@@ -97,6 +102,37 @@ public class Temas implements Serializable {
 
     public void setNivel(Niveles nivel) {
         this.nivel = nivel;
+    }
+
+    public Set<EvaluacionesDetalle> getEvaluacionesDetalles() {
+        return this.evaluacionesDetalles;
+    }
+
+    public void setEvaluacionesDetalles(Set<EvaluacionesDetalle> evaluacionesDetalles) {
+        if (this.evaluacionesDetalles != null) {
+            this.evaluacionesDetalles.forEach(i -> i.setTemas(null));
+        }
+        if (evaluacionesDetalles != null) {
+            evaluacionesDetalles.forEach(i -> i.setTemas(this));
+        }
+        this.evaluacionesDetalles = evaluacionesDetalles;
+    }
+
+    public Temas evaluacionesDetalles(Set<EvaluacionesDetalle> evaluacionesDetalles) {
+        this.setEvaluacionesDetalles(evaluacionesDetalles);
+        return this;
+    }
+
+    public Temas addEvaluacionesDetalle(EvaluacionesDetalle evaluacionesDetalle) {
+        this.evaluacionesDetalles.add(evaluacionesDetalle);
+        evaluacionesDetalle.setTemas(this);
+        return this;
+    }
+
+    public Temas removeEvaluacionesDetalle(EvaluacionesDetalle evaluacionesDetalle) {
+        this.evaluacionesDetalles.remove(evaluacionesDetalle);
+        evaluacionesDetalle.setTemas(null);
+        return this;
     }
 
     public Set<RegistroClases> getRegistroClases() {

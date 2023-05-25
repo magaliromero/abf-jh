@@ -61,6 +61,8 @@ public class AlumnosCriteria implements Serializable, Criteria {
 
     private EstadosPersonaFilter estado;
 
+    private LongFilter evaluacionesId;
+
     private LongFilter matriculaId;
 
     private LongFilter prestamosId;
@@ -83,6 +85,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
         this.fechaNacimiento = other.fechaNacimiento == null ? null : other.fechaNacimiento.copy();
         this.documento = other.documento == null ? null : other.documento.copy();
         this.estado = other.estado == null ? null : other.estado.copy();
+        this.evaluacionesId = other.evaluacionesId == null ? null : other.evaluacionesId.copy();
         this.matriculaId = other.matriculaId == null ? null : other.matriculaId.copy();
         this.prestamosId = other.prestamosId == null ? null : other.prestamosId.copy();
         this.tipoDocumentosId = other.tipoDocumentosId == null ? null : other.tipoDocumentosId.copy();
@@ -259,6 +262,21 @@ public class AlumnosCriteria implements Serializable, Criteria {
         this.estado = estado;
     }
 
+    public LongFilter getEvaluacionesId() {
+        return evaluacionesId;
+    }
+
+    public LongFilter evaluacionesId() {
+        if (evaluacionesId == null) {
+            evaluacionesId = new LongFilter();
+        }
+        return evaluacionesId;
+    }
+
+    public void setEvaluacionesId(LongFilter evaluacionesId) {
+        this.evaluacionesId = evaluacionesId;
+    }
+
     public LongFilter getMatriculaId() {
         return matriculaId;
     }
@@ -333,6 +351,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
             Objects.equals(fechaNacimiento, that.fechaNacimiento) &&
             Objects.equals(documento, that.documento) &&
             Objects.equals(estado, that.estado) &&
+            Objects.equals(evaluacionesId, that.evaluacionesId) &&
             Objects.equals(matriculaId, that.matriculaId) &&
             Objects.equals(prestamosId, that.prestamosId) &&
             Objects.equals(tipoDocumentosId, that.tipoDocumentosId) &&
@@ -354,6 +373,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
             fechaNacimiento,
             documento,
             estado,
+            evaluacionesId,
             matriculaId,
             prestamosId,
             tipoDocumentosId,
@@ -376,6 +396,7 @@ public class AlumnosCriteria implements Serializable, Criteria {
             (fechaNacimiento != null ? "fechaNacimiento=" + fechaNacimiento + ", " : "") +
             (documento != null ? "documento=" + documento + ", " : "") +
             (estado != null ? "estado=" + estado + ", " : "") +
+            (evaluacionesId != null ? "evaluacionesId=" + evaluacionesId + ", " : "") +
             (matriculaId != null ? "matriculaId=" + matriculaId + ", " : "") +
             (prestamosId != null ? "prestamosId=" + prestamosId + ", " : "") +
             (tipoDocumentosId != null ? "tipoDocumentosId=" + tipoDocumentosId + ", " : "") +

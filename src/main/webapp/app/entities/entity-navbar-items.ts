@@ -30,6 +30,11 @@ export const EntityNavbarItems = [
     translationKey: 'global.menu.entities.facturas',
   },
   {
+    name: 'FacturaDetalle',
+    route: 'factura-detalle',
+    translationKey: 'global.menu.entities.facturaDetalle',
+  },
+  {
     name: 'Pagos',
     route: 'pagos',
     translationKey: 'global.menu.entities.pagos',
@@ -38,11 +43,6 @@ export const EntityNavbarItems = [
     name: 'Productos',
     route: 'productos',
     translationKey: 'global.menu.entities.productos',
-  },
-  {
-    name: 'FacturaDetalle',
-    route: 'factura-detalle',
-    translationKey: 'global.menu.entities.facturaDetalle',
   },
   {
     name: 'Materiales',
@@ -58,5 +58,15 @@ export const EntityNavbarItems = [
     name: 'Matricula',
     route: 'matricula',
     translationKey: 'global.menu.entities.matricula',
+  },
+  {
+    name: 'Evaluaciones',
+    route: 'evaluaciones',
+    translationKey: 'global.menu.entities.evaluaciones',
+  },
+  {
+    name: 'EvaluacionesDetalle',
+    route: 'evaluaciones-detalle',
+    translationKey: 'global.menu.entities.evaluacionesDetalle',
   },
 ];

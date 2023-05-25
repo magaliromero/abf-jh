@@ -6,7 +6,7 @@ import { IFacturas, NewFacturas } from './facturas.model';
 
 export const sampleWithRequiredData: IFacturas = {
   id: 29679,
-  fecha: dayjs('2023-05-21'),
+  fecha: dayjs('2023-05-23'),
   facturaNro: 'explicit circuit',
   timbrado: 61190,
   razonSocial: 'Zealand',
@@ -17,7 +17,7 @@ export const sampleWithRequiredData: IFacturas = {
 
 export const sampleWithPartialData: IFacturas = {
   id: 37081,
-  fecha: dayjs('2023-05-21'),
+  fecha: dayjs('2023-05-23'),
   facturaNro: 'Oval',
   timbrado: 89640,
   razonSocial: 'Yuan Tasty',
@@ -28,7 +28,7 @@ export const sampleWithPartialData: IFacturas = {
 
 export const sampleWithFullData: IFacturas = {
   id: 97576,
-  fecha: dayjs('2023-05-21'),
+  fecha: dayjs('2023-05-23'),
   facturaNro: 'National',
   timbrado: 22694,
   razonSocial: 'bypassing Configuration navigate',
@@ -38,7 +38,7 @@ export const sampleWithFullData: IFacturas = {
 };
 
 export const sampleWithNewData: NewFacturas = {
-  fecha: dayjs('2023-05-21'),
+  fecha: dayjs('2023-05-23'),
   facturaNro: 'cohesive Greece',
   timbrado: 59500,
   razonSocial: 'XML protocol',

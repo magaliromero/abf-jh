@@ -13,12 +13,14 @@
         "alumnos": "Alumnos",
         "funcionarios": "Funcionarios",
         "facturas": "Facturas",
+        "facturaDetalle": "Factura Detalle",
         "pagos": "Pagos",
         "productos": "Productos",
-        "facturaDetalle": "Factura Detalle",
         "materiales": "Materiales",
         "prestamos": "Prestamos",
         "matricula": "Matricula",
+        "evaluaciones": "Evaluaciones",
+        "evaluacionesDetalle": "Evaluaciones Detalle",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

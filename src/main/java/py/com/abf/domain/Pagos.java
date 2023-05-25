@@ -43,7 +43,7 @@ public class Pagos implements Serializable {
     private Productos producto;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "pagos", "registroClases", "tipoDocumentos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "evaluaciones", "pagos", "registroClases", "tipoDocumentos" }, allowSetters = true)
     private Funcionarios funcionario;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -1,6 +1,6 @@
 {
-  "applications": "*",
-  "changelogDate": "20230523011407",
+  "applications": ["abf"],
+  "changelogDate": "20230523230637",
   "dto": "no",
   "embedded": false,
   "entityTableName": "funcionarios",

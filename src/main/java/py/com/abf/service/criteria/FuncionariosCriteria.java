@@ -81,6 +81,8 @@ public class FuncionariosCriteria implements Serializable, Criteria {
 
     private TipoFuncionariosFilter tipoFuncionario;
 
+    private LongFilter evaluacionesId;
+
     private LongFilter pagosId;
 
     private LongFilter registroClasesId;
@@ -104,6 +106,7 @@ public class FuncionariosCriteria implements Serializable, Criteria {
         this.documento = other.documento == null ? null : other.documento.copy();
         this.estado = other.estado == null ? null : other.estado.copy();
         this.tipoFuncionario = other.tipoFuncionario == null ? null : other.tipoFuncionario.copy();
+        this.evaluacionesId = other.evaluacionesId == null ? null : other.evaluacionesId.copy();
         this.pagosId = other.pagosId == null ? null : other.pagosId.copy();
         this.registroClasesId = other.registroClasesId == null ? null : other.registroClasesId.copy();
         this.tipoDocumentosId = other.tipoDocumentosId == null ? null : other.tipoDocumentosId.copy();
@@ -295,6 +298,21 @@ public class FuncionariosCriteria implements Serializable, Criteria {
         this.tipoFuncionario = tipoFuncionario;
     }
 
+    public LongFilter getEvaluacionesId() {
+        return evaluacionesId;
+    }
+
+    public LongFilter evaluacionesId() {
+        if (evaluacionesId == null) {
+            evaluacionesId = new LongFilter();
+        }
+        return evaluacionesId;
+    }
+
+    public void setEvaluacionesId(LongFilter evaluacionesId) {
+        this.evaluacionesId = evaluacionesId;
+    }
+
     public LongFilter getPagosId() {
         return pagosId;
     }
@@ -370,6 +388,7 @@ public class FuncionariosCriteria implements Serializable, Criteria {
             Objects.equals(documento, that.documento) &&
             Objects.equals(estado, that.estado) &&
             Objects.equals(tipoFuncionario, that.tipoFuncionario) &&
+            Objects.equals(evaluacionesId, that.evaluacionesId) &&
             Objects.equals(pagosId, that.pagosId) &&
             Objects.equals(registroClasesId, that.registroClasesId) &&
             Objects.equals(tipoDocumentosId, that.tipoDocumentosId) &&
@@ -392,6 +411,7 @@ public class FuncionariosCriteria implements Serializable, Criteria {
             documento,
             estado,
             tipoFuncionario,
+            evaluacionesId,
             pagosId,
             registroClasesId,
             tipoDocumentosId,
@@ -415,6 +435,7 @@ public class FuncionariosCriteria implements Serializable, Criteria {
             (documento != null ? "documento=" + documento + ", " : "") +
             (estado != null ? "estado=" + estado + ", " : "") +
             (tipoFuncionario != null ? "tipoFuncionario=" + tipoFuncionario + ", " : "") +
+            (evaluacionesId != null ? "evaluacionesId=" + evaluacionesId + ", " : "") +
             (pagosId != null ? "pagosId=" + pagosId + ", " : "") +
             (registroClasesId != null ? "registroClasesId=" + registroClasesId + ", " : "") +
             (tipoDocumentosId != null ? "tipoDocumentosId=" + tipoDocumentosId + ", " : "") +

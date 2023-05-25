@@ -72,6 +72,11 @@ public class Funcionarios implements Serializable {
     @Column(name = "tipo_funcionario")
     private TipoFuncionarios tipoFuncionario;
 
+    @OneToMany(mappedBy = "funcionarios")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "evaluacionesDetalles", "alumnos", "funcionarios" }, allowSetters = true)
+    private Set<Evaluaciones> evaluaciones = new HashSet<>();
+
     @OneToMany(mappedBy = "funcionario")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "producto", "funcionario" }, allowSetters = true)
@@ -243,6 +248,37 @@ public class Funcionarios implements Serializable {
 
     public void setTipoFuncionario(TipoFuncionarios tipoFuncionario) {
         this.tipoFuncionario = tipoFuncionario;
+    }
+
+    public Set<Evaluaciones> getEvaluaciones() {
+        return this.evaluaciones;
+    }
+
+    public void setEvaluaciones(Set<Evaluaciones> evaluaciones) {
+        if (this.evaluaciones != null) {
+            this.evaluaciones.forEach(i -> i.setFuncionarios(null));
+        }
+        if (evaluaciones != null) {
+            evaluaciones.forEach(i -> i.setFuncionarios(this));
+        }
+        this.evaluaciones = evaluaciones;
+    }
+
+    public Funcionarios evaluaciones(Set<Evaluaciones> evaluaciones) {
+        this.setEvaluaciones(evaluaciones);
+        return this;
+    }
+
+    public Funcionarios addEvaluaciones(Evaluaciones evaluaciones) {
+        this.evaluaciones.add(evaluaciones);
+        evaluaciones.setFuncionarios(this);
+        return this;
+    }
+
+    public Funcionarios removeEvaluaciones(Evaluaciones evaluaciones) {
+        this.evaluaciones.remove(evaluaciones);
+        evaluaciones.setFuncionarios(null);
+        return this;
     }
 
     public Set<Pagos> getPagos() {

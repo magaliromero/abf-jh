@@ -73,6 +73,21 @@
             <div class="btn-group">
               <button
                 type="submit"
+                [routerLink]="['/evaluaciones-detalle']"
+                [queryParams]="{ 'filter[temasId.in]': temas.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.temas.evaluacionesDetalle' | translate) }"
+                  >Show Evaluaciones Detalle</span
+                >
+              </button>
+              <button
+                type="submit"
                 [routerLink]="['/registro-clases']"
                 [queryParams]="{ 'filter[temaId.in]': temas.id }"
                 class="btn btn-info btn-sm"

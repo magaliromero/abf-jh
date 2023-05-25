@@ -118,6 +118,15 @@ public class FuncionariosQueryService extends QueryService<Funcionarios> {
             if (criteria.getTipoFuncionario() != null) {
                 specification = specification.and(buildSpecification(criteria.getTipoFuncionario(), Funcionarios_.tipoFuncionario));
             }
+            if (criteria.getEvaluacionesId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getEvaluacionesId(),
+                            root -> root.join(Funcionarios_.evaluaciones, JoinType.LEFT).get(Evaluaciones_.id)
+                        )
+                    );
+            }
             if (criteria.getPagosId() != null) {
                 specification =
                     specification.and(
