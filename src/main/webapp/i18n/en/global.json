@@ -7,20 +7,6 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
-        "temas": "Temas",
-        "registroClases": "Registro Clases",
-        "tiposDocumentos": "Tipos Documentos",
-        "alumnos": "Alumnos",
-        "funcionarios": "Funcionarios",
-        "facturas": "Facturas",
-        "facturaDetalle": "Factura Detalle",
-        "pagos": "Pagos",
-        "productos": "Productos",
-        "materiales": "Materiales",
-        "prestamos": "Prestamos",
-        "matricula": "Matricula",
-        "evaluaciones": "Evaluaciones",
-        "evaluacionesDetalle": "Evaluaciones Detalle",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
