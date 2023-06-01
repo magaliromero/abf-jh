@@ -51,9 +51,6 @@ public class TemasServiceImpl implements TemasService {
                 if (temas.getDescripcion() != null) {
                     existingTemas.setDescripcion(temas.getDescripcion());
                 }
-                if (temas.getNivel() != null) {
-                    existingTemas.setNivel(temas.getNivel());
-                }
 
                 return existingTemas;
             })
@@ -67,11 +64,15 @@ public class TemasServiceImpl implements TemasService {
         return temasRepository.findAll(pageable);
     }
 
+    public Page<Temas> findAllWithEagerRelationships(Pageable pageable) {
+        return temasRepository.findAllWithEagerRelationships(pageable);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<Temas> findOne(Long id) {
         log.debug("Request to get Temas : {}", id);
-        return temasRepository.findById(id);
+        return temasRepository.findOneWithEagerRelationships(id);
     }
 
     @Override

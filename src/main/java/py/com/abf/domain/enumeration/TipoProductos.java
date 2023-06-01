@@ -4,8 +4,8 @@ package py.com.abf.domain.enumeration;
  * The TipoProductos enumeration.
  */
 public enum TipoProductos {
-    PRODUCTO("Producto"),
-    SERVICIO("Servicio");
+    SERVICIO("Servicio"),
+    PRODUCTO("Producto");
 
     private final String value;
 

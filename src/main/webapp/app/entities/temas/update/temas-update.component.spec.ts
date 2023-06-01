@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { TemasFormService } from './temas-form.service';
 import { TemasService } from '../service/temas.service';
 import { ITemas } from '../temas.model';
+import { ICursos } from 'app/entities/cursos/cursos.model';
+import { CursosService } from 'app/entities/cursos/service/cursos.service';
 
 import { TemasUpdateComponent } from './temas-update.component';
 
@@ -18,6 +20,7 @@ describe('Temas Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let temasFormService: TemasFormService;
   let temasService: TemasService;
+  let cursosService: CursosService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +43,43 @@ describe('Temas Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     temasFormService = TestBed.inject(TemasFormService);
     temasService = TestBed.inject(TemasService);
+    cursosService = TestBed.inject(CursosService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call Cursos query and add missing value', () => {
       const temas: ITemas = { id: 456 };
+      const cursos: ICursos = { id: 83927 };
+      temas.cursos = cursos;
+
+      const cursosCollection: ICursos[] = [{ id: 2905 }];
+      jest.spyOn(cursosService, 'query').mockReturnValue(of(new HttpResponse({ body: cursosCollection })));
+      const additionalCursos = [cursos];
+      const expectedCollection: ICursos[] = [...additionalCursos, ...cursosCollection];
+      jest.spyOn(cursosService, 'addCursosToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ temas });
       comp.ngOnInit();
 
+      expect(cursosService.query).toHaveBeenCalled();
+      expect(cursosService.addCursosToCollectionIfMissing).toHaveBeenCalledWith(
+        cursosCollection,
+        ...additionalCursos.map(expect.objectContaining)
+      );
+      expect(comp.cursosSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const temas: ITemas = { id: 456 };
+      const cursos: ICursos = { id: 56821 };
+      temas.cursos = cursos;
+
+      activatedRoute.data = of({ temas });
+      comp.ngOnInit();
+
+      expect(comp.cursosSharedCollection).toContain(cursos);
       expect(comp.temas).toEqual(temas);
     });
   });
@@ -120,6 +149,18 @@ describe('Temas Management Update Component', () => {
       expect(temasService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareCursos', () => {
+      it('Should forward to cursosService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(cursosService, 'compareCursos');
+        comp.compareCursos(entity, entity2);
+        expect(cursosService.compareCursos).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

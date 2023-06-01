@@ -5,8 +5,8 @@ package py.com.abf.domain.enumeration;
  */
 public enum EstadosPagos {
     PAGADO("Pagado"),
-    ANULADO("Anulado"),
-    PENDIENTE("Pendiente");
+    PENDIENTE("Pendiente"),
+    ANULADO("Anulado");
 
     private final String value;
 

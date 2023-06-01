@@ -1,4 +1,3 @@
-
 application {
   config {
     baseName abf
@@ -9,17 +8,16 @@ application {
     prodDatabaseType postgresql
     devDatabaseType postgresql
     buildTool maven
-    clientFramework react
+    clientFramework angular
+    languages [es]
   }
   entities *
 }
 
-
-
 enum EstadosPagos{
  	PAGADO(Pagado)
-    ANULADO(Anulado)
     PENDIENTE(Pendiente)
+    ANULADO(Anulado)
 }
 enum EstadosPersona{
 	 ACTIVO(Activo),
@@ -28,17 +26,19 @@ enum EstadosPersona{
 
 enum CondicionVenta {
 	CONTADO(Contado)
-    CREDITO(Credito)
 }
+
 enum TipoProductos {
+	SERVICIO(Servicio)
 	PRODUCTO(Producto)
-    SERVICIO(Servicio)
 }
+
 enum TipoFuncionarios{
 	PROFESORES(Profesores)
     FUNCIONARIOS(Funcionarios)
     OTRO(Otro)
 }
+
 enum Niveles{
 	PREAJEDREZ("Pre-Ajedrez")
     INICIAL(Inicial)
@@ -56,14 +56,31 @@ enum EstadosPrestamos{
 
 entity Temas(temas){
 	titulo String required,
-    descripcion String required,
-	nivel Niveles required,
+    descripcion String required
 }
 
 entity RegistroClases(registro_clases){
 	fecha LocalDate  required
     cantidadHoras Integer required
     asistenciaAlumno Boolean
+}
+
+entity Cursos(cursos){
+	nombreCurso String required,
+    descripcion String required,
+    fechaInicio LocalDate,
+    fechaFin LocalDate,
+  	cantidadClases Integer,
+    nivel Niveles required
+}
+
+entity Inscripciones(inscripcion){
+	fechaInscripcion LocalDate,
+}
+
+relationship OneToMany {
+	Alumnos to Inscripciones { alumnos(nombreCompleto) required},
+    Cursos to Inscripciones  {cursos(nombreCurso) required},
 }
 
 entity TiposDocumentos(tipos_documentos){
@@ -96,6 +113,18 @@ entity Funcionarios(funcionarios){
 	documento String required,
     estado EstadosPersona required,
     tipoFuncionario TipoFuncionarios
+}
+
+entity Clientes(clientes){
+	ruc String,
+	nombres String required,
+	apellidos String required,
+    razonSocial String required,
+    documento String required,
+	email String,
+	telefono String,
+	fechaNacimiento LocalDate,
+    direccion String
 }
 
 entity Facturas(factura){
@@ -200,8 +229,14 @@ relationship OneToMany{
 }
 
 relationship OneToMany{
- 	Temas to RegistroClases {tema(descripcion) required},
-    Funcionarios to RegistroClases { funcionario(nombreCompleto) }
+ 	Temas to RegistroClases { temas(descripcion) required},
+    Funcionarios to RegistroClases { funcionario(nombreCompleto) required},
+    Alumnos to RegistroClases {alumnos(nombreCompleto) required}
+}
+
+
+relationship OneToMany{
+ 	Cursos to Temas  { cursos(nombreCurso) required},
 }
 
 service all with serviceClass

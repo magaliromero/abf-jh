@@ -20,7 +20,7 @@ type TemasFormGroupContent = {
   id: FormControl<ITemas['id'] | NewTemas['id']>;
   titulo: FormControl<ITemas['titulo']>;
   descripcion: FormControl<ITemas['descripcion']>;
-  nivel: FormControl<ITemas['nivel']>;
+  cursos: FormControl<ITemas['cursos']>;
 };
 
 export type TemasFormGroup = FormGroup<TemasFormGroupContent>;
@@ -46,7 +46,7 @@ export class TemasFormService {
       descripcion: new FormControl(temasRawValue.descripcion, {
         validators: [Validators.required],
       }),
-      nivel: new FormControl(temasRawValue.nivel, {
+      cursos: new FormControl(temasRawValue.cursos, {
         validators: [Validators.required],
       }),
     });

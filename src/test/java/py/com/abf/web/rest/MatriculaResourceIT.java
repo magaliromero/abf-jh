@@ -64,7 +64,7 @@ class MatriculaResourceIT {
     private static final LocalDate SMALLER_FECHA_PAGO = LocalDate.ofEpochDay(-1L);
 
     private static final EstadosPagos DEFAULT_ESTADO = EstadosPagos.PAGADO;
-    private static final EstadosPagos UPDATED_ESTADO = EstadosPagos.ANULADO;
+    private static final EstadosPagos UPDATED_ESTADO = EstadosPagos.PENDIENTE;
 
     private static final String ENTITY_API_URL = "/api/matriculas";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

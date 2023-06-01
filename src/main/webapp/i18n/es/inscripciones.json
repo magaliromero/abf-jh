@@ -1,0 +1,26 @@
+{
+  "abfApp": {
+    "inscripciones": {
+      "home": {
+        "title": "Inscripciones",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Inscripciones",
+        "createOrEditLabel": "Crear o editar Inscripciones",
+        "notFound": "Ningún Inscripciones encontrado"
+      },
+      "created": "Un nuevo Inscripciones ha sido creado con el identificador {{ param }}",
+      "updated": "Un Inscripciones ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Inscripciones ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Inscripciones {{ id }}?"
+      },
+      "detail": {
+        "title": "Inscripciones"
+      },
+      "id": "ID",
+      "fechaInscripcion": "Fecha Inscripcion",
+      "alumnos": "Alumnos",
+      "cursos": "Cursos"
+    }
+  }
+}

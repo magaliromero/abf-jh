@@ -94,10 +94,10 @@ public class RegistroClasesQueryService extends QueryService<RegistroClases> {
             if (criteria.getAsistenciaAlumno() != null) {
                 specification = specification.and(buildSpecification(criteria.getAsistenciaAlumno(), RegistroClases_.asistenciaAlumno));
             }
-            if (criteria.getTemaId() != null) {
+            if (criteria.getTemasId() != null) {
                 specification =
                     specification.and(
-                        buildSpecification(criteria.getTemaId(), root -> root.join(RegistroClases_.tema, JoinType.LEFT).get(Temas_.id))
+                        buildSpecification(criteria.getTemasId(), root -> root.join(RegistroClases_.temas, JoinType.LEFT).get(Temas_.id))
                     );
             }
             if (criteria.getFuncionarioId() != null) {
@@ -106,6 +106,15 @@ public class RegistroClasesQueryService extends QueryService<RegistroClases> {
                         buildSpecification(
                             criteria.getFuncionarioId(),
                             root -> root.join(RegistroClases_.funcionario, JoinType.LEFT).get(Funcionarios_.id)
+                        )
+                    );
+            }
+            if (criteria.getAlumnosId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getAlumnosId(),
+                            root -> root.join(RegistroClases_.alumnos, JoinType.LEFT).get(Alumnos_.id)
                         )
                     );
             }

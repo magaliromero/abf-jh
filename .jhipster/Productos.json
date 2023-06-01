@@ -1,6 +1,6 @@
 {
   "applications": ["abf"],
-  "changelogDate": "20230523231037",
+  "changelogDate": "20230601200437",
   "dto": "no",
   "embedded": false,
   "entityTableName": "productos",
@@ -9,7 +9,7 @@
       "fieldName": "tipoProducto",
       "fieldType": "TipoProductos",
       "fieldValidateRules": ["required"],
-      "fieldValues": "PRODUCTO (Producto),SERVICIO (Servicio)"
+      "fieldValues": "SERVICIO (Servicio),PRODUCTO (Producto)"
     },
     {
       "fieldName": "precioUnitario",

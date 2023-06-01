@@ -1,9 +1,0 @@
-{
-  "abfApp": {
-    "CondicionVenta": {
-      "null": "",
-      "CONTADO": "Contado",
-      "CREDITO": "Credito"
-    }
-  }
-}

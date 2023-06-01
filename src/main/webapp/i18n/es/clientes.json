@@ -1,0 +1,32 @@
+{
+  "abfApp": {
+    "clientes": {
+      "home": {
+        "title": "Clientes",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Clientes",
+        "createOrEditLabel": "Crear o editar Clientes",
+        "notFound": "Ningún Clientes encontrado"
+      },
+      "created": "Un nuevo Clientes ha sido creado con el identificador {{ param }}",
+      "updated": "Un Clientes ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Clientes ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Clientes {{ id }}?"
+      },
+      "detail": {
+        "title": "Clientes"
+      },
+      "id": "ID",
+      "ruc": "Ruc",
+      "nombres": "Nombres",
+      "apellidos": "Apellidos",
+      "razonSocial": "Razon Social",
+      "documento": "Documento",
+      "email": "Email",
+      "telefono": "Telefono",
+      "fechaNacimiento": "Fecha Nacimiento",
+      "direccion": "Direccion"
+    }
+  }
+}

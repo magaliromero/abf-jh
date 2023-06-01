@@ -52,9 +52,9 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="nivel">
+          <th scope="col" jhiSortBy="cursos.nombreCurso">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.temas.nivel">Nivel</span>
+              <span jhiTranslate="abfApp.temas.cursos">Cursos</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -68,7 +68,11 @@
           </td>
           <td>{{ temas.titulo }}</td>
           <td>{{ temas.descripcion }}</td>
-          <td jhiTranslate="{{ 'abfApp.Niveles.' + temas.nivel }}">{{ temas.nivel }}</td>
+          <td>
+            <div *ngIf="temas.cursos">
+              <a [routerLink]="['/cursos', temas.cursos.id, 'view']">{{ temas.cursos.nombreCurso }}</a>
+            </div>
+          </td>
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -89,7 +93,7 @@
               <button
                 type="submit"
                 [routerLink]="['/registro-clases']"
-                [queryParams]="{ 'filter[temaId.in]': temas.id }"
+                [queryParams]="{ 'filter[temasId.in]': temas.id }"
                 class="btn btn-info btn-sm"
                 data-cy="filterOtherEntityButton"
               >

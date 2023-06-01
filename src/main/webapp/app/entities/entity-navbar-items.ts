@@ -10,6 +10,16 @@ export const EntityNavbarItems = [
     translationKey: 'global.menu.entities.registroClases',
   },
   {
+    name: 'Cursos',
+    route: 'cursos',
+    translationKey: 'global.menu.entities.cursos',
+  },
+  {
+    name: 'Inscripciones',
+    route: 'inscripciones',
+    translationKey: 'global.menu.entities.inscripciones',
+  },
+  {
     name: 'TiposDocumentos',
     route: 'tipos-documentos',
     translationKey: 'global.menu.entities.tiposDocumentos',
@@ -23,6 +33,11 @@ export const EntityNavbarItems = [
     name: 'Funcionarios',
     route: 'funcionarios',
     translationKey: 'global.menu.entities.funcionarios',
+  },
+  {
+    name: 'Clientes',
+    route: 'clientes',
+    translationKey: 'global.menu.entities.clientes',
   },
   {
     name: 'Facturas',

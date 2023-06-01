@@ -1,6 +1,6 @@
 {
   "applications": ["abf"],
-  "changelogDate": "20230523230737",
+  "changelogDate": "20230601200137",
   "dto": "no",
   "embedded": false,
   "entityTableName": "factura",
@@ -34,7 +34,7 @@
       "fieldName": "condicionVenta",
       "fieldType": "CondicionVenta",
       "fieldValidateRules": ["required"],
-      "fieldValues": "CONTADO (Contado),CREDITO (Credito)"
+      "fieldValues": "CONTADO (Contado)"
     },
     {
       "fieldName": "total",

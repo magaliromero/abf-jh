@@ -36,7 +36,10 @@ public class TiposDocumentos implements Serializable {
 
     @OneToMany(mappedBy = "tipoDocumentos")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "evaluaciones", "matriculas", "prestamos", "tipoDocumentos" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "inscripciones", "evaluaciones", "matriculas", "prestamos", "registroClases", "tipoDocumentos" },
+        allowSetters = true
+    )
     private Set<Alumnos> alumnos = new HashSet<>();
 
     @OneToMany(mappedBy = "tipoDocumentos")

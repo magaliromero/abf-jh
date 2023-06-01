@@ -20,9 +20,9 @@
       "id": "ID",
       "titulo": "Titulo",
       "descripcion": "Descripcion",
-      "nivel": "Nivel",
       "evaluacionesDetalle": "Evaluaciones Detalle",
-      "registroClases": "Registro Clases"
+      "registroClases": "Registro Clases",
+      "cursos": "Cursos"
     }
   }
 }

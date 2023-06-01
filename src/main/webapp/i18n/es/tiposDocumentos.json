@@ -1,0 +1,27 @@
+{
+  "abfApp": {
+    "tiposDocumentos": {
+      "home": {
+        "title": "Tipos Documentos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Tipos Documentos",
+        "createOrEditLabel": "Crear o editar Tipos Documentos",
+        "notFound": "Ningún Tipos Documentos encontrado"
+      },
+      "created": "Un nuevo Tipos Documentos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tipos Documentos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tipos Documentos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Tipos Documentos {{ id }}?"
+      },
+      "detail": {
+        "title": "Tipos Documentos"
+      },
+      "id": "ID",
+      "codigo": "Codigo",
+      "descripcion": "Descripcion",
+      "alumnos": "Alumnos",
+      "funcionarios": "Funcionarios"
+    }
+  }
+}

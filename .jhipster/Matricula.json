@@ -1,6 +1,6 @@
 {
   "applications": ["abf"],
-  "changelogDate": "20230523231337",
+  "changelogDate": "20230601200737",
   "dto": "no",
   "embedded": false,
   "entityTableName": "matricula",
@@ -33,7 +33,7 @@
       "fieldName": "estado",
       "fieldType": "EstadosPagos",
       "fieldValidateRules": ["required"],
-      "fieldValues": "PAGADO (Pagado),ANULADO (Anulado),PENDIENTE (Pendiente)"
+      "fieldValues": "PAGADO (Pagado),PENDIENTE (Pendiente),ANULADO (Anulado)"
     }
   ],
   "fluentMethods": true,

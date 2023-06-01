@@ -22,9 +22,11 @@
         <dd>
           <span>{{ temas.descripcion }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.temas.nivel">Nivel</span></dt>
+        <dt><span jhiTranslate="abfApp.temas.cursos">Cursos</span></dt>
         <dd>
-          <span jhiTranslate="{{ 'abfApp.Niveles.' + temas.nivel }}">{{ temas.nivel }}</span>
+          <div *ngIf="temas.cursos">
+            <a [routerLink]="['/cursos', temas.cursos.id, 'view']">{{ temas.cursos.nombreCurso }}</a>
+          </div>
         </dd>
       </dl>
 

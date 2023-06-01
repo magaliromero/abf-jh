@@ -52,7 +52,7 @@ class FacturasResourceIT {
     private static final String UPDATED_RUC = "BBBBBBBBBB";
 
     private static final CondicionVenta DEFAULT_CONDICION_VENTA = CondicionVenta.CONTADO;
-    private static final CondicionVenta UPDATED_CONDICION_VENTA = CondicionVenta.CREDITO;
+    private static final CondicionVenta UPDATED_CONDICION_VENTA = CondicionVenta.CONTADO;
 
     private static final Integer DEFAULT_TOTAL = 1;
     private static final Integer UPDATED_TOTAL = 2;

@@ -1,0 +1,136 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-clientes-heading" data-cy="ClientesCreateUpdateHeading" jhiTranslate="abfApp.clientes.home.createOrEditLabel">
+        Create or edit a Clientes
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.ruc" for="field_ruc">Ruc</label>
+          <input type="text" class="form-control" name="ruc" id="field_ruc" data-cy="ruc" formControlName="ruc" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.nombres" for="field_nombres">Nombres</label>
+          <input type="text" class="form-control" name="nombres" id="field_nombres" data-cy="nombres" formControlName="nombres" />
+          <div *ngIf="editForm.get('nombres')!.invalid && (editForm.get('nombres')!.dirty || editForm.get('nombres')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nombres')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.apellidos" for="field_apellidos">Apellidos</label>
+          <input type="text" class="form-control" name="apellidos" id="field_apellidos" data-cy="apellidos" formControlName="apellidos" />
+          <div *ngIf="editForm.get('apellidos')!.invalid && (editForm.get('apellidos')!.dirty || editForm.get('apellidos')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('apellidos')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.razonSocial" for="field_razonSocial">Razon Social</label>
+          <input
+            type="text"
+            class="form-control"
+            name="razonSocial"
+            id="field_razonSocial"
+            data-cy="razonSocial"
+            formControlName="razonSocial"
+          />
+          <div *ngIf="editForm.get('razonSocial')!.invalid && (editForm.get('razonSocial')!.dirty || editForm.get('razonSocial')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('razonSocial')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.documento" for="field_documento">Documento</label>
+          <input type="text" class="form-control" name="documento" id="field_documento" data-cy="documento" formControlName="documento" />
+          <div *ngIf="editForm.get('documento')!.invalid && (editForm.get('documento')!.dirty || editForm.get('documento')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('documento')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.telefono" for="field_telefono">Telefono</label>
+          <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.fechaNacimiento" for="field_fechaNacimiento">Fecha Nacimiento</label>
+          <div class="input-group">
+            <input
+              id="field_fechaNacimiento"
+              data-cy="fechaNacimiento"
+              type="text"
+              class="form-control"
+              name="fechaNacimiento"
+              ngbDatepicker
+              #fechaNacimientoDp="ngbDatepicker"
+              formControlName="fechaNacimiento"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fechaNacimientoDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.clientes.direccion" for="field_direccion">Direccion</label>
+          <input type="text" class="form-control" name="direccion" id="field_direccion" data-cy="direccion" formControlName="direccion" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

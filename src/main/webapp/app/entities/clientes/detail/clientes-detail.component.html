@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="clientes">
+      <h2 data-cy="clientesDetailsHeading"><span jhiTranslate="abfApp.clientes.detail.title">Clientes</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ clientes.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.ruc">Ruc</span></dt>
+        <dd>
+          <span>{{ clientes.ruc }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.nombres">Nombres</span></dt>
+        <dd>
+          <span>{{ clientes.nombres }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.apellidos">Apellidos</span></dt>
+        <dd>
+          <span>{{ clientes.apellidos }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.razonSocial">Razon Social</span></dt>
+        <dd>
+          <span>{{ clientes.razonSocial }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.documento">Documento</span></dt>
+        <dd>
+          <span>{{ clientes.documento }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.email">Email</span></dt>
+        <dd>
+          <span>{{ clientes.email }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.telefono">Telefono</span></dt>
+        <dd>
+          <span>{{ clientes.telefono }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.fechaNacimiento">Fecha Nacimiento</span></dt>
+        <dd>
+          <span>{{ clientes.fechaNacimiento | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.clientes.direccion">Direccion</span></dt>
+        <dd>
+          <span>{{ clientes.direccion }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/clientes', clientes.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

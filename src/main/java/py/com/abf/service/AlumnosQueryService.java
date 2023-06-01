@@ -115,6 +115,15 @@ public class AlumnosQueryService extends QueryService<Alumnos> {
             if (criteria.getEstado() != null) {
                 specification = specification.and(buildSpecification(criteria.getEstado(), Alumnos_.estado));
             }
+            if (criteria.getInscripcionesId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getInscripcionesId(),
+                            root -> root.join(Alumnos_.inscripciones, JoinType.LEFT).get(Inscripciones_.id)
+                        )
+                    );
+            }
             if (criteria.getEvaluacionesId() != null) {
                 specification =
                     specification.and(
@@ -139,6 +148,15 @@ public class AlumnosQueryService extends QueryService<Alumnos> {
                         buildSpecification(
                             criteria.getPrestamosId(),
                             root -> root.join(Alumnos_.prestamos, JoinType.LEFT).get(Prestamos_.id)
+                        )
+                    );
+            }
+            if (criteria.getRegistroClasesId() != null) {
+                specification =
+                    specification.and(
+                        buildSpecification(
+                            criteria.getRegistroClasesId(),
+                            root -> root.join(Alumnos_.registroClases, JoinType.LEFT).get(RegistroClases_.id)
                         )
                     );
             }

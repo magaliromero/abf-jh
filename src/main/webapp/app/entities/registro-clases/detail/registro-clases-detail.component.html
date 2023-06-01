@@ -26,16 +26,22 @@
         <dd>
           <span>{{ registroClases.asistenciaAlumno }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.registroClases.tema">Tema</span></dt>
+        <dt><span jhiTranslate="abfApp.registroClases.temas">Temas</span></dt>
         <dd>
-          <div *ngIf="registroClases.tema">
-            <a [routerLink]="['/temas', registroClases.tema.id, 'view']">{{ registroClases.tema.descripcion }}</a>
+          <div *ngIf="registroClases.temas">
+            <a [routerLink]="['/temas', registroClases.temas.id, 'view']">{{ registroClases.temas.descripcion }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="abfApp.registroClases.funcionario">Funcionario</span></dt>
         <dd>
           <div *ngIf="registroClases.funcionario">
             <a [routerLink]="['/funcionarios', registroClases.funcionario.id, 'view']">{{ registroClases.funcionario.nombreCompleto }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="abfApp.registroClases.alumnos">Alumnos</span></dt>
+        <dd>
+          <div *ngIf="registroClases.alumnos">
+            <a [routerLink]="['/alumnos', registroClases.alumnos.id, 'view']">{{ registroClases.alumnos.nombreCompleto }}</a>
           </div>
         </dd>
       </dl>

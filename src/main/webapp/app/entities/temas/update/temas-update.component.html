@@ -45,16 +45,23 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.temas.nivel" for="field_nivel">Nivel</label>
-          <select class="form-control" name="nivel" formControlName="nivel" id="field_nivel" data-cy="nivel">
-            <option [ngValue]="null">{{ 'abfApp.Niveles.null' | translate }}</option>
-            <option *ngFor="let niveles of nivelesValues" [value]="niveles">{{ 'abfApp.Niveles.' + niveles | translate }}</option>
+          <label class="form-label" jhiTranslate="abfApp.temas.cursos" for="field_cursos">Cursos</label>
+          <select
+            class="form-control"
+            id="field_cursos"
+            data-cy="cursos"
+            name="cursos"
+            formControlName="cursos"
+            [compareWith]="compareCursos"
+          >
+            <option *ngIf="editForm.get(['cursos'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="cursosOption" *ngFor="let cursosOption of cursosSharedCollection">{{ cursosOption.nombreCurso }}</option>
           </select>
-          <div *ngIf="editForm.get('nivel')!.invalid && (editForm.get('nivel')!.dirty || editForm.get('nivel')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nivel')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-          </div>
+        </div>
+        <div *ngIf="editForm.get(['cursos'])!.invalid && (editForm.get(['cursos'])!.dirty || editForm.get(['cursos'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['cursos'])?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
         </div>
       </div>
 

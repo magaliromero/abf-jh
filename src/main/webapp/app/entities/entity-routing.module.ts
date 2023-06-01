@@ -15,6 +15,16 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./registro-clases/registro-clases.module').then(m => m.RegistroClasesModule),
       },
       {
+        path: 'cursos',
+        data: { pageTitle: 'abfApp.cursos.home.title' },
+        loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule),
+      },
+      {
+        path: 'inscripciones',
+        data: { pageTitle: 'abfApp.inscripciones.home.title' },
+        loadChildren: () => import('./inscripciones/inscripciones.module').then(m => m.InscripcionesModule),
+      },
+      {
         path: 'tipos-documentos',
         data: { pageTitle: 'abfApp.tiposDocumentos.home.title' },
         loadChildren: () => import('./tipos-documentos/tipos-documentos.module').then(m => m.TiposDocumentosModule),
@@ -28,6 +38,11 @@ import { RouterModule } from '@angular/router';
         path: 'funcionarios',
         data: { pageTitle: 'abfApp.funcionarios.home.title' },
         loadChildren: () => import('./funcionarios/funcionarios.module').then(m => m.FuncionariosModule),
+      },
+      {
+        path: 'clientes',
+        data: { pageTitle: 'abfApp.clientes.home.title' },
+        loadChildren: () => import('./clientes/clientes.module').then(m => m.ClientesModule),
       },
       {
         path: 'facturas',

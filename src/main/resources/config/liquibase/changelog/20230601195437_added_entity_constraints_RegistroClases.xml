@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity RegistroClases.
+    -->
+    <changeSet id="20230601195437-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="temas_id"
+                                 baseTableName="registro_clases"
+                                 constraintName="fk_registro_clases__temas_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="temas"/>
+
+        <addForeignKeyConstraint baseColumnNames="funcionario_id"
+                                 baseTableName="registro_clases"
+                                 constraintName="fk_registro_clases__funcionario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="funcionarios"/>
+
+        <addForeignKeyConstraint baseColumnNames="alumnos_id"
+                                 baseTableName="registro_clases"
+                                 constraintName="fk_registro_clases__alumnos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="alumnos"/>
+    </changeSet>
+</databaseChangeLog>

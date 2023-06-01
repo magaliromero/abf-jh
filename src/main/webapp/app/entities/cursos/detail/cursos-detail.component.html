@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="cursos">
+      <h2 data-cy="cursosDetailsHeading"><span jhiTranslate="abfApp.cursos.detail.title">Cursos</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ cursos.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cursos.nombreCurso">Nombre Curso</span></dt>
+        <dd>
+          <span>{{ cursos.nombreCurso }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cursos.descripcion">Descripcion</span></dt>
+        <dd>
+          <span>{{ cursos.descripcion }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cursos.fechaInicio">Fecha Inicio</span></dt>
+        <dd>
+          <span>{{ cursos.fechaInicio | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cursos.fechaFin">Fecha Fin</span></dt>
+        <dd>
+          <span>{{ cursos.fechaFin | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cursos.cantidadClases">Cantidad Clases</span></dt>
+        <dd>
+          <span>{{ cursos.cantidadClases }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.cursos.nivel">Nivel</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'abfApp.Niveles.' + cursos.nivel }}">{{ cursos.nivel }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/cursos', cursos.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

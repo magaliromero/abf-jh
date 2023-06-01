@@ -1,0 +1,31 @@
+{
+  "abfApp": {
+    "facturas": {
+      "home": {
+        "title": "Facturas",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Facturas",
+        "createOrEditLabel": "Crear o editar Facturas",
+        "notFound": "Ningún Facturas encontrado"
+      },
+      "created": "Un nuevo Facturas ha sido creado con el identificador {{ param }}",
+      "updated": "Un Facturas ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Facturas ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Facturas {{ id }}?"
+      },
+      "detail": {
+        "title": "Facturas"
+      },
+      "id": "ID",
+      "fecha": "Fecha",
+      "facturaNro": "Factura Nro",
+      "timbrado": "Timbrado",
+      "razonSocial": "Razon Social",
+      "ruc": "Ruc",
+      "condicionVenta": "Condicion Venta",
+      "total": "Total",
+      "facturaDetalle": "Factura Detalle"
+    }
+  }
+}

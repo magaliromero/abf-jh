@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { TemasFormService, TemasFormGroup } from './temas-form.service';
 import { ITemas } from '../temas.model';
 import { TemasService } from '../service/temas.service';
-import { Niveles } from 'app/entities/enumerations/niveles.model';
+import { ICursos } from 'app/entities/cursos/cursos.model';
+import { CursosService } from 'app/entities/cursos/service/cursos.service';
 
 @Component({
   selector: 'jhi-temas-update',
@@ -16,15 +17,19 @@ import { Niveles } from 'app/entities/enumerations/niveles.model';
 export class TemasUpdateComponent implements OnInit {
   isSaving = false;
   temas: ITemas | null = null;
-  nivelesValues = Object.keys(Niveles);
+
+  cursosSharedCollection: ICursos[] = [];
 
   editForm: TemasFormGroup = this.temasFormService.createTemasFormGroup();
 
   constructor(
     protected temasService: TemasService,
     protected temasFormService: TemasFormService,
+    protected cursosService: CursosService,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareCursos = (o1: ICursos | null, o2: ICursos | null): boolean => this.cursosService.compareCursos(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ temas }) => {
@@ -32,6 +37,8 @@ export class TemasUpdateComponent implements OnInit {
       if (temas) {
         this.updateForm(temas);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -71,5 +78,15 @@ export class TemasUpdateComponent implements OnInit {
   protected updateForm(temas: ITemas): void {
     this.temas = temas;
     this.temasFormService.resetForm(this.editForm, temas);
+
+    this.cursosSharedCollection = this.cursosService.addCursosToCollectionIfMissing<ICursos>(this.cursosSharedCollection, temas.cursos);
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.cursosService
+      .query()
+      .pipe(map((res: HttpResponse<ICursos[]>) => res.body ?? []))
+      .pipe(map((cursos: ICursos[]) => this.cursosService.addCursosToCollectionIfMissing<ICursos>(cursos, this.temas?.cursos)))
+      .subscribe((cursos: ICursos[]) => (this.cursosSharedCollection = cursos));
   }
 }

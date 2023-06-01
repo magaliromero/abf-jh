@@ -1,11 +1,11 @@
 id;tipo_producto;precio_unitario;porcentaje_iva;descripcion
-1;PRODUCTO;50636;74655;Views engineer
-2;SERVICIO;83186;14557;Fundamental Rustic
-3;PRODUCTO;7758;98154;HDD
-4;SERVICIO;14943;21747;Wooden Dakota
-5;SERVICIO;57749;95530;back-end parse adapter
-6;PRODUCTO;41953;8782;salmon Gloves
-7;SERVICIO;47612;68972;up
-8;PRODUCTO;50756;81783;Belize Electronics Games
-9;SERVICIO;7282;39929;Salad Branding
-10;PRODUCTO;14932;31857;Table Global
+1;SERVICIO;50636;74655;Views engineer
+2;PRODUCTO;83186;14557;Fundamental Rustic
+3;SERVICIO;7758;98154;HDD
+4;PRODUCTO;14943;21747;Wooden Dakota
+5;PRODUCTO;57749;95530;back-end parse adapter
+6;SERVICIO;41953;8782;salmon Gloves
+7;PRODUCTO;47612;68972;up
+8;SERVICIO;50756;81783;Belize Electronics Games
+9;PRODUCTO;7282;39929;Salad Branding
+10;SERVICIO;14932;31857;Table Global

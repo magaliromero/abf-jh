@@ -42,6 +42,14 @@ public interface TemasService {
     Page<Temas> findAll(Pageable pageable);
 
     /**
+     * Get all the temas with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<Temas> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" temas.
      *
      * @param id the id of the entity.
