@@ -37,6 +37,11 @@ export class FacturasService {
       .post<RestFacturas>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
+  createNew(data: any): Observable<any> {
+    return this.http
+      .post<RestFacturas>(this.resourceUrl + '/detalle', data, { observe: 'response' })
+      .pipe(map(res => this.convertResponseFromServer(res)));
+  }
 
   update(facturas: IFacturas): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(facturas);

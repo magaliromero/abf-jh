@@ -4,15 +4,15 @@
       "home": {
         "title": "Temas",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Temas",
+        "createLabel": "Crear nuevo Tema",
         "createOrEditLabel": "Crear o editar Temas",
-        "notFound": "Ningún Temas encontrado"
+        "notFound": "Ningún Tema encontrado"
       },
-      "created": "Un nuevo Temas ha sido creado con el identificador {{ param }}",
-      "updated": "Un Temas ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Temas ha sido eliminado con el identificador {{ param }}",
+      "created": "Un nuevo Tema ha sido creado con el identificador {{ param }}",
+      "updated": "Un Tema ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Tema ha sido eliminado con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Temas {{ id }}?"
+        "question": "¿Seguro que quiere eliminar Tema {{ id }}?"
       },
       "detail": {
         "title": "Temas"

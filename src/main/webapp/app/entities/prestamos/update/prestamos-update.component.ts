@@ -12,12 +12,17 @@ import { MaterialesService } from 'app/entities/materiales/service/materiales.se
 import { IAlumnos } from 'app/entities/alumnos/alumnos.model';
 import { AlumnosService } from 'app/entities/alumnos/service/alumnos.service';
 import { EstadosPrestamos } from 'app/entities/enumerations/estados-prestamos.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
   selector: 'jhi-prestamos-update',
   templateUrl: './prestamos-update.component.html',
 })
 export class PrestamosUpdateComponent implements OnInit {
+  error = false;
+  success = false;
+  mensajeError = '';
   isSaving = false;
   prestamos: IPrestamos | null = null;
   estadosPrestamosValues = Object.keys(EstadosPrestamos);
@@ -43,6 +48,9 @@ export class PrestamosUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ prestamos }) => {
       this.prestamos = prestamos;
       if (prestamos) {
+        if (prestamos.estado == 'DEVUELTO') {
+          this.editForm.disable();
+        }
         this.updateForm(prestamos);
       }
 
@@ -56,11 +64,29 @@ export class PrestamosUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
+
     const prestamos = this.prestamosFormService.getPrestamos(this.editForm);
+    if (prestamos.materiales?.cantidad == 0) {
+      return;
+    }
     if (prestamos.id !== null) {
       this.subscribeToSaveResponse(this.prestamosService.update(prestamos));
     } else {
       this.subscribeToSaveResponse(this.prestamosService.create(prestamos));
+    }
+  }
+
+  validarStock() {
+    const data = this.editForm.controls.materiales.value;
+    console.log(this.editForm.value);
+
+    if (data?.cantidad == 0) {
+      this.error = true;
+      this.mensajeError = 'El material elegido no cuenta con stock';
+      setTimeout(() => {
+        this.error = false;
+        this.mensajeError = '';
+      }, 5000);
     }
   }
 
@@ -106,7 +132,9 @@ export class PrestamosUpdateComponent implements OnInit {
           this.materialesService.addMaterialesToCollectionIfMissing<IMateriales>(materiales, this.prestamos?.materiales)
         )
       )
-      .subscribe((materiales: IMateriales[]) => (this.materialesSharedCollection = materiales));
+      .subscribe((materiales: IMateriales[]) => {
+        this.materialesSharedCollection = materiales;
+      });
 
     this.alumnosService
       .query()

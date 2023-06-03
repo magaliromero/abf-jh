@@ -37,6 +37,11 @@ export class EvaluacionesService {
       .post<RestEvaluaciones>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
+  createDetails(data: any): Observable<EntityResponseType> {
+    return this.http
+      .post<RestEvaluaciones>(this.resourceUrl + '/detalle', data, { observe: 'response' })
+      .pipe(map(res => this.convertResponseFromServer(res)));
+  }
 
   update(evaluaciones: IEvaluaciones): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(evaluaciones);

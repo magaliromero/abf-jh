@@ -2,170 +2,265 @@
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
       <h2 id="jhi-facturas-heading" data-cy="FacturasCreateUpdateHeading" jhiTranslate="abfApp.facturas.home.createOrEditLabel">
-        Create or edit a Facturas
+        Facturas
       </h2>
 
       <div>
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
+        <div class="row">
+          <div class="col-3 mb-3" *ngIf="editForm.controls.id.value !== null">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.facturas.fecha" for="field_fecha">Fecha</label>
-          <div class="input-group">
+          <div class="col-3 mb-3">
+            <label class="form-label" jhiTranslate="abfApp.facturas.fecha" for="field_fecha">Fecha</label>
+            <div class="input-group">
+              <input
+                id="field_fecha"
+                data-cy="fecha"
+                type="text"
+                class="form-control"
+                name="fecha"
+                ngbDatepicker
+                #fechaDp="ngbDatepicker"
+                formControlName="fecha"
+              />
+              <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </div>
+            <div *ngIf="editForm.get('fecha')!.invalid && (editForm.get('fecha')!.dirty || editForm.get('fecha')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('fecha')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Requerido.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-3 mb-3">
+            <label class="form-label" jhiTranslate="abfApp.facturas.facturaNro" for="field_facturaNro">Factura Nro</label>
             <input
-              id="field_fecha"
-              data-cy="fecha"
               type="text"
               class="form-control"
-              name="fecha"
-              ngbDatepicker
-              #fechaDp="ngbDatepicker"
-              formControlName="fecha"
+              name="facturaNro"
+              id="field_facturaNro"
+              data-cy="facturaNro"
+              formControlName="facturaNro"
             />
-            <button type="button" class="btn btn-secondary" (click)="fechaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            <div *ngIf="editForm.get('facturaNro')!.invalid && (editForm.get('facturaNro')!.dirty || editForm.get('facturaNro')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('facturaNro')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Requerido.
+              </small>
+            </div>
           </div>
-          <div *ngIf="editForm.get('fecha')!.invalid && (editForm.get('fecha')!.dirty || editForm.get('fecha')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('fecha')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-          </div>
-        </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.facturas.facturaNro" for="field_facturaNro">Factura Nro</label>
-          <input
-            type="text"
-            class="form-control"
-            name="facturaNro"
-            id="field_facturaNro"
-            data-cy="facturaNro"
-            formControlName="facturaNro"
-          />
-          <div *ngIf="editForm.get('facturaNro')!.invalid && (editForm.get('facturaNro')!.dirty || editForm.get('facturaNro')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('facturaNro')?.errors?.required"
-              jhiTranslate="entity.validation.required"
+          <div class="col-3 mb-3">
+            <label class="form-label" jhiTranslate="abfApp.facturas.timbrado" for="field_timbrado">Timbrado</label>
+            <input type="number" class="form-control" name="timbrado" id="field_timbrado" data-cy="timbrado" formControlName="timbrado" />
+            <div *ngIf="editForm.get('timbrado')!.invalid && (editForm.get('timbrado')!.dirty || editForm.get('timbrado')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('timbrado')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Requerido.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('timbrado')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-3 mb-3">
+            <label class="form-label" jhiTranslate="abfApp.facturas.condicionVenta" for="field_condicionVenta">Condicion Venta</label>
+            <select
+              class="form-control"
+              name="condicionVenta"
+              formControlName="condicionVenta"
+              id="field_condicionVenta"
+              data-cy="condicionVenta"
             >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.facturas.timbrado" for="field_timbrado">Timbrado</label>
-          <input type="number" class="form-control" name="timbrado" id="field_timbrado" data-cy="timbrado" formControlName="timbrado" />
-          <div *ngIf="editForm.get('timbrado')!.invalid && (editForm.get('timbrado')!.dirty || editForm.get('timbrado')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('timbrado')?.errors?.required"
-              jhiTranslate="entity.validation.required"
+              <option [ngValue]="null">{{ 'abfApp.CondicionVenta.null' | translate }}</option>
+              <option *ngFor="let condicionVenta of condicionVentaValues" [value]="condicionVenta">
+                {{ 'abfApp.CondicionVenta.' + condicionVenta | translate }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                editForm.get('condicionVenta')!.invalid &&
+                (editForm.get('condicionVenta')!.dirty || editForm.get('condicionVenta')!.touched)
+              "
             >
-              This field is required.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('timbrado')?.errors?.number"
-              jhiTranslate="entity.validation.number"
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('condicionVenta')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Requerido.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-8 mb-3">
+            <label class="form-label" jhiTranslate="abfApp.facturas.razonSocial" for="field_razonSocial">Razon Social</label>
+            <input
+              type="text"
+              class="form-control"
+              name="razonSocial"
+              id="field_razonSocial"
+              data-cy="razonSocial"
+              formControlName="razonSocial"
+            />
+            <div
+              *ngIf="editForm.get('razonSocial')!.invalid && (editForm.get('razonSocial')!.dirty || editForm.get('razonSocial')!.touched)"
             >
-              This field should be a number.
-            </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('razonSocial')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Requerido.
+              </small>
+            </div>
+          </div>
+          <div class="col-4 mb-3">
+            <label class="form-label" jhiTranslate="abfApp.facturas.ruc" for="field_ruc">Ruc</label>
+            <input type="text" class="form-control" name="ruc" id="field_ruc" data-cy="ruc" formControlName="ruc" />
+            <div *ngIf="editForm.get('ruc')!.invalid && (editForm.get('ruc')!.dirty || editForm.get('ruc')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('ruc')?.errors?.required" jhiTranslate="entity.validation.required">
+                Requerido.
+              </small>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label class="form-label" jhiTranslate="abfApp.facturas.total" for="field_total">Total</label>
+            <input type="number" class="form-control" name="total" id="field_total" data-cy="total" formControlName="total" />
+            <div *ngIf="editForm.get('total')!.invalid && (editForm.get('total')!.dirty || editForm.get('total')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('total')?.errors?.required"
+                jhiTranslate="entity.validation.required"
+              >
+                Requerido.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('total')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+              >
+                This field should be a number.
+              </small>
+            </div>
           </div>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.facturas.razonSocial" for="field_razonSocial">Razon Social</label>
-          <input
-            type="text"
-            class="form-control"
-            name="razonSocial"
-            id="field_razonSocial"
-            data-cy="razonSocial"
-            formControlName="razonSocial"
-          />
-          <div *ngIf="editForm.get('razonSocial')!.invalid && (editForm.get('razonSocial')!.dirty || editForm.get('razonSocial')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('razonSocial')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.facturas.ruc" for="field_ruc">Ruc</label>
-          <input type="text" class="form-control" name="ruc" id="field_ruc" data-cy="ruc" formControlName="ruc" />
-          <div *ngIf="editForm.get('ruc')!.invalid && (editForm.get('ruc')!.dirty || editForm.get('ruc')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('ruc')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.facturas.condicionVenta" for="field_condicionVenta">Condicion Venta</label>
-          <select
-            class="form-control"
-            name="condicionVenta"
-            formControlName="condicionVenta"
-            id="field_condicionVenta"
-            data-cy="condicionVenta"
-          >
-            <option [ngValue]="null">{{ 'abfApp.CondicionVenta.null' | translate }}</option>
-            <option *ngFor="let condicionVenta of condicionVentaValues" [value]="condicionVenta">
-              {{ 'abfApp.CondicionVenta.' + condicionVenta | translate }}
-            </option>
-          </select>
-          <div
-            *ngIf="
-              editForm.get('condicionVenta')!.invalid && (editForm.get('condicionVenta')!.dirty || editForm.get('condicionVenta')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('condicionVenta')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.facturas.total" for="field_total">Total</label>
-          <input type="number" class="form-control" name="total" id="field_total" data-cy="total" formControlName="total" />
-          <div *ngIf="editForm.get('total')!.invalid && (editForm.get('total')!.dirty || editForm.get('total')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('total')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('total')?.errors?.number" jhiTranslate="entity.validation.number">
-              This field should be a number.
-            </small>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
       </div>
     </form>
+
+    <div>
+      <h3>DETALLE FACTURA</h3>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-3">
+        <label class="form-label" for="field_condicionVenta">Producto/Servicio</label>
+        <select class="form-control" name="prod" id="id_detalle_prod" [(ngModel)]="nuevoItem.producto" (click)="seleccionaProducto()">
+          <option [ngValue]="null">{{ ' Seleccione un producto' }}</option>
+          <!-- se agrego prod -->
+          <option *ngFor="let item of productos" [value]="item.id">
+            {{ item.descripcion }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-1">
+        <label class="form-label" placeholder="Cantidad" for="field_total">Cantidad</label>
+        <input
+          type="number"
+          class="form-control"
+          name="total"
+          id="field_total"
+          (change)="calcularSubtotal()"
+          [(ngModel)]="nuevoItem.cantidad"
+        />
+      </div>
+
+      <div class="col-1">
+        <label class="form-label" placeholder="IVA" for="field_total">IVA</label>
+        <input type="number" class="form-control" name="total" id="field_total" [(ngModel)]="nuevoItem.iva" [disabled]="true" />
+      </div>
+
+      <div class="col-2">
+        <label class="form-label" placeholder="IVA" for="field_total">Precio</label>
+        <input
+          type="number"
+          class="form-control"
+          name="total"
+          id="field_total"
+          min="0"
+          (change)="calcularSubtotal()"
+          [(ngModel)]="nuevoItem.precio"
+        />
+      </div>
+
+      <div class="col-2">
+        <label class="form-label" placeholder="Subtotal" for="field_total">Subtotal</label>
+        <input type="number" class="form-control" name="total" id="field_total" min="0" [(ngModel)]="nuevoItem.subtotal" />
+      </div>
+      <div class="col-1 d-flex align-items-end">
+        <button id="id_btn" class="btn btn-primary jh-create-entity" (click)="agregarDetalle()">
+          <fa-icon icon="plus"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="row mb-3" *ngFor="let items of listaDetalle | keyvalue; let i = index" [attr.data-index]="i">
+      <div class="row mb-3 col-3">
+        <input type="text" class="form-control" id="id" [(ngModel)]="items.value.descripcionProducto" [disabled]="true" />
+      </div>
+
+      <div class="col-1">
+        <input type="number" class="form-control" name="total" id="field_total" [(ngModel)]="items.value.cantidad" [disabled]="true" />
+      </div>
+
+      <div class="col-1">
+        <input type="number" class="form-control" name="total" id="field_total" [(ngModel)]="items.value.iva" [disabled]="true" />
+      </div>
+
+      <div class="col-2">
+        <input type="number" class="form-control" name="total" id="field_total" [(ngModel)]="items.value.precio" [disabled]="true" />
+      </div>
+
+      <div class="col-2">
+        <input type="number" class="form-control" name="total" id="field_total" [(ngModel)]="items.value.subtotal" [disabled]="true" />
+      </div>
+      <div class="col-1 d-flex align-items-start">
+        <button id="id_btn" class="btn btn-danger" (click)="eliminarDetalle(i)">
+          <fa-icon icon="times"></fa-icon>
+        </button>
+      </div>
+    </div>
+    <!--         [disabled]="editForm.invalid || isSaving"
+ -->
+    <div>
+      <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+      </button>
+
+      <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" class="btn btn-primary" (click)="save()">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Guardar </span>
+      </button>
+    </div>
   </div>
 </div>
