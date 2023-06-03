@@ -4,15 +4,15 @@
       "home": {
         "title": "Alumnos",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Alumnos",
-        "createOrEditLabel": "Crear o editar Alumnos",
-        "notFound": "Ningún Alumnos encontrado"
+        "createLabel": "Crear nuevo Alumno",
+        "createOrEditLabel": "Crear o editar Alumno",
+        "notFound": "Ningún Alumno encontrado"
       },
-      "created": "Un nuevo Alumnos ha sido creado con el identificador {{ param }}",
-      "updated": "Un Alumnos ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Alumnos ha sido eliminado con el identificador {{ param }}",
+      "created": "Un nuevo Alumno ha sido creado con el identificador {{ param }}",
+      "updated": "Un Alumno ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Alumno ha sido eliminado con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Alumnos {{ id }}?"
+        "question": "¿Seguro que quiere eliminar Alumno {{ id }}?"
       },
       "detail": {
         "title": "Alumnos"

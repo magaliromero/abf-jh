@@ -4,25 +4,25 @@
       "home": {
         "title": "Prestamos",
         "refreshListLabel": "Refrescar lista",
-        "createLabel": "Crear nuevo Prestamos",
-        "createOrEditLabel": "Crear o editar Prestamos",
-        "notFound": "Ningún Prestamos encontrado"
+        "createLabel": "Crear nuevo Prestamo",
+        "createOrEditLabel": "Crear o editar Prestamo",
+        "notFound": "Ningún Prestamo encontrado"
       },
-      "created": "Un nuevo Prestamos ha sido creado con el identificador {{ param }}",
-      "updated": "Un Prestamos ha sido actualizado con el identificador {{ param }}",
-      "deleted": "Un Prestamos ha sido eliminado con el identificador {{ param }}",
+      "created": "Un nuevo Prestamo ha sido creado con el identificador {{ param }}",
+      "updated": "Un Prestamo ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Prestamo ha sido eliminado con el identificador {{ param }}",
       "delete": {
-        "question": "¿Seguro que quiere eliminar Prestamos {{ id }}?"
+        "question": "¿Seguro que quiere eliminar Prestamo {{ id }}?"
       },
       "detail": {
-        "title": "Prestamos"
+        "title": "Prestamo"
       },
       "id": "ID",
       "fechaPrestamo": "Fecha Prestamo",
       "fechaDevolucion": "Fecha Devolucion",
       "estado": "Estado",
-      "materiales": "Materiales",
-      "alumnos": "Alumnos"
+      "materiales": "Material",
+      "alumnos": "Alumno"
     }
   }
 }
