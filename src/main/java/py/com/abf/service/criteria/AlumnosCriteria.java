@@ -61,11 +61,15 @@ public class AlumnosCriteria implements Serializable, Criteria {
 
     private EstadosPersonaFilter estado;
 
+    private LongFilter inscripcionesId;
+
     private LongFilter evaluacionesId;
 
     private LongFilter matriculaId;
 
     private LongFilter prestamosId;
+
+    private LongFilter registroClasesId;
 
     private LongFilter tipoDocumentosId;
 
@@ -85,9 +89,11 @@ public class AlumnosCriteria implements Serializable, Criteria {
         this.fechaNacimiento = other.fechaNacimiento == null ? null : other.fechaNacimiento.copy();
         this.documento = other.documento == null ? null : other.documento.copy();
         this.estado = other.estado == null ? null : other.estado.copy();
+        this.inscripcionesId = other.inscripcionesId == null ? null : other.inscripcionesId.copy();
         this.evaluacionesId = other.evaluacionesId == null ? null : other.evaluacionesId.copy();
         this.matriculaId = other.matriculaId == null ? null : other.matriculaId.copy();
         this.prestamosId = other.prestamosId == null ? null : other.prestamosId.copy();
+        this.registroClasesId = other.registroClasesId == null ? null : other.registroClasesId.copy();
         this.tipoDocumentosId = other.tipoDocumentosId == null ? null : other.tipoDocumentosId.copy();
         this.distinct = other.distinct;
     }
@@ -262,6 +268,21 @@ public class AlumnosCriteria implements Serializable, Criteria {
         this.estado = estado;
     }
 
+    public LongFilter getInscripcionesId() {
+        return inscripcionesId;
+    }
+
+    public LongFilter inscripcionesId() {
+        if (inscripcionesId == null) {
+            inscripcionesId = new LongFilter();
+        }
+        return inscripcionesId;
+    }
+
+    public void setInscripcionesId(LongFilter inscripcionesId) {
+        this.inscripcionesId = inscripcionesId;
+    }
+
     public LongFilter getEvaluacionesId() {
         return evaluacionesId;
     }
@@ -305,6 +326,21 @@ public class AlumnosCriteria implements Serializable, Criteria {
 
     public void setPrestamosId(LongFilter prestamosId) {
         this.prestamosId = prestamosId;
+    }
+
+    public LongFilter getRegistroClasesId() {
+        return registroClasesId;
+    }
+
+    public LongFilter registroClasesId() {
+        if (registroClasesId == null) {
+            registroClasesId = new LongFilter();
+        }
+        return registroClasesId;
+    }
+
+    public void setRegistroClasesId(LongFilter registroClasesId) {
+        this.registroClasesId = registroClasesId;
     }
 
     public LongFilter getTipoDocumentosId() {
@@ -351,9 +387,11 @@ public class AlumnosCriteria implements Serializable, Criteria {
             Objects.equals(fechaNacimiento, that.fechaNacimiento) &&
             Objects.equals(documento, that.documento) &&
             Objects.equals(estado, that.estado) &&
+            Objects.equals(inscripcionesId, that.inscripcionesId) &&
             Objects.equals(evaluacionesId, that.evaluacionesId) &&
             Objects.equals(matriculaId, that.matriculaId) &&
             Objects.equals(prestamosId, that.prestamosId) &&
+            Objects.equals(registroClasesId, that.registroClasesId) &&
             Objects.equals(tipoDocumentosId, that.tipoDocumentosId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -373,9 +411,11 @@ public class AlumnosCriteria implements Serializable, Criteria {
             fechaNacimiento,
             documento,
             estado,
+            inscripcionesId,
             evaluacionesId,
             matriculaId,
             prestamosId,
+            registroClasesId,
             tipoDocumentosId,
             distinct
         );
@@ -396,9 +436,11 @@ public class AlumnosCriteria implements Serializable, Criteria {
             (fechaNacimiento != null ? "fechaNacimiento=" + fechaNacimiento + ", " : "") +
             (documento != null ? "documento=" + documento + ", " : "") +
             (estado != null ? "estado=" + estado + ", " : "") +
+            (inscripcionesId != null ? "inscripcionesId=" + inscripcionesId + ", " : "") +
             (evaluacionesId != null ? "evaluacionesId=" + evaluacionesId + ", " : "") +
             (matriculaId != null ? "matriculaId=" + matriculaId + ", " : "") +
             (prestamosId != null ? "prestamosId=" + prestamosId + ", " : "") +
+            (registroClasesId != null ? "registroClasesId=" + registroClasesId + ", " : "") +
             (tipoDocumentosId != null ? "tipoDocumentosId=" + tipoDocumentosId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";

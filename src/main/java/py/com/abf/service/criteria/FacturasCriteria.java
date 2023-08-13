@@ -57,6 +57,8 @@ public class FacturasCriteria implements Serializable, Criteria {
 
     private LongFilter facturaDetalleId;
 
+    private LongFilter clientesId;
+
     private Boolean distinct;
 
     public FacturasCriteria() {}
@@ -71,6 +73,7 @@ public class FacturasCriteria implements Serializable, Criteria {
         this.condicionVenta = other.condicionVenta == null ? null : other.condicionVenta.copy();
         this.total = other.total == null ? null : other.total.copy();
         this.facturaDetalleId = other.facturaDetalleId == null ? null : other.facturaDetalleId.copy();
+        this.clientesId = other.clientesId == null ? null : other.clientesId.copy();
         this.distinct = other.distinct;
     }
 
@@ -214,6 +217,21 @@ public class FacturasCriteria implements Serializable, Criteria {
         this.facturaDetalleId = facturaDetalleId;
     }
 
+    public LongFilter getClientesId() {
+        return clientesId;
+    }
+
+    public LongFilter clientesId() {
+        if (clientesId == null) {
+            clientesId = new LongFilter();
+        }
+        return clientesId;
+    }
+
+    public void setClientesId(LongFilter clientesId) {
+        this.clientesId = clientesId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -241,13 +259,26 @@ public class FacturasCriteria implements Serializable, Criteria {
             Objects.equals(condicionVenta, that.condicionVenta) &&
             Objects.equals(total, that.total) &&
             Objects.equals(facturaDetalleId, that.facturaDetalleId) &&
+            Objects.equals(clientesId, that.clientesId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fecha, facturaNro, timbrado, razonSocial, ruc, condicionVenta, total, facturaDetalleId, distinct);
+        return Objects.hash(
+            id,
+            fecha,
+            facturaNro,
+            timbrado,
+            razonSocial,
+            ruc,
+            condicionVenta,
+            total,
+            facturaDetalleId,
+            clientesId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -263,6 +294,7 @@ public class FacturasCriteria implements Serializable, Criteria {
             (condicionVenta != null ? "condicionVenta=" + condicionVenta + ", " : "") +
             (total != null ? "total=" + total + ", " : "") +
             (facturaDetalleId != null ? "facturaDetalleId=" + facturaDetalleId + ", " : "") +
+            (clientesId != null ? "clientesId=" + clientesId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

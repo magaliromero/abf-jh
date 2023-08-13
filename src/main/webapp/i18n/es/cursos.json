@@ -1,0 +1,31 @@
+{
+  "abfApp": {
+    "cursos": {
+      "home": {
+        "title": "Cursos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Cursos",
+        "createOrEditLabel": "Crear o editar Cursos",
+        "notFound": "Ningún Cursos encontrado"
+      },
+      "created": "Un nuevo Cursos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Cursos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Cursos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Cursos {{ id }}?"
+      },
+      "detail": {
+        "title": "Cursos"
+      },
+      "id": "ID",
+      "nombreCurso": "Nombre Curso",
+      "descripcion": "Descripcion",
+      "fechaInicio": "Fecha Inicio",
+      "fechaFin": "Fecha Fin",
+      "cantidadClases": "Cantidad Clases",
+      "nivel": "Nivel",
+      "inscripciones": "Inscripciones",
+      "temas": "Temas"
+    }
+  }
+}

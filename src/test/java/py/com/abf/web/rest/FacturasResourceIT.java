@@ -2,34 +2,45 @@ package py.com.abf.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
+import py.com.abf.domain.Clientes;
 import py.com.abf.domain.FacturaDetalle;
 import py.com.abf.domain.Facturas;
 import py.com.abf.domain.enumeration.CondicionVenta;
 import py.com.abf.repository.FacturasRepository;
+import py.com.abf.service.FacturasService;
 import py.com.abf.service.criteria.FacturasCriteria;
 
 /**
  * Integration tests for the {@link FacturasResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class FacturasResourceIT {
@@ -52,7 +63,7 @@ class FacturasResourceIT {
     private static final String UPDATED_RUC = "BBBBBBBBBB";
 
     private static final CondicionVenta DEFAULT_CONDICION_VENTA = CondicionVenta.CONTADO;
-    private static final CondicionVenta UPDATED_CONDICION_VENTA = CondicionVenta.CREDITO;
+    private static final CondicionVenta UPDATED_CONDICION_VENTA = CondicionVenta.CONTADO;
 
     private static final Integer DEFAULT_TOTAL = 1;
     private static final Integer UPDATED_TOTAL = 2;
@@ -66,6 +77,12 @@ class FacturasResourceIT {
 
     @Autowired
     private FacturasRepository facturasRepository;
+
+    @Mock
+    private FacturasRepository facturasRepositoryMock;
+
+    @Mock
+    private FacturasService facturasServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -90,6 +107,16 @@ class FacturasResourceIT {
             .ruc(DEFAULT_RUC)
             .condicionVenta(DEFAULT_CONDICION_VENTA)
             .total(DEFAULT_TOTAL);
+        // Add required entity
+        Clientes clientes;
+        if (TestUtil.findAll(em, Clientes.class).isEmpty()) {
+            clientes = ClientesResourceIT.createEntity(em);
+            em.persist(clientes);
+            em.flush();
+        } else {
+            clientes = TestUtil.findAll(em, Clientes.class).get(0);
+        }
+        facturas.setClientes(clientes);
         return facturas;
     }
 
@@ -108,6 +135,16 @@ class FacturasResourceIT {
             .ruc(UPDATED_RUC)
             .condicionVenta(UPDATED_CONDICION_VENTA)
             .total(UPDATED_TOTAL);
+        // Add required entity
+        Clientes clientes;
+        if (TestUtil.findAll(em, Clientes.class).isEmpty()) {
+            clientes = ClientesResourceIT.createUpdatedEntity(em);
+            em.persist(clientes);
+            em.flush();
+        } else {
+            clientes = TestUtil.findAll(em, Clientes.class).get(0);
+        }
+        facturas.setClientes(clientes);
         return facturas;
     }
 
@@ -294,6 +331,23 @@ class FacturasResourceIT {
             .andExpect(jsonPath("$.[*].ruc").value(hasItem(DEFAULT_RUC)))
             .andExpect(jsonPath("$.[*].condicionVenta").value(hasItem(DEFAULT_CONDICION_VENTA.toString())))
             .andExpect(jsonPath("$.[*].total").value(hasItem(DEFAULT_TOTAL)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllFacturasWithEagerRelationshipsIsEnabled() throws Exception {
+        when(facturasServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restFacturasMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(facturasServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllFacturasWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(facturasServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restFacturasMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(facturasRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -863,6 +917,29 @@ class FacturasResourceIT {
 
         // Get all the facturasList where facturaDetalle equals to (facturaDetalleId + 1)
         defaultFacturasShouldNotBeFound("facturaDetalleId.equals=" + (facturaDetalleId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllFacturasByClientesIsEqualToSomething() throws Exception {
+        Clientes clientes;
+        if (TestUtil.findAll(em, Clientes.class).isEmpty()) {
+            facturasRepository.saveAndFlush(facturas);
+            clientes = ClientesResourceIT.createEntity(em);
+        } else {
+            clientes = TestUtil.findAll(em, Clientes.class).get(0);
+        }
+        em.persist(clientes);
+        em.flush();
+        facturas.setClientes(clientes);
+        facturasRepository.saveAndFlush(facturas);
+        Long clientesId = clientes.getId();
+
+        // Get all the facturasList where clientes equals to clientesId
+        defaultFacturasShouldBeFound("clientesId.equals=" + clientesId);
+
+        // Get all the facturasList where clientes equals to (clientesId + 1)
+        defaultFacturasShouldNotBeFound("clientesId.equals=" + (clientesId + 1));
     }
 
     /**

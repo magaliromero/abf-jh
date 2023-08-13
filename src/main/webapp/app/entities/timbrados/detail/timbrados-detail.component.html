@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="timbrados">
+      <h2 data-cy="timbradosDetailsHeading"><span jhiTranslate="abfApp.timbrados.detail.title">Timbrados</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ timbrados.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.timbrados.numeroTimbrado">Numero Timbrado</span></dt>
+        <dd>
+          <span>{{ timbrados.numeroTimbrado }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.timbrados.fechaInicio">Fecha Inicio</span></dt>
+        <dd>
+          <span>{{ timbrados.fechaInicio | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.timbrados.fechaFin">Fecha Fin</span></dt>
+        <dd>
+          <span>{{ timbrados.fechaFin | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.timbrados.sucursales">Sucursales</span></dt>
+        <dd>
+          <div *ngIf="timbrados.sucursales">
+            <a [routerLink]="['/sucursales', timbrados.sucursales.id, 'view']">{{ timbrados.sucursales.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/timbrados', timbrados.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

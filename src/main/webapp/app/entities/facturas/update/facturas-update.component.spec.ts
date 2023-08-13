@@ -9,6 +9,8 @@ import { of, Subject, from } from 'rxjs';
 import { FacturasFormService } from './facturas-form.service';
 import { FacturasService } from '../service/facturas.service';
 import { IFacturas } from '../facturas.model';
+import { IClientes } from 'app/entities/clientes/clientes.model';
+import { ClientesService } from 'app/entities/clientes/service/clientes.service';
 
 import { FacturasUpdateComponent } from './facturas-update.component';
 
@@ -18,6 +20,7 @@ describe('Facturas Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let facturasFormService: FacturasFormService;
   let facturasService: FacturasService;
+  let clientesService: ClientesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,17 +43,43 @@ describe('Facturas Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     facturasFormService = TestBed.inject(FacturasFormService);
     facturasService = TestBed.inject(FacturasService);
+    clientesService = TestBed.inject(ClientesService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should update editForm', () => {
+    it('Should call Clientes query and add missing value', () => {
       const facturas: IFacturas = { id: 456 };
+      const clientes: IClientes = { id: 1580 };
+      facturas.clientes = clientes;
+
+      const clientesCollection: IClientes[] = [{ id: 83291 }];
+      jest.spyOn(clientesService, 'query').mockReturnValue(of(new HttpResponse({ body: clientesCollection })));
+      const additionalClientes = [clientes];
+      const expectedCollection: IClientes[] = [...additionalClientes, ...clientesCollection];
+      jest.spyOn(clientesService, 'addClientesToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ facturas });
       comp.ngOnInit();
 
+      expect(clientesService.query).toHaveBeenCalled();
+      expect(clientesService.addClientesToCollectionIfMissing).toHaveBeenCalledWith(
+        clientesCollection,
+        ...additionalClientes.map(expect.objectContaining)
+      );
+      expect(comp.clientesSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const facturas: IFacturas = { id: 456 };
+      const clientes: IClientes = { id: 32262 };
+      facturas.clientes = clientes;
+
+      activatedRoute.data = of({ facturas });
+      comp.ngOnInit();
+
+      expect(comp.clientesSharedCollection).toContain(clientes);
       expect(comp.facturas).toEqual(facturas);
     });
   });
@@ -120,6 +149,18 @@ describe('Facturas Management Update Component', () => {
       expect(facturasService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareClientes', () => {
+      it('Should forward to clientesService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(clientesService, 'compareClientes');
+        comp.compareClientes(entity, entity2);
+        expect(clientesService.compareClientes).toHaveBeenCalledWith(entity, entity2);
+      });
     });
   });
 });

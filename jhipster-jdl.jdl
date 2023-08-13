@@ -9,7 +9,8 @@ application {
     prodDatabaseType postgresql
     devDatabaseType postgresql
     buildTool maven
-    clientFramework react
+    clientFramework angular
+    languages [es]
   }
   entities *
 }
@@ -18,8 +19,8 @@ application {
 
 enum EstadosPagos{
  	PAGADO(Pagado)
-    ANULADO(Anulado)
     PENDIENTE(Pendiente)
+    ANULADO(Anulado)
 }
 enum EstadosPersona{
 	 ACTIVO(Activo),
@@ -28,17 +29,19 @@ enum EstadosPersona{
 
 enum CondicionVenta {
 	CONTADO(Contado)
-    CREDITO(Credito)
 }
+
 enum TipoProductos {
+	SERVICIO(Servicio)
 	PRODUCTO(Producto)
-    SERVICIO(Servicio)
 }
+
 enum TipoFuncionarios{
 	PROFESORES(Profesores)
     FUNCIONARIOS(Funcionarios)
     OTRO(Otro)
 }
+
 enum Niveles{
 	PREAJEDREZ("Pre-Ajedrez")
     INICIAL(Inicial)
@@ -56,14 +59,31 @@ enum EstadosPrestamos{
 
 entity Temas(temas){
 	titulo String required,
-    descripcion String required,
-	nivel Niveles required,
+    descripcion String required
 }
 
 entity RegistroClases(registro_clases){
 	fecha LocalDate  required
     cantidadHoras Integer required
     asistenciaAlumno Boolean
+}
+
+entity Cursos(cursos){
+	nombreCurso String required,
+    descripcion String required,
+    fechaInicio LocalDate,
+    fechaFin LocalDate,
+  	cantidadClases Integer,
+    nivel Niveles required
+}
+
+entity Inscripciones(inscripcion){
+	fechaInscripcion LocalDate,
+}
+
+relationship OneToMany {
+	Alumnos to Inscripciones { alumnos(nombreCompleto) required},
+    Cursos to Inscripciones  {cursos(nombreCurso) required},
 }
 
 entity TiposDocumentos(tipos_documentos){
@@ -96,6 +116,18 @@ entity Funcionarios(funcionarios){
 	documento String required,
     estado EstadosPersona required,
     tipoFuncionario TipoFuncionarios
+}
+
+entity Clientes(clientes){
+	ruc String,
+	nombres String required,
+	apellidos String required,
+    razonSocial String required,
+    documento String required,
+	email String,
+	telefono String,
+	fechaNacimiento LocalDate,
+    direccion String
 }
 
 entity Facturas(factura){
@@ -162,6 +194,32 @@ entity EvaluacionesDetalle(evaluaciones_detalle){
     comentarios String required
     puntaje Integer required
 }
+
+entity Timbrados (timbrado) {
+	numeroTimbrado String required unique
+	fechaInicio LocalDate required
+    fechaFin LocalDate required  
+}
+entity Sucursales(sucursales){
+	nombreSucursal String required 
+    direccion String
+    numeroEstablecimiento String required
+}
+
+entity PuntoDeExpedicion(punto_de_expedicion){
+	numeroPuntoDeExpedicion String required
+}
+
+relationship OneToOne {
+	Timbrados to Sucursales
+}
+relationship OneToMany{
+		Sucursales to PuntoDeExpedicion { sucursales(nombreSucursal) required }
+        Clientes to Facturas {clientes(ruc) required}
+}
+
+
+
 relationship OneToMany {
 	Evaluaciones to EvaluacionesDetalle { Evaluaciones(nroEvaluacion) required }
     Alumnos to Evaluaciones{Alumnos(nombreCompleto) required}
@@ -200,8 +258,14 @@ relationship OneToMany{
 }
 
 relationship OneToMany{
- 	Temas to RegistroClases {tema(descripcion) required},
-    Funcionarios to RegistroClases { funcionario(nombreCompleto) }
+ 	Temas to RegistroClases { temas(descripcion) required},
+    Funcionarios to RegistroClases { funcionario(nombreCompleto) required},
+    Alumnos to RegistroClases {alumnos(nombreCompleto) required}
+}
+
+
+relationship OneToMany{
+ 	Temas to Cursos { temas(titulo) required},
 }
 
 service all with serviceClass

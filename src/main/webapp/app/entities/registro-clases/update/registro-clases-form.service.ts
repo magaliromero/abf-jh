@@ -21,8 +21,9 @@ type RegistroClasesFormGroupContent = {
   fecha: FormControl<IRegistroClases['fecha']>;
   cantidadHoras: FormControl<IRegistroClases['cantidadHoras']>;
   asistenciaAlumno: FormControl<IRegistroClases['asistenciaAlumno']>;
-  tema: FormControl<IRegistroClases['tema']>;
+  temas: FormControl<IRegistroClases['temas']>;
   funcionario: FormControl<IRegistroClases['funcionario']>;
+  alumnos: FormControl<IRegistroClases['alumnos']>;
 };
 
 export type RegistroClasesFormGroup = FormGroup<RegistroClasesFormGroupContent>;
@@ -49,10 +50,15 @@ export class RegistroClasesFormService {
         validators: [Validators.required],
       }),
       asistenciaAlumno: new FormControl(registroClasesRawValue.asistenciaAlumno),
-      tema: new FormControl(registroClasesRawValue.tema, {
+      temas: new FormControl(registroClasesRawValue.temas, {
         validators: [Validators.required],
       }),
-      funcionario: new FormControl(registroClasesRawValue.funcionario),
+      funcionario: new FormControl(registroClasesRawValue.funcionario, {
+        validators: [Validators.required],
+      }),
+      alumnos: new FormControl(registroClasesRawValue.alumnos, {
+        validators: [Validators.required],
+      }),
     });
   }
 

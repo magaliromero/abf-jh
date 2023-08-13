@@ -27,6 +27,7 @@ describe('Facturas Form Service', () => {
             ruc: expect.any(Object),
             condicionVenta: expect.any(Object),
             total: expect.any(Object),
+            clientes: expect.any(Object),
           })
         );
       });
@@ -44,6 +45,7 @@ describe('Facturas Form Service', () => {
             ruc: expect.any(Object),
             condicionVenta: expect.any(Object),
             total: expect.any(Object),
+            clientes: expect.any(Object),
           })
         );
       });

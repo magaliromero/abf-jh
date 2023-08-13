@@ -34,7 +34,7 @@
       "fieldName": "condicionVenta",
       "fieldType": "CondicionVenta",
       "fieldValidateRules": ["required"],
-      "fieldValues": "CONTADO (Contado),CREDITO (Credito)"
+      "fieldValues": "CONTADO (Contado)"
     },
     {
       "fieldName": "total",
@@ -53,6 +53,14 @@
       "otherEntityRelationshipName": "factura",
       "relationshipName": "facturaDetalle",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "ruc",
+      "otherEntityName": "clientes",
+      "otherEntityRelationshipName": "facturas",
+      "relationshipName": "clientes",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceImpl"

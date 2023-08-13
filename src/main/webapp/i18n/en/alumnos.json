@@ -28,9 +28,11 @@
       "fechaNacimiento": "Fecha Nacimiento",
       "documento": "Documento",
       "estado": "Estado",
+      "inscripciones": "Inscripciones",
       "evaluaciones": "Evaluaciones",
       "matricula": "Matricula",
       "prestamos": "Prestamos",
+      "registroClases": "Registro Clases",
       "tipoDocumentos": "Tipo Documentos"
     }
   }

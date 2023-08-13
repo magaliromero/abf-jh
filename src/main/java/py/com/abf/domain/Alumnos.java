@@ -68,6 +68,11 @@ public class Alumnos implements Serializable {
 
     @OneToMany(mappedBy = "alumnos")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "alumnos", "cursos" }, allowSetters = true)
+    private Set<Inscripciones> inscripciones = new HashSet<>();
+
+    @OneToMany(mappedBy = "alumnos")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "evaluacionesDetalles", "alumnos", "funcionarios" }, allowSetters = true)
     private Set<Evaluaciones> evaluaciones = new HashSet<>();
 
@@ -80,6 +85,11 @@ public class Alumnos implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "materiales", "alumnos" }, allowSetters = true)
     private Set<Prestamos> prestamos = new HashSet<>();
+
+    @OneToMany(mappedBy = "alumnos")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "temas", "funcionario", "alumnos" }, allowSetters = true)
+    private Set<RegistroClases> registroClases = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
@@ -231,6 +241,37 @@ public class Alumnos implements Serializable {
         this.estado = estado;
     }
 
+    public Set<Inscripciones> getInscripciones() {
+        return this.inscripciones;
+    }
+
+    public void setInscripciones(Set<Inscripciones> inscripciones) {
+        if (this.inscripciones != null) {
+            this.inscripciones.forEach(i -> i.setAlumnos(null));
+        }
+        if (inscripciones != null) {
+            inscripciones.forEach(i -> i.setAlumnos(this));
+        }
+        this.inscripciones = inscripciones;
+    }
+
+    public Alumnos inscripciones(Set<Inscripciones> inscripciones) {
+        this.setInscripciones(inscripciones);
+        return this;
+    }
+
+    public Alumnos addInscripciones(Inscripciones inscripciones) {
+        this.inscripciones.add(inscripciones);
+        inscripciones.setAlumnos(this);
+        return this;
+    }
+
+    public Alumnos removeInscripciones(Inscripciones inscripciones) {
+        this.inscripciones.remove(inscripciones);
+        inscripciones.setAlumnos(null);
+        return this;
+    }
+
     public Set<Evaluaciones> getEvaluaciones() {
         return this.evaluaciones;
     }
@@ -321,6 +362,37 @@ public class Alumnos implements Serializable {
     public Alumnos removePrestamos(Prestamos prestamos) {
         this.prestamos.remove(prestamos);
         prestamos.setAlumnos(null);
+        return this;
+    }
+
+    public Set<RegistroClases> getRegistroClases() {
+        return this.registroClases;
+    }
+
+    public void setRegistroClases(Set<RegistroClases> registroClases) {
+        if (this.registroClases != null) {
+            this.registroClases.forEach(i -> i.setAlumnos(null));
+        }
+        if (registroClases != null) {
+            registroClases.forEach(i -> i.setAlumnos(this));
+        }
+        this.registroClases = registroClases;
+    }
+
+    public Alumnos registroClases(Set<RegistroClases> registroClases) {
+        this.setRegistroClases(registroClases);
+        return this;
+    }
+
+    public Alumnos addRegistroClases(RegistroClases registroClases) {
+        this.registroClases.add(registroClases);
+        registroClases.setAlumnos(this);
+        return this;
+    }
+
+    public Alumnos removeRegistroClases(RegistroClases registroClases) {
+        this.registroClases.remove(registroClases);
+        registroClases.setAlumnos(null);
         return this;
     }
 

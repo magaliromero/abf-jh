@@ -1,0 +1,27 @@
+{
+  "abfApp": {
+    "timbrados": {
+      "home": {
+        "title": "Timbrados",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Timbrados",
+        "createOrEditLabel": "Create or edit a Timbrados",
+        "notFound": "No Timbrados found"
+      },
+      "created": "A new Timbrados is created with identifier {{ param }}",
+      "updated": "A Timbrados is updated with identifier {{ param }}",
+      "deleted": "A Timbrados is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Timbrados {{ id }}?"
+      },
+      "detail": {
+        "title": "Timbrados"
+      },
+      "id": "ID",
+      "numeroTimbrado": "Numero Timbrado",
+      "fechaInicio": "Fecha Inicio",
+      "fechaFin": "Fecha Fin",
+      "sucursales": "Sucursales"
+    }
+  }
+}

@@ -38,12 +38,21 @@ public class RegistroClases implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "evaluacionesDetalles", "registroClases" }, allowSetters = true)
-    private Temas tema;
+    @JsonIgnoreProperties(value = { "evaluacionesDetalles", "registroClases", "cursos" }, allowSetters = true)
+    private Temas temas;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "evaluaciones", "pagos", "registroClases", "tipoDocumentos" }, allowSetters = true)
     private Funcionarios funcionario;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(
+        value = { "inscripciones", "evaluaciones", "matriculas", "prestamos", "registroClases", "tipoDocumentos" },
+        allowSetters = true
+    )
+    private Alumnos alumnos;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -99,16 +108,16 @@ public class RegistroClases implements Serializable {
         this.asistenciaAlumno = asistenciaAlumno;
     }
 
-    public Temas getTema() {
-        return this.tema;
+    public Temas getTemas() {
+        return this.temas;
     }
 
-    public void setTema(Temas temas) {
-        this.tema = temas;
+    public void setTemas(Temas temas) {
+        this.temas = temas;
     }
 
-    public RegistroClases tema(Temas temas) {
-        this.setTema(temas);
+    public RegistroClases temas(Temas temas) {
+        this.setTemas(temas);
         return this;
     }
 
@@ -122,6 +131,19 @@ public class RegistroClases implements Serializable {
 
     public RegistroClases funcionario(Funcionarios funcionarios) {
         this.setFuncionario(funcionarios);
+        return this;
+    }
+
+    public Alumnos getAlumnos() {
+        return this.alumnos;
+    }
+
+    public void setAlumnos(Alumnos alumnos) {
+        this.alumnos = alumnos;
+    }
+
+    public RegistroClases alumnos(Alumnos alumnos) {
+        this.setAlumnos(alumnos);
         return this;
     }
 

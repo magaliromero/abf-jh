@@ -52,12 +52,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="nivel">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.temas.nivel">Nivel</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -68,7 +62,6 @@
           </td>
           <td>{{ temas.titulo }}</td>
           <td>{{ temas.descripcion }}</td>
-          <td jhiTranslate="{{ 'abfApp.Niveles.' + temas.nivel }}">{{ temas.nivel }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -89,7 +82,7 @@
               <button
                 type="submit"
                 [routerLink]="['/registro-clases']"
-                [queryParams]="{ 'filter[temaId.in]': temas.id }"
+                [queryParams]="{ 'filter[temasId.in]': temas.id }"
                 class="btn btn-info btn-sm"
                 data-cy="filterOtherEntityButton"
               >
@@ -99,6 +92,21 @@
                   jhiTranslate="entity.action.show"
                   [translateValues]="{ otherEntity: ('abfApp.temas.registroClases' | translate) }"
                   >Show Registro Clases</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/cursos']"
+                [queryParams]="{ 'filter[temasId.in]': temas.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.temas.cursos' | translate) }"
+                  >Show Cursos</span
                 >
               </button>
               <button type="submit" [routerLink]="['/temas', temas.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

@@ -20,9 +20,6 @@
             <column name="descripcion" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="nivel" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -46,7 +43,6 @@
             <column name="id" type="numeric"/>
             <column name="titulo" type="string"/>
             <column name="descripcion" type="string"/>
-            <column name="nivel" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

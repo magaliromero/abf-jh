@@ -69,4 +69,34 @@ export const EntityNavbarItems = [
     route: 'evaluaciones-detalle',
     translationKey: 'global.menu.entities.evaluacionesDetalle',
   },
+  {
+    name: 'Cursos',
+    route: 'cursos',
+    translationKey: 'global.menu.entities.cursos',
+  },
+  {
+    name: 'Inscripciones',
+    route: 'inscripciones',
+    translationKey: 'global.menu.entities.inscripciones',
+  },
+  {
+    name: 'Clientes',
+    route: 'clientes',
+    translationKey: 'global.menu.entities.clientes',
+  },
+  {
+    name: 'Timbrados',
+    route: 'timbrados',
+    translationKey: 'global.menu.entities.timbrados',
+  },
+  {
+    name: 'Sucursales',
+    route: 'sucursales',
+    translationKey: 'global.menu.entities.sucursales',
+  },
+  {
+    name: 'PuntoDeExpedicion',
+    route: 'punto-de-expedicion',
+    translationKey: 'global.menu.entities.puntoDeExpedicion',
+  },
 ];

@@ -1,0 +1,39 @@
+{
+  "applications": ["abf"],
+  "changelogDate": "20230813164454",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "timbrado",
+  "fields": [
+    {
+      "fieldName": "numeroTimbrado",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "fechaInicio",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaFin",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Timbrados",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "sucursales",
+      "otherEntityRelationshipName": "timbrados",
+      "ownerSide": true,
+      "relationshipName": "sucursales",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

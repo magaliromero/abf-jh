@@ -1,0 +1,10 @@
+{
+  "abfApp": {
+    "EstadosPrestamos": {
+      "null": "",
+      "DEVUELTO": "Devuelto",
+      "PRESTADO": "En Prestamo",
+      "VENCIDO": "No devuelto"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="puntoDeExpedicion">
+      <h2 data-cy="puntoDeExpedicionDetailsHeading">
+        <span jhiTranslate="abfApp.puntoDeExpedicion.detail.title">Punto De Expedicion</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ puntoDeExpedicion.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.puntoDeExpedicion.numeroPuntoDeExpedicion">Numero Punto De Expedicion</span></dt>
+        <dd>
+          <span>{{ puntoDeExpedicion.numeroPuntoDeExpedicion }}</span>
+        </dd>
+        <dt><span jhiTranslate="abfApp.puntoDeExpedicion.sucursales">Sucursales</span></dt>
+        <dd>
+          <div *ngIf="puntoDeExpedicion.sucursales">
+            <a [routerLink]="['/sucursales', puntoDeExpedicion.sucursales.id, 'view']">{{ puntoDeExpedicion.sucursales.nombreSucursal }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/punto-de-expedicion', puntoDeExpedicion.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

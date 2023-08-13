@@ -74,6 +74,36 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'abfApp.evaluacionesDetalle.home.title' },
         loadChildren: () => import('./evaluaciones-detalle/evaluaciones-detalle.module').then(m => m.EvaluacionesDetalleModule),
       },
+      {
+        path: 'cursos',
+        data: { pageTitle: 'abfApp.cursos.home.title' },
+        loadChildren: () => import('./cursos/cursos.module').then(m => m.CursosModule),
+      },
+      {
+        path: 'inscripciones',
+        data: { pageTitle: 'abfApp.inscripciones.home.title' },
+        loadChildren: () => import('./inscripciones/inscripciones.module').then(m => m.InscripcionesModule),
+      },
+      {
+        path: 'clientes',
+        data: { pageTitle: 'abfApp.clientes.home.title' },
+        loadChildren: () => import('./clientes/clientes.module').then(m => m.ClientesModule),
+      },
+      {
+        path: 'timbrados',
+        data: { pageTitle: 'abfApp.timbrados.home.title' },
+        loadChildren: () => import('./timbrados/timbrados.module').then(m => m.TimbradosModule),
+      },
+      {
+        path: 'sucursales',
+        data: { pageTitle: 'abfApp.sucursales.home.title' },
+        loadChildren: () => import('./sucursales/sucursales.module').then(m => m.SucursalesModule),
+      },
+      {
+        path: 'punto-de-expedicion',
+        data: { pageTitle: 'abfApp.puntoDeExpedicion.home.title' },
+        loadChildren: () => import('./punto-de-expedicion/punto-de-expedicion.module').then(m => m.PuntoDeExpedicionModule),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

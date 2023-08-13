@@ -1,0 +1,28 @@
+{
+  "abfApp": {
+    "pagos": {
+      "home": {
+        "title": "Pagos",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Pagos",
+        "createOrEditLabel": "Crear o editar Pagos",
+        "notFound": "Ningún Pagos encontrado"
+      },
+      "created": "Un nuevo Pagos ha sido creado con el identificador {{ param }}",
+      "updated": "Un Pagos ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Pagos ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Pagos {{ id }}?"
+      },
+      "detail": {
+        "title": "Pagos"
+      },
+      "id": "ID",
+      "fecha": "Fecha",
+      "total": "Total",
+      "cantidadHoras": "Cantidad Horas",
+      "producto": "Producto",
+      "funcionario": "Funcionario"
+    }
+  }
+}

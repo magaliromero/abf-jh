@@ -84,7 +84,7 @@ public class Funcionarios implements Serializable {
 
     @OneToMany(mappedBy = "funcionario")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tema", "funcionario" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "temas", "funcionario", "alumnos" }, allowSetters = true)
     private Set<RegistroClases> registroClases = new HashSet<>();
 
     @ManyToOne(optional = false)

@@ -30,8 +30,10 @@ import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
 import py.com.abf.domain.Alumnos;
 import py.com.abf.domain.Evaluaciones;
+import py.com.abf.domain.Inscripciones;
 import py.com.abf.domain.Matricula;
 import py.com.abf.domain.Prestamos;
+import py.com.abf.domain.RegistroClases;
 import py.com.abf.domain.TiposDocumentos;
 import py.com.abf.domain.enumeration.EstadosPersona;
 import py.com.abf.repository.AlumnosRepository;
@@ -1119,6 +1121,29 @@ class AlumnosResourceIT {
 
     @Test
     @Transactional
+    void getAllAlumnosByInscripcionesIsEqualToSomething() throws Exception {
+        Inscripciones inscripciones;
+        if (TestUtil.findAll(em, Inscripciones.class).isEmpty()) {
+            alumnosRepository.saveAndFlush(alumnos);
+            inscripciones = InscripcionesResourceIT.createEntity(em);
+        } else {
+            inscripciones = TestUtil.findAll(em, Inscripciones.class).get(0);
+        }
+        em.persist(inscripciones);
+        em.flush();
+        alumnos.addInscripciones(inscripciones);
+        alumnosRepository.saveAndFlush(alumnos);
+        Long inscripcionesId = inscripciones.getId();
+
+        // Get all the alumnosList where inscripciones equals to inscripcionesId
+        defaultAlumnosShouldBeFound("inscripcionesId.equals=" + inscripcionesId);
+
+        // Get all the alumnosList where inscripciones equals to (inscripcionesId + 1)
+        defaultAlumnosShouldNotBeFound("inscripcionesId.equals=" + (inscripcionesId + 1));
+    }
+
+    @Test
+    @Transactional
     void getAllAlumnosByEvaluacionesIsEqualToSomething() throws Exception {
         Evaluaciones evaluaciones;
         if (TestUtil.findAll(em, Evaluaciones.class).isEmpty()) {
@@ -1184,6 +1209,29 @@ class AlumnosResourceIT {
 
         // Get all the alumnosList where prestamos equals to (prestamosId + 1)
         defaultAlumnosShouldNotBeFound("prestamosId.equals=" + (prestamosId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllAlumnosByRegistroClasesIsEqualToSomething() throws Exception {
+        RegistroClases registroClases;
+        if (TestUtil.findAll(em, RegistroClases.class).isEmpty()) {
+            alumnosRepository.saveAndFlush(alumnos);
+            registroClases = RegistroClasesResourceIT.createEntity(em);
+        } else {
+            registroClases = TestUtil.findAll(em, RegistroClases.class).get(0);
+        }
+        em.persist(registroClases);
+        em.flush();
+        alumnos.addRegistroClases(registroClases);
+        alumnosRepository.saveAndFlush(alumnos);
+        Long registroClasesId = registroClases.getId();
+
+        // Get all the alumnosList where registroClases equals to registroClasesId
+        defaultAlumnosShouldBeFound("registroClasesId.equals=" + registroClasesId);
+
+        // Get all the alumnosList where registroClases equals to (registroClasesId + 1)
+        defaultAlumnosShouldNotBeFound("registroClasesId.equals=" + (registroClasesId + 1));
     }
 
     @Test

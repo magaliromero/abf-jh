@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import py.com.abf.domain.enumeration.Niveles;
 
 /**
  * A Temas.
@@ -35,20 +34,20 @@ public class Temas implements Serializable {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "nivel", nullable = false)
-    private Niveles nivel;
-
     @OneToMany(mappedBy = "temas")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "evaluaciones", "temas" }, allowSetters = true)
     private Set<EvaluacionesDetalle> evaluacionesDetalles = new HashSet<>();
 
-    @OneToMany(mappedBy = "tema")
+    @OneToMany(mappedBy = "temas")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tema", "funcionario" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "temas", "funcionario", "alumnos" }, allowSetters = true)
     private Set<RegistroClases> registroClases = new HashSet<>();
+
+    @OneToMany(mappedBy = "temas")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "inscripciones", "temas" }, allowSetters = true)
+    private Set<Cursos> cursos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -91,19 +90,6 @@ public class Temas implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Niveles getNivel() {
-        return this.nivel;
-    }
-
-    public Temas nivel(Niveles nivel) {
-        this.setNivel(nivel);
-        return this;
-    }
-
-    public void setNivel(Niveles nivel) {
-        this.nivel = nivel;
-    }
-
     public Set<EvaluacionesDetalle> getEvaluacionesDetalles() {
         return this.evaluacionesDetalles;
     }
@@ -141,10 +127,10 @@ public class Temas implements Serializable {
 
     public void setRegistroClases(Set<RegistroClases> registroClases) {
         if (this.registroClases != null) {
-            this.registroClases.forEach(i -> i.setTema(null));
+            this.registroClases.forEach(i -> i.setTemas(null));
         }
         if (registroClases != null) {
-            registroClases.forEach(i -> i.setTema(this));
+            registroClases.forEach(i -> i.setTemas(this));
         }
         this.registroClases = registroClases;
     }
@@ -156,13 +142,44 @@ public class Temas implements Serializable {
 
     public Temas addRegistroClases(RegistroClases registroClases) {
         this.registroClases.add(registroClases);
-        registroClases.setTema(this);
+        registroClases.setTemas(this);
         return this;
     }
 
     public Temas removeRegistroClases(RegistroClases registroClases) {
         this.registroClases.remove(registroClases);
-        registroClases.setTema(null);
+        registroClases.setTemas(null);
+        return this;
+    }
+
+    public Set<Cursos> getCursos() {
+        return this.cursos;
+    }
+
+    public void setCursos(Set<Cursos> cursos) {
+        if (this.cursos != null) {
+            this.cursos.forEach(i -> i.setTemas(null));
+        }
+        if (cursos != null) {
+            cursos.forEach(i -> i.setTemas(this));
+        }
+        this.cursos = cursos;
+    }
+
+    public Temas cursos(Set<Cursos> cursos) {
+        this.setCursos(cursos);
+        return this;
+    }
+
+    public Temas addCursos(Cursos cursos) {
+        this.cursos.add(cursos);
+        cursos.setTemas(this);
+        return this;
+    }
+
+    public Temas removeCursos(Cursos cursos) {
+        this.cursos.remove(cursos);
+        cursos.setTemas(null);
         return this;
     }
 
@@ -192,7 +209,6 @@ public class Temas implements Serializable {
             "id=" + getId() +
             ", titulo='" + getTitulo() + "'" +
             ", descripcion='" + getDescripcion() + "'" +
-            ", nivel='" + getNivel() + "'" +
             "}";
     }
 }

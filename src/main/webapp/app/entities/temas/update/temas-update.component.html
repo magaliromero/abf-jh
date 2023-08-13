@@ -43,19 +43,6 @@
             </small>
           </div>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.temas.nivel" for="field_nivel">Nivel</label>
-          <select class="form-control" name="nivel" formControlName="nivel" id="field_nivel" data-cy="nivel">
-            <option [ngValue]="null">{{ 'abfApp.Niveles.null' | translate }}</option>
-            <option *ngFor="let niveles of nivelesValues" [value]="niveles">{{ 'abfApp.Niveles.' + niveles | translate }}</option>
-          </select>
-          <div *ngIf="editForm.get('nivel')!.invalid && (editForm.get('nivel')!.dirty || editForm.get('nivel')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nivel')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-          </div>
-        </div>
       </div>
 
       <div>

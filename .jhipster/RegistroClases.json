@@ -30,7 +30,7 @@
       "otherEntityField": "descripcion",
       "otherEntityName": "temas",
       "otherEntityRelationshipName": "registroClases",
-      "relationshipName": "tema",
+      "relationshipName": "temas",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     },
@@ -39,7 +39,16 @@
       "otherEntityName": "funcionarios",
       "otherEntityRelationshipName": "registroClases",
       "relationshipName": "funcionario",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nombreCompleto",
+      "otherEntityName": "alumnos",
+      "otherEntityRelationshipName": "registroClases",
+      "relationshipName": "alumnos",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceImpl"

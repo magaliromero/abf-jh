@@ -11,7 +11,7 @@ export const sampleWithRequiredData: IFacturas = {
   timbrado: 61190,
   razonSocial: 'Zealand',
   ruc: 'SMS Rubber Market',
-  condicionVenta: CondicionVenta['CREDITO'],
+  condicionVenta: CondicionVenta['CONTADO'],
   total: 86011,
 };
 
@@ -33,7 +33,7 @@ export const sampleWithFullData: IFacturas = {
   timbrado: 22694,
   razonSocial: 'bypassing Configuration navigate',
   ruc: 'Bacon tan',
-  condicionVenta: CondicionVenta['CREDITO'],
+  condicionVenta: CondicionVenta['CONTADO'],
   total: 5477,
 };
 

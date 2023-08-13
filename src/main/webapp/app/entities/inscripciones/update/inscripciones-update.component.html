@@ -1,0 +1,105 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-inscripciones-heading"
+        data-cy="InscripcionesCreateUpdateHeading"
+        jhiTranslate="abfApp.inscripciones.home.createOrEditLabel"
+      >
+        Create or edit a Inscripciones
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.inscripciones.fechaInscripcion" for="field_fechaInscripcion"
+            >Fecha Inscripcion</label
+          >
+          <div class="input-group">
+            <input
+              id="field_fechaInscripcion"
+              data-cy="fechaInscripcion"
+              type="text"
+              class="form-control"
+              name="fechaInscripcion"
+              ngbDatepicker
+              #fechaInscripcionDp="ngbDatepicker"
+              formControlName="fechaInscripcion"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fechaInscripcionDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.inscripciones.alumnos" for="field_alumnos">Alumnos</label>
+          <select
+            class="form-control"
+            id="field_alumnos"
+            data-cy="alumnos"
+            name="alumnos"
+            formControlName="alumnos"
+            [compareWith]="compareAlumnos"
+          >
+            <option *ngIf="editForm.get(['alumnos'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="alumnosOption" *ngFor="let alumnosOption of alumnosSharedCollection">
+              {{ alumnosOption.nombreCompleto }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['alumnos'])!.invalid && (editForm.get(['alumnos'])!.dirty || editForm.get(['alumnos'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['alumnos'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="abfApp.inscripciones.cursos" for="field_cursos">Cursos</label>
+          <select
+            class="form-control"
+            id="field_cursos"
+            data-cy="cursos"
+            name="cursos"
+            formControlName="cursos"
+            [compareWith]="compareCursos"
+          >
+            <option *ngIf="editForm.get(['cursos'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="cursosOption" *ngFor="let cursosOption of cursosSharedCollection">{{ cursosOption.nombreCurso }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['cursos'])!.invalid && (editForm.get(['cursos'])!.dirty || editForm.get(['cursos'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['cursos'])?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -18,10 +18,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import py.com.abf.IntegrationTest;
+import py.com.abf.domain.Cursos;
 import py.com.abf.domain.EvaluacionesDetalle;
 import py.com.abf.domain.RegistroClases;
 import py.com.abf.domain.Temas;
-import py.com.abf.domain.enumeration.Niveles;
 import py.com.abf.repository.TemasRepository;
 import py.com.abf.service.criteria.TemasCriteria;
 
@@ -38,9 +38,6 @@ class TemasResourceIT {
 
     private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
-
-    private static final Niveles DEFAULT_NIVEL = Niveles.PREAJEDREZ;
-    private static final Niveles UPDATED_NIVEL = Niveles.INICIAL;
 
     private static final String ENTITY_API_URL = "/api/temas";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -66,7 +63,7 @@ class TemasResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Temas createEntity(EntityManager em) {
-        Temas temas = new Temas().titulo(DEFAULT_TITULO).descripcion(DEFAULT_DESCRIPCION).nivel(DEFAULT_NIVEL);
+        Temas temas = new Temas().titulo(DEFAULT_TITULO).descripcion(DEFAULT_DESCRIPCION);
         return temas;
     }
 
@@ -77,7 +74,7 @@ class TemasResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Temas createUpdatedEntity(EntityManager em) {
-        Temas temas = new Temas().titulo(UPDATED_TITULO).descripcion(UPDATED_DESCRIPCION).nivel(UPDATED_NIVEL);
+        Temas temas = new Temas().titulo(UPDATED_TITULO).descripcion(UPDATED_DESCRIPCION);
         return temas;
     }
 
@@ -101,7 +98,6 @@ class TemasResourceIT {
         Temas testTemas = temasList.get(temasList.size() - 1);
         assertThat(testTemas.getTitulo()).isEqualTo(DEFAULT_TITULO);
         assertThat(testTemas.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
-        assertThat(testTemas.getNivel()).isEqualTo(DEFAULT_NIVEL);
     }
 
     @Test
@@ -158,23 +154,6 @@ class TemasResourceIT {
 
     @Test
     @Transactional
-    void checkNivelIsRequired() throws Exception {
-        int databaseSizeBeforeTest = temasRepository.findAll().size();
-        // set the field null
-        temas.setNivel(null);
-
-        // Create the Temas, which fails.
-
-        restTemasMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(temas)))
-            .andExpect(status().isBadRequest());
-
-        List<Temas> temasList = temasRepository.findAll();
-        assertThat(temasList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllTemas() throws Exception {
         // Initialize the database
         temasRepository.saveAndFlush(temas);
@@ -186,8 +165,7 @@ class TemasResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(temas.getId().intValue())))
             .andExpect(jsonPath("$.[*].titulo").value(hasItem(DEFAULT_TITULO)))
-            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
-            .andExpect(jsonPath("$.[*].nivel").value(hasItem(DEFAULT_NIVEL.toString())));
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)));
     }
 
     @Test
@@ -203,8 +181,7 @@ class TemasResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(temas.getId().intValue()))
             .andExpect(jsonPath("$.titulo").value(DEFAULT_TITULO))
-            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION))
-            .andExpect(jsonPath("$.nivel").value(DEFAULT_NIVEL.toString()));
+            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION));
     }
 
     @Test
@@ -357,45 +334,6 @@ class TemasResourceIT {
 
     @Test
     @Transactional
-    void getAllTemasByNivelIsEqualToSomething() throws Exception {
-        // Initialize the database
-        temasRepository.saveAndFlush(temas);
-
-        // Get all the temasList where nivel equals to DEFAULT_NIVEL
-        defaultTemasShouldBeFound("nivel.equals=" + DEFAULT_NIVEL);
-
-        // Get all the temasList where nivel equals to UPDATED_NIVEL
-        defaultTemasShouldNotBeFound("nivel.equals=" + UPDATED_NIVEL);
-    }
-
-    @Test
-    @Transactional
-    void getAllTemasByNivelIsInShouldWork() throws Exception {
-        // Initialize the database
-        temasRepository.saveAndFlush(temas);
-
-        // Get all the temasList where nivel in DEFAULT_NIVEL or UPDATED_NIVEL
-        defaultTemasShouldBeFound("nivel.in=" + DEFAULT_NIVEL + "," + UPDATED_NIVEL);
-
-        // Get all the temasList where nivel equals to UPDATED_NIVEL
-        defaultTemasShouldNotBeFound("nivel.in=" + UPDATED_NIVEL);
-    }
-
-    @Test
-    @Transactional
-    void getAllTemasByNivelIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        temasRepository.saveAndFlush(temas);
-
-        // Get all the temasList where nivel is not null
-        defaultTemasShouldBeFound("nivel.specified=true");
-
-        // Get all the temasList where nivel is null
-        defaultTemasShouldNotBeFound("nivel.specified=false");
-    }
-
-    @Test
-    @Transactional
     void getAllTemasByEvaluacionesDetalleIsEqualToSomething() throws Exception {
         EvaluacionesDetalle evaluacionesDetalle;
         if (TestUtil.findAll(em, EvaluacionesDetalle.class).isEmpty()) {
@@ -440,6 +378,29 @@ class TemasResourceIT {
         defaultTemasShouldNotBeFound("registroClasesId.equals=" + (registroClasesId + 1));
     }
 
+    @Test
+    @Transactional
+    void getAllTemasByCursosIsEqualToSomething() throws Exception {
+        Cursos cursos;
+        if (TestUtil.findAll(em, Cursos.class).isEmpty()) {
+            temasRepository.saveAndFlush(temas);
+            cursos = CursosResourceIT.createEntity(em);
+        } else {
+            cursos = TestUtil.findAll(em, Cursos.class).get(0);
+        }
+        em.persist(cursos);
+        em.flush();
+        temas.addCursos(cursos);
+        temasRepository.saveAndFlush(temas);
+        Long cursosId = cursos.getId();
+
+        // Get all the temasList where cursos equals to cursosId
+        defaultTemasShouldBeFound("cursosId.equals=" + cursosId);
+
+        // Get all the temasList where cursos equals to (cursosId + 1)
+        defaultTemasShouldNotBeFound("cursosId.equals=" + (cursosId + 1));
+    }
+
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -450,8 +411,7 @@ class TemasResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(temas.getId().intValue())))
             .andExpect(jsonPath("$.[*].titulo").value(hasItem(DEFAULT_TITULO)))
-            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)))
-            .andExpect(jsonPath("$.[*].nivel").value(hasItem(DEFAULT_NIVEL.toString())));
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)));
 
         // Check, that the count call also returns 1
         restTemasMockMvc
@@ -499,7 +459,7 @@ class TemasResourceIT {
         Temas updatedTemas = temasRepository.findById(temas.getId()).get();
         // Disconnect from session so that the updates on updatedTemas are not directly saved in db
         em.detach(updatedTemas);
-        updatedTemas.titulo(UPDATED_TITULO).descripcion(UPDATED_DESCRIPCION).nivel(UPDATED_NIVEL);
+        updatedTemas.titulo(UPDATED_TITULO).descripcion(UPDATED_DESCRIPCION);
 
         restTemasMockMvc
             .perform(
@@ -515,7 +475,6 @@ class TemasResourceIT {
         Temas testTemas = temasList.get(temasList.size() - 1);
         assertThat(testTemas.getTitulo()).isEqualTo(UPDATED_TITULO);
         assertThat(testTemas.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testTemas.getNivel()).isEqualTo(UPDATED_NIVEL);
     }
 
     @Test
@@ -586,8 +545,6 @@ class TemasResourceIT {
         Temas partialUpdatedTemas = new Temas();
         partialUpdatedTemas.setId(temas.getId());
 
-        partialUpdatedTemas.nivel(UPDATED_NIVEL);
-
         restTemasMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedTemas.getId())
@@ -602,7 +559,6 @@ class TemasResourceIT {
         Temas testTemas = temasList.get(temasList.size() - 1);
         assertThat(testTemas.getTitulo()).isEqualTo(DEFAULT_TITULO);
         assertThat(testTemas.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
-        assertThat(testTemas.getNivel()).isEqualTo(UPDATED_NIVEL);
     }
 
     @Test
@@ -617,7 +573,7 @@ class TemasResourceIT {
         Temas partialUpdatedTemas = new Temas();
         partialUpdatedTemas.setId(temas.getId());
 
-        partialUpdatedTemas.titulo(UPDATED_TITULO).descripcion(UPDATED_DESCRIPCION).nivel(UPDATED_NIVEL);
+        partialUpdatedTemas.titulo(UPDATED_TITULO).descripcion(UPDATED_DESCRIPCION);
 
         restTemasMockMvc
             .perform(
@@ -633,7 +589,6 @@ class TemasResourceIT {
         Temas testTemas = temasList.get(temasList.size() - 1);
         assertThat(testTemas.getTitulo()).isEqualTo(UPDATED_TITULO);
         assertThat(testTemas.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
-        assertThat(testTemas.getNivel()).isEqualTo(UPDATED_NIVEL);
     }
 
     @Test

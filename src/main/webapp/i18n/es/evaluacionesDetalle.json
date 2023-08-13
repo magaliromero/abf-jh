@@ -1,0 +1,27 @@
+{
+  "abfApp": {
+    "evaluacionesDetalle": {
+      "home": {
+        "title": "Evaluaciones Detalles",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Evaluaciones Detalle",
+        "createOrEditLabel": "Crear o editar Evaluaciones Detalle",
+        "notFound": "Ningún Evaluaciones Detalles encontrado"
+      },
+      "created": "Un nuevo Evaluaciones Detalle ha sido creado con el identificador {{ param }}",
+      "updated": "Un Evaluaciones Detalle ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Evaluaciones Detalle ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Evaluaciones Detalle {{ id }}?"
+      },
+      "detail": {
+        "title": "Evaluaciones Detalle"
+      },
+      "id": "ID",
+      "comentarios": "Comentarios",
+      "puntaje": "Puntaje",
+      "evaluaciones": "Evaluaciones",
+      "temas": "Temas"
+    }
+  }
+}

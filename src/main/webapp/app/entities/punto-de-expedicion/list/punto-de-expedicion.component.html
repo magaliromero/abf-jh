@@ -1,0 +1,121 @@
+<div>
+  <h2 id="page-heading" data-cy="PuntoDeExpedicionHeading">
+    <span jhiTranslate="abfApp.puntoDeExpedicion.home.title">Punto De Expedicions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="abfApp.puntoDeExpedicion.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-punto-de-expedicion"
+        [routerLink]="['/punto-de-expedicion/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="abfApp.puntoDeExpedicion.home.createLabel"> Create a new Punto De Expedicion </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="puntoDeExpedicions?.length === 0">
+    <span jhiTranslate="abfApp.puntoDeExpedicion.home.notFound">No Punto De Expedicions found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="puntoDeExpedicions && puntoDeExpedicions.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="numeroPuntoDeExpedicion">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.puntoDeExpedicion.numeroPuntoDeExpedicion">Numero Punto De Expedicion</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="sucursales.nombreSucursal">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.puntoDeExpedicion.sucursales">Sucursales</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let puntoDeExpedicion of puntoDeExpedicions; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/punto-de-expedicion', puntoDeExpedicion.id, 'view']">{{ puntoDeExpedicion.id }}</a>
+          </td>
+          <td>{{ puntoDeExpedicion.numeroPuntoDeExpedicion }}</td>
+          <td>
+            <div *ngIf="puntoDeExpedicion.sucursales">
+              <a [routerLink]="['/sucursales', puntoDeExpedicion.sucursales.id, 'view']">{{
+                puntoDeExpedicion.sucursales.nombreSucursal
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/punto-de-expedicion', puntoDeExpedicion.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/punto-de-expedicion', puntoDeExpedicion.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(puntoDeExpedicion)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="puntoDeExpedicions && puntoDeExpedicions.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

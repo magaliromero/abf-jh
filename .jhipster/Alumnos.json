@@ -61,6 +61,12 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "inscripciones",
+      "otherEntityRelationshipName": "alumnos",
+      "relationshipName": "inscripciones",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityName": "evaluaciones",
       "otherEntityRelationshipName": "alumnos",
       "relationshipName": "evaluaciones",
@@ -76,6 +82,12 @@
       "otherEntityName": "prestamos",
       "otherEntityRelationshipName": "alumnos",
       "relationshipName": "prestamos",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "registroClases",
+      "otherEntityRelationshipName": "alumnos",
+      "relationshipName": "registroClases",
       "relationshipType": "one-to-many"
     },
     {

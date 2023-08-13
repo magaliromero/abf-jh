@@ -10,7 +10,7 @@ export const sampleWithRequiredData: IMatricula = {
   monto: 45850,
   fechaInscripcion: dayjs('2023-05-23'),
   fechaInicio: dayjs('2023-05-23'),
-  estado: EstadosPagos['ANULADO'],
+  estado: EstadosPagos['PENDIENTE'],
 };
 
 export const sampleWithPartialData: IMatricula = {
@@ -20,7 +20,7 @@ export const sampleWithPartialData: IMatricula = {
   fechaInscripcion: dayjs('2023-05-23'),
   fechaInicio: dayjs('2023-05-23'),
   fechaPago: dayjs('2023-05-22'),
-  estado: EstadosPagos['PENDIENTE'],
+  estado: EstadosPagos['ANULADO'],
 };
 
 export const sampleWithFullData: IMatricula = {
@@ -30,7 +30,7 @@ export const sampleWithFullData: IMatricula = {
   fechaInscripcion: dayjs('2023-05-23'),
   fechaInicio: dayjs('2023-05-23'),
   fechaPago: dayjs('2023-05-23'),
-  estado: EstadosPagos['PENDIENTE'],
+  estado: EstadosPagos['ANULADO'],
 };
 
 export const sampleWithNewData: NewMatricula = {
@@ -38,7 +38,7 @@ export const sampleWithNewData: NewMatricula = {
   monto: 85587,
   fechaInscripcion: dayjs('2023-05-23'),
   fechaInicio: dayjs('2023-05-23'),
-  estado: EstadosPagos['ANULADO'],
+  estado: EstadosPagos['PENDIENTE'],
   id: null,
 };
 

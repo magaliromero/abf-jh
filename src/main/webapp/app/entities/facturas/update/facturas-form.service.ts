@@ -25,6 +25,7 @@ type FacturasFormGroupContent = {
   ruc: FormControl<IFacturas['ruc']>;
   condicionVenta: FormControl<IFacturas['condicionVenta']>;
   total: FormControl<IFacturas['total']>;
+  clientes: FormControl<IFacturas['clientes']>;
 };
 
 export type FacturasFormGroup = FormGroup<FacturasFormGroupContent>;
@@ -63,6 +64,9 @@ export class FacturasFormService {
         validators: [Validators.required],
       }),
       total: new FormControl(facturasRawValue.total, {
+        validators: [Validators.required],
+      }),
+      clientes: new FormControl(facturasRawValue.clientes, {
         validators: [Validators.required],
       }),
     });

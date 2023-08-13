@@ -33,8 +33,8 @@ import py.com.abf.service.criteria.ProductosCriteria;
 @WithMockUser
 class ProductosResourceIT {
 
-    private static final TipoProductos DEFAULT_TIPO_PRODUCTO = TipoProductos.PRODUCTO;
-    private static final TipoProductos UPDATED_TIPO_PRODUCTO = TipoProductos.SERVICIO;
+    private static final TipoProductos DEFAULT_TIPO_PRODUCTO = TipoProductos.SERVICIO;
+    private static final TipoProductos UPDATED_TIPO_PRODUCTO = TipoProductos.PRODUCTO;
 
     private static final Integer DEFAULT_PRECIO_UNITARIO = 1;
     private static final Integer UPDATED_PRECIO_UNITARIO = 2;

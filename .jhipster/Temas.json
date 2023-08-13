@@ -14,12 +14,6 @@
       "fieldName": "descripcion",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "nivel",
-      "fieldType": "Niveles",
-      "fieldValidateRules": ["required"],
-      "fieldValues": "PREAJEDREZ (Pre-Ajedrez),INICIAL (Inicial),PRINCIPIANTE (Principiante),INTERMEDIO (Intermedio),AVANZADO (Avanzado),TODOS (Todos los niveles)"
     }
   ],
   "fluentMethods": true,
@@ -36,8 +30,14 @@
     },
     {
       "otherEntityName": "registroClases",
-      "otherEntityRelationshipName": "tema",
+      "otherEntityRelationshipName": "temas",
       "relationshipName": "registroClases",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "cursos",
+      "otherEntityRelationshipName": "temas",
+      "relationshipName": "cursos",
       "relationshipType": "one-to-many"
     }
   ],

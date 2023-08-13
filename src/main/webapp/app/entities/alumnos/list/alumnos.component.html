@@ -133,6 +133,21 @@
             <div class="btn-group">
               <button
                 type="submit"
+                [routerLink]="['/inscripciones']"
+                [queryParams]="{ 'filter[alumnosId.in]': alumnos.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.alumnos.inscripciones' | translate) }"
+                  >Show Inscripciones</span
+                >
+              </button>
+              <button
+                type="submit"
                 [routerLink]="['/evaluaciones']"
                 [queryParams]="{ 'filter[alumnosId.in]': alumnos.id }"
                 class="btn btn-info btn-sm"
@@ -174,6 +189,21 @@
                   jhiTranslate="entity.action.show"
                   [translateValues]="{ otherEntity: ('abfApp.alumnos.prestamos' | translate) }"
                   >Show Prestamos</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/registro-clases']"
+                [queryParams]="{ 'filter[alumnosId.in]': alumnos.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  jhiTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('abfApp.alumnos.registroClases' | translate) }"
+                  >Show Registro Clases</span
                 >
               </button>
               <button

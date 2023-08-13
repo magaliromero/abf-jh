@@ -9,7 +9,7 @@
       "fieldName": "tipoProducto",
       "fieldType": "TipoProductos",
       "fieldValidateRules": ["required"],
-      "fieldValues": "PRODUCTO (Producto),SERVICIO (Servicio)"
+      "fieldValues": "SERVICIO (Servicio),PRODUCTO (Producto)"
     },
     {
       "fieldName": "precioUnitario",

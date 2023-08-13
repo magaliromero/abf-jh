@@ -4,8 +4,7 @@ package py.com.abf.domain.enumeration;
  * The CondicionVenta enumeration.
  */
 public enum CondicionVenta {
-    CONTADO("Contado"),
-    CREDITO("Credito");
+    CONTADO("Contado");
 
     private final String value;
 

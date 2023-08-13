@@ -1,0 +1,28 @@
+{
+  "abfApp": {
+    "sucursales": {
+      "home": {
+        "title": "Sucursales",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Sucursales",
+        "createOrEditLabel": "Crear o editar Sucursales",
+        "notFound": "Ningún Sucursales encontrado"
+      },
+      "created": "Un nuevo Sucursales ha sido creado con el identificador {{ param }}",
+      "updated": "Un Sucursales ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Sucursales ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Sucursales {{ id }}?"
+      },
+      "detail": {
+        "title": "Sucursales"
+      },
+      "id": "ID",
+      "nombreSucursal": "Nombre Sucursal",
+      "direccion": "Direccion",
+      "numeroEstablecimiento": "Numero Establecimiento",
+      "puntoDeExpedicion": "Punto De Expedicion",
+      "timbrados": "Timbrados"
+    }
+  }
+}

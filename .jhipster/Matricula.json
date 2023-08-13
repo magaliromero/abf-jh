@@ -33,7 +33,7 @@
       "fieldName": "estado",
       "fieldType": "EstadosPagos",
       "fieldValidateRules": ["required"],
-      "fieldValues": "PAGADO (Pagado),ANULADO (Anulado),PENDIENTE (Pendiente)"
+      "fieldValues": "PAGADO (Pagado),PENDIENTE (Pendiente),ANULADO (Anulado)"
     }
   ],
   "fluentMethods": true,

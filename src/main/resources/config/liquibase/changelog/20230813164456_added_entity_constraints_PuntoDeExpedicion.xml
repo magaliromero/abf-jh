@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity PuntoDeExpedicion.
+    -->
+    <changeSet id="20230813164456-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="sucursales_id"
+                                 baseTableName="punto_de_expedicion"
+                                 constraintName="fk_punto_de_expedicion__sucursales_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sucursales"/>
+    </changeSet>
+</databaseChangeLog>

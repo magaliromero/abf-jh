@@ -58,15 +58,21 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="tema.descripcion">
+          <th scope="col" jhiSortBy="temas.descripcion">
             <div class="d-flex">
-              <span jhiTranslate="abfApp.registroClases.tema">Tema</span>
+              <span jhiTranslate="abfApp.registroClases.temas">Temas</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" jhiSortBy="funcionario.nombreCompleto">
             <div class="d-flex">
               <span jhiTranslate="abfApp.registroClases.funcionario">Funcionario</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="alumnos.nombreCompleto">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.registroClases.alumnos">Alumnos</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -82,13 +88,18 @@
           <td>{{ registroClases.cantidadHoras }}</td>
           <td>{{ registroClases.asistenciaAlumno }}</td>
           <td>
-            <div *ngIf="registroClases.tema">
-              <a [routerLink]="['/temas', registroClases.tema.id, 'view']">{{ registroClases.tema.descripcion }}</a>
+            <div *ngIf="registroClases.temas">
+              <a [routerLink]="['/temas', registroClases.temas.id, 'view']">{{ registroClases.temas.descripcion }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="registroClases.funcionario">
               <a [routerLink]="['/funcionarios', registroClases.funcionario.id, 'view']">{{ registroClases.funcionario.nombreCompleto }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="registroClases.alumnos">
+              <a [routerLink]="['/alumnos', registroClases.alumnos.id, 'view']">{{ registroClases.alumnos.nombreCompleto }}</a>
             </div>
           </td>
           <td class="text-end">

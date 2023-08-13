@@ -1,19 +1,12 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="jhi-evaluaciones-heading" data-cy="EvaluacionesCreateUpdateHeading" jhiTranslate="abfApp.evaluaciones.home.createOrEditLabel">
-        Create or edit a Evaluaciones
-      </h2>
+      <h2 id="jhi-evaluaciones-heading" data-cy="EvaluacionesCreateUpdateHeading">EVALUACION</h2>
 
-      <div>
+      <div class="row">
         <jhi-alert-error></jhi-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="abfApp.evaluaciones.nroEvaluacion" for="field_nroEvaluacion">Nro Evaluacion</label>
           <input
             type="number"
@@ -45,7 +38,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="col-6 mb-3">
           <label class="form-label" jhiTranslate="abfApp.evaluaciones.fecha" for="field_fecha">Fecha</label>
           <div class="input-group">
             <input
@@ -67,8 +60,8 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.evaluaciones.alumnos" for="field_alumnos">Alumnos</label>
+        <div class="col-6 mb-3">
+          <label class="form-label" jhiTranslate="abfApp.evaluaciones.alumnos" for="field_alumnos">Alumno</label>
           <select
             class="form-control"
             id="field_alumnos"
@@ -93,8 +86,8 @@
           </small>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.evaluaciones.funcionarios" for="field_funcionarios">Funcionarios</label>
+        <div class="col-6 mb-3">
+          <label class="form-label" jhiTranslate="abfApp.evaluaciones.funcionarios" for="field_funcionarios">Profesor</label>
           <select
             class="form-control"
             id="field_funcionarios"
@@ -123,22 +116,66 @@
           </small>
         </div>
       </div>
+    </form>
 
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
+    <div>
+      <h3>DETALLE EVALUACION</h3>
+    </div>
 
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+    <div class="row mb-3">
+      <div class="col-3">
+        <label class="form-label" for="field_condicionVenta">Tema</label>
+        <select class="form-control" name="prod" id="id_detalle_prod" [(ngModel)]="nuevoItem.tema" (click)="selecciona()">
+          <option [ngValue]="null">{{ ' Seleccione un producto' }}</option>
+          <!-- se agrego prod -->
+          <option *ngFor="let item of temas" [value]="item.id">
+            {{ item.descripcion }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-2">
+        <label class="form-label" placeholder="Puntaje" for="field_total">Puntaje</label>
+        <input type="number" class="form-control" name="total" id="field_total" [(ngModel)]="nuevoItem.puntaje" min="0" max="100" />
+      </div>
+      <div class="col-6">
+        <label class="form-label" placeholder="Comentarios" for="field_total">Comentarios </label>
+        <input type="text" class="form-control" name="comentarios" id="field_total" min="0" [(ngModel)]="nuevoItem.comentarios" />
+      </div>
+      <div class="col-1 d-flex align-items-end">
+        <button id="id_btn" class="btn btn-primary jh-create-entity" (click)="agregarDetalle()">
+          <fa-icon icon="plus"></fa-icon>
         </button>
       </div>
-    </form>
+    </div>
+
+    <div class="row mb-3" *ngFor="let items of listaDetalle | keyvalue; let i = index" [attr.data-index]="i">
+      <div class="row mb-3 col-3">
+        <input type="text" class="form-control" id="id" [(ngModel)]="items.value.descripcion" [disabled]="true" />
+      </div>
+
+      <div class="col-2">
+        <input type="number" class="form-control" name="total" id="field_total" [(ngModel)]="items.value.puntaje" [disabled]="true" />
+      </div>
+
+      <div class="col-4">
+        <input type="text" class="form-control" name="total" id="field_total" [(ngModel)]="items.value.comentarios" [disabled]="true" />
+      </div>
+      <div class="col-1 d-flex align-items-start">
+        <button id="id_btn" class="btn btn-danger" (click)="eliminarDetalle(i)">
+          <fa-icon icon="times"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <div>
+      <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      </button>
+
+      <button type="submit" id="save-entity" data-cy="entityCreateSaveButton" (click)="save()" class="btn btn-primary">
+        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+      </button>
+    </div>
   </div>
 </div>

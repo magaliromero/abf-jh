@@ -23,11 +23,14 @@
             <column name="asistencia_alumno" type="boolean">
                 <constraints nullable="true" />
             </column>
-            <column name="tema_id" type="bigint">
+            <column name="temas_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="funcionario_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
+            </column>
+            <column name="alumnos_id" type="bigint">
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -53,7 +56,9 @@
             <column name="fecha" type="date"/>
             <column name="cantidad_horas" type="numeric"/>
             <column name="asistencia_alumno" type="boolean"/>
-            <column name="tema_id" type="numeric"/>
+            <column name="temas_id" type="numeric"/>
+            <column name="funcionario_id" type="numeric"/>
+            <column name="alumnos_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
