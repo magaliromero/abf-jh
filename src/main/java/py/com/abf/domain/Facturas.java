@@ -62,11 +62,6 @@ public class Facturas implements Serializable {
     @JsonIgnoreProperties(value = { "producto", "factura" }, allowSetters = true)
     private Set<FacturaDetalle> facturaDetalles = new HashSet<>();
 
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "facturas" }, allowSetters = true)
-    private Clientes clientes;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -201,19 +196,6 @@ public class Facturas implements Serializable {
     public Facturas removeFacturaDetalle(FacturaDetalle facturaDetalle) {
         this.facturaDetalles.remove(facturaDetalle);
         facturaDetalle.setFactura(null);
-        return this;
-    }
-
-    public Clientes getClientes() {
-        return this.clientes;
-    }
-
-    public void setClientes(Clientes clientes) {
-        this.clientes = clientes;
-    }
-
-    public Facturas clientes(Clientes clientes) {
-        this.setClientes(clientes);
         return this;
     }
 

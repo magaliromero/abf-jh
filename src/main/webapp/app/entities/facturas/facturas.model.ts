@@ -1,5 +1,4 @@
 import dayjs from 'dayjs/esm';
-import { IClientes } from 'app/entities/clientes/clientes.model';
 import { CondicionVenta } from 'app/entities/enumerations/condicion-venta.model';
 
 export interface IFacturas {
@@ -11,7 +10,6 @@ export interface IFacturas {
   ruc?: string | null;
   condicionVenta?: CondicionVenta | null;
   total?: number | null;
-  clientes?: Pick<IClientes, 'id' | 'ruc'> | null;
 }
 
 export type NewFacturas = Omit<IFacturas, 'id'> & { id: null };

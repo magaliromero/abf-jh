@@ -51,7 +51,7 @@
       "fieldName": "estado",
       "fieldType": "EstadosPersona",
       "fieldValidateRules": ["required"],
-      "fieldValues": "ACTIVO (Activo),INACTIVO (Inactivo)"
+      "fieldValues": "ACTIVO(Activo), INACTIVO(Inactivo)"
     }
   ],
   "fluentMethods": true,

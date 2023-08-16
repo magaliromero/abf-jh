@@ -45,10 +45,7 @@ public class Prestamos implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(
-        value = { "inscripciones", "evaluaciones", "matriculas", "prestamos", "registroClases", "tipoDocumentos" },
-        allowSetters = true
-    )
+    @JsonIgnoreProperties(value = { "evaluaciones", "matriculas", "prestamos", "tipoDocumentos" }, allowSetters = true)
     private Alumnos alumnos;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

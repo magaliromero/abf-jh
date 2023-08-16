@@ -115,12 +115,6 @@ public class FacturasQueryService extends QueryService<Facturas> {
                         )
                     );
             }
-            if (criteria.getClientesId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getClientesId(), root -> root.join(Facturas_.clientes, JoinType.LEFT).get(Clientes_.id))
-                    );
-            }
         }
         return specification;
     }

@@ -7,7 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import py.com.abf.domain.Materiales;
 import py.com.abf.domain.Prestamos;
+import py.com.abf.domain.enumeration.EstadosPrestamos;
 import py.com.abf.repository.PrestamosRepository;
 import py.com.abf.service.PrestamosService;
 
@@ -22,19 +24,42 @@ public class PrestamosServiceImpl implements PrestamosService {
 
     private final PrestamosRepository prestamosRepository;
 
-    public PrestamosServiceImpl(PrestamosRepository prestamosRepository) {
+    private final MaterialesServiceImpl materialesService;
+
+    public PrestamosServiceImpl(PrestamosRepository prestamosRepository, MaterialesServiceImpl materialesService) {
         this.prestamosRepository = prestamosRepository;
+        this.materialesService = materialesService;
     }
 
     @Override
     public Prestamos save(Prestamos prestamos) {
         log.debug("Request to save Prestamos : {}", prestamos);
+        Materiales m = prestamos.getMateriales();
+        Integer cantidad = m.getCantidad();
+        Integer cantidadEnPrestamo = m.getCantidadEnPrestamo();
+        m.setCantidad(--cantidad);
+        m.setCantidadEnPrestamo(++cantidadEnPrestamo);
+        materialesService.update(m);
         return prestamosRepository.save(prestamos);
     }
 
     @Override
     public Prestamos update(Prestamos prestamos) {
-        log.debug("Request to update Prestamos : {}", prestamos);
+        log.debug("	: {}", prestamos);
+        log.debug("Request to update estado entrante : {}", prestamos.getEstado().toString());
+
+        log.debug("Request to update estado TEST : {}", prestamos.getEstado().compareTo(EstadosPrestamos.DEVUELTO));
+        log.debug("Request to update estado TEST 2 : {}", prestamos.getEstado().compareTo(EstadosPrestamos.DEVUELTO));
+        Materiales m = prestamos.getMateriales();
+        Integer cantidad = m.getCantidad();
+        Integer cantidadEnPrestamo = m.getCantidadEnPrestamo();
+        if (prestamos.getEstado().compareTo(EstadosPrestamos.DEVUELTO) == 0) {
+            log.debug("Request to update DEVUELTO : {}", prestamos.getEstado());
+
+            m.setCantidad(++cantidad);
+            m.setCantidadEnPrestamo(--cantidadEnPrestamo);
+            materialesService.update(m);
+        }
         return prestamosRepository.save(prestamos);
     }
 
@@ -52,7 +77,20 @@ public class PrestamosServiceImpl implements PrestamosService {
                     existingPrestamos.setFechaDevolucion(prestamos.getFechaDevolucion());
                 }
                 if (prestamos.getEstado() != null) {
+                    log.debug("Request to update estado entrante partialUpdate : {}", prestamos.getEstado());
+                    log.debug("Request to update estado TEST  partialUpdate: {}", prestamos.getEstado().getValue() == "DEVUELTO");
+                    log.debug("Request to update estado TEST 2 partialUpdate: {}", prestamos.getEstado().getValue().equals("DEVUELTO"));
+
                     existingPrestamos.setEstado(prestamos.getEstado());
+                    if (prestamos.getEstado().compareTo(EstadosPrestamos.DEVUELTO) == 0) {
+                        log.debug("Request to update DEVUELTO : {}", prestamos.getEstado());
+                        Materiales m = prestamos.getMateriales();
+                        Integer cantidad = m.getCantidad();
+                        Integer cantidadEnPrestamo = m.getCantidadEnPrestamo();
+                        m.setCantidad(++cantidad);
+                        m.setCantidadEnPrestamo(--cantidadEnPrestamo);
+                        materialesService.update(m);
+                    }
                 }
 
                 return existingPrestamos;

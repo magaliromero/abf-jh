@@ -36,31 +36,7 @@
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
           <th scope="col" jhiSortBy="id">
             <div class="d-flex">
-              <span jhiTranslate="global.field.id">ID</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="fecha">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.fecha">Fecha</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="total">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.total">Total</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="cantidadHoras">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.cantidadHoras">Cantidad Horas</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="producto.descripcion">
-            <div class="d-flex">
-              <span jhiTranslate="abfApp.pagos.producto">Producto</span>
+              <span jhiTranslate="global.field.id">Id</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -70,6 +46,35 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+
+          <th scope="col" jhiSortBy="producto.descripcion">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.pagos.producto">Descripción del servicio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+
+          <th scope="col" jhiSortBy="cantidadHoras">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.pagos.cantidadHoras">Cantidad de horas</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+
+          <th scope="col" jhiSortBy="total">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.pagos.total">Monto total en Guaraníes</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+
+          <th scope="col" jhiSortBy="fecha">
+            <div class="d-flex">
+              <span jhiTranslate="abfApp.pagos.fecha">Fecha</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+
           <th scope="col"></th>
         </tr>
       </thead>
@@ -78,19 +83,19 @@
           <td>
             <a [routerLink]="['/pagos', pagos.id, 'view']">{{ pagos.id }}</a>
           </td>
-          <td>{{ pagos.fecha | formatMediumDate }}</td>
-          <td>{{ pagos.total }}</td>
-          <td>{{ pagos.cantidadHoras }}</td>
-          <td>
-            <div *ngIf="pagos.producto">
-              <a [routerLink]="['/productos', pagos.producto.id, 'view']">{{ pagos.producto.descripcion }}</a>
-            </div>
-          </td>
           <td>
             <div *ngIf="pagos.funcionario">
               <a [routerLink]="['/funcionarios', pagos.funcionario.id, 'view']">{{ pagos.funcionario.nombreCompleto }}</a>
             </div>
           </td>
+          <td>
+            <div *ngIf="pagos.producto">
+              <a [routerLink]="['/productos', pagos.producto.id, 'view']">{{ pagos.producto.descripcion }}</a>
+            </div>
+          </td>
+          <td>{{ pagos.cantidadHoras }}</td>
+          <td>{{ pagos.total }}</td>
+          <td>{{ pagos.fecha | formatMediumDate }}</td>
           <td class="text-end">
             <div class="btn-group">
               <button type="submit" [routerLink]="['/pagos', pagos.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

@@ -12,172 +12,6 @@
           <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.elo" for="field_elo">Elo</label>
-          <input type="number" class="form-control" name="elo" id="field_elo" data-cy="elo" formControlName="elo" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.fideId" for="field_fideId">Fide Id</label>
-          <input type="number" class="form-control" name="fideId" id="field_fideId" data-cy="fideId" formControlName="fideId" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.nombres" for="field_nombres">Nombres</label>
-          <input type="text" class="form-control" name="nombres" id="field_nombres" data-cy="nombres" formControlName="nombres" />
-          <div *ngIf="editForm.get('nombres')!.invalid && (editForm.get('nombres')!.dirty || editForm.get('nombres')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('nombres')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.apellidos" for="field_apellidos">Apellidos</label>
-          <input type="text" class="form-control" name="apellidos" id="field_apellidos" data-cy="apellidos" formControlName="apellidos" />
-          <div *ngIf="editForm.get('apellidos')!.invalid && (editForm.get('apellidos')!.dirty || editForm.get('apellidos')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('apellidos')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.nombreCompleto" for="field_nombreCompleto">Nombre Completo</label>
-          <input
-            type="text"
-            class="form-control"
-            name="nombreCompleto"
-            id="field_nombreCompleto"
-            data-cy="nombreCompleto"
-            formControlName="nombreCompleto"
-          />
-          <div
-            *ngIf="
-              editForm.get('nombreCompleto')!.invalid && (editForm.get('nombreCompleto')!.dirty || editForm.get('nombreCompleto')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('nombreCompleto')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.email" for="field_email">Email</label>
-          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
-          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.telefono" for="field_telefono">Telefono</label>
-          <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
-          <div *ngIf="editForm.get('telefono')!.invalid && (editForm.get('telefono')!.dirty || editForm.get('telefono')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('telefono')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.fechaNacimiento" for="field_fechaNacimiento">Fecha Nacimiento</label>
-          <div class="input-group">
-            <input
-              id="field_fechaNacimiento"
-              data-cy="fechaNacimiento"
-              type="text"
-              class="form-control"
-              name="fechaNacimiento"
-              ngbDatepicker
-              #fechaNacimientoDp="ngbDatepicker"
-              formControlName="fechaNacimiento"
-            />
-            <button type="button" class="btn btn-secondary" (click)="fechaNacimientoDp.toggle()">
-              <fa-icon icon="calendar-alt"></fa-icon>
-            </button>
-          </div>
-          <div
-            *ngIf="
-              editForm.get('fechaNacimiento')!.invalid &&
-              (editForm.get('fechaNacimiento')!.dirty || editForm.get('fechaNacimiento')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('fechaNacimiento')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.documento" for="field_documento">Documento</label>
-          <input type="text" class="form-control" name="documento" id="field_documento" data-cy="documento" formControlName="documento" />
-          <div *ngIf="editForm.get('documento')!.invalid && (editForm.get('documento')!.dirty || editForm.get('documento')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('documento')?.errors?.required"
-              jhiTranslate="entity.validation.required"
-            >
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.estado" for="field_estado">Estado</label>
-          <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
-            <option [ngValue]="null">{{ 'abfApp.EstadosPersona.null' | translate }}</option>
-            <option *ngFor="let estadosPersona of estadosPersonaValues" [value]="estadosPersona">
-              {{ 'abfApp.EstadosPersona.' + estadosPersona | translate }}
-            </option>
-          </select>
-          <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" jhiTranslate="entity.validation.required">
-              This field is required.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="abfApp.funcionarios.tipoFuncionario" for="field_tipoFuncionario">Tipo Funcionario</label>
-          <select
-            class="form-control"
-            name="tipoFuncionario"
-            formControlName="tipoFuncionario"
-            id="field_tipoFuncionario"
-            data-cy="tipoFuncionario"
-          >
-            <option [ngValue]="null">{{ 'abfApp.TipoFuncionarios.null' | translate }}</option>
-            <option *ngFor="let tipoFuncionarios of tipoFuncionariosValues" [value]="tipoFuncionarios">
-              {{ 'abfApp.TipoFuncionarios.' + tipoFuncionarios | translate }}
-            </option>
-          </select>
-        </div>
-
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="abfApp.funcionarios.tipoDocumentos" for="field_tipoDocumentos">Tipo Documentos</label>
           <select
@@ -208,6 +42,162 @@
             This field is required.
           </small>
         </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.documento" for="field_documento">Documento</label>
+        <input type="text" class="form-control" name="documento" id="field_documento" data-cy="documento" formControlName="documento" />
+        <div *ngIf="editForm.get('documento')!.invalid && (editForm.get('documento')!.dirty || editForm.get('documento')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('documento')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.nombres" for="field_nombres">Nombres</label>
+        <input type="text" class="form-control" name="nombres" id="field_nombres" data-cy="nombres" formControlName="nombres" />
+        <div *ngIf="editForm.get('nombres')!.invalid && (editForm.get('nombres')!.dirty || editForm.get('nombres')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('nombres')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.apellidos" for="field_apellidos">Apellidos</label>
+        <input type="text" class="form-control" name="apellidos" id="field_apellidos" data-cy="apellidos" formControlName="apellidos" />
+        <div *ngIf="editForm.get('apellidos')!.invalid && (editForm.get('apellidos')!.dirty || editForm.get('apellidos')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('apellidos')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.nombreCompleto" for="field_nombreCompleto">Nombre Completo</label>
+        <input
+          type="text"
+          class="form-control"
+          name="nombreCompleto"
+          id="field_nombreCompleto"
+          data-cy="nombreCompleto"
+          formControlName="nombreCompleto"
+        />
+        <div
+          *ngIf="
+            editForm.get('nombreCompleto')!.invalid && (editForm.get('nombreCompleto')!.dirty || editForm.get('nombreCompleto')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('nombreCompleto')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.email" for="field_email">Email</label>
+        <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+        <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.telefono" for="field_telefono">Telefono</label>
+        <input type="text" class="form-control" name="telefono" id="field_telefono" data-cy="telefono" formControlName="telefono" />
+        <div *ngIf="editForm.get('telefono')!.invalid && (editForm.get('telefono')!.dirty || editForm.get('telefono')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('telefono')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.fechaNacimiento" for="field_fechaNacimiento">Fecha Nacimiento</label>
+        <div class="input-group">
+          <input
+            id="field_fechaNacimiento"
+            data-cy="fechaNacimiento"
+            type="text"
+            class="form-control"
+            name="fechaNacimiento"
+            ngbDatepicker
+            #fechaNacimientoDp="ngbDatepicker"
+            formControlName="fechaNacimiento"
+          />
+          <button type="button" class="btn btn-secondary" (click)="fechaNacimientoDp.toggle()">
+            <fa-icon icon="calendar-alt"></fa-icon>
+          </button>
+        </div>
+        <div
+          *ngIf="
+            editForm.get('fechaNacimiento')!.invalid && (editForm.get('fechaNacimiento')!.dirty || editForm.get('fechaNacimiento')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('fechaNacimiento')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.estado" for="field_estado">Estado</label>
+        <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
+          <option [ngValue]="null">{{ 'abfApp.EstadosPersona.null' | translate }}</option>
+          <option *ngFor="let estadosPersona of estadosPersonaValues" [value]="estadosPersona">
+            {{ 'abfApp.EstadosPersona.' + estadosPersona | translate }}
+          </option>
+        </select>
+        <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.elo" for="field_elo">Elo</label>
+        <input type="number" class="form-control" name="elo" id="field_elo" data-cy="elo" formControlName="elo" />
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.fideId" for="field_fideId">Fide Id</label>
+        <input type="number" class="form-control" name="fideId" id="field_fideId" data-cy="fideId" formControlName="fideId" />
+      </div>
+
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="abfApp.funcionarios.tipoFuncionario" for="field_tipoFuncionario">Tipo Funcionario</label>
+        <select
+          class="form-control"
+          name="tipoFuncionario"
+          formControlName="tipoFuncionario"
+          id="field_tipoFuncionario"
+          data-cy="tipoFuncionario"
+        >
+          <option [ngValue]="null">{{ 'abfApp.TipoFuncionarios.null' | translate }}</option>
+          <option *ngFor="let tipoFuncionarios of tipoFuncionariosValues" [value]="tipoFuncionarios">
+            {{ 'abfApp.TipoFuncionarios.' + tipoFuncionarios | translate }}
+          </option>
+        </select>
       </div>
 
       <div>

@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { FacturasFormService, FacturasFormGroup } from './facturas-form.service';
 import { IFacturas } from '../facturas.model';
 import { FacturasService } from '../service/facturas.service';
-import { IClientes } from 'app/entities/clientes/clientes.model';
-import { ClientesService } from 'app/entities/clientes/service/clientes.service';
 import { CondicionVenta } from 'app/entities/enumerations/condicion-venta.model';
 
 @Component({
@@ -20,18 +18,13 @@ export class FacturasUpdateComponent implements OnInit {
   facturas: IFacturas | null = null;
   condicionVentaValues = Object.keys(CondicionVenta);
 
-  clientesSharedCollection: IClientes[] = [];
-
   editForm: FacturasFormGroup = this.facturasFormService.createFacturasFormGroup();
 
   constructor(
     protected facturasService: FacturasService,
     protected facturasFormService: FacturasFormService,
-    protected clientesService: ClientesService,
     protected activatedRoute: ActivatedRoute
   ) {}
-
-  compareClientes = (o1: IClientes | null, o2: IClientes | null): boolean => this.clientesService.compareClientes(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ facturas }) => {
@@ -39,8 +32,6 @@ export class FacturasUpdateComponent implements OnInit {
       if (facturas) {
         this.updateForm(facturas);
       }
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -80,20 +71,5 @@ export class FacturasUpdateComponent implements OnInit {
   protected updateForm(facturas: IFacturas): void {
     this.facturas = facturas;
     this.facturasFormService.resetForm(this.editForm, facturas);
-
-    this.clientesSharedCollection = this.clientesService.addClientesToCollectionIfMissing<IClientes>(
-      this.clientesSharedCollection,
-      facturas.clientes
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.clientesService
-      .query()
-      .pipe(map((res: HttpResponse<IClientes[]>) => res.body ?? []))
-      .pipe(
-        map((clientes: IClientes[]) => this.clientesService.addClientesToCollectionIfMissing<IClientes>(clientes, this.facturas?.clientes))
-      )
-      .subscribe((clientes: IClientes[]) => (this.clientesSharedCollection = clientes));
   }
 }

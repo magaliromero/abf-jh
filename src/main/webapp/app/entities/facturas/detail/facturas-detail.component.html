@@ -42,12 +42,6 @@
         <dd>
           <span>{{ facturas.total }}</span>
         </dd>
-        <dt><span jhiTranslate="abfApp.facturas.clientes">Clientes</span></dt>
-        <dd>
-          <div *ngIf="facturas.clientes">
-            <a [routerLink]="['/clientes', facturas.clientes.id, 'view']">{{ facturas.clientes.ruc }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

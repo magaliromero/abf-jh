@@ -6,18 +6,18 @@ import { IFacturas, NewFacturas } from './facturas.model';
 
 export const sampleWithRequiredData: IFacturas = {
   id: 29679,
-  fecha: dayjs('2023-05-23'),
+  fecha: dayjs('2023-05-21'),
   facturaNro: 'explicit circuit',
   timbrado: 61190,
   razonSocial: 'Zealand',
   ruc: 'SMS Rubber Market',
-  condicionVenta: CondicionVenta['CONTADO'],
+  condicionVenta: CondicionVenta['CREDITO'],
   total: 86011,
 };
 
 export const sampleWithPartialData: IFacturas = {
   id: 37081,
-  fecha: dayjs('2023-05-23'),
+  fecha: dayjs('2023-05-21'),
   facturaNro: 'Oval',
   timbrado: 89640,
   razonSocial: 'Yuan Tasty',
@@ -28,17 +28,17 @@ export const sampleWithPartialData: IFacturas = {
 
 export const sampleWithFullData: IFacturas = {
   id: 97576,
-  fecha: dayjs('2023-05-23'),
+  fecha: dayjs('2023-05-21'),
   facturaNro: 'National',
   timbrado: 22694,
   razonSocial: 'bypassing Configuration navigate',
   ruc: 'Bacon tan',
-  condicionVenta: CondicionVenta['CONTADO'],
+  condicionVenta: CondicionVenta['CREDITO'],
   total: 5477,
 };
 
 export const sampleWithNewData: NewFacturas = {
-  fecha: dayjs('2023-05-23'),
+  fecha: dayjs('2023-05-21'),
   facturaNro: 'cohesive Greece',
   timbrado: 59500,
   razonSocial: 'XML protocol',
